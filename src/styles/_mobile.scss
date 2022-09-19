@@ -1,0 +1,63 @@
+.bd-mobile {
+    background-color: rgb(24, 32, 41);
+    .master-layout-mobile {
+      overflow: scroll;
+      min-height: 110vh !important;
+      .mobile-screen {
+        .app-header {
+          height: 58px;
+          width: 100%;
+          background-color: cyan;
+        }
+        .app-body {
+          width: 100%;
+          .app-slider {
+            height: 510px;
+            margin-inline: 26px;
+            background-color: gray;
+          }
+          .app-video {
+            background-color: rgb(255, 255, 0);
+            margin-inline: 320px;
+            height: 400px;
+          }
+          .app-qoutes {
+            background-color: blueviolet;
+            margin-inline: 400px;
+            height: 200px;
+          }
+          .app-course {
+            background-color: red;
+            margin-inline: 243px;
+            height: 3000px;
+          }
+          .app-feedback {
+            background-color: green;
+            margin-inline: 243px;
+            height: 450px;
+          }
+          .app-news {
+            margin-inline: 243px;
+            background-color: pink;
+            height: 500px;
+          }
+          .contact-get-in-touch {
+            margin-inline: 140px;
+            background-color: rgb(0, 128, 0);
+            height: 280px;
+          }
+          .contact-info {
+            height: 130px;
+            background-color: rgb(128, 0, 128);
+          }
+        }
+        .app-footer {
+          padding: 0;
+          .copyright {
+            background-color: rgb(56, 61, 64);
+            height: 45px;
+          }
+        }
+      }
+    }
+  }
