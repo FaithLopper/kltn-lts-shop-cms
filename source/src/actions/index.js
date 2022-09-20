@@ -4,9 +4,7 @@ import { actions as userActions, actionTypes as userTypes } from './user';
 import { actions as groupPermissionActions, actionTypes as groupPermissionTypes } from './groupPermission';
 import {actions as categoryActions, actionTypes as categoryTypes} from './category';
 import {actions as newsActions, actionTypes as newsTypes} from './news';
-import {actions as provinceActions, actionType as provinceTypes} from "./province"
-import {actions as importExportActions, actionTypes as importExportTypes} from "./importExport"
-import {actions as customerActions, actionTypes as customerTypes } from "./customer"
+
 export const actions = {
     ...appCommonActions,
     ...accountActions,
@@ -14,9 +12,6 @@ export const actions = {
     ...groupPermissionActions,
     ...categoryActions,
     ...newsActions,
-    ...provinceActions,
-    ...importExportActions,
-    ...customerActions
 }
 
 export const types = {
@@ -26,7 +21,4 @@ export const types = {
     ...groupPermissionTypes,
     ...categoryTypes,
     ...newsTypes,
-    ...provinceTypes,
-    ...importExportTypes,
-    ...customerTypes
 }

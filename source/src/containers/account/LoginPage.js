@@ -20,7 +20,6 @@ class LoginPage extends Component {
   }
 
   onLogin(valueForm) {
-    valueForm.app="BACKEND_ADMIN"
     const { login, setUserData } = this.props;
     this.setState({ loading: true });
 

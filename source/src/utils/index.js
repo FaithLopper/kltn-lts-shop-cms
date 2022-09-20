@@ -73,9 +73,6 @@ const Utils = {
     isEmptyObject(obj) {
         return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
     },
-    isMobileDevice(){
-        return (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent))
-    },
     formatNumber(value, setting){
         if(value) {
             const decimalPosition = value.toString().indexOf('.');
@@ -192,7 +189,6 @@ const Utils = {
         hex = hex + a;
         return hex;
     }
-   
 }
 
 export default Utils;

@@ -287,6 +287,7 @@ class NewsListPage extends ListBasePage {
         label: c.categoryName,
       }
     }) : [];
+
     return (
       <div>
         {this.renderSearchForm()}
