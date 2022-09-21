@@ -29,7 +29,6 @@ const LoginForm = ({ loading, onLogin }) => {
                     placeholder="Tên đăng nhập"
                     />
             </FormItem>
-            
             <FormItem
                 name= "password"
                 rules={[{ required: true, message: 'Hãy nhập mật khẩu!' }]}

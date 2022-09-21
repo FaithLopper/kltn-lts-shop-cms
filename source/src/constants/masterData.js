@@ -26,13 +26,6 @@ export const commonKinds = [
     { value: 1, label: 'Tin tức'},
     { value: 2, label: 'Dịch vụ'},
 ]
-export const commonProvince = [
-    { value: 1, label: 'Tỉnh/ Thành Phố'},
-    { value: 2, label: 'Huyện'},
-    { value: 3, label: 'Xã'},
-
-]
-
 
 export const commonSex = [
     { value: 0, label: 'Nữ' },

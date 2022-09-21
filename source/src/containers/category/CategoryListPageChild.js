@@ -60,7 +60,6 @@ class CategoryListPage extends ListBasePage {
             isDelete: true,
             isChangeStatus: false,
         };
-        
     }
 
     componentWillMount() {

@@ -43,42 +43,6 @@ export const sitePathConfig = {
             apiConfig.category.update.path,
             apiConfig.category.delete.path,
         ]
-    }, 
-    province:{
-        path:'/province',
-        childrenKeys: ['/province-district','/province-district-commune'],
-        permissions:[
-            apiConfig.province.getList.path,
-            apiConfig.province.getById.path,
-            apiConfig.province.create.path,
-            apiConfig.province.update.path,
-            apiConfig.province.delete.path,
-            apiConfig.province.provinceAutoComplete.path,
-        ]
-    },
-    district:{
-        path:'/province-district',
-        childrenKeys: ['/province-district','/province-district-commune'],
-        permissions:[
-            apiConfig.province.getList.path,
-            apiConfig.province.getById.path,
-            apiConfig.province.create.path,
-            apiConfig.province.update.path,
-            apiConfig.province.delete.path,
-            apiConfig.province.provinceAutoComplete.path,
-        ]
-    },
-    commune:{
-        path:'/province-district-commune',
-        childrenKeys: ['/province-district','/province-district-commune'],
-        permissions:[
-            apiConfig.province.getList.path,
-            apiConfig.province.getById.path,
-            apiConfig.province.create.path,
-            apiConfig.province.update.path,
-            apiConfig.province.delete.path,
-            apiConfig.province.provinceAutoComplete.path,
-        ]
     },
     adminNews: {
         path: '/news',
@@ -91,18 +55,4 @@ export const sitePathConfig = {
             apiConfig.news.categoryAutoComplete.path,
         ]
     },
-    importExport: {
-        path: '/import',
-        permissions: [
-            apiConfig.importExport.getList.path,
-            apiConfig.importExport.getById.path,
-            apiConfig.importExport.create.path,
-            apiConfig.importExport.update.path,
-            apiConfig.importExport.delete.path,
-            apiConfig.importExport.categoryAutoComplete.path,
-        ]
-    },
-    landPage:{
-        path:'/demo'
-    }
 }

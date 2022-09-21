@@ -28,7 +28,6 @@ class CategoryForm extends BasicForm {
 
     getInitialValue = () => {
         const { dataDetail, isEditing } = this.props;
-        console.log(dataDetail, isEditing )
         if(!isEditing) {
         return {
             ...dataDetail,
