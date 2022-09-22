@@ -188,7 +188,27 @@ const Utils = {
         a = ((a * 255) | 1 << 8).toString(16).slice(1)
         hex = hex + a;
         return hex;
-    }
+    },
+    generateRandomPassword ( length, strict, isNumber, isNotUpperCase, isNotLowerCase, isSymbols ) {
+        var generator = require('generate-password');
+        var passwords = generator.generate({
+            length: length,
+            numbers: isNumber,
+            uppercase: !isNotUpperCase,
+            lowercase: !isNotLowerCase,
+            symbols: isSymbols,
+            strict: strict,
+        });
+        return passwords
+    },
+    copyToClipboard (text) {
+        var textField = document.createElement('textarea')
+        textField.innerText = text
+        document.body.appendChild(textField)
+        textField.select()
+        document.execCommand('copy')
+        textField.remove()
+    },
 }
 
 export default Utils;

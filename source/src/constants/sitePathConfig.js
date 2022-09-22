@@ -19,6 +19,13 @@ export const sitePathConfig = {
             apiConfig.user.deleteAdmin.path
         ]
     },
+    adminUpdate: {
+        path: '/admins/:id',
+        permissions: [
+            apiConfig.user.createAdmin.path,
+            apiConfig.user.updateAdmin.path,
+        ]
+    },
     forbidden: {
         path: '/forbidden'
     },

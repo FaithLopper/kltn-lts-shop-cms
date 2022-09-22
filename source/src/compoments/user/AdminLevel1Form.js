@@ -1,0 +1,223 @@
+import React from 'react';
+import { Form, Col, Row, Card, Button } from 'antd';
+import BasicForm from '../common/entryForm/BasicForm';
+import TextField from '../common/entryForm/TextField';
+import DatePickerField from '../common/entryForm/DatePickerField';
+import UploadImageField from '../common/entryForm/UploadImageField';
+import { convertDateTimeToString, convertUtcToLocalTime } from '../../utils/datetimeHelper';
+import CropImageFiled from '../common/entryForm/CropImageFiled';
+import Utils from "../../utils";
+import { KeyOutlined, CopyOutlined } from '@ant-design/icons';
+import {
+    AppConstants,
+    UploadFileTypes,
+    STATUS_ACTIVE,
+  } from "../../constants";
+  import { showErrorMessage } from "../../services/notifyService";
+import PasswordGeneratorField from '../common/entryForm/PasswordGeneratorField';
+class AdminLevel1Form extends BasicForm {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            logo: props.dataDetail.avatar
+				? `${AppConstants.contentRootUrl}/${props.dataDetail.avatar}`
+				: "",
+			uploading: false,
+            curPassword: null,
+        }
+        
+
+        this.acceptFileTypes = ".png, .jpg, .jpeg, .webp"
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.dataDetail !== this.props.dataDetail) {
+            this.formRef.current.setFieldsValue(nextProps.dataDetail)
+        }
+    }
+
+    onValuesChange = () => {
+        const { setIsChangedFormValues } = this.props
+        setIsChangedFormValues(true)
+    }
+
+    handleSubmit(formValues) {
+        const { onSubmit } = this.props
+        console.log("day");
+        onSubmit({
+            ...formValues,
+        })
+    }
+
+    handleRemoveImageField(fieldName) {
+        const { handleRemoveImage } = this.props
+        handleRemoveImage(fieldName, () => {
+            this.setState({
+                [`${fieldName}FileList`]: []
+            })
+        })
+    }
+
+    handleUploadImageField(fieldName, file) {
+        const { handleUploadImage } = this.props
+        handleUploadImage(fieldName, file, (res) => {
+            this.setState({
+                [`${fieldName}FileList`]: [{ url: res?.body?.newUrlFromS3 }]
+            })
+        })
+    }
+
+    uploadFileLogo = (file, onSuccess) => {
+		const { uploadFile } = this.props;
+		this.setState({ uploading: true });
+		uploadFile({
+		params: { fileObjects: { file }, type: UploadFileTypes.AVATAR },
+		onCompleted: (result) => {
+			// this.otherData.logoPath = result.data.filePath;
+			this.setFieldValue("avatar", result.data.filePath);
+			this.setState({ uploading: false })
+            console.log(result);
+			onSuccess();
+		},
+		onError: (err) => {
+			if (err && err.message) {
+			showErrorMessage(err.message);
+			this.setState({ uploading: false });
+			}
+		},
+		});
+	};
+
+	getInitialFormValues = () => {
+		const { isEditing, dataDetail } = this.props;
+        console.log(dataDetail)
+        console.log(isEditing);
+		if (!isEditing) {
+		return {
+			status: STATUS_ACTIVE,
+		};
+		}
+		return dataDetail;
+	};
+
+    handleChangeLogo = (info) => {
+		console.log(info);
+		if (info.file.status === "done") {
+		Utils.getBase64(info.file.originFileObj, (logo) =>
+			this.setState({ logo })
+		);
+		}
+	};
+
+    render() {
+        const { formId, dataDetail, actions, isEditing,t } = this.props
+        console.log(dataDetail);
+        const {
+            uploading,
+			logo,
+            curPassword
+        } = this.state
+
+        return (
+            <Form
+                id={formId}
+                onFinish={this.handleSubmit}
+                ref={this.formRef}
+                initialValues={this.getInitialFormValues()}
+                layout="vertical"
+                onValuesChange={this.onValuesChange}
+            >
+                <Card title="Thông tin cơ bản" className="card-form" bordered={false}>
+                            <Row gutter={16}>
+                        <Col span={12}>
+                            <CropImageFiled
+                            fieldName="avatar"  
+                            loading={uploading}
+                            label={t("form.label.avatar")}
+                            imageUrl={logo}
+                            onChange={this.handleChangeLogo}
+                            uploadFile={this.uploadFileLogo}
+                            // disabled={loadingSave}
+                            />
+                        </Col>
+                        </Row>
+                        <Row gutter={16}>
+                        <Col span={12}>
+                            <TextField
+                            fieldName="username"
+                            min={6}
+                            label={t("form.label.username")}
+                            // disabled={isEditing || loadingSave}
+                            required={!isEditing}
+                            validators={[Utils.validateUsernameForm]}
+                            />
+                        </Col>
+                        <Col span={12}>
+                            <TextField fieldName="fullName" label={t("form.label.fullName")} required 
+                            // disabled={loadingSave}
+                            />
+                        </Col>
+                        </Row>
+                        <Row gutter={16}>
+                            <Col span={12}>
+                            <PasswordGeneratorField
+                        type="password"
+                        fieldName="password"
+                        label={isEditing ? t("form.label.newPassword") : t("form.label.password")}
+                        required={!isEditing}
+                        minLength={6}
+                        disabled
+                        value={this.getFieldValue('password')}
+                        suffix={
+                            <>
+                                <Button onClick={
+                                    () => {
+                                        const curPass = Utils.generateRandomPassword(8, true, true, false, false, true)
+                                        this.setState({curPassword: curPass})
+                                        this.setFieldValue('password', curPass)
+                                    }}
+                                >
+                                    <KeyOutlined style={{ alignSelf: 'center'}}/>
+                                </Button>
+                                <Button disabled={!curPassword} 
+                                    onClick={()=>{
+										Utils.copyToClipboard(this.getFieldValue('password'))
+										this.copyToClipboardAlert()
+									}}>
+                                <CopyOutlined style={{ alignSelf: 'center' }}/></Button>
+                            </>
+                        }
+                    />
+                            </Col>
+                            <Col span={12}>
+                            <TextField
+                            type="number"
+                            fieldName="phone"
+                            label={t("form.label.phone")}
+                            required
+                            minLength={10}
+                            // disabled={loadingSave}
+                            />
+                        </Col>
+                        </Row>
+                        <Row gutter={16}>
+                        <Col span={12}>
+                            <TextField fieldName="email" label="E-mail" type="email" 
+                            // disabled={loadingSave}
+                            />
+                        </Col>
+                       
+                        </Row>
+                </Card>
+                <div className="footer-card-form">
+                    <Row gutter={16}>
+                        <Col align="right" span={24}>{actions}</Col>
+                    </Row>
+                </div>
+            </Form>
+        )
+    }
+}
+
+export default AdminLevel1Form;

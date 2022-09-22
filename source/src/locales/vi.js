@@ -164,7 +164,15 @@ export default {
     },
     userAdminListPage: {
         breadcrumbs: {
-            currentPage: 'Quản trị viên'
+            currentPage: 'Quản trị viên',
+        },
+        breadcrumbsCreatePage: {
+            parentPage:'Quản trị viên',
+            currentPage: 'Thêm mới quản trị viên',
+        },
+        breadcrumbsUpdatePage: {
+            parentPage:'Quản trị viên',
+            currentPage: 'Cập nhật quản trị viên',
         },
         objectName: 'quản trị viên',
         searchPlaceHolder: {
@@ -183,6 +191,8 @@ export default {
         },
         form: {
             label: {
+                newPassword:'Tạo mật khẩu mới',
+                password:'Mật khẩu',
                 avatar: 'Ảnh đại diện',
                 username: 'Tên đăng nhập',
                 fullName: 'Họ và tên',

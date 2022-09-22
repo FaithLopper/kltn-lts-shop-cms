@@ -7,7 +7,8 @@
     "express": "^4.14.0",
     "google-maps-react": "^2.0.6",
     "path": "^0.12.7",
-    "react-quill": "^1.3.5"
+    "react-quill": "^1.3.5",
+    "generate-password": "^1.7.0"
   },
   "scripts": {
     "start": "env-cmd -f ./env/.local react-scripts start",
