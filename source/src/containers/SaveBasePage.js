@@ -167,7 +167,8 @@ class SaveBasePage extends Component {
     }
 
     showSuccessConfirmModal({ onContinueEdit, title = null, ...rest } = {}) {
-        const defaultTitle = `${t(`constants.Successfully`)} ${this.isEditing ? 'Updating' : 'Creating'} ${this.objectName}`
+        const { t } = this.props;
+        const defaultTitle = `${t(`constants:${"Successfully"}`)} ${this.isEditing ? t(`listBasePage:${"update"}`) : t(`constants:${"create"}`)} ${this.objectName}`
         
         confirm({
             title: title || defaultTitle,

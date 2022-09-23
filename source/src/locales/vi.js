@@ -49,7 +49,10 @@ export default {
         diamond: 'Kim cương',
         NotDone: 'Chưa hoàn thành',
         Successfully:'Thành công',
-        Failed:'Thất bại'
+        Failed:'Thất bại',
+        successMessage: {
+            copied: 'Đã sao chép',
+        },
     },
     listBasePage: {
         update: 'Cập nhật',
