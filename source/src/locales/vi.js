@@ -48,6 +48,8 @@ export default {
         gold: 'Vàng',
         diamond: 'Kim cương',
         NotDone: 'Chưa hoàn thành',
+        Successfully:'Thành công',
+        Failed:'Thất bại'
     },
     listBasePage: {
         update: 'Cập nhật',
@@ -166,14 +168,6 @@ export default {
         breadcrumbs: {
             currentPage: 'Quản trị viên',
         },
-        breadcrumbsCreatePage: {
-            parentPage:'Quản trị viên',
-            currentPage: 'Thêm mới quản trị viên',
-        },
-        breadcrumbsUpdatePage: {
-            parentPage:'Quản trị viên',
-            currentPage: 'Cập nhật quản trị viên',
-        },
         objectName: 'quản trị viên',
         searchPlaceHolder: {
             username: 'Tài khoản đăng nhập',
@@ -217,6 +211,40 @@ export default {
             // updateProfileSuccess: 'Your profile have been updated!'
         },
         createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    userAdminUpdatePage: {
+        breadcrumbs: {
+            // currentPage: '{{ var }} quản trị viên',
+            parentPage:'Quản trị viên',
+        },
+        objectName: 'quản trị viên',
+        form: {
+            label: {
+                newPassword:'Tạo mật khẩu mới',
+                password:'Mật khẩu',
+                avatar: 'Ảnh đại diện',
+                username: 'Tên đăng nhập',
+                fullName: 'Họ và tên',
+                password: 'Mật khẩu',
+                confirmPassword: 'Xác nhận mật khẩu',
+                newPassword: 'Mật khẩu mới',
+                confirmNewPassword: 'Xác nhận mật khẩu mới',
+                groupPermission: 'Nhóm quyền',
+                phone: 'Số điện thoại',
+                language: 'Ngôn ngữ',
+                status: 'Trạng thái',
+                organization: 'Đơn vị',
+                organizationPlaceHolder: 'Hãy chọn đơn vị',
+            },
+            validationMessage: {
+                phoneLengthRequire: 'Hãy nhập số',
+                comparePassword: 'Mật khẩu bạn nhập không khớp!',
+            }
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
     },
     categoryListPage: {
         breadcrumbs: {

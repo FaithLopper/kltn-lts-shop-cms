@@ -110,6 +110,11 @@ class AdminLevel1Form extends BasicForm {
 		}
 	};
 
+    copyToClipboardAlert = () => {
+        const { t } = this.props;
+        message.success( t('constants:successMessage.copied'));
+    };
+
     render() {
         const { formId, dataDetail, actions, isEditing,t } = this.props
         console.log(dataDetail);
@@ -148,7 +153,7 @@ class AdminLevel1Form extends BasicForm {
                             fieldName="username"
                             min={6}
                             label={t("form.label.username")}
-                            // disabled={isEditing || loadingSave}
+                            disabled={isEditing}
                             required={!isEditing}
                             validators={[Utils.validateUsernameForm]}
                             />

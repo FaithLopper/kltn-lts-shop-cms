@@ -18,16 +18,16 @@ class UserAminUpdate extends SaveBasePage {
 
     constructor(props) {
         super(props);
-        this.objectName = 'userAdminForm';
-        this.getListUrl = sitePathConfig.admin.path;
         const { t } = this.props;
+        this.objectName =  t("objectName");
+        this.getListUrl = sitePathConfig.admin.path;
         this.breadcrumbs = [
             {
-                name:  t("breadcrumbs.currentPage"),
+                name:  t("breadcrumbs.parentPage"),
                 path:`${sitePathConfig.admin.path}`
             },
             {
-                name:  this.isEditing? `${t("breadcrumbsUpdatePage.currentPage")}`:`${t("breadcrumbsCreatePage.currentPage")}`,
+                name:  this.isEditing? `${t(`listBasePage:${"update"}`)} ${this.objectName}` :`${t(`listBasePage:${"create"}`)} ${this.objectName}`,
             },
         ];
     }
@@ -219,12 +219,10 @@ const mapDispatchToProps = dispatch => ({
   updateData: (payload) => dispatch(actions.updateUser(payload)),
   deleteData: (payload) => dispatch(actions.deleteAdmin(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
-    // deleteBanner: payload => dispatch(eCatalogueActions.deleteBanner(payload)),
-    // uploadBanner: payload => dispatch(eCatalogueActions.uploadBanner(payload))
 })
 
 const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['userAdminListPage','listBasePage'])(UserAminUpdate));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['userAdminUpdatePage','listBasePage'])(UserAminUpdate));

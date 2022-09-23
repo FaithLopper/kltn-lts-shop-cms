@@ -167,7 +167,7 @@ class SaveBasePage extends Component {
     }
 
     showSuccessConfirmModal({ onContinueEdit, title = null, ...rest } = {}) {
-        const defaultTitle = `Successfully ${this.isEditing ? 'Updating' : 'Creating'} ${this.objectName}`
+        const defaultTitle = `${t(`constants.Successfully`)} ${this.isEditing ? 'Updating' : 'Creating'} ${this.objectName}`
         
         confirm({
             title: title || defaultTitle,
@@ -176,7 +176,7 @@ class SaveBasePage extends Component {
             centered: true,
             cancelText: `Continue ${this.isEditing ? 'update' : 'create'}  ${this.objectName}`,
             className: "custom-confirm-modal success",
-            icon: <CheckCircleFilled />,
+            icon: <CheckCircleFilled style={{"color":"green"}}/>,
             onOk: this.onBack,
             onCancel: onContinueEdit,
             ...rest
@@ -184,16 +184,16 @@ class SaveBasePage extends Component {
     }
 
     showFailedConfirmModal({ onContinueEdit, title = null, ...rest } = {}) {
-        const defaultTitle = `${this.d ? 'Updating' : 'Creating'}  ${this.objectName} Failed`
+        const defaultTitle = `${this.isEditing ? 'Updating' : 'Creating'}  ${this.objectName} Failed`
     
         confirm({
             title: title || defaultTitle,
-            okText: `Continue ${this.d ? 'update' : 'create'}  ${this.objectName}`,
+            okText: `Continue ${this.isEditing ? 'update' : 'create'}  ${this.objectName}`,
             centered: true,
             width: 475,
             cancelText: 'Back To List',
             className: "custom-confirm-modal failed",
-            icon: <CloseCircleFilled />,
+            icon: <CloseCircleFilled style={{"color":"red"}}/>,
             onCancel: this.onBack,
             onOk: onContinueEdit,
             ...rest
