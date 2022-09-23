@@ -56,7 +56,6 @@ class AdminForm extends BasicForm {
 	};
 
 	handleChangeLogo = (info) => {
-		console.log(info);
 		if (info.file.status === "done") {
 		Utils.getBase64(info.file.originFileObj, (logo) =>
 			this.setState({ logo })

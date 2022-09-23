@@ -14,7 +14,9 @@ import { FieldTypes } from "../../constants/formConfig";
 import { commonStatus } from "../../constants/masterData";
 import { convertUtcToTimezone } from "../../utils/datetimeHelper";
 import { AppConstants, UserTypes, GroupPermissonTypes, STATUS_ACTIVE } from "../../constants";
-
+import PageWrapper from "../../compoments/common/PageWrapper";
+import { Link } from 'react-router-dom';
+import { sitePathConfig } from "../../constants/sitePathConfig";
 class UserAdminListPage extends ListBasePage {
   initialSearch() {
     return { username: "", fullName: "" };
@@ -24,6 +26,7 @@ class UserAdminListPage extends ListBasePage {
     super(props);
     const {t} = this.props;
     this.objectName =  t("objectName");
+    this.objectListName = 'admins';
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
     this.columns = [
       this.renderIdColumn(),
@@ -101,7 +104,9 @@ class UserAdminListPage extends ListBasePage {
     };
   }
 
-
+  getDetailLink(dataRow) {
+    return sitePathConfig.adminUpdate.path.replace(':id', dataRow.id);
+}
 
   render() {
     const {
@@ -114,16 +119,22 @@ class UserAdminListPage extends ListBasePage {
     const users = dataList.data || [];
     this.pagination.total = dataList.totalElements || 0;
     return (
-      <div>
-        {this.renderSearchForm()}
+        <PageWrapper
+                routes={[
+                  { breadcrumbName: 'Trang chủ' },
+                  { breadcrumbName: 'Quản trị viên' }
+                ]}
+                // title="Quản trị viên"
+                >
+              {this.renderSearchForm()}
         <div className="action-bar">
           {this.renderCreateNewButton((
+            <Link to={this.getCreateLink()}>
             <Button
             type="primary"
-            onClick={() => this.onShowModifiedModal(false)}
           >
             <PlusOutlined /> {t("createNewButton", { var: t(`constants:${"Administrator"}`, "") })}
-          </Button>
+          </Button></Link>
           ))}
         </div>
         <BaseTable
@@ -134,23 +145,7 @@ class UserAdminListPage extends ListBasePage {
           pagination={this.pagination}
           onChange={this.handleTableChange}
         />
-        <BasicModal
-          visible={isShowModifiedModal}
-          isEditing={this.isEditing}
-          objectName={this.objectName}
-          loading={isShowModifiedLoading}
-          onOk={this.onOkModal}
-          onCancel={this.onCancelModal}
-        >
-          <AdminForm
-            isEditing={this.isEditing}
-            dataDetail={this.isEditing ? this.dataDetail : {}}
-            loadingSave={isShowModifiedLoading}
-            uploadFile={uploadFile}
-            t={t}
-          />
-        </BasicModal>
-      </div>
+        </PageWrapper>
     );
   }
 }

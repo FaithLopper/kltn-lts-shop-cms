@@ -18,7 +18,7 @@ import GroupPermissionListPage from '../containers/groupPermission/GroupPermissi
 import CategoryListPage from '../containers/category/CategoryListPage';
 import CategoryListPageChild from '../containers/category/CategoryListPageChild';
 import NewsListPage from '../containers/adminNews/NewsListPage';
-
+import UserAminUpdate from '../containers/users/UserAminUpdate';
 const RootRoute = () => {
     const {
         admin,
@@ -28,6 +28,7 @@ const RootRoute = () => {
         groupPermission,
         category,
         adminNews,
+        adminUpdate
     } = sitePathConfig;
 
     return (
@@ -40,6 +41,7 @@ const RootRoute = () => {
                 <PublicRoute exact path={login.path} component={LoginPage} />
                 <PrivateRoute exact path={profile.path} component={ProfilePage}/>
                 <PrivateRoute exact path={admin.path} component={UserAdminListPage}/>
+                <PrivateRoute exact path={adminUpdate.path} component={UserAminUpdate}/>
                 <PrivateRoute exact path={groupPermission.path} component={GroupPermissionListPage}/>
                 <PrivateRoute exact path={category.path} component={CategoryListPage}/>
                 <PrivateRoute exact path={category.childrenKeys[0]} component={CategoryListPageChild}/>

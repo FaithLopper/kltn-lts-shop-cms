@@ -118,7 +118,6 @@ class MasterLayout extends Component {
         } = this.props;
         const { breadcrumbs, navSidercollapsed, userData } = this.state;
         const contentClass = siteConfig?.contentClass || '';
-
         if(!userData)
             return null;
         
@@ -139,7 +138,7 @@ class MasterLayout extends Component {
                             userData={userData || {fullName: 'admin'}}
                         />
                         <Content className="app-content">
-                            <Breadcrumb className="app-breadcrumb" separator=">">
+                        <Breadcrumb className="app-breadcrumb" separator=">">
                                 <Breadcrumb.Item>
                                     {/* <Link to="/">Home</Link> */}
                                     {t('breadcrumbs.home')}
