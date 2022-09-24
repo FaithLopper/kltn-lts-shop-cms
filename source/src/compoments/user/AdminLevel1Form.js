@@ -8,6 +8,7 @@ import { convertDateTimeToString, convertUtcToLocalTime } from '../../utils/date
 import CropImageFiled from '../common/entryForm/CropImageFiled';
 import Utils from "../../utils";
 import { KeyOutlined, CopyOutlined } from '@ant-design/icons';
+import { commonStatus } from '../../constants/masterData';
 import {
     AppConstants,
     UploadFileTypes,
@@ -15,6 +16,7 @@ import {
   } from "../../constants";
   import { showErrorMessage } from "../../services/notifyService";
 import PasswordGeneratorField from '../common/entryForm/PasswordGeneratorField';
+import DropdownField from '../common/entryForm/DropdownField';
 class AdminLevel1Form extends BasicForm {
 
     constructor(props) {
@@ -44,7 +46,6 @@ class AdminLevel1Form extends BasicForm {
 
     handleSubmit(formValues) {
         const { onSubmit } = this.props
-        console.log("day");
         onSubmit({
             ...formValues,
         })
@@ -77,7 +78,6 @@ class AdminLevel1Form extends BasicForm {
 			// this.otherData.logoPath = result.data.filePath;
 			this.setFieldValue("avatar", result.data.filePath);
 			this.setState({ uploading: false })
-            console.log(result);
 			onSuccess();
 		},
 		onError: (err) => {
@@ -91,8 +91,6 @@ class AdminLevel1Form extends BasicForm {
 
 	getInitialFormValues = () => {
 		const { isEditing, dataDetail } = this.props;
-        console.log(dataDetail)
-        console.log(isEditing);
 		if (!isEditing) {
 		return {
 			status: STATUS_ACTIVE,
@@ -102,7 +100,6 @@ class AdminLevel1Form extends BasicForm {
 	};
 
     handleChangeLogo = (info) => {
-		console.log(info);
 		if (info.file.status === "done") {
 		Utils.getBase64(info.file.originFileObj, (logo) =>
 			this.setState({ logo })
@@ -117,7 +114,6 @@ class AdminLevel1Form extends BasicForm {
 
     render() {
         const { formId, dataDetail, actions, isEditing,t } = this.props
-        console.log(dataDetail);
         const {
             uploading,
 			logo,
@@ -212,7 +208,15 @@ class AdminLevel1Form extends BasicForm {
                             // disabled={loadingSave}
                             />
                         </Col>
-                       
+                       <Col span={12}>
+                       <DropdownField
+                        fieldName="status"
+                        label={t("form.label.status")}
+                        required
+                        options={commonStatus}
+                        disabled={!isEditing}
+                    />
+                       </Col>
                         </Row>
                 </Card>
                 <div className="footer-card-form">

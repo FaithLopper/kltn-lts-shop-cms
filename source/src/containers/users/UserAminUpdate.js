@@ -58,6 +58,7 @@ class UserAminUpdate extends SaveBasePage {
 
     onInsertCompleted = (res) => {
         const { history } = this.props
+        console.log(res)
         this.setIsChangedFormValues(false);
         if (res?.result) {
             this.showSuccessConfirmModal({
@@ -65,9 +66,9 @@ class UserAminUpdate extends SaveBasePage {
                     history.push(sitePathConfig.adminUpdate.path.replace(':id', res.id))
                 }
             })
-        } else if (res?.Code === '-1' && (res?.Status || res?.status)) {
+        } else if (res?.result===false) {
             this.showFailedConfirmModal({
-                title: res?.Status || res?.status
+                title: res?.message
             })
 
         } else {
@@ -76,6 +77,7 @@ class UserAminUpdate extends SaveBasePage {
     }
 
     onUpdateCompleted = (res) => {
+        console.log("here")
         this.setIsChangedFormValues(false);
         if (res.result) {
             this.getDetail(this.dataId)
@@ -84,7 +86,6 @@ class UserAminUpdate extends SaveBasePage {
             this.showFailedConfirmModal({
                 title: res?.message
             })
-
         } else {
             this.showFailedConfirmModal()
         }
@@ -107,40 +108,6 @@ class UserAminUpdate extends SaveBasePage {
         })
     }
 
-    handleUploadImageField = (fieldName, file, onCompleted, onError) => {
-        const { uploadBanner } = this.props
-        const catId = this.props.match.params.id
-        const fileObjects = {
-            uploadFile: file
-        }
-
-        const params = { imageField: fieldName, catId, fileObjects }
-        uploadBanner({
-            params,
-            onCompleted: (res) => {
-                showSucsessMessage(`${fieldName} had uploaded successful!`)
-                !!onCompleted && onCompleted(res)
-            },
-            onError: (res) => {
-                showErrorMessage(`Upload ${fieldName} failed. Please try again !`)
-                !!onError && onError()
-            },
-        })
-    }
-
-    onSaveError = (res) => {
-        // Show error messages from API response
-        if (res?.Code === '-1' && (res?.Status || res?.status)) {
-            this.showFailedConfirmModal({
-                title: res?.Status || res?.status
-            })
-        } else {
-            this.showFailedConfirmModal()
-        }
-
-        this.setState({ isSubmitting: false })
-    }
-
     onBack = () => {
         if (this.state.isChanged) {
             this.showWarningConfirmModal({
@@ -156,8 +123,10 @@ class UserAminUpdate extends SaveBasePage {
 
     prepareCreateData = (data) => {
         return {
+            kind:UserTypes.ADMIN,
+            avatarPath: data.avatar,
+            status: 1,
             ...data,
-            kind:UserTypes.ADMIN
         };
     }
 
@@ -165,6 +134,7 @@ class UserAminUpdate extends SaveBasePage {
         return {
             ...data,
             kind:UserTypes.ADMIN,
+            avatarPath: data.avatar,
             id: this.dataDetail.id
         };
     }
@@ -176,9 +146,12 @@ class UserAminUpdate extends SaveBasePage {
         }
         else {
             if (this.isEditing) {
+                console.log("object");
                 this.onUpdateCompleted(responseData);
             }
             else {
+                console.log("object2");
+
                 this.onInsertCompleted(responseData);
             }
         }
@@ -188,7 +161,6 @@ class UserAminUpdate extends SaveBasePage {
         const { isGetDetailLoading, objectNotFound,  } = this.state
         const {t,uploadFile}= this.props
         if (objectNotFound) {
-            console.log(objectNotFound)
             return <ObjectNotFound />
         }
 

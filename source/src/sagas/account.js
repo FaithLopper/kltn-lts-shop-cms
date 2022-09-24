@@ -62,7 +62,6 @@ function* login({ payload: { params, onCompleted, onError } }) {
       onError(responseData);
     }
   } catch (error) {
-    console.log(error);
     onError(error);
   }
 }

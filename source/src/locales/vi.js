@@ -71,11 +71,20 @@ export default {
         titleActionCol: 'Hành động',
         titleStatusCol: 'Trạng thái',
     },
-    basicModal: {
-        updateTitle: 'CẬP NHẬT {{ objectName, uppercase }}',
-        createTitle: 'THÊM MỚI {{ objectName, uppercase }}',
-        closeButton: 'Đóng',
-        saveButton: 'Lưu',
+    // basicModal: {
+    //     updateTitle: 'CẬP NHẬT {{ objectName, uppercase }}',
+    //     createTitle: 'THÊM MỚI {{ objectName, uppercase }}',
+    //     closeButton: 'Đóng',
+    //     saveButton: 'Lưu',
+    // },
+    basicSavePage:{
+        saveButton:'Lưu',
+        updateButton:'Lưu & cập nhật',
+        cancelButton:'Huỷ',
+        createMessage:'tạo mới',
+        updateMessage:'cập nhật',
+        okText:'Trở về danh sách',
+        Continue:'Tiếp tục'
     },
     baseField: {
         select: 'chọn',

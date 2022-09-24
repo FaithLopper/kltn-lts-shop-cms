@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'antd';
+import i18next from 'i18next';
 import {
     CloseCircleFilled,
     CheckCircleFilled,
@@ -7,7 +8,8 @@ import {
     ExclamationCircleOutlined,
 } from '@ant-design/icons';
 import { showErrorMessage } from '../services/notifyService';
-
+import Utils from '../utils';
+const {changeCase} =Utils
 const { confirm } = Modal;
 class SaveBasePage extends Component {
 
@@ -95,6 +97,7 @@ class SaveBasePage extends Component {
     }
 
     onSaveCompleted = (responseData) => {
+        console.log(responseData)
         this.setState({ isSubmitting: false });
         if (responseData?.data?.errors?.length) {
             this.onSaveError();
@@ -126,7 +129,6 @@ class SaveBasePage extends Component {
     }
 
     onSave = (values) => {
-        console.log("one")
         const { createData, updateData } = this.props;
         this.setState({ isSubmitting: true });
         if (this.isEditing) {
@@ -137,7 +139,6 @@ class SaveBasePage extends Component {
             });
         }
         else {
-            console.log("hello")
             createData({
                 params: this.prepareCreateData(values),
                 onCompleted: this.onSaveCompleted,
@@ -168,31 +169,35 @@ class SaveBasePage extends Component {
 
     showSuccessConfirmModal({ onContinueEdit, title = null, ...rest } = {}) {
         const { t } = this.props;
-        const defaultTitle = `${t(`constants:${"Successfully"}`)} ${this.isEditing ? t(`listBasePage:${"update"}`) : t(`constants:${"create"}`)} ${this.objectName}`
-        
-        confirm({
+        const defaultTitle = `${t(`constants:${"Successfully"}`)} ${this.isEditing ? t(`basicSavePage:${"updateMessage"}`):t(`basicSavePage:${"createMessage"}`)}   ${this.objectName}`
+        let prepareComfirm={
             title: title || defaultTitle,
-            okText: 'Back To List',
+            okText: t(`basicSavePage:${"okText"}`),
             width: 475,
             centered: true,
-            cancelText: `Continue ${this.isEditing ? 'update' : 'create'}  ${this.objectName}`,
+            cancelText: `${t(`basicSavePage:${"Continue"}`)} ${this.isEditing ? t(`basicSavePage:${"updateMessage"}`) : t(`basicSavePage:${"createMessage"}`)}  ${this.objectName}`,
             className: "custom-confirm-modal success",
             icon: <CheckCircleFilled style={{"color":"green"}}/>,
             onOk: this.onBack,
-            onCancel: onContinueEdit,
+            // onCancel: onContinueEdit,
             ...rest
-        })
+        }
+        if(!this.isEditing)
+            delete prepareComfirm.cancelText
+        confirm(prepareComfirm)
     }
 
     showFailedConfirmModal({ onContinueEdit, title = null, ...rest } = {}) {
-        const defaultTitle = `${this.isEditing ? 'Updating' : 'Creating'}  ${this.objectName} Failed`
+        const { t } = this.props;
+        const defaultTitle = `${t(`constants:${"Failed"}`)} ${this.isEditing ? t(`basicSavePage:${"updateMessage"}`):t(`basicSavePage:${"createMessage"}`)}   ${this.objectName}`
+        console.log("object");
     
         confirm({
             title: title || defaultTitle,
-            okText: `Continue ${this.isEditing ? 'update' : 'create'}  ${this.objectName}`,
+            okText: `${t(`basicSavePage:${"Continue"}`)} ${this.isEditing ? t(`basicSavePage:${"updateMessage"}`) : t(`basicSavePage:${"createMessage"}`)}  ${this.objectName}`,
             centered: true,
             width: 475,
-            cancelText: 'Back To List',
+            cancelText: t(`basicSavePage:${"okText"}`),
             className: "custom-confirm-modal failed",
             icon: <CloseCircleFilled style={{"color":"red"}}/>,
             onCancel: this.onBack,
@@ -216,6 +221,7 @@ class SaveBasePage extends Component {
 
     renderActions = (customDisabledSubmitValue) => {
         const { isSubmitting, isChanged } = this.state;
+        const {t}= this.props
 
         const disabledSubmit = customDisabledSubmitValue !== undefined ? customDisabledSubmitValue : !isChanged;
 
@@ -228,8 +234,9 @@ class SaveBasePage extends Component {
                 loading={isSubmitting}
                 disabled={disabledSubmit}
                 icon={<SaveOutlined />}
+                
             >
-                {this.d ? 'Save' : 'Save & Update'}
+                {this.isEditing ? t(`basicSavePage:${"updateButton"}`) : t(`basicSavePage:${"saveButton"}`)}
             </Button>
         ];
         // if (this.getListUrl) {
@@ -241,7 +248,7 @@ class SaveBasePage extends Component {
         // }
 
             actions.unshift(
-                <Button key="cancel" onClick={this.onBack}> Cancel</Button>
+                <Button key="cancel" style={{marginRight:"15px" }} onClick={this.onBack}> {t(`basicSavePage:${"cancelButton"}`) }</Button>
             )
 
         return actions;

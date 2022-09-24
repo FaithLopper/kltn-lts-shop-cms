@@ -23,6 +23,7 @@ class MasterLayout extends Component {
             userData: getUserData(),
             breadcrumbs: [],
             navSidercollapsed: false,
+            objectName:''
         }
         this.onLogout = this.onLogout.bind(this);
         this.onChangeBreadcrumb = this.onChangeBreadcrumb.bind(this);
@@ -139,6 +140,7 @@ class MasterLayout extends Component {
                         />
                         <Content className="app-content">
                         <Breadcrumb className="app-breadcrumb" separator=">">
+                        <h2>{breadcrumbs ? breadcrumbs[breadcrumbs.length-1]?.name:""}</h2>
                                 <Breadcrumb.Item>
                                     {/* <Link to="/">Home</Link> */}
                                     {t('breadcrumbs.home')}
