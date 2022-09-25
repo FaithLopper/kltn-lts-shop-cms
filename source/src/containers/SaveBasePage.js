@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal } from 'antd';
+import { Button, Col, Modal, Row } from 'antd';
 import i18next from 'i18next';
 import {
     CloseCircleFilled,
@@ -97,7 +97,6 @@ class SaveBasePage extends Component {
     }
 
     onSaveCompleted = (responseData) => {
-        console.log(responseData)
         this.setState({ isSubmitting: false });
         if (responseData?.data?.errors?.length) {
             this.onSaveError();
@@ -189,9 +188,7 @@ class SaveBasePage extends Component {
 
     showFailedConfirmModal({ onContinueEdit, title = null, ...rest } = {}) {
         const { t } = this.props;
-        const defaultTitle = `${t(`constants:${"Failed"}`)} ${this.isEditing ? t(`basicSavePage:${"updateMessage"}`):t(`basicSavePage:${"createMessage"}`)}   ${this.objectName}`
-        console.log("object");
-    
+        const defaultTitle = `${t(`constants:${"Failed"}`)} ${this.isEditing ? t(`basicSavePage:${"updateMessage"}`):t(`basicSavePage:${"createMessage"}`)}   ${this.objectName}`    
         confirm({
             title: title || defaultTitle,
             okText: `${t(`basicSavePage:${"Continue"}`)} ${this.isEditing ? t(`basicSavePage:${"updateMessage"}`) : t(`basicSavePage:${"createMessage"}`)}  ${this.objectName}`,
@@ -224,8 +221,11 @@ class SaveBasePage extends Component {
         const {t}= this.props
 
         const disabledSubmit = customDisabledSubmitValue !== undefined ? customDisabledSubmitValue : !isChanged;
-
-        const actions = [
+        return (<Row gutter={16}>
+            <Col span={14}>
+            <Button key="cancel" onClick={this.onBack}> {t(`basicSavePage:${"cancelButton"}`) }</Button>
+            </Col>
+            <Col span={1}>
             <Button
                 key="submit"
                 htmlType="submit"
@@ -235,23 +235,11 @@ class SaveBasePage extends Component {
                 disabled={disabledSubmit}
                 icon={<SaveOutlined />}
                 
-            >
+                >
                 {this.isEditing ? t(`basicSavePage:${"updateButton"}`) : t(`basicSavePage:${"saveButton"}`)}
             </Button>
-        ];
-        // if (this.getListUrl) {
-        //     actions.unshift(
-        //         <Link key="cancel" to={this.getListUrl}>
-        //             <Button key="cancel"> Cancel</Button>
-        //         </Link>
-        //     )
-        // }
-
-            actions.unshift(
-                <Button key="cancel" style={{marginRight:"15px" }} onClick={this.onBack}> {t(`basicSavePage:${"cancelButton"}`) }</Button>
-            )
-
-        return actions;
+                </Col>
+        </Row>);
     }
 
 }

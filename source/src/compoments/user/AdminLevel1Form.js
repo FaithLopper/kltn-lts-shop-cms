@@ -51,24 +51,6 @@ class AdminLevel1Form extends BasicForm {
         })
     }
 
-    handleRemoveImageField(fieldName) {
-        const { handleRemoveImage } = this.props
-        handleRemoveImage(fieldName, () => {
-            this.setState({
-                [`${fieldName}FileList`]: []
-            })
-        })
-    }
-
-    handleUploadImageField(fieldName, file) {
-        const { handleUploadImage } = this.props
-        handleUploadImage(fieldName, file, (res) => {
-            this.setState({
-                [`${fieldName}FileList`]: [{ url: res?.body?.newUrlFromS3 }]
-            })
-        })
-    }
-
     uploadFileLogo = (file, onSuccess) => {
 		const { uploadFile } = this.props;
 		this.setState({ uploading: true });
@@ -131,7 +113,7 @@ class AdminLevel1Form extends BasicForm {
             >
                 <Card title="Thông tin cơ bản" className="card-form" bordered={false}>
                             <Row gutter={16}>
-                        <Col span={12}>
+                        <Col span={8}>
                             <CropImageFiled
                             fieldName="avatar"  
                             loading={uploading}
@@ -144,7 +126,7 @@ class AdminLevel1Form extends BasicForm {
                         </Col>
                         </Row>
                         <Row gutter={16}>
-                        <Col span={12}>
+                        <Col span={8}>
                             <TextField
                             fieldName="username"
                             min={6}
@@ -154,14 +136,14 @@ class AdminLevel1Form extends BasicForm {
                             validators={[Utils.validateUsernameForm]}
                             />
                         </Col>
-                        <Col span={12}>
+                        <Col span={8}>
                             <TextField fieldName="fullName" label={t("form.label.fullName")} required 
                             // disabled={loadingSave}
                             />
                         </Col>
                         </Row>
                         <Row gutter={16}>
-                            <Col span={12}>
+                            <Col span={8}>
                             <PasswordGeneratorField
                         type="password"
                         fieldName="password"
@@ -191,7 +173,7 @@ class AdminLevel1Form extends BasicForm {
                         }
                     />
                             </Col>
-                            <Col span={12}>
+                            <Col span={8}>
                             <TextField
                             type="number"
                             fieldName="phone"
@@ -203,12 +185,12 @@ class AdminLevel1Form extends BasicForm {
                         </Col>
                         </Row>
                         <Row gutter={16}>
-                        <Col span={12}>
+                        <Col span={8}>
                             <TextField fieldName="email" label="E-mail" type="email" 
                             // disabled={loadingSave}
                             />
                         </Col>
-                       <Col span={12}>
+                       <Col span={8}>
                        <DropdownField
                         fieldName="status"
                         label={t("form.label.status")}

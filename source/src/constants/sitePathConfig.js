@@ -40,6 +40,14 @@ export const sitePathConfig = {
             apiConfig.groupPermission.getPermissionList.path,
         ]
     },
+    groupPermissionUpdate: {
+        path: '/group-permission/:id',
+        permissions: [
+            apiConfig.groupPermission.update.path,
+            'not_have_delete',
+            apiConfig.groupPermission.getPermissionList.path,
+        ]
+    },
     category: {
         path: '/category',
         childrenKeys: ['/category-child'],
@@ -60,6 +68,42 @@ export const sitePathConfig = {
             apiConfig.news.update.path,
             apiConfig.news.delete.path,
             apiConfig.news.categoryAutoComplete.path,
+        ]
+    },
+    province:{
+        path:'/province',
+        childrenKeys: ['/province-district','/province-district-commune'],
+        permissions:[
+            apiConfig.province.getList.path,
+            apiConfig.province.getById.path,
+            apiConfig.province.create.path,
+            apiConfig.province.update.path,
+            apiConfig.province.delete.path,
+            apiConfig.province.provinceAutoComplete.path,
+        ]
+    },
+    district:{
+        path:'/province-district',
+        childrenKeys: ['/province-district','/province-district-commune'],
+        permissions:[
+            apiConfig.province.getList.path,
+            apiConfig.province.getById.path,
+            apiConfig.province.create.path,
+            apiConfig.province.update.path,
+            apiConfig.province.delete.path,
+            apiConfig.province.provinceAutoComplete.path,
+        ]
+    },
+    commune:{
+        path:'/province-district-commune',
+        childrenKeys: ['/province-district','/province-district-commune'],
+        permissions:[
+            apiConfig.province.getList.path,
+            apiConfig.province.getById.path,
+            apiConfig.province.create.path,
+            apiConfig.province.update.path,
+            apiConfig.province.delete.path,
+            apiConfig.province.provinceAutoComplete.path,
         ]
     },
 }

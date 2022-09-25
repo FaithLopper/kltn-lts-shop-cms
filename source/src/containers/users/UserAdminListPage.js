@@ -79,34 +79,9 @@ class UserAdminListPage extends ListBasePage {
     ];
   }
 
-  prepareCreateData(values) {
-    return {
-      kind: UserTypes.ADMIN,
-      avatarPath: values.avatar,
-      ...values,
-    };
-  }
-
-  prepareUpdateData(values) {
-    return {
-      id: this.dataDetail.id,
-      kind: UserTypes.ADMIN,
-      avatarPath: values.avatar,
-      status: STATUS_ACTIVE,
-      ...values,
-    };
-  }
-
-  getDataDetailMapping(data) {
-    return {
-      ...data,
-      groupId: data.group && data.group.id,
-    };
-  }
-
   getDetailLink(dataRow) {
     return sitePathConfig.adminUpdate.path.replace(':id', dataRow.id);
-}
+  }
 
   render() {
     const {
@@ -119,13 +94,7 @@ class UserAdminListPage extends ListBasePage {
     const users = dataList.data || [];
     this.pagination.total = dataList.totalElements || 0;
     return (
-        <PageWrapper
-                routes={[
-                  { breadcrumbName: 'Trang chủ' },
-                  { breadcrumbName: 'Quản trị viên' }
-                ]}
-                // title="Quản trị viên"
-                >
+        <PageWrapper>
               {this.renderSearchForm()}
         <div className="action-bar">
           {this.renderCreateNewButton((

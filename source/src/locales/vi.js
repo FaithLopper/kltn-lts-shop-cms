@@ -77,6 +77,12 @@ export default {
     //     closeButton: 'Đóng',
     //     saveButton: 'Lưu',
     // },
+    basicModal: {
+        updateTitle: "CẬP NHẬT {{ objectName, uppercase }}",
+        createTitle: "THÊM MỚI {{ objectName, uppercase }}",
+        closeButton: "Đóng",
+        saveButton: "Lưu",
+      },
     basicSavePage:{
         saveButton:'Lưu',
         updateButton:'Lưu & cập nhật',
@@ -308,6 +314,26 @@ export default {
             }
         },
     },
+    groupPermissionUpdatePage: {
+        breadcrumbs: {
+            parentPage: 'Nhóm quyền',
+            currentPage: 'Cập nhật Nhóm',
+        },
+        objectName: 'Cập nhật nhóm',
+        form: {
+            label: {
+                name: 'Tên',
+                value: 'Giá trị',
+                description: 'Mô tả',
+                status: 'Trạng thái',
+                kind: 'Loại',
+                groupPermission: 'Nhóm quyền',
+            },
+            validationMessage: {
+               permission: 'Vui lòng chọn nhóm quyền',
+            }
+        },
+    },
     SettingDetailsListPage: {
         breadcrumbs: {
             currentPage: 'Cài đặt'
@@ -351,4 +377,101 @@ export default {
         },
         createNewButton: 'Tạo {{ var, lowercase }} mới',
     },
+    provinceListPage: {
+        breadcrumbs: {
+          currentPage: "Tỉnh thành",
+        },
+        objectName: "Tỉnh thành",
+        searchPlaceHolder: {
+          province: "Tên tỉnh thành",
+          status: "Chọn trạng thái",
+          organize: "Chọn đơn vị",
+        },
+        table: {
+          provinceName: "Tên tỉnh",
+          
+        },
+    
+        form: {
+          label: {
+            parentId: "ID tỉnh",
+            status: "Trạng thái",
+            provinceName: "Tên tỉnh",
+            currentName:"Tên tỉnh"
+          },
+          validationMessage: {
+            phoneLengthRequire: "Hãy nhập số",
+            comparePassword: "Mật khẩu bạn nhập không khớp!",
+          },
+        },
+        message: {
+          // updateProfileFail: 'Your profile failed. Please try again!',
+          // updateProfileSuccess: 'Your profile have been updated!'
+        },
+        createNewButton: "Tạo {{ var, lowercase }} mới",
+      },
+      districtListPage: {
+        breadcrumbs: {
+          currentPage: "Quận/ Huyện",
+          parentPage: "Tỉnh thành",
+        },
+        objectName: "Quận/ huyện",
+        searchPlaceHolder: {
+          province: "Tên quận huyện",
+          status: "Chọn trạng thái",
+          organize: "Chọn đơn vị",
+        },
+        table: {
+          provinceName: "Tên quận huyện",
+        },
+    
+        form: {
+          label: {
+            parentName: "Tên tỉnh",
+            provinceName: "Tên Quận/ Huyện",
+            currentName:"Tên Quận/ Huyện"
+          },
+          validationMessage: {
+            phoneLengthRequire: "Hãy nhập số",
+            comparePassword: "Mật khẩu bạn nhập không khớp!",
+          },
+        },
+        message: {
+          // updateProfileFail: 'Your profile failed. Please try again!',
+          // updateProfileSuccess: 'Your profile have been updated!'
+        },
+        createNewButton: "Tạo {{ var, lowercase }} mới",
+      },
+      communeListPage: {
+        breadcrumbs: {
+          currentPage: "Xã",
+          parentPage: "Tỉnh thành",
+        },
+        objectName: "Xã Phường",
+        searchPlaceHolder: {
+          province: "Tên Xã/ Phường",
+          status: "Chọn trạng thái",
+          organize: "Chọn đơn vị",
+        },
+        table: {
+          provinceName: "Tên Xã/ Phường",
+        },
+    
+        form: {
+          label: {
+            currentName: "Tên Xã Phường",
+            parentName: "Tên Quận/ Huyện",
+            provinceName: "Tên tỉnh",
+          },
+          validationMessage: {
+            phoneLengthRequire: "Hãy nhập số",
+            comparePassword: "Mật khẩu bạn nhập không khớp!",
+          },
+        },
+        message: {
+          // updateProfileFail: 'Your profile failed. Please try again!',
+          // updateProfileSuccess: 'Your profile have been updated!'
+        },
+        createNewButton: "Tạo {{ var, lowercase }} mới",
+      },
 }

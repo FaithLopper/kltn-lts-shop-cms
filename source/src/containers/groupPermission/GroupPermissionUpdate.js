@@ -14,17 +14,17 @@ import { sitePathConfig } from '../../constants/sitePathConfig';
 import ObjectNotFound from '../../compoments/common/ObjectNotFound';
 import { withTranslation } from "react-i18next";
 import { UserTypes } from '../../constants';
-class UserAminUpdate extends SaveBasePage {
+class GroupPermissionUpdate extends SaveBasePage {
 
     constructor(props) {
         super(props);
         const { t } = this.props;
         this.objectName =  t("objectName");
-        this.getListUrl = sitePathConfig.admin.path;
+        this.getListUrl = sitePathConfig.groupPermission.path;
         this.breadcrumbs = [
             {
                 name:  t("breadcrumbs.parentPage"),
-                path:`${sitePathConfig.admin.path}`
+                path:`${sitePathConfig.groupPermission.path}`
             },
             {
                 name:  this.isEditing? `${t(`listBasePage:${"update"}`)} ${this.objectName}` :`${t(`listBasePage:${"create"}`)} ${this.objectName}`,
@@ -163,15 +163,12 @@ class UserAminUpdate extends SaveBasePage {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getDataById: (payload) => dispatch(actions.getUserById(payload)),
-  createData: (payload) => dispatch(actions.createUser(payload)),
-  updateData: (payload) => dispatch(actions.updateUser(payload)),
-  deleteData: (payload) => dispatch(actions.deleteAdmin(payload)),
-  uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
+  getDataById: (payload) => dispatch(actions.getGroupPermissionById(payload)),
+  updateData: (payload) => dispatch(actions.updateGroupPermission(payload)),
 })
 
 const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['userAdminUpdatePage','listBasePage'])(UserAminUpdate));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['groupPermissionUpdatePage','listBasePage'])(GroupPermissionUpdate));

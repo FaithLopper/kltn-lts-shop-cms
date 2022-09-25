@@ -12,7 +12,7 @@ import { withTranslation } from "react-i18next";
 
 import SearchForm from '../compoments/common/entryForm/SearchForm';
 import StatusTag from '../compoments/common/elements/StatusTag';
-import { Link } from 'react-router-dom';
+
 import { showErrorMessage, showSucsessMessage } from '../services/notifyService';
 import { DEFAULT_TABLE_ITEM_SIZE, STATUS_ACTIVE, STATUS_LOCK } from '../constants';
 import ElementWithPermission from '../compoments/common/elements/ElementWithPermission';
@@ -39,7 +39,6 @@ class ListBasePage extends Component {
         }
 
         this.objectName = '';
-        this.objectListName = '/';
         this.isEditing = false;
         this.dataDetail = {};
         this.breadcrumbs = [];
@@ -471,10 +470,6 @@ class ListBasePage extends Component {
         });
     }
 
-    getDetailLink() {
-        return '';
-    }
-
     renderActionColumn() {
         const { t } = this.props;
         return {
@@ -483,28 +478,15 @@ class ListBasePage extends Component {
             align: 'center',
             render: (dataRow) => {
                 const actionColumns = [];
-                if (this.actionColumns.isEdit) {
-                    const detailLink = this.getDetailLink(dataRow);
-                    
-                    let to = {
-                        state: { prevPath: this.props.location.pathname }
-                    }
-                    if (typeof detailLink === 'object') {
-                        to = {
-                            ...to,
-                            ...detailLink,
-                        }
-                    } else {
-                        to.pathname = detailLink;
-                    }
-                    console.log(to);
-                    actionColumns.push(
-                        <Link to={to}>
-                            <Button type="link" className="no-padding">
-                                <EditOutlined color="red" />
-                            </Button>
-                        </Link>
-                    )
+                if(this.actionColumns.isEdit) {
+                    actionColumns.push(this.renderEditButton((
+                        <Button type="link" onClick={(e) => {
+                            e.stopPropagation()
+                            this.getDetail(dataRow.id)
+                        }} className="no-padding">
+                            { this.actionColumns.isEdit.icon || <EditOutlined/> }
+                        </Button>
+                    )))
                 }
                 if(this.actionColumns.isChangeStatus) {
                     actionColumns.push(
@@ -647,10 +629,6 @@ class ListBasePage extends Component {
         return (<ElementWithPermission permissions={requiredPermissions}>
             {children}
         </ElementWithPermission>)
-    }
-
-    getCreateLink() {
-        return `/${this.objectListName}/create`
     }
 
     /**

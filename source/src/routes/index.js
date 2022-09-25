@@ -19,6 +19,9 @@ import CategoryListPage from '../containers/category/CategoryListPage';
 import CategoryListPageChild from '../containers/category/CategoryListPageChild';
 import NewsListPage from '../containers/adminNews/NewsListPage';
 import UserAminUpdate from '../containers/users/UserAminUpdate';
+import ProvinceListPage from '../containers/province/ProvinceListPage';
+import DistrictListPage from '../containers/province/DistrictListPage';
+import CommuneListPage from '../containers/province/CommuneListPage';
 const RootRoute = () => {
     const {
         admin,
@@ -28,7 +31,9 @@ const RootRoute = () => {
         groupPermission,
         category,
         adminNews,
-        adminUpdate
+        adminUpdate,
+        province,
+        provinceUpdate
     } = sitePathConfig;
 
     return (
@@ -46,6 +51,9 @@ const RootRoute = () => {
                 <PrivateRoute exact path={category.path} component={CategoryListPage}/>
                 <PrivateRoute exact path={category.childrenKeys[0]} component={CategoryListPageChild}/>
                 <PrivateRoute exact path={adminNews.path} component={NewsListPage}/>
+                <PrivateRoute exact path={province.path} component={ProvinceListPage} />
+                <PrivateRoute exact path={province.childrenKeys[0]} component={DistrictListPage} />
+                <PrivateRoute exact path={province.childrenKeys[1]} component={CommuneListPage} />
                 {/* Error Page */}
                 <PrivateRoute exact path={forbidden.path} component={Forbidden}/>
                 {/* <Route exact path="/error" component={ErrorServer} /> */}
