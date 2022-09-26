@@ -217,11 +217,7 @@ class MasterLayout extends Component {
                                     hideFullScreenLoading
                                 })}
                             </div>
-                            {this.state.actionFooter ? this.renderActionFooter() :
-                             <Footer className="app-footer">
-                             Copyright © IService, All Rights Reserved.
-                            </Footer>
-                            }
+                            {this.state.actionFooter && this.renderActionFooter}
                            
                         </Content>
                     </Layout>

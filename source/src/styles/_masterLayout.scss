@@ -181,6 +181,7 @@
         // margin: 0px !important;
         padding: 0px !important;
         min-height: 360px;
+        border-radius: 5px;
         min-height: calc(100vh - 215px) !important;
         background: #fff;  
         width:fit-content;
@@ -192,8 +193,9 @@
             // height: 80px;
         }
         .ant-card-body{
-            min-height: 62.5vh;
+            min-height: 67.5vh;
         }
+
 }
 
 .overlay-panel-submenu {
