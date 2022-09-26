@@ -6,6 +6,7 @@ import {
     CheckCircleFilled,
     SaveOutlined,
     ExclamationCircleOutlined,
+    StopOutlined
 } from '@ant-design/icons';
 import { showErrorMessage } from '../services/notifyService';
 import Utils from '../utils';
@@ -230,7 +231,7 @@ class SaveBasePage extends Component {
         const disabledSubmit = customDisabledSubmitValue !== undefined ? customDisabledSubmitValue : !isChanged;
         return (<Row gutter={16}>
             <Col span={14}>
-            <Button key="cancel" onClick={this.onBack}> {t(`basicSavePage:${"cancelButton"}`) }</Button>
+            <Button type="danger" key="cancel" onClick={this.onBack} icon={<StopOutlined />}> {t(`basicSavePage:${"cancelButton"}`) }</Button>
             </Col>
             <Col span={1}>
             <Button
@@ -241,7 +242,6 @@ class SaveBasePage extends Component {
                 loading={isSubmitting}
                 disabled={disabledSubmit}
                 icon={<SaveOutlined />}
-                // style={{"marginLeft":}}
                 >
                 {this.isEditing ? t(`basicSavePage:${"updateButton"}`) : t(`basicSavePage:${"saveButton"}`)}
             </Button>
