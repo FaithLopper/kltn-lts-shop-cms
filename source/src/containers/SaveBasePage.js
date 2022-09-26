@@ -30,17 +30,23 @@ class SaveBasePage extends Component {
         this.isEditing = this.getIsEditing(props);
         this.dataDetail = {};
         this.breadcrumbs = [];
+        this.actionFooter =false
         this.warningOnBack = false;
+        this.onBack=this.onBack.bind(this)
+        this.getFormId=this.getFormId.bind(this)
     }
 
     componentWillMount() {
-        const { changeBreadcrumb } = this.props;
+        const { changeBreadcrumb,onReturn, onGetFormID,detectActionRenderType} = this.props;
         if (this.isEditing) {
             this.getDetail(this.dataId);
         }
         if(this.breadcrumbs.length > 0) {
             changeBreadcrumb(this.breadcrumbs);
         }
+        onReturn(this.onBack)
+        onGetFormID(this.getFormId)
+        detectActionRenderType(this.actionFooter)
     }
 
     setIsChangedFormValues = (flag) => {
@@ -57,6 +63,7 @@ class SaveBasePage extends Component {
     getFormId = () => {
         return `form-${this.objectName}`;
     }
+
 
     getDetail = (id) => {
         const { getDataById } = this.props;
@@ -234,7 +241,7 @@ class SaveBasePage extends Component {
                 loading={isSubmitting}
                 disabled={disabledSubmit}
                 icon={<SaveOutlined />}
-                
+                // style={{"marginLeft":}}
                 >
                 {this.isEditing ? t(`basicSavePage:${"updateButton"}`) : t(`basicSavePage:${"saveButton"}`)}
             </Button>

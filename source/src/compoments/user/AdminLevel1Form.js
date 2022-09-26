@@ -110,14 +110,15 @@ class AdminLevel1Form extends BasicForm {
                 initialValues={this.getInitialFormValues()}
                 layout="vertical"
                 onValuesChange={this.onValuesChange}
+                style={{width:"600px"}}
             >
-                <Card title="Thông tin cơ bản" className="card-form" bordered={false}>
-                            <Row gutter={16}>
-                        <Col span={8}>
+                <Card title="THÔNG TIN CƠ BẢN" className="card-form" bordered={false}>
+                        <Row gutter={[16, 0]} >
+                        <Col span={12}>
                             <CropImageFiled
                             fieldName="avatar"  
                             loading={uploading}
-                            label={t("form.label.avatar")}
+                            // label={t("form.label.avatar")}
                             imageUrl={logo}
                             onChange={this.handleChangeLogo}
                             uploadFile={this.uploadFileLogo}
@@ -125,8 +126,8 @@ class AdminLevel1Form extends BasicForm {
                             />
                         </Col>
                         </Row>
-                        <Row gutter={16}>
-                        <Col span={8}>
+                        <Row gutter={[16, 0]}>
+                        <Col span={12}>
                             <TextField
                             fieldName="username"
                             min={6}
@@ -136,14 +137,14 @@ class AdminLevel1Form extends BasicForm {
                             validators={[Utils.validateUsernameForm]}
                             />
                         </Col>
-                        <Col span={8}>
+                        <Col span={12}>
                             <TextField fieldName="fullName" label={t("form.label.fullName")} required 
                             // disabled={loadingSave}
                             />
                         </Col>
                         </Row>
-                        <Row gutter={16}>
-                            <Col span={8}>
+                        <Row gutter={[16, 0]}>
+                            <Col span={12}>
                             <PasswordGeneratorField
                         type="password"
                         fieldName="password"
@@ -156,7 +157,7 @@ class AdminLevel1Form extends BasicForm {
                             <>
                                 <Button onClick={
                                     () => {
-                                        const curPass = Utils.generateRandomPassword(8, true, true, false, false, true)
+                                        const curPass = Utils.generateRandomPassword(6, true, true, false, false, true)
                                         this.setState({curPassword: curPass})
                                         this.setFieldValue('password', curPass)
                                     }}
@@ -173,7 +174,7 @@ class AdminLevel1Form extends BasicForm {
                         }
                     />
                             </Col>
-                            <Col span={8}>
+                            <Col span={12}>
                             <TextField
                             type="number"
                             fieldName="phone"
@@ -184,13 +185,103 @@ class AdminLevel1Form extends BasicForm {
                             />
                         </Col>
                         </Row>
-                        <Row gutter={16}>
-                        <Col span={8}>
+                        <Row gutter={[16, 0]}>
+                        <Col span={12}>
                             <TextField fieldName="email" label="E-mail" type="email" 
                             // disabled={loadingSave}
                             />
                         </Col>
-                       <Col span={8}>
+                       <Col span={12}>
+                       <DropdownField
+                        fieldName="status"
+                        label={t("form.label.status")}
+                        required
+                        options={commonStatus}
+                        disabled={!isEditing}
+                    />
+                       </Col>
+                        </Row>
+                </Card>
+                <Card title="THÔNG TIN CƠ BẢN" className="card-form" bordered={false}>
+                        <Row gutter={[16, 0]} >
+                        <Col span={12}>
+                            <CropImageFiled
+                            fieldName="avatar"  
+                            loading={uploading}
+                            // label={t("form.label.avatar")}
+                            imageUrl={logo}
+                            onChange={this.handleChangeLogo}
+                            uploadFile={this.uploadFileLogo}
+                            // disabled={loadingSave}
+                            />
+                        </Col>
+                        </Row>
+                        <Row gutter={[16, 0]}>
+                        <Col span={12}>
+                            <TextField
+                            fieldName="username"
+                            min={6}
+                            label={t("form.label.username")}
+                            disabled={isEditing}
+                            required={!isEditing}
+                            validators={[Utils.validateUsernameForm]}
+                            />
+                        </Col>
+                        <Col span={12}>
+                            <TextField fieldName="fullName" label={t("form.label.fullName")} required 
+                            // disabled={loadingSave}
+                            />
+                        </Col>
+                        </Row>
+                        <Row gutter={[16, 0]}>
+                            <Col span={12}>
+                            <PasswordGeneratorField
+                        type="password"
+                        fieldName="password"
+                        label={isEditing ? t("form.label.newPassword") : t("form.label.password")}
+                        required={!isEditing}
+                        minLength={6}
+                        disabled
+                        value={this.getFieldValue('password')}
+                        suffix={
+                            <>
+                                <Button onClick={
+                                    () => {
+                                        const curPass = Utils.generateRandomPassword(6, true, true, false, false, true)
+                                        this.setState({curPassword: curPass})
+                                        this.setFieldValue('password', curPass)
+                                    }}
+                                >
+                                    <KeyOutlined style={{ alignSelf: 'center'}}/>
+                                </Button>
+                                <Button disabled={!curPassword} 
+                                    onClick={()=>{
+										Utils.copyToClipboard(this.getFieldValue('password'))
+										this.copyToClipboardAlert()
+									}}>
+                                <CopyOutlined style={{ alignSelf: 'center' }}/></Button>
+                            </>
+                        }
+                    />
+                            </Col>
+                            <Col span={12}>
+                            <TextField
+                            type="number"
+                            fieldName="phone"
+                            label={t("form.label.phone")}
+                            required
+                            minLength={10}
+                            // disabled={loadingSave}
+                            />
+                        </Col>
+                        </Row>
+                        <Row gutter={[16, 0]}>
+                        <Col span={12}>
+                            <TextField fieldName="email" label="E-mail" type="email" 
+                            // disabled={loadingSave}
+                            />
+                        </Col>
+                       <Col span={12}>
                        <DropdownField
                         fieldName="status"
                         label={t("form.label.status")}
@@ -202,8 +293,8 @@ class AdminLevel1Form extends BasicForm {
                         </Row>
                 </Card>
                 <div className="footer-card-form">
-                    <Row gutter={16}>
-                        <Col align="right" span={24}>{actions}</Col>
+                    <Row gutter={16} justify="end">
+                        <Col align="right" span={10}>{actions}</Col>
                     </Row>
                 </div>
             </Form>

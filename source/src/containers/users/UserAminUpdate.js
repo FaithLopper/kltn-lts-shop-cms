@@ -21,6 +21,7 @@ class UserAminUpdate extends SaveBasePage {
         const { t } = this.props;
         this.objectName =  t("objectName");
         this.getListUrl = sitePathConfig.admin.path;
+        this.actionFooter= false
         this.breadcrumbs = [
             {
                 name:  t("breadcrumbs.parentPage"),
@@ -156,7 +157,9 @@ class UserAminUpdate extends SaveBasePage {
                     handleUploadImage={this.handleUploadImageField}
                     uploadFile={uploadFile}
                     t={t}
-                />
+
+                    />
+                    
             </LoadingWrapper>
         )
     }

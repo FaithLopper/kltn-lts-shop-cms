@@ -466,7 +466,7 @@ class ListBasePage extends Component {
             this.onDelete(id);
           },
           onCancel() {
-            // console.log('Cancel');
+            // handleRou('Cancel');
           },
         });
     }
@@ -497,7 +497,6 @@ class ListBasePage extends Component {
                     } else {
                         to.pathname = detailLink;
                     }
-                    console.log(to);
                     actionColumns.push(
                         <Link to={to}>
                             <Button type="link" className="no-padding">

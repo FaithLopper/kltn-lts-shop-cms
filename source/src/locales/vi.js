@@ -18,6 +18,7 @@ export default {
         'Role': 'Quyền',
         'Category': 'Danh mục',
         'News': 'Tin tức',
+        'Province':'Tỉnh thành'
     },
     appHeader: {
         profile: 'Hồ sơ',
