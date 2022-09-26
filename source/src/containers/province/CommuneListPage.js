@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ListBasePageModal from "../ListBasePageModal";
+import ListBasePage from "../ListBasePage";
 import { connect } from "react-redux";
 import { actions } from "../../actions/province";
 import BaseTable from "../../compoments/common/table/BaseTable";
@@ -13,7 +13,7 @@ import { sitePathConfig } from "../../constants/sitePathConfig";
 import qs from "query-string";
 import { ProvinceKinds } from "../../constants";
 
-class CommuneListPage extends ListBasePageModal {
+class CommuneListPage extends ListBasePage {
   initialSearch() {
     return { province: "" };
   }
@@ -39,7 +39,7 @@ class CommuneListPage extends ListBasePageModal {
     this.columns = [
       this.renderIdColumn(),
       { title: t("table.provinceName"), dataIndex: "name" },
-      this.renderActionColumn(),
+      this.renderActionColumnModal(),
     ];
     this.actionColumns = {
       isEdit: true,

@@ -552,6 +552,71 @@ class ListBasePage extends Component {
         }  
     }
 
+    renderActionColumnModal() {
+        const { t } = this.props;
+        return {
+            title: t ? t('listBasePage:titleActionCol') : 'Action',
+            width: '100px',
+            align: 'center',
+            render: (dataRow) => {
+                const actionColumns = [];
+                if(this.actionColumns.isEdit) {
+                    actionColumns.push(this.renderEditButton((
+                        <Button type="link" onClick={(e) => {
+                            e.stopPropagation()
+                            this.getDetail(dataRow.id)
+                        }} className="no-padding">
+                            { this.actionColumns.isEdit.icon || <EditOutlined/> }
+                        </Button>
+                    )))
+                }
+                if(this.actionColumns.isChangeStatus) {
+                    actionColumns.push(
+                        <Button type="link" onClick={(e) => {
+                            e.stopPropagation()
+                            this.showChangeStatusConfirm(dataRow)
+                        }} className="no-padding">
+                            {
+                                dataRow.status === STATUS_ACTIVE
+                                ?
+                                <LockOutlined/>
+                                :
+                                <CheckOutlined/>
+                            }
+                        </Button>
+                    )
+                }
+                if(this.actionColumns.isDelete) {
+                    actionColumns.push(
+                        this.renderDeleteButton((
+                            <Button type="link" onClick={(e) => {
+                                e.stopPropagation()
+                                this.showDeleteConfirm(dataRow.id)
+                            }} className="no-padding">
+                                { this.actionColumns.isDelete.icon || <DeleteOutlined/> }
+                            </Button>
+                        ))
+                    )
+                }
+                const actionColumnsWithDivider = [];
+                actionColumns.forEach((action, index) => {
+                    actionColumnsWithDivider.push(action);
+                    if(index !== (actionColumns.length -1))
+                    {
+                        actionColumnsWithDivider.push(<Divider type="vertical" />);
+                    }
+                })
+                return (
+                    <span>
+                        {
+                            actionColumnsWithDivider.map((action, index) => <span key={index}>{action}</span>)
+                        }
+                    </span>
+                )
+            }
+        }  
+    }
+
     renderSearchForm(hiddenAction) {
         const searchFields = this.getSearchFields();
 

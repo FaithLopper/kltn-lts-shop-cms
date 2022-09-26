@@ -6,9 +6,8 @@ import ListBasePage from "../ListBasePage";
 import GroupPermissionForm from "../../compoments/groupPermission/GroupPermissionForm";
 import BaseTable from "../../compoments/common/table/BaseTable";
 import BasicModal from "../../compoments/common/modal/BasicModal";
-import { sitePathConfig } from "../../constants/sitePathConfig";
+
 import { actions } from "../../actions";
-import PageWrapper from "../../compoments/common/PageWrapper";
 
 class GroupPermissionListPage extends ListBasePage {
   initialSearch() {
@@ -21,10 +20,9 @@ class GroupPermissionListPage extends ListBasePage {
     this.objectName = t("objectName");
     this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
     this.columns = [
-      this.renderIdColumn(),
       { title: t("table.name"), dataIndex: "name" },
       { title: t("table.description"), dataIndex: "description", width: "200px" },
-      this.renderActionColumn(),
+      this.renderActionColumnModal(),
     ];
     this.actionColumns = {
       isEdit: true,
@@ -51,10 +49,6 @@ class GroupPermissionListPage extends ListBasePage {
     }
   }
 
-  // getDetailLink(dataRow) {
-  //   return sitePathConfig.adminUpdate.path.replace(':id', dataRow.id);
-  // }
-
   render() {
     const {
       dataList,
@@ -68,7 +62,7 @@ class GroupPermissionListPage extends ListBasePage {
     const permissionsList = permissions.data || [];
 
     return (
-        <PageWrapper>
+      <div>
         {this.renderSearchForm()}
         <div className="action-bar">
         </div>
@@ -80,7 +74,24 @@ class GroupPermissionListPage extends ListBasePage {
           pagination={this.pagination}
           onChange={this.handleTableChange}
         />
-      </PageWrapper>
+        <BasicModal
+          visible={isShowModifiedModal}
+          isEditing={this.isEditing}
+          objectName={this.objectName}
+          loading={isShowModifiedLoading}
+          onOk={this.onOkModal}
+          onCancel={this.onCancelModal}
+        >
+          <GroupPermissionForm
+            isEditing={this.isEditing}
+            dataDetail={this.isEditing ? this.dataDetail : {}}
+            permissions={permissionsList || []}
+            getPermissionList={this.props.getPermissionList}
+            loadingSave={isShowModifiedLoading}
+            t={t}
+          />
+        </BasicModal>
+      </div>
     );
   }
 }

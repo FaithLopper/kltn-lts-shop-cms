@@ -5,7 +5,6 @@ import { PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { withTranslation } from "react-i18next";
 
 import ListBasePage from "../ListBasePage";
-import AdminForm from "../../compoments/user/AdminForm";
 import BaseTable from "../../compoments/common/table/BaseTable";
 import BasicModal from "../../compoments/common/modal/BasicModal";
 
@@ -94,6 +93,7 @@ class UserAdminListPage extends ListBasePage {
     const users = dataList.data || [];
     this.pagination.total = dataList.totalElements || 0;
     return (
+      
         <PageWrapper>
               {this.renderSearchForm()}
         <div className="action-bar">

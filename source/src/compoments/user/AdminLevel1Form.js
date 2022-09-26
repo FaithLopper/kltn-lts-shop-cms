@@ -22,20 +22,20 @@ class AdminLevel1Form extends BasicForm {
     constructor(props) {
         super(props)
         this.state = {
-            logo: props.dataDetail.avatar
-				? `${AppConstants.contentRootUrl}/${props.dataDetail.avatar}`
-				: "",
+            logo: "",
 			uploading: false,
             curPassword: null,
+            isUpdateLogo:false
         }
-        
-
-        this.acceptFileTypes = ".png, .jpg, .jpeg, .webp"
+        console.log(AppConstants.contentRootUrl,props.dataDetail.avatar);
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.dataDetail !== this.props.dataDetail) {
             this.formRef.current.setFieldsValue(nextProps.dataDetail)
+        }
+        if(nextProps.dataDetail.avatar !== this.state.logo && this.state.isUpdateLogo === false){
+            this.setState({logo:`${AppConstants.contentRootUrl}${nextProps.dataDetail.avatar}`})
         }
     }
 
@@ -78,13 +78,16 @@ class AdminLevel1Form extends BasicForm {
 			status: STATUS_ACTIVE,
 		};
 		}
-		return dataDetail;
+		return {
+            ...dataDetail,
+        };
 	};
 
     handleChangeLogo = (info) => {
 		if (info.file.status === "done") {
-		Utils.getBase64(info.file.originFileObj, (logo) =>
-			this.setState({ logo })
+		Utils.getBase64(info.file.originFileObj, (logo) =>{
+			this.setState({ logo:logo,isUpdateLogo:true })
+        }
 		);
 		}
 	};
@@ -101,7 +104,7 @@ class AdminLevel1Form extends BasicForm {
 			logo,
             curPassword
         } = this.state
-
+        console.log(logo)
         return (
             <Form
                 id={formId}
