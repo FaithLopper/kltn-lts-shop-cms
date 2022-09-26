@@ -202,7 +202,7 @@ class AdminLevel1Form extends BasicForm {
                        </Col>
                         </Row>
                 </Card>
-                <Card title="THÔNG TIN CƠ BẢN" className="card-form" bordered={false}>
+                {/* <Card title="THÔNG TIN CƠ BẢN" className="card-form" bordered={false}>
                         <Row gutter={[16, 0]} >
                         <Col span={12}>
                             <CropImageFiled
@@ -291,7 +291,7 @@ class AdminLevel1Form extends BasicForm {
                     />
                        </Col>
                         </Row>
-                </Card>
+                </Card> */}
                 <div className="footer-card-form">
                     <Row gutter={16} justify="end">
                         <Col align="right" span={10}>{actions}</Col>

@@ -243,7 +243,7 @@ class SaveBasePage extends Component {
                 disabled={disabledSubmit}
                 icon={<SaveOutlined />}
                 >
-                {this.isEditing ? t(`basicSavePage:${"updateButton"}`) : t(`basicSavePage:${"saveButton"}`)}
+               {t(`basicSavePage:${"saveButton"}`)}
             </Button>
                 </Col>
         </Row>);
