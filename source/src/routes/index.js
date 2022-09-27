@@ -43,7 +43,19 @@ const RootRoute = () => {
                     pathname: admin.path,
                     state: { isRedirectToHomePage: true }
                 }}/>
-                <PublicRoute exact path={login.path} component={LoginPage} />
+                {Object.keys(sitePathConfig).map(key => {
+                    // const CompRoute = siteConfig[key].isPublic ? PublicRoute : PrivateRoute;
+                    const CompRoute = PrivateRoute;
+                    return (
+                        <CompRoute
+                            key={sitePathConfig[key].path}
+                            exact
+                            path={sitePathConfig[key].path}
+                            component={sitePathConfig[key].component}
+                        />
+                    );
+                })}
+                {/* <PublicRoute exact path={login.path} component={LoginPage} />
                 <PrivateRoute exact path={profile.path} component={ProfilePage}/>
                 <PrivateRoute exact path={admin.path} component={UserAdminListPage}/>
                 <PrivateRoute exact path={adminUpdate.path} component={UserAminUpdate}/>
@@ -53,7 +65,7 @@ const RootRoute = () => {
                 <PrivateRoute exact path={adminNews.path} component={NewsListPage}/>
                 <PrivateRoute exact path={province.path} component={ProvinceListPage} />
                 <PrivateRoute exact path={province.childrenKeys[0]} component={DistrictListPage} />
-                <PrivateRoute exact path={province.childrenKeys[1]} component={CommuneListPage} />
+                <PrivateRoute exact path={province.childrenKeys[1]} component={CommuneListPage} /> */}
                 {/* Error Page */}
                 <PrivateRoute exact path={forbidden.path} component={Forbidden}/>
                 {/* <Route exact path="/error" component={ErrorServer} /> */}
