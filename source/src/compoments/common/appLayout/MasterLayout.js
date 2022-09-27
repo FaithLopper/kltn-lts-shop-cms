@@ -210,7 +210,7 @@ class MasterLayout extends Component {
                                     null
                                 }
                             </Breadcrumb>
-                            <div className={`content-wrapper ${contentClass} ${this.isSaveBasePage() ? 'save-base-page': ''}`}>
+                            <div className={`content-wrapper ${contentClass}`} id='body-content-wrapper'>
                                 {React.cloneElement(children, {
                                     changeUserData: this.onChangeUserData,
                                     currentUser: userData,
