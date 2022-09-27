@@ -103,43 +103,66 @@ class CategoryUpdateForm extends BasicForm {
       >
         <Card title="THÔNG TIN CƠ BẢN" className="card-form" bordered={false}>
           <Row gutter={[16, 0]}>
-            <Col span={13}>
+            <Col span={20}>
               <Row>
-                <CropImageFiled
-                  fieldName="categoryImage"
-                  loading={uploading}
-                  // label={t("form.label.avatar")}
-                  imageUrl={logo}
-                  onChange={this.handleChangeLogo}
-                  uploadFile={this.uploadFileLogo}
-                  // disabled={loadingSave}
-                />
+                <Col span={20} xl>
+                  <CropImageFiled
+                    fieldName="categoryImage"
+                    loading={uploading}
+                    // label={t("form.label.avatar")}
+                    imageUrl={logo}
+                    onChange={this.handleChangeLogo}
+                    uploadFile={this.uploadFileLogo}
+                    // disabled={loadingSave}
+                  />
+                </Col>
               </Row>
-              <TextField
-                fieldName="categoryName"
-                label={t("form.label.categoryName")}
-                required
-                // disabled={loadingSave}
-              />
-              {isEditing ? (
-                <DropdownField
-                  fieldName="status"
-                  label={t("form.label.status")}
-                  required
-                  options={commonStatus}
-                  // disabled={loadingSave}
-                />
-              ) : null}
-              <TextField
-                type="textarea"
-                fieldName="categoryDescription"
-                label={t("form.label.categoryDescription")}
-                required
+              <Row>
+                <Col span={15}>
+                  <TextField
+                    fieldName="categoryName"
+                    label={t("form.label.categoryName")}
+                    required
+                    // disabled={loadingSave}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col span={15}>
+                  {isEditing ? (
+                    <DropdownField
+                      fieldName="status"
+                      label={t("form.label.status")}
+                      required
+                      options={commonStatus}
+                      // disabled={loadingSave}
+                    />
+                  ) : null}
+                </Col>
+              </Row>
+              <Row
                 style={{
-                  height: 250,
+                  paddingTop: "50px",
+                  maxWidth: "unset",
+                  width: "550px",
                 }}
-                // disabled={loadingSave}
-              />
+              >
+                <Col
+                  style={{
+                    width: "100%",
+                  }}
+                >
+                  <TextField
+                    type="textarea"
+                    fieldName="categoryDescription"
+                    label={t("form.label.categoryDescription")}
+                    required
+                    style={{
+                      height: 180,
+                    }}
+                  />
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Card>
