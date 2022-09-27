@@ -50,8 +50,16 @@ const navMenuConfig = [
         icon: <UnorderedListOutlined />,
         children: [
             {
-                label: 'Category',
-                ...sitePathConfig.category,
+                label: 'Category News',
+                ...sitePathConfig.categoryNews,
+            },
+            {
+                label: 'Category Jobs',
+                ...sitePathConfig.categoryJobs,
+            },
+            {
+                label: 'Category Departments',
+                ...sitePathConfig.categoryDepartments,
             },
         ]
     },

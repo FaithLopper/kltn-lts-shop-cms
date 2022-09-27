@@ -16,6 +16,12 @@ export const commonStatus = [
     { value: STATUS_LOCK, label: 'Đang khóa', color: 'red' },
 ]
 
+export const categoryType = [
+    { value: 1, label: 'news'},
+    { value: 2, label: 'jobs'},
+    { value: 3, label: 'departments'},
+]
+
 export const commonLanguages = [
     { value: 'vi', label: 'Việt Nam'},
     { value: 'en', label: 'English'},
@@ -56,5 +62,15 @@ export const commonRatioImageSetting = [
         label: "40:9",
     },
 ]
+
+const CATEGORY_KIND_NEWS = 1;
+const CATEGORY_KIND_JOBS = 2;
+const CATEGORY_KIND_DEPARTMENTS = 3;
+
+export const categoryKinds = {
+    CATEGORY_KIND_NEWS,
+    CATEGORY_KIND_JOBS,
+    CATEGORY_KIND_DEPARTMENTS,
+}
 
 export const ASPECT_CATEGORY_AVATAR = 16/9

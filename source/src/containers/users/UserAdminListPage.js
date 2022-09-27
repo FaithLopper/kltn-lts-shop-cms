@@ -98,12 +98,12 @@ class UserAdminListPage extends ListBasePage {
               {this.renderSearchForm()}
         <div className="action-bar">
           {this.renderCreateNewButton((
-            <Link to={this.getCreateLink()}>
-            <Button
-            type="primary"
-          >
-            <PlusOutlined /> {t("createNewButton", { var: t(`constants:${"Administrator"}`, "") })}
-          </Button></Link>
+          <Link to={this.getCreateLink()}>
+          <Button
+          type="primary"
+        >
+          <PlusOutlined /> {t("createNewButton", { var: t(`constants:${"Administrator"}`, "") })}
+        </Button></Link>
           ))}
         </div>
         <BaseTable
