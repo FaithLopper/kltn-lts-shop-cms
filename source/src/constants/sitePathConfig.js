@@ -1,22 +1,20 @@
 import apiConfig from './apiConfig';
-import { actions } from '../actions';
-import { UserTypes } from '.';
 import LoginPage from '../containers/account/LoginPage';
 import ProfilePage from '../containers/account/ProfilePage';
-
 // import DashBoard from '../containers/Dashboard';
 import UserAdminListPage from '../containers/users/UserAdminListPage';
-
-import NotFound from '../compoments/common/NotFound';
-import Forbidden from '../containers/Forbidden';
 import GroupPermissionListPage from '../containers/groupPermission/GroupPermissionListPage';
-import CategoryListPage from '../containers/category/CategoryListPage';
-import CategoryListPageChild from '../containers/category/CategoryListPageChild';
 import NewsListPage from '../containers/adminNews/NewsListPage';
 import UserAminUpdate from '../containers/users/UserAminUpdate';
 import ProvinceListPage from '../containers/province/ProvinceListPage';
 import DistrictListPage from '../containers/province/DistrictListPage';
 import CommuneListPage from '../containers/province/CommuneListPage';
+import CategoryNewsListPage from '../containers/category/CategoryNewsListPage';
+import CategoryNewsUpdate from '../containers/category/CategoryNewsUpdate';
+import CategoryJobsListPage from '../containers/category/CategoryJobsListPage';
+import CategoryJobsUpdate from '../containers/category/CategoryJobsUpdate';
+import CategoryDepartmentsListPage from '../containers/category/CategoryDepartmentsListPage';
+import CategoryDepartmentsUpdate from '../containers/category/CategoryDepartmentsUpdate';
 
 export const sitePathConfig = {
     login: {
@@ -61,19 +59,58 @@ export const sitePathConfig = {
             apiConfig.groupPermission.getPermissionList.path,
         ]
     },
-    // groupPermissionUpdate: {
-    //     path: '/group-permission/:id',
-    //     component:Gr,
-    //     permissions: [
-    //         apiConfig.groupPermission.update.path,
-    //         'not_have_delete',
-    //         apiConfig.groupPermission.getPermissionList.path,
-    //     ]
-    // },
-    category: {
-        path: '/category',
-        component:CategoryListPage,
-        childrenKeys: ['/category-child'],
+    categoryNews: {
+        path: '/category-news',
+        component:CategoryNewsListPage,
+        permissions: [
+            apiConfig.category.getList.path,
+            apiConfig.category.getById.path,
+            apiConfig.category.create.path,
+            apiConfig.category.update.path,
+            apiConfig.category.delete.path,
+        ]
+    },
+    categoryNewsUpdate: {
+        path: '/category-news/:id',
+        component:CategoryNewsUpdate,
+        permissions: [
+            apiConfig.category.create.path,
+            apiConfig.category.update.path,
+        ]
+    },
+    categoryJobs: {
+        path: '/category-jobs',
+        component:CategoryJobsListPage,
+        permissions: [
+            apiConfig.category.getList.path,
+            apiConfig.category.getById.path,
+            apiConfig.category.create.path,
+            apiConfig.category.update.path,
+            apiConfig.category.delete.path,
+        ]
+    },
+    categoryJobsUpdate: {
+        path: '/category-jobs/:id',
+        component:CategoryJobsUpdate,
+        permissions: [
+            apiConfig.category.create.path,
+            apiConfig.category.update.path,
+        ]
+    },
+    categoryDepartments: {
+        path: '/category-departments',
+        component:CategoryDepartmentsListPage,
+        permissions: [
+            apiConfig.category.getList.path,
+            apiConfig.category.getById.path,
+            apiConfig.category.create.path,
+            apiConfig.category.update.path,
+            apiConfig.category.delete.path,
+        ]
+    },
+    categoryDepartmentsUpdate: {
+        path: '/category-departments/:id',
+        component:CategoryDepartmentsUpdate,
         permissions: [
             apiConfig.category.getList.path,
             apiConfig.category.getById.path,
@@ -87,9 +124,9 @@ export const sitePathConfig = {
         component:NewsListPage,
         permissions: [
             apiConfig.news.getList.path,
-            apiConfig.news.getById.path,
-            apiConfig.news.create.path,
-            apiConfig.news.update.path,
+            apiConfig.news.getById.path, //xxxx dup
+            apiConfig.news.create.path, //xxxx dup
+            apiConfig.news.update.path, //xxxx dup
             apiConfig.news.delete.path,
             apiConfig.news.categoryAutoComplete.path,
         ]

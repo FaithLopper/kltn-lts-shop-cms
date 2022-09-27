@@ -13,7 +13,8 @@ import BasicModal from "../../compoments/common/modal/BasicModal";
 import { actions } from "../../actions";
 import { FieldTypes } from "../../constants/formConfig";
 import { AppConstants } from "../../constants";
-import { commonStatus } from "../../constants/masterData";
+import { categoryType, commonStatus } from "../../constants/masterData";
+import { Link } from 'react-router-dom';
 
 class CategoryImportListPage extends ListBasePage {
     initialSearch() {
@@ -24,6 +25,7 @@ class CategoryImportListPage extends ListBasePage {
         super(props);
         const { t } = props;
         this.objectName = t("objectName");
+        this.objectListName = 'category';
         this.breadcrumbs = [
             { name: t("breadcrumbs.currentPage") },
         ];
@@ -35,6 +37,7 @@ class CategoryImportListPage extends ListBasePage {
             align: 'center',
             width: 100,
             render: (avatarPath) => (
+                
             <Avatar
                 className="table-avatar"
                 size="large"
@@ -123,12 +126,14 @@ class CategoryImportListPage extends ListBasePage {
             <div className="action-bar">
             {
                 this.renderCreateNewButton((
-                    <Button
+                    <Link to={this.getCreateLink()}>
+                        <Button
                     type="primary"
-                    onClick={() => this.onShowModifiedModal(false)}
                     >
                         <PlusOutlined /> {t("createNewButton")}
-                    </Button>
+                        </Button>
+                    </Link>
+                    
                 ))
             }
             </div>
@@ -140,24 +145,6 @@ class CategoryImportListPage extends ListBasePage {
             pagination={this.pagination}
             onChange={this.handleTableChange}
             />
-            <BasicModal
-            visible={isShowModifiedModal}
-            isEditing={this.isEditing}
-            objectName={this.objectName}
-            loading={isShowModifiedLoading}
-            onOk={this.onOkModal}
-            onCancel={this.onCancelModal}
-            >
-            <CategoryForm
-                isEditing={this.isEditing}
-                dataDetail={this.isEditing ? this.dataDetail : {}}
-                uploadFile={uploadFile}
-                commonStatus={commonStatus}
-                loadingSave={isShowModifiedLoading}
-                t={t}
-                isProductCategory={true}
-            />
-            </BasicModal>
         </div>
         );
     }
