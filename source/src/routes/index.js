@@ -55,17 +55,6 @@ const RootRoute = () => {
                         />
                     );
                 })}
-                {/* <PublicRoute exact path={login.path} component={LoginPage} />
-                <PrivateRoute exact path={profile.path} component={ProfilePage}/>
-                <PrivateRoute exact path={admin.path} component={UserAdminListPage}/>
-                <PrivateRoute exact path={adminUpdate.path} component={UserAminUpdate}/>
-                <PrivateRoute exact path={groupPermission.path} component={GroupPermissionListPage}/>
-                <PrivateRoute exact path={category.path} component={CategoryListPage}/>
-                <PrivateRoute exact path={category.childrenKeys[0]} component={CategoryListPageChild}/>
-                <PrivateRoute exact path={adminNews.path} component={NewsListPage}/>
-                <PrivateRoute exact path={province.path} component={ProvinceListPage} />
-                <PrivateRoute exact path={province.childrenKeys[0]} component={DistrictListPage} />
-                <PrivateRoute exact path={province.childrenKeys[1]} component={CommuneListPage} /> */}
                 {/* Error Page */}
                 <PrivateRoute exact path={forbidden.path} component={Forbidden}/>
                 {/* <Route exact path="/error" component={ErrorServer} /> */}

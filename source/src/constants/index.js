@@ -12,7 +12,7 @@ const StorageKeys = {
 }
 
 const LayoutConfigs = {
-    NAV_WIDTH_EXPANDED: 280,
+    NAV_WIDTH_EXPANDED: 230,
     NAV_WIDTH_COLLAPSED: 80
 }
 
