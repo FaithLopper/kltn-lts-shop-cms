@@ -12,7 +12,7 @@ const StorageKeys = {
 }
 
 const LayoutConfigs = {
-    NAV_WIDTH_EXPANDED: 280,
+    NAV_WIDTH_EXPANDED: 230,
     NAV_WIDTH_COLLAPSED: 80
 }
 
@@ -36,17 +36,17 @@ const UploadFileTypes = {
 
 const ProvinceKinds = {
     province: {
-        name: 'PROVINCE_KIND_PROVINCE',
+        name: 'LOCATION_KIND_PROVINCE',
         level: 1,
         text: 'Province'
     },
     district: {
-        name: 'PROVINCE_KIND_DISTRICT',
+        name: 'LOCATION_KIND_DISTRICT',
         level: 2,
         text: 'District'
     },
     commune: {
-        name: 'PROVINCE_KIND_COMMUNE',
+        name: 'LOCATION_KIND_WARD',
         level: 3,
         text: 'Commune'
     }

@@ -503,3 +503,46 @@ body {
 .selectable, .clickable {
     cursor: pointer;
 }
+
+h2{
+   margin-bottom: 0rem;
+   font-weight: bold;
+}
+.ant-card-head-title{
+    display: inline-block;
+    -ms-flex: 1;
+    flex: 1 1;
+    padding: 0; 
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.ant-card-head {
+    min-height: 0; 
+    margin-bottom: -1px;
+    padding: 6px 13px;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+    font-size: 16px;
+    background: transparent;
+    border-bottom: 1px solid #f0f0f0;
+    border-radius: 2px 2px 0 0;
+}
+
+.action-save-page{
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.footer-card-form {
+    padding: 10px 0;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 8px solid #f0f0f0;
+    border-radius: 2px 2px 0 0;
+    position:sticky;
+    bottom: 33px;
+    background-color: white;
+    z-index: 999;
+
+}

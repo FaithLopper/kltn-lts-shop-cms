@@ -20,10 +20,9 @@ class GroupPermissionListPage extends ListBasePage {
     this.objectName = t("objectName");
     this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
     this.columns = [
-      this.renderIdColumn(),
       { title: t("table.name"), dataIndex: "name" },
       { title: t("table.description"), dataIndex: "description", width: "200px" },
-      this.renderActionColumn(),
+      this.renderActionColumnModal(),
     ];
     this.actionColumns = {
       isEdit: true,

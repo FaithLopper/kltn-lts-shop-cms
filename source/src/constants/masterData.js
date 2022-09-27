@@ -57,5 +57,4 @@ export const commonRatioImageSetting = [
     },
 ]
 
-
 export const ASPECT_CATEGORY_AVATAR = 16/9

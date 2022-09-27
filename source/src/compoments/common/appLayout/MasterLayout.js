@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Layout, Breadcrumb, Spin } from 'antd';
-
+import { Layout, Breadcrumb, Spin, Row, Col, Button, Space } from 'antd';
+import {ArrowLeftOutlined,SaveOutlined} from '@ant-design/icons'
 import NavSider from './NavSider';
 import AppHeader from './AppHeader';
 import { LayoutConfigs, StorageKeys } from '../../../constants';
@@ -23,11 +23,16 @@ class MasterLayout extends Component {
             userData: getUserData(),
             breadcrumbs: [],
             navSidercollapsed: false,
+            objectName:'',
+            formId:'',
+            actionFooter:false,
         }
         this.onLogout = this.onLogout.bind(this);
         this.onChangeBreadcrumb = this.onChangeBreadcrumb.bind(this);
         this.toggleNavSide = this.onToggleNavSide.bind(this);
         this.userData = getUserData();
+        this.onReturn= this.onReturn.bind(this)
+        this.onGetFormID= this.onGetFormID.bind(this)
     }
 
     onToggleNavSide() {
@@ -105,6 +110,49 @@ class MasterLayout extends Component {
             window.localStorage.removeItem(StorageKeys.userData);
         window.location.href = sitePathConfig.login.path;
     }
+    isSaveBasePage(){
+        const { 
+            location: { pathname },
+            children,
+        }= this.props
+        const protoTypeName=children.type.WrappedComponent.prototype.constructor.name.toLowerCase();
+        return pathname.includes('create') || pathname.includes('update') || protoTypeName.includes('update') ? true: false
+    }
+    onReturn(onBack){
+        this.returnHandle= onBack
+    }
+    onGetFormID(FormId){
+       this.setState({formId:FormId()})
+    }
+    renderActionFooter(){
+        const {      
+            t,
+            location: { pathname },
+        } = this.props;
+        return ( <Footer className="app-footer" style={{ position: "sticky", bottom: "0",display:this.isSaveBasePage()? 'block':'none'}}>
+        <Row justify='space-between'>
+            <Col span={3}>
+                <div className='action-save-page' onClick={e =>{this.returnHandle()}}>
+                <ArrowLeftOutlined/>     {t(`basicSavePage:${"okText"}`)} 
+                </div>
+            </Col>
+            <Col span={3}>
+                <Space>
+                {/* <Button key="cancel" > {t(`basicSavePage:${"cancelButton"}`) }</Button> */}
+            <Button
+                key="submit"
+                htmlType="submit"
+                type="primary"
+                form={this.state.formId}
+                icon={<SaveOutlined />}
+                >
+                 {t(`basicSavePage:${"saveButton"}`)}
+            </Button>
+                </Space>
+        </Col>
+        </Row>
+    </Footer>)
+    }
 
     render() {
         const {
@@ -120,7 +168,7 @@ class MasterLayout extends Component {
         const contentClass = siteConfig?.contentClass || '';
         if(!userData)
             return null;
-        
+            
         return (
             <Spin size="large" wrapperClassName="full-screen-loading" spinning={fullScreenLoading}>
                 <Layout className="master-layout">
@@ -139,6 +187,7 @@ class MasterLayout extends Component {
                         />
                         <Content className="app-content">
                         <Breadcrumb className="app-breadcrumb" separator=">">
+                        <h2>{breadcrumbs ? breadcrumbs[breadcrumbs.length-1]?.name:""}</h2>
                                 <Breadcrumb.Item>
                                     {/* <Link to="/">Home</Link> */}
                                     {t('breadcrumbs.home')}
@@ -155,24 +204,27 @@ class MasterLayout extends Component {
                                                 :
                                                     breadcrumb.name
                                             }
-                                        </Breadcrumb.Item>
+                                      </Breadcrumb.Item>
                                     )
                                     :
                                     null
                                 }
                             </Breadcrumb>
-                            <div className={`content-wrapper ${contentClass}`}>
+                            <div className={`content-wrapper ${contentClass} ${this.isSaveBasePage() ? 'save-base-page': ''}`}>
                                 {React.cloneElement(children, {
                                     changeUserData: this.onChangeUserData,
                                     currentUser: userData,
                                     changeBreadcrumb: this.onChangeBreadcrumb,
+                                    onGetFormID:this.onGetFormID,
+                                    onReturn:this.onReturn,
+                                    detectActionRenderType:(type)=>{if(type)this.setState({actionFooter:true})},
                                     showFullScreenLoading,
-                                    hideFullScreenLoading
+                                    hideFullScreenLoading,
+                                    protoType:()=>{  }
                                 })}
                             </div>
-                            <Footer className="app-footer">
-                                Copyright © IService, All Rights Reserved.
-                            </Footer>
+                            {this.state.actionFooter && this.renderActionFooter}
+                           
                         </Content>
                     </Layout>
                 </Layout>

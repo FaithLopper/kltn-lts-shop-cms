@@ -11,6 +11,7 @@ import {
     UserAddOutlined,
     ShoppingCartOutlined,
     CarryOutOutlined,
+    BankOutlined,
 } from '@ant-design/icons';
 import { sitePathConfig } from '../constants/sitePathConfig';
 import store from '../store';
@@ -63,6 +64,17 @@ const navMenuConfig = [
                 ...sitePathConfig.adminNews
             },
         ],
+    },
+    {
+        label: 'Province',
+        icon: <BankOutlined />,
+        children: [
+            {
+                label: 'Province',
+                ...sitePathConfig.province,
+            },
+        ]
+        
     },
 ]
 

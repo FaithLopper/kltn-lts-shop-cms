@@ -2,7 +2,6 @@ import { commonStatus,commonKinds } from '../constants/masterData';
 import { STATUS_DELETE, CurrentcyPositions } from '../constants';
 import { showErrorMessage } from '../services/notifyService';
 import { actions } from '../actions';
-
 const { getUserData } = actions;
 
 const Utils = {
@@ -208,6 +207,9 @@ const Utils = {
         textField.select()
         document.execCommand('copy')
         textField.remove()
+    },
+    changeCase (str, isLower = false){
+        isLower ? str.toLowerCase() : str.toUpperCase()
     },
 }
 
