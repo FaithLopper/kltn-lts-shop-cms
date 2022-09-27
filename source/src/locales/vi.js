@@ -17,6 +17,9 @@ export default {
         'System': 'Hệ thống',
         'Role': 'Quyền',
         'Category': 'Danh mục',
+        'Category News': 'Danh mục tin tức',
+        'Category Jobs': 'Danh mục công việc',
+        'Category Departments': 'Danh mục phòng ban',
         'News': 'Tin tức',
     },
     appHeader: {
@@ -76,6 +79,15 @@ export default {
         createTitle: 'THÊM MỚI {{ objectName, uppercase }}',
         closeButton: 'Đóng',
         saveButton: 'Lưu',
+    },
+    basicSavePage:{
+        saveButton:'Lưu',
+        updateButton:'Lưu & cập nhật',
+        cancelButton:'Huỷ',
+        createMessage:'tạo mới',
+        updateMessage:'cập nhật',
+        okText:'Trở về danh sách',
+        Continue:'Tiếp tục'
     },
     baseField: {
         select: 'chọn',
@@ -252,7 +264,7 @@ export default {
     categoryListPage: {
         breadcrumbs: {
             currentPage: 'Danh mục',
-            currentPage: 'Danh mục',
+            parentPage: 'Danh mục',
         },
         objectName: 'danh mục',
         searchPlaceHolder: {
@@ -269,9 +281,38 @@ export default {
                 categoryName: 'Tên danh mục',
                 categoryDescription: 'Mô tả',
                 status: 'Trạng thái',
+                access:'Quyền',
             },
         },
+        kind: {
+            news: 'tin tức',
+            jobs: 'công việc',
+            departments: 'phòng ban'
+        },
         createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    categoryPage: {
+        breadcrumbs: {
+            parentPage:'Danh mục',
+        },
+        objectName: 'danh mục',
+        form: {
+            label: {
+                avatar: 'Ảnh đại diện',
+                status: 'Trạng thái',
+                categoryName: 'Tên danh mục',
+                categoryDescription: 'Mô tả danh mục',
+                categoryKind: 'Loại danh mục',
+            },
+            validationMessage: {
+                phoneLengthRequire: 'Hãy nhập số',
+                comparePassword: 'Mật khẩu bạn nhập không khớp!',
+            }
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
     },
     groupPermissionListPage: {
         breadcrumbs: {

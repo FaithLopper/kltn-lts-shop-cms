@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { Button, Modal } from 'antd';
+import { Button, Col, Modal, Row } from 'antd';
+import i18next from 'i18next';
 import {
     CloseCircleFilled,
     CheckCircleFilled,
     SaveOutlined,
     ExclamationCircleOutlined,
+    StopOutlined
 } from '@ant-design/icons';
 import { showErrorMessage } from '../services/notifyService';
-
+import Utils from '../utils';
+const {changeCase} =Utils
 const { confirm } = Modal;
 class SaveBasePage extends Component {
 
@@ -28,17 +31,23 @@ class SaveBasePage extends Component {
         this.isEditing = this.getIsEditing(props);
         this.dataDetail = {};
         this.breadcrumbs = [];
+        this.actionFooter =false
         this.warningOnBack = false;
+        this.onBack=this.onBack.bind(this)
+        this.getFormId=this.getFormId.bind(this)
     }
 
     componentWillMount() {
-        const { changeBreadcrumb } = this.props;
+        const { changeBreadcrumb,onReturn, onGetFormID,detectActionRenderType} = this.props;
         if (this.isEditing) {
             this.getDetail(this.dataId);
         }
         if(this.breadcrumbs.length > 0) {
             changeBreadcrumb(this.breadcrumbs);
         }
+        onReturn(this.onBack)
+        onGetFormID(this.getFormId)
+        detectActionRenderType(this.actionFooter)
     }
 
     setIsChangedFormValues = (flag) => {
@@ -55,6 +64,7 @@ class SaveBasePage extends Component {
     getFormId = () => {
         return `form-${this.objectName}`;
     }
+
 
     getDetail = (id) => {
         const { getDataById } = this.props;
@@ -126,7 +136,6 @@ class SaveBasePage extends Component {
     }
 
     onSave = (values) => {
-        console.log("one")
         const { createData, updateData } = this.props;
         this.setState({ isSubmitting: true });
         if (this.isEditing) {
@@ -137,7 +146,6 @@ class SaveBasePage extends Component {
             });
         }
         else {
-            console.log("hello")
             createData({
                 params: this.prepareCreateData(values),
                 onCompleted: this.onSaveCompleted,
@@ -168,31 +176,33 @@ class SaveBasePage extends Component {
 
     showSuccessConfirmModal({ onContinueEdit, title = null, ...rest } = {}) {
         const { t } = this.props;
-        const defaultTitle = `${t(`constants:${"Successfully"}`)} ${this.isEditing ? t(`listBasePage:${"update"}`) : t(`constants:${"create"}`)} ${this.objectName}`
-        
-        confirm({
+        const defaultTitle = `${t(`constants:${"Successfully"}`)} ${this.isEditing ? t(`basicSavePage:${"updateMessage"}`):t(`basicSavePage:${"createMessage"}`)}   ${this.objectName}`
+        let prepareComfirm={
             title: title || defaultTitle,
-            okText: 'Back To List',
+            okText: t(`basicSavePage:${"okText"}`),
             width: 475,
             centered: true,
-            cancelText: `Continue ${this.isEditing ? 'update' : 'create'}  ${this.objectName}`,
+            cancelText: `${t(`basicSavePage:${"Continue"}`)} ${this.isEditing ? t(`basicSavePage:${"updateMessage"}`) : t(`basicSavePage:${"createMessage"}`)}  ${this.objectName}`,
             className: "custom-confirm-modal success",
             icon: <CheckCircleFilled style={{"color":"green"}}/>,
             onOk: this.onBack,
-            onCancel: onContinueEdit,
+            // onCancel: onContinueEdit,
             ...rest
-        })
+        }
+        if(!this.isEditing)
+            delete prepareComfirm.cancelText
+        confirm(prepareComfirm)
     }
 
     showFailedConfirmModal({ onContinueEdit, title = null, ...rest } = {}) {
-        const defaultTitle = `${this.isEditing ? 'Updating' : 'Creating'}  ${this.objectName} Failed`
-    
+        const { t } = this.props;
+        const defaultTitle = `${t(`constants:${"Failed"}`)} ${this.isEditing ? t(`basicSavePage:${"updateMessage"}`):t(`basicSavePage:${"createMessage"}`)}   ${this.objectName}`    
         confirm({
             title: title || defaultTitle,
-            okText: `Continue ${this.isEditing ? 'update' : 'create'}  ${this.objectName}`,
+            okText: `${t(`basicSavePage:${"Continue"}`)} ${this.isEditing ? t(`basicSavePage:${"updateMessage"}`) : t(`basicSavePage:${"createMessage"}`)}  ${this.objectName}`,
             centered: true,
             width: 475,
-            cancelText: 'Back To List',
+            cancelText: t(`basicSavePage:${"okText"}`),
             className: "custom-confirm-modal failed",
             icon: <CloseCircleFilled style={{"color":"red"}}/>,
             onCancel: this.onBack,
@@ -216,10 +226,14 @@ class SaveBasePage extends Component {
 
     renderActions = (customDisabledSubmitValue) => {
         const { isSubmitting, isChanged } = this.state;
+        const {t}= this.props
 
         const disabledSubmit = customDisabledSubmitValue !== undefined ? customDisabledSubmitValue : !isChanged;
-
-        const actions = [
+        return (<Row gutter={16}>
+            <Col span={14}>
+            <Button type="danger" key="cancel" onClick={this.onBack} icon={<StopOutlined />}> {t(`basicSavePage:${"cancelButton"}`) }</Button>
+            </Col>
+            <Col span={1}>
             <Button
                 key="submit"
                 htmlType="submit"
@@ -228,23 +242,11 @@ class SaveBasePage extends Component {
                 loading={isSubmitting}
                 disabled={disabledSubmit}
                 icon={<SaveOutlined />}
-            >
-                {this.d ? 'Save' : 'Save & Update'}
+                >
+                {this.isEditing ? t(`basicSavePage:${"updateButton"}`) : t(`basicSavePage:${"saveButton"}`)}
             </Button>
-        ];
-        // if (this.getListUrl) {
-        //     actions.unshift(
-        //         <Link key="cancel" to={this.getListUrl}>
-        //             <Button key="cancel"> Cancel</Button>
-        //         </Link>
-        //     )
-        // }
-
-            actions.unshift(
-                <Button key="cancel" onClick={this.onBack}> Cancel</Button>
-            )
-
-        return actions;
+                </Col>
+        </Row>);
     }
 
 }

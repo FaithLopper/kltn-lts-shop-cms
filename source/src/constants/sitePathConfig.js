@@ -40,9 +40,19 @@ export const sitePathConfig = {
             apiConfig.groupPermission.getPermissionList.path,
         ]
     },
-    category: {
-        path: '/category',
-        childrenKeys: ['/category-child'],
+    // category: {
+    //     path: '/category',
+    //     childrenKeys: ['/category-child'],
+    //     permissions: [
+    //         apiConfig.category.getList.path,
+    //         apiConfig.category.getById.path,
+    //         apiConfig.category.create.path,
+    //         apiConfig.category.update.path,
+    //         apiConfig.category.delete.path,
+    //     ]
+    // },
+    categoryNews: {
+        path: '/category-news',
         permissions: [
             apiConfig.category.getList.path,
             apiConfig.category.getById.path,
@@ -51,15 +61,75 @@ export const sitePathConfig = {
             apiConfig.category.delete.path,
         ]
     },
+    categoryNewsUpdate: {
+        path: '/category-news/:id',
+        permissions: [
+            apiConfig.category.create.path,
+            apiConfig.category.update.path,
+        ]
+    },
+    categoryJobs: {
+        path: '/category-jobs',
+        permissions: [
+            apiConfig.category.getList.path,
+            apiConfig.category.getById.path,
+            apiConfig.category.create.path,
+            apiConfig.category.update.path,
+            apiConfig.category.delete.path,
+        ]
+    },
+    categoryJobsUpdate: {
+        path: '/category-jobs/:id',
+        permissions: [
+            apiConfig.category.create.path,
+            apiConfig.category.update.path,
+        ]
+    },
+    categoryDepartments: {
+        path: '/category-departments',
+        permissions: [
+            apiConfig.category.getList.path,
+            apiConfig.category.getById.path,
+            apiConfig.category.create.path,
+            apiConfig.category.update.path,
+            apiConfig.category.delete.path,
+        ]
+    },
+    categoryDepartmentsUpdate: {
+        path: '/category-departments/:id',
+        permissions: [
+            apiConfig.category.getList.path,
+            apiConfig.category.getById.path,
+            apiConfig.category.create.path,
+            apiConfig.category.update.path,
+            apiConfig.category.delete.path,
+        ]
+    },
+    categoryUpdate: {
+        path: '/category/:id',
+        permissions: [
+            apiConfig.category.getById.path,
+            apiConfig.category.update.path,
+        ]
+    },
     adminNews: {
         path: '/news',
         permissions: [
             apiConfig.news.getList.path,
-            apiConfig.news.getById.path,
-            apiConfig.news.create.path,
-            apiConfig.news.update.path,
+            apiConfig.news.getById.path, //xxxx dup
+            apiConfig.news.create.path, //xxxx dup
+            apiConfig.news.update.path, //xxxx dup
             apiConfig.news.delete.path,
             apiConfig.news.categoryAutoComplete.path,
         ]
     },
+    adminNewsUpdate: {
+        path:'/news/:id',
+        permissions: [
+            apiConfig.news.getById.path,
+            apiConfig.news.create.path, //re check
+            apiConfig.news.update.path,
+        ]
+        
+    }
 }

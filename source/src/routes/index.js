@@ -19,6 +19,12 @@ import CategoryListPage from '../containers/category/CategoryListPage';
 import CategoryListPageChild from '../containers/category/CategoryListPageChild';
 import NewsListPage from '../containers/adminNews/NewsListPage';
 import UserAminUpdate from '../containers/users/UserAminUpdate';
+import CategoryNewsListPage from '../containers/category/CategoryNewsListPage';
+import CategoryNewsUpdate from '../containers/category/CategoryNewsUpdate';
+import CategoryDepartmentsListPage from '../containers/category/CategoryDepartmentsListPage';
+import CategoryJobsListPage from '../containers/category/CategoryJobsListPage';
+import CategoryJobsUpdate from '../containers/category/CategoryJobsUpdate';
+import CategoryDepartmentsUpdate from '../containers/category/CategoryDepartmentsUpdate';
 const RootRoute = () => {
     const {
         admin,
@@ -26,9 +32,16 @@ const RootRoute = () => {
         profile,
         forbidden,
         groupPermission,
-        category,
+        categoryDepartments,
+        categoryJobs,
+        categoryNews,
+        categoryDepartmentsUpdate,
+        categoryJobsUpdate,
+        categoryNewsUpdate,
         adminNews,
-        adminUpdate
+        adminUpdate,
+        adminNewsUpdate,
+        categoryUpdate
     } = sitePathConfig;
 
     return (
@@ -43,8 +56,12 @@ const RootRoute = () => {
                 <PrivateRoute exact path={admin.path} component={UserAdminListPage}/>
                 <PrivateRoute exact path={adminUpdate.path} component={UserAminUpdate}/>
                 <PrivateRoute exact path={groupPermission.path} component={GroupPermissionListPage}/>
-                <PrivateRoute exact path={category.path} component={CategoryListPage}/>
-                <PrivateRoute exact path={category.childrenKeys[0]} component={CategoryListPageChild}/>
+                <PrivateRoute exact path={categoryNews.path} component={CategoryNewsListPage}/>
+                <PrivateRoute exact path={categoryNewsUpdate.path} component={CategoryNewsUpdate}/>
+                <PrivateRoute exact path={categoryJobs.path} component={CategoryJobsListPage}/>
+                <PrivateRoute exact path={categoryJobsUpdate.path} component={CategoryJobsUpdate}/>
+                <PrivateRoute exact path={categoryDepartments.path} component={CategoryDepartmentsListPage}/>
+                <PrivateRoute exact path={categoryDepartmentsUpdate.path} component={CategoryDepartmentsUpdate}/>
                 <PrivateRoute exact path={adminNews.path} component={NewsListPage}/>
                 {/* Error Page */}
                 <PrivateRoute exact path={forbidden.path} component={Forbidden}/>

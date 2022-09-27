@@ -8,6 +8,7 @@ import { convertDateTimeToString, convertUtcToLocalTime } from '../../utils/date
 import CropImageFiled from '../common/entryForm/CropImageFiled';
 import Utils from "../../utils";
 import { KeyOutlined, CopyOutlined } from '@ant-design/icons';
+import { commonStatus } from '../../constants/masterData';
 import {
     AppConstants,
     UploadFileTypes,
@@ -15,6 +16,7 @@ import {
   } from "../../constants";
   import { showErrorMessage } from "../../services/notifyService";
 import PasswordGeneratorField from '../common/entryForm/PasswordGeneratorField';
+import DropdownField from '../common/entryForm/DropdownField';
 class AdminLevel1Form extends BasicForm {
 
     constructor(props) {
@@ -44,27 +46,8 @@ class AdminLevel1Form extends BasicForm {
 
     handleSubmit(formValues) {
         const { onSubmit } = this.props
-        console.log("day");
         onSubmit({
             ...formValues,
-        })
-    }
-
-    handleRemoveImageField(fieldName) {
-        const { handleRemoveImage } = this.props
-        handleRemoveImage(fieldName, () => {
-            this.setState({
-                [`${fieldName}FileList`]: []
-            })
-        })
-    }
-
-    handleUploadImageField(fieldName, file) {
-        const { handleUploadImage } = this.props
-        handleUploadImage(fieldName, file, (res) => {
-            this.setState({
-                [`${fieldName}FileList`]: [{ url: res?.body?.newUrlFromS3 }]
-            })
         })
     }
 
@@ -77,7 +60,6 @@ class AdminLevel1Form extends BasicForm {
 			// this.otherData.logoPath = result.data.filePath;
 			this.setFieldValue("avatar", result.data.filePath);
 			this.setState({ uploading: false })
-            console.log(result);
 			onSuccess();
 		},
 		onError: (err) => {
@@ -91,8 +73,6 @@ class AdminLevel1Form extends BasicForm {
 
 	getInitialFormValues = () => {
 		const { isEditing, dataDetail } = this.props;
-        console.log(dataDetail)
-        console.log(isEditing);
 		if (!isEditing) {
 		return {
 			status: STATUS_ACTIVE,
@@ -102,7 +82,6 @@ class AdminLevel1Form extends BasicForm {
 	};
 
     handleChangeLogo = (info) => {
-		console.log(info);
 		if (info.file.status === "done") {
 		Utils.getBase64(info.file.originFileObj, (logo) =>
 			this.setState({ logo })
@@ -117,7 +96,6 @@ class AdminLevel1Form extends BasicForm {
 
     render() {
         const { formId, dataDetail, actions, isEditing,t } = this.props
-        console.log(dataDetail);
         const {
             uploading,
 			logo,
@@ -132,14 +110,15 @@ class AdminLevel1Form extends BasicForm {
                 initialValues={this.getInitialFormValues()}
                 layout="vertical"
                 onValuesChange={this.onValuesChange}
+                style={{width:"600px"}}
             >
-                <Card title="Thông tin cơ bản" className="card-form" bordered={false}>
-                            <Row gutter={16}>
+                <Card title="THÔNG TIN CƠ BẢN" className="card-form" bordered={false}>
+                        <Row gutter={[16, 0]} >
                         <Col span={12}>
                             <CropImageFiled
                             fieldName="avatar"  
                             loading={uploading}
-                            label={t("form.label.avatar")}
+                            // label={t("form.label.avatar")}
                             imageUrl={logo}
                             onChange={this.handleChangeLogo}
                             uploadFile={this.uploadFileLogo}
@@ -147,7 +126,7 @@ class AdminLevel1Form extends BasicForm {
                             />
                         </Col>
                         </Row>
-                        <Row gutter={16}>
+                        <Row gutter={[16, 0]}>
                         <Col span={12}>
                             <TextField
                             fieldName="username"
@@ -164,7 +143,7 @@ class AdminLevel1Form extends BasicForm {
                             />
                         </Col>
                         </Row>
-                        <Row gutter={16}>
+                        <Row gutter={[16, 0]}>
                             <Col span={12}>
                             <PasswordGeneratorField
                         type="password"
@@ -178,7 +157,7 @@ class AdminLevel1Form extends BasicForm {
                             <>
                                 <Button onClick={
                                     () => {
-                                        const curPass = Utils.generateRandomPassword(8, true, true, false, false, true)
+                                        const curPass = Utils.generateRandomPassword(6, true, true, false, false, true)
                                         this.setState({curPassword: curPass})
                                         this.setFieldValue('password', curPass)
                                     }}
@@ -206,18 +185,116 @@ class AdminLevel1Form extends BasicForm {
                             />
                         </Col>
                         </Row>
-                        <Row gutter={16}>
+                        <Row gutter={[16, 0]}>
                         <Col span={12}>
                             <TextField fieldName="email" label="E-mail" type="email" 
                             // disabled={loadingSave}
                             />
                         </Col>
-                       
+                       <Col span={12}>
+                       <DropdownField
+                        fieldName="status"
+                        label={t("form.label.status")}
+                        required
+                        options={commonStatus}
+                        disabled={!isEditing}
+                    />
+                       </Col>
+                        </Row>
+                </Card>
+                <Card title="THÔNG TIN CƠ BẢN" className="card-form" bordered={false}>
+                        <Row gutter={[16, 0]} >
+                        <Col span={12}>
+                            <CropImageFiled
+                            fieldName="avatar"  
+                            loading={uploading}
+                            // label={t("form.label.avatar")}
+                            imageUrl={logo}
+                            onChange={this.handleChangeLogo}
+                            uploadFile={this.uploadFileLogo}
+                            // disabled={loadingSave}
+                            />
+                        </Col>
+                        </Row>
+                        <Row gutter={[16, 0]}>
+                        <Col span={12}>
+                            <TextField
+                            fieldName="username"
+                            min={6}
+                            label={t("form.label.username")}
+                            disabled={isEditing}
+                            required={!isEditing}
+                            validators={[Utils.validateUsernameForm]}
+                            />
+                        </Col>
+                        <Col span={12}>
+                            <TextField fieldName="fullName" label={t("form.label.fullName")} required 
+                            // disabled={loadingSave}
+                            />
+                        </Col>
+                        </Row>
+                        <Row gutter={[16, 0]}>
+                            <Col span={12}>
+                            <PasswordGeneratorField
+                        type="password"
+                        fieldName="password"
+                        label={isEditing ? t("form.label.newPassword") : t("form.label.password")}
+                        required={!isEditing}
+                        minLength={6}
+                        disabled
+                        value={this.getFieldValue('password')}
+                        suffix={
+                            <>
+                                <Button onClick={
+                                    () => {
+                                        const curPass = Utils.generateRandomPassword(6, true, true, false, false, true)
+                                        this.setState({curPassword: curPass})
+                                        this.setFieldValue('password', curPass)
+                                    }}
+                                >
+                                    <KeyOutlined style={{ alignSelf: 'center'}}/>
+                                </Button>
+                                <Button disabled={!curPassword} 
+                                    onClick={()=>{
+										Utils.copyToClipboard(this.getFieldValue('password'))
+										this.copyToClipboardAlert()
+									}}>
+                                <CopyOutlined style={{ alignSelf: 'center' }}/></Button>
+                            </>
+                        }
+                    />
+                            </Col>
+                            <Col span={12}>
+                            <TextField
+                            type="number"
+                            fieldName="phone"
+                            label={t("form.label.phone")}
+                            required
+                            minLength={10}
+                            // disabled={loadingSave}
+                            />
+                        </Col>
+                        </Row>
+                        <Row gutter={[16, 0]}>
+                        <Col span={12}>
+                            <TextField fieldName="email" label="E-mail" type="email" 
+                            // disabled={loadingSave}
+                            />
+                        </Col>
+                       <Col span={12}>
+                       <DropdownField
+                        fieldName="status"
+                        label={t("form.label.status")}
+                        required
+                        options={commonStatus}
+                        disabled={!isEditing}
+                    />
+                       </Col>
                         </Row>
                 </Card>
                 <div className="footer-card-form">
-                    <Row gutter={16}>
-                        <Col align="right" span={24}>{actions}</Col>
+                    <Row gutter={16} justify="end">
+                        <Col align="right" span={10}>{actions}</Col>
                     </Row>
                 </div>
             </Form>

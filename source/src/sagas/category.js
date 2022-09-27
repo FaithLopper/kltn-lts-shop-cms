@@ -64,6 +64,7 @@ function* getCategoryById({ payload: { params, onCompleted, onError } }) {
 }
 
 function* createCategory({payload: { params, onCompleted, onError }}){
+    console.log(params)
     try {
         const apiParams = apiConfig.category.create;
         const result = yield call(sendRequest, apiParams, params);
@@ -75,6 +76,7 @@ function* createCategory({payload: { params, onCompleted, onError }}){
 }
 
 function* updateCategory({ payload: { params, onCompleted, onError } }) {
+    console.log(params)
     try {
         const apiParams = apiConfig.category.update;
         const result = yield call(sendRequest, apiParams, params);
