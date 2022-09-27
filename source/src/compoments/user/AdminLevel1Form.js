@@ -27,14 +27,13 @@ class AdminLevel1Form extends BasicForm {
             curPassword: null,
             isUpdateLogo:false
         }
-        console.log(AppConstants.contentRootUrl,props.dataDetail.avatar);
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.dataDetail !== this.props.dataDetail) {
             this.formRef.current.setFieldsValue(nextProps.dataDetail)
         }
-        if(nextProps.dataDetail.avatar !== this.state.logo && this.state.isUpdateLogo === false){
+        if(nextProps.dataDetail.avatar !== this.state.logo && this.state.isUpdateLogo === false && nextProps.dataDetail.avatar!==undefined){
             this.setState({logo:`${AppConstants.contentRootUrl}${nextProps.dataDetail.avatar}`})
         }
     }
@@ -104,7 +103,6 @@ class AdminLevel1Form extends BasicForm {
 			logo,
             curPassword
         } = this.state
-        console.log(logo)
         return (
             <Form
                 id={formId}
