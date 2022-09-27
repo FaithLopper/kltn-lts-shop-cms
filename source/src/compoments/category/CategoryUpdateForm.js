@@ -103,28 +103,24 @@ class CategoryUpdateForm extends BasicForm {
       >
         <Card title="THÔNG TIN CƠ BẢN" className="card-form" bordered={false}>
           <Row gutter={[16, 0]}>
-            <Col span={12}>
-              <CropImageFiled
-                fieldName="categoryImage"
-                loading={uploading}
-                // label={t("form.label.avatar")}
-                imageUrl={logo}
-                onChange={this.handleChangeLogo}
-                uploadFile={this.uploadFileLogo}
-                // disabled={loadingSave}
-              />
-            </Col>
-            <Col span={12}>
+            <Col span={13}>
+              <Row>
+                <CropImageFiled
+                  fieldName="categoryImage"
+                  loading={uploading}
+                  // label={t("form.label.avatar")}
+                  imageUrl={logo}
+                  onChange={this.handleChangeLogo}
+                  uploadFile={this.uploadFileLogo}
+                  // disabled={loadingSave}
+                />
+              </Row>
               <TextField
                 fieldName="categoryName"
                 label={t("form.label.categoryName")}
                 required
                 // disabled={loadingSave}
               />
-            </Col>
-          </Row>
-          <Row gutter={[16, 0]}>
-            <Col span={12}>
               {isEditing ? (
                 <DropdownField
                   fieldName="status"
@@ -134,22 +130,17 @@ class CategoryUpdateForm extends BasicForm {
                   // disabled={loadingSave}
                 />
               ) : null}
-            </Col>
-            <Col span={12}>
               <TextField
                 type="textarea"
                 fieldName="categoryDescription"
                 label={t("form.label.categoryDescription")}
                 required
                 style={{
-                  height: 100,
+                  height: 250,
                 }}
                 // disabled={loadingSave}
               />
             </Col>
-          </Row>
-          <Row gutter={[16, 0]}>
-            <Col span={12}></Col>
           </Row>
         </Card>
         <div className="footer-card-form">
