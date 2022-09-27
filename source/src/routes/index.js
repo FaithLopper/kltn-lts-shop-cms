@@ -19,6 +19,7 @@ const RootRoute = () => {
                     pathname: admin.path,
                     state: { isRedirectToHomePage: true }
                 }}/>
+                <PublicRoute exact path={login.path} component={LoginPage} />
                 {Object.keys(sitePathConfig).map(key => {
                     // const CompRoute = siteConfig[key].isPublic ? PublicRoute : PrivateRoute;
                     const CompRoute = PrivateRoute;
