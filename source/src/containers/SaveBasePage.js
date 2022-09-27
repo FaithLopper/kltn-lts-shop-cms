@@ -49,6 +49,10 @@ class SaveBasePage extends Component {
         onGetFormID(this.getFormId)
         detectActionRenderType(this.actionFooter)
     }
+    componentDidMount(){
+        const contentBody= document.getElementById("body-content-wrapper")
+        contentBody.classList.add("save-base-page");
+    }
 
     setIsChangedFormValues = (flag) => {
         const { isChanged } = this.state;
