@@ -101,70 +101,45 @@ class CategoryUpdateForm extends BasicForm {
         onValuesChange={this.onValuesChange}
         style={{ width: "600px" }}
       >
-        <Card title="THÔNG TIN CƠ BẢN" className="card-form" bordered={false}>
-          <Row gutter={[16, 0]}>
-            <Col span={20}>
-              <Row>
-                <Col span={20} xl>
-                  <CropImageFiled
-                    fieldName="categoryImage"
-                    loading={uploading}
-                    // label={t("form.label.avatar")}
-                    imageUrl={logo}
-                    onChange={this.handleChangeLogo}
-                    uploadFile={this.uploadFileLogo}
-                    // disabled={loadingSave}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col span={15}>
-                  <TextField
-                    fieldName="categoryName"
-                    label={t("form.label.categoryName")}
-                    required
-                    // disabled={loadingSave}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col span={15}>
-                  {isEditing ? (
-                    <DropdownField
-                      fieldName="status"
-                      label={t("form.label.status")}
-                      required
-                      options={commonStatus}
-                      // disabled={loadingSave}
-                    />
-                  ) : null}
-                </Col>
-              </Row>
-              <Row
-                style={{
-                  paddingTop: "50px",
-                  maxWidth: "unset",
-                  width: "550px",
-                }}
-              >
-                <Col
-                  style={{
-                    width: "100%",
-                  }}
-                >
-                  <TextField
-                    type="textarea"
-                    fieldName="categoryDescription"
-                    label={t("form.label.categoryDescription")}
-                    required
-                    style={{
-                      height: 180,
-                    }}
-                  />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
+        <Card title="THÔNG TIN CƠ BẢN" bordered={false}>
+          <div style={{ padding: "20px 6px" }}>
+            <CropImageFiled
+              fieldName="categoryImage"
+              loading={uploading}
+              // label={t("form.label.avatar")}
+              imageUrl={logo}
+              onChange={this.handleChangeLogo}
+              uploadFile={this.uploadFileLogo}
+              // disabled={loadingSave}
+            />
+            <TextField
+              style={{ width: "50%" }}
+              fieldName="categoryName"
+              label={t("form.label.categoryName")}
+              required
+              // disabled={loadingSave}
+            />
+            <div style={{ width: "50%" }}>
+              {isEditing ? (
+                <DropdownField
+                  fieldName="status"
+                  label={t("form.label.status")}
+                  required
+                  options={commonStatus}
+                  // disabled={loadingSave}
+                />
+              ) : null}
+            </div>
+            <TextField
+              type="textarea"
+              fieldName="categoryDescription"
+              label={t("form.label.categoryDescription")}
+              required
+              style={{
+                height: 180,
+              }}
+            />
+          </div>
         </Card>
         <div className="footer-card-form">
           <Row gutter={16} justify="end">
