@@ -5,7 +5,7 @@ import user from './user';
 import groupPermission from './groupPermission';
 import category from './category';
 import news from './news';
-
+import province from './province';
 const rootReducer = combineReducers({
     appCommon: appCommon.reducer,
     account: account.reducer,
@@ -13,6 +13,7 @@ const rootReducer = combineReducers({
     groupPermission: groupPermission.reducer,
     category: category.reducer,
     news: news.reducer,
+    province:province.reducer,
 });
 
 export default rootReducer;

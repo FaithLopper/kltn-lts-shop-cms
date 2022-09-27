@@ -27,7 +27,8 @@ class CategoryUpdateForm extends BasicForm {
     }
     if (
       nextProps.dataDetail.categoryImage !== this.state.logo &&
-      this.state.isUpdateLogo === false
+      this.state.isUpdateLogo === false &&
+      nextProps.dataDetail.categoryImage !== undefined
     ) {
       this.setState({
         logo: `${AppConstants.contentRootUrl}${nextProps.dataDetail.categoryImage}`,
@@ -41,7 +42,6 @@ class CategoryUpdateForm extends BasicForm {
   };
 
   handleSubmit(formValues) {
-    console.log(formValues);
     const { onSubmit } = this.props;
     onSubmit({
       ...formValues,

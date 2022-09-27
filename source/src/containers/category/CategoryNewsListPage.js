@@ -47,13 +47,9 @@ class CategoryNewsListPage extends ListBasePage {
       {
         title: t("table.name"),
         render: (dataRow) => {
-            return <span className="routing" onClick={()=>{
-                this.handleRouting(dataRow.id, dataRow.categoryName);
-            }}>
-                {dataRow.categoryName}
-            </span>
-        }
-    },
+          return dataRow.categoryName;
+        },
+      },
       this.renderStatusColumn(),
       this.renderActionColumn(),
     ];

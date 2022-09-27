@@ -40,7 +40,6 @@ class CategoryForm extends BasicForm {
     }
 
     handleChangeAvatar = (info) => {
-        console.log(info);
         if (info.file.status === "done") {
         Utils.getBase64(info.file.originFileObj, (avatar) =>
             this.setState({ avatar })

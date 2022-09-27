@@ -182,11 +182,10 @@ class SaveBasePage extends Component {
             okText: t(`basicSavePage:${"okText"}`),
             width: 475,
             centered: true,
-            cancelText: `${t(`basicSavePage:${"Continue"}`)} ${this.isEditing ? t(`basicSavePage:${"updateMessage"}`) : t(`basicSavePage:${"createMessage"}`)}  ${this.objectName}`,
             className: "custom-confirm-modal success",
             icon: <CheckCircleFilled style={{"color":"green"}}/>,
             onOk: this.onBack,
-            // onCancel: onContinueEdit,
+            cancelButtonProps : { style: { display: 'none' } },  
             ...rest
         }
         if(!this.isEditing)
@@ -243,7 +242,7 @@ class SaveBasePage extends Component {
                 disabled={disabledSubmit}
                 icon={<SaveOutlined />}
                 >
-                {this.isEditing ? t(`basicSavePage:${"updateButton"}`) : t(`basicSavePage:${"saveButton"}`)}
+               {t(`basicSavePage:${"saveButton"}`)}
             </Button>
                 </Col>
         </Row>);

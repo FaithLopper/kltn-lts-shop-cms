@@ -161,5 +161,37 @@ const apiConfig = {
             headers: baseHeader
         },
     },
+    province: {
+        getList:{
+            path:"/v1/locations/list",
+            method:"GET",
+            headers:baseHeader
+        },
+        getById:{
+            path:"/v1/locations/get",
+            method:"GET",
+            headers:baseHeader
+        },
+        create:{
+            path:"/v1/locations/create",
+            method:"POST",
+            headers:baseHeader
+        },
+        update:{
+            path:"/v1/locations/update",
+            method:"PUT",
+            headers:baseHeader
+        },
+        delete:{
+            path:"/v1/locations/delete",
+            method:"DELETE",
+            headers:baseHeader
+        },
+        provinceAutoComplete:{
+            path:"/v1/locations/auto-complete",
+            method:"GET",
+            headers:baseHeader
+        }
+      },
 }
 export default apiConfig;

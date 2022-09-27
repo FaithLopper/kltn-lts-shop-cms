@@ -5,7 +5,6 @@ import { PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { withTranslation } from "react-i18next";
 
 import ListBasePage from "../ListBasePage";
-import AdminForm from "../../compoments/user/AdminForm";
 import BaseTable from "../../compoments/common/table/BaseTable";
 import BasicModal from "../../compoments/common/modal/BasicModal";
 
@@ -79,34 +78,9 @@ class UserAdminListPage extends ListBasePage {
     ];
   }
 
-  prepareCreateData(values) {
-    return {
-      kind: UserTypes.ADMIN,
-      avatarPath: values.avatar,
-      ...values,
-    };
-  }
-
-  prepareUpdateData(values) {
-    return {
-      id: this.dataDetail.id,
-      kind: UserTypes.ADMIN,
-      avatarPath: values.avatar,
-      status: STATUS_ACTIVE,
-      ...values,
-    };
-  }
-
-  getDataDetailMapping(data) {
-    return {
-      ...data,
-      groupId: data.group && data.group.id,
-    };
-  }
-
   getDetailLink(dataRow) {
     return sitePathConfig.adminUpdate.path.replace(':id', dataRow.id);
-}
+  }
 
   render() {
     const {
@@ -119,13 +93,8 @@ class UserAdminListPage extends ListBasePage {
     const users = dataList.data || [];
     this.pagination.total = dataList.totalElements || 0;
     return (
-        <PageWrapper
-                routes={[
-                  { breadcrumbName: 'Trang chủ' },
-                  { breadcrumbName: 'Quản trị viên' }
-                ]}
-                // title="Quản trị viên"
-                >
+      
+        <PageWrapper>
               {this.renderSearchForm()}
         <div className="action-bar">
           {this.renderCreateNewButton((
