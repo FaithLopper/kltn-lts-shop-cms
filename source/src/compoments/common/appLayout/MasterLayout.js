@@ -220,7 +220,6 @@ class MasterLayout extends Component {
                                     detectActionRenderType:(type)=>{if(type)this.setState({actionFooter:true})},
                                     showFullScreenLoading,
                                     hideFullScreenLoading,
-                                    protoType:()=>{  }
                                 })}
                             </div>
                             {this.state.actionFooter && this.renderActionFooter}

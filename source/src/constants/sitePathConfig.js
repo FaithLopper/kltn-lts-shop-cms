@@ -28,6 +28,7 @@ export const sitePathConfig = {
     admin: {
         path: '/admins',
         component:UserAdminListPage,
+        childrenKeys: ['/admins/create','/admins/:id'],  //nếu có trang Update thì để childPath dạng ['/parent/create','/parent/update']
         permissions: [
             apiConfig.user.getAdminList.path,
             apiConfig.user.getAdminById.path,
@@ -147,7 +148,6 @@ export const sitePathConfig = {
     district:{
         path:'/province-district',
         component:DistrictListPage,
-        childrenKeys: ['/province-district','/province-district-commune'],
         permissions:[
             apiConfig.province.getList.path,
             apiConfig.province.getById.path,
@@ -160,7 +160,6 @@ export const sitePathConfig = {
     commune:{
         path:'/province-district-commune',
         component:CommuneListPage,
-        childrenKeys: ['/province-district','/province-district-commune'],
         permissions:[
             apiConfig.province.getList.path,
             apiConfig.province.getById.path,

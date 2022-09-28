@@ -20,11 +20,12 @@ class GroupPermissionUpdate extends SaveBasePage {
         super(props);
         const { t } = this.props;
         this.objectName =  t("objectName");
-        this.getListUrl = sitePathConfig.groupPermission.path;
+        this.getListUrl = sitePathConfig.admin.path;
+        this.actionFooter= false
         this.breadcrumbs = [
             {
                 name:  t("breadcrumbs.parentPage"),
-                path:`${sitePathConfig.groupPermission.path}`
+                path:`${sitePathConfig.admin.path}`
             },
             {
                 name:  this.isEditing? `${t(`listBasePage:${"update"}`)} ${this.objectName}` :`${t(`listBasePage:${"create"}`)} ${this.objectName}`,
@@ -156,15 +157,20 @@ class GroupPermissionUpdate extends SaveBasePage {
                     handleUploadImage={this.handleUploadImageField}
                     uploadFile={uploadFile}
                     t={t}
-                />
+
+                    />
+                    
             </LoadingWrapper>
         )
     }
 }
 
 const mapDispatchToProps = dispatch => ({
-  getDataById: (payload) => dispatch(actions.getGroupPermissionById(payload)),
-  updateData: (payload) => dispatch(actions.updateGroupPermission(payload)),
+  getDataById: (payload) => dispatch(actions.getUserById(payload)),
+  createData: (payload) => dispatch(actions.createUser(payload)),
+  updateData: (payload) => dispatch(actions.updateUser(payload)),
+  deleteData: (payload) => dispatch(actions.deleteAdmin(payload)),
+  uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
 })
 
 const mapStateToProps = state => ({
