@@ -5,6 +5,7 @@ import { actions as groupPermissionActions, actionTypes as groupPermissionTypes 
 import {actions as categoryActions, actionTypes as categoryTypes} from './category';
 import {actions as newsActions, actionTypes as newsTypes} from './news';
 import {actions as provinceActions, actionTypes as provinceTypes} from './province';
+import {actions as ranksActions, actionTypes as ranksTypes} from './ranks';
 
 export const actions = {
     ...appCommonActions,
@@ -14,6 +15,7 @@ export const actions = {
     ...categoryActions,
     ...newsActions,
     ...provinceActions,
+    ...ranksActions
 }
 
 export const types = {
@@ -24,4 +26,5 @@ export const types = {
     ...categoryTypes,
     ...newsTypes,
     ...provinceTypes,
+    ...ranksTypes
 }

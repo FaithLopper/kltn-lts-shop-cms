@@ -193,5 +193,37 @@ const apiConfig = {
             headers:baseHeader
         }
       },
+    ranks: {
+        getList:{
+            path:"/v1/ranks/list",
+            method:"GET",
+            headers:baseHeader
+        },
+        getById:{
+            path:"/v1/ranks/get",
+            method:"GET",
+            headers:baseHeader
+        },
+        create:{
+            path:"/v1/ranks/create",
+            method:"POST",
+            headers:baseHeader
+        },
+        update:{
+            path:"/v1/ranks/update",
+            method:"PUT",
+            headers:baseHeader
+        },
+        delete:{
+            path:"/v1/ranks/delete",
+            method:"DELETE",
+            headers:baseHeader
+        },
+        ranksAutoComplete:{
+            path:"/v1/ranks/auto-complete",
+            method:"GET",
+            headers:baseHeader
+        }
+      },
 }
 export default apiConfig;

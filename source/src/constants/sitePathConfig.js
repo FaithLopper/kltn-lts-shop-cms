@@ -15,6 +15,8 @@ import CategoryJobsListPage from '../containers/category/CategoryJobsListPage';
 import CategoryJobsUpdate from '../containers/category/CategoryJobsUpdate';
 import CategoryDepartmentsListPage from '../containers/category/CategoryDepartmentsListPage';
 import CategoryDepartmentsUpdate from '../containers/category/CategoryDepartmentsUpdate';
+import RanksListPage from '../containers/ranks/RanksListPage';
+import RanksUpdate from '../containers/ranks/RanksUpdate';
 
 export const sitePathConfig = {
     login: {
@@ -169,4 +171,27 @@ export const sitePathConfig = {
             apiConfig.province.provinceAutoComplete.path,
         ]
     },
+    ranks: {
+        path:'/ranks',
+        component:RanksListPage,
+        childrenKeys: ['/ranks/create','/ranks/:id'],
+        permissions:[
+            apiConfig.ranks.getList.path,
+            apiConfig.ranks.getById.path,
+            apiConfig.ranks.create.path,
+            apiConfig.ranks.update.path,
+            apiConfig.ranks.delete.path,
+            apiConfig.ranks.ranksAutoComplete.path,
+        ]
+    },
+    ranksUpdate: {
+        path:'/ranks/:id',
+        component:RanksUpdate,
+        permissions:[
+            apiConfig.ranks.getById.path,
+            apiConfig.ranks.create.path,
+            apiConfig.ranks.update.path,
+            apiConfig.ranks.ranksAutoComplete.path,
+        ]
+    }
 }
