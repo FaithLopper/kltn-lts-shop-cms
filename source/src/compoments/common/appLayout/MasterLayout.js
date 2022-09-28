@@ -210,7 +210,7 @@ class MasterLayout extends Component {
                                     null
                                 }
                             </Breadcrumb>
-                            <div className={`content-wrapper ${contentClass} ${this.isSaveBasePage() ? 'save-base-page': ''}`}>
+                            <div className={`content-wrapper ${contentClass}`} id='body-content-wrapper'>
                                 {React.cloneElement(children, {
                                     changeUserData: this.onChangeUserData,
                                     currentUser: userData,
@@ -220,7 +220,6 @@ class MasterLayout extends Component {
                                     detectActionRenderType:(type)=>{if(type)this.setState({actionFooter:true})},
                                     showFullScreenLoading,
                                     hideFullScreenLoading,
-                                    protoType:()=>{  }
                                 })}
                             </div>
                             {this.state.actionFooter && this.renderActionFooter}
