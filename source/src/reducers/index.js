@@ -6,6 +6,8 @@ import groupPermission from './groupPermission';
 import category from './category';
 import news from './news';
 import province from './province';
+import ranks from './ranks';
+
 const rootReducer = combineReducers({
     appCommon: appCommon.reducer,
     account: account.reducer,
@@ -14,6 +16,7 @@ const rootReducer = combineReducers({
     category: category.reducer,
     news: news.reducer,
     province:province.reducer,
+    ranks: ranks.reducer
 });
 
 export default rootReducer;

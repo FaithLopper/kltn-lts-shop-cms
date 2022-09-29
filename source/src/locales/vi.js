@@ -17,11 +17,12 @@ export default {
         'System': 'Hệ thống',
         'Role': 'Quyền',
         'Category': 'Danh mục',
-        'Category News': 'Danh mục tin tức',
-        'Category Jobs': 'Danh mục công việc',
-        'Category Departments': 'Danh mục phòng ban',
+        'CategoryNews': 'Danh mục tin tức',
+        'CategoryJobs': 'Danh mục công việc',
+        'CategoryDepartments': 'Danh mục phòng ban',
         'News': 'Tin tức',
-        'Province':'Tỉnh thành'
+        'Province':'Tỉnh thành',
+        'Ranks': 'Cấp bậc khách hàng'
     },
     appHeader: {
         profile: 'Hồ sơ',
@@ -87,15 +88,6 @@ export default {
         closeButton: "Đóng",
         saveButton: "Lưu",
       },
-    basicSavePage:{
-        saveButton:'Lưu',
-        updateButton:'Lưu & cập nhật',
-        cancelButton:'Huỷ',
-        createMessage:'tạo mới',
-        updateMessage:'cập nhật',
-        okText:'Trở về danh sách',
-        Continue:'Tiếp tục'
-    },
     basicSavePage:{
         saveButton:'Lưu',
         updateButton:'Lưu & cập nhật',
@@ -516,4 +508,26 @@ export default {
         },
         createNewButton: "Tạo {{ var, lowercase }} mới",
       },
+    ranksListPage: {
+        breadcrumbs: {
+            currentPage: 'Cấp bậc khách hàng',
+            parentPage: 'Cấp bậc khách hàng',
+        },
+        objectName: 'cấp bậc khách hàng',
+        searchPlaceHolder: {
+            name: 'tên cấp bậc',
+        },
+        table: {
+            name: 'Cấp bậc',
+
+        },
+        form: {
+            label: {
+                avatar: 'Ảnh đại diện',
+                name: 'Tên cấp bậc',
+                target: 'Hạn mức tối thiểu để đạt được cấp bậc',
+            },
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
 }

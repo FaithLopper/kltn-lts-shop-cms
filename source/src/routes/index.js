@@ -33,7 +33,7 @@ const RootRoute = () => {
         adminNews,
         adminUpdate,
         province,
-        provinceUpdate
+        provinceUpdate,
     } = sitePathConfig;
 
     return (

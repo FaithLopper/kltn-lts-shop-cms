@@ -6,6 +6,7 @@ import groupPermission from './groupPermission';
 import category from './category';
 import news from './news';
 import provinces from './province'
+import ranks from './ranks';
 const sagas = [
     ...appCommon,
     ...account,
@@ -14,6 +15,7 @@ const sagas = [
     ...category,
     ...news,
     ...provinces,
+    ...ranks
 ];
 
 function* rootSaga() {
