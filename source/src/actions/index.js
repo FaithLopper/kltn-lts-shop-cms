@@ -32,5 +32,5 @@ export const types = {
     ...provinceTypes,
     ...customerTypes,
     ...addressTypes,
-    ...ranksTypess
+    ...ranksTypes
 }
