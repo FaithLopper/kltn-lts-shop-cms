@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Avatar, Tag, Button } from "antd";
+import { Avatar, Button } from "antd";
 import { UserOutlined, PlusOutlined } from "@ant-design/icons";
 import qs from "query-string";
 import { withTranslation } from "react-i18next";
@@ -9,13 +9,9 @@ import ListBasePage from "../ListBasePage";
 import BaseTable from "../../compoments/common/table/BaseTable";
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import { actions } from "../../actions";
-import { FieldTypes } from "../../constants/formConfig";
 import { AppConstants } from "../../constants";
-import { commonStatus, categoryKinds } from "../../constants/masterData";
 
-const { CATEGORY_KIND_JOBS } = categoryKinds;
-
-class CategoryJobsListPage extends ListBasePage {
+class RanksListPage extends ListBasePage {
   initialSearch() {
     return { name: "", status: null };
   }
@@ -24,13 +20,13 @@ class CategoryJobsListPage extends ListBasePage {
     super(props);
     const { t } = props;
     this.objectName = t("objectName");
-    this.objectListName = "category-jobs";
+    this.objectListName = "ranks";
     this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
     this.columns = [
       this.renderIdColumn(),
       {
         title: "#",
-        dataIndex: "categoryImage",
+        dataIndex: "avatar",
         align: "center",
         width: 100,
         render: (avatarPath) => (
@@ -47,16 +43,14 @@ class CategoryJobsListPage extends ListBasePage {
       {
         title: t("table.name"),
         render: (dataRow) => {
-          return dataRow.categoryName;
+          return dataRow.name;
         },
       },
-      this.renderStatusColumn(),
       this.renderActionColumn(),
     ];
     this.actionColumns = {
       isEdit: true,
       isDelete: true,
-      isChangeStatus: false,
     };
   }
 
@@ -78,7 +72,6 @@ class CategoryJobsListPage extends ListBasePage {
   prepareCreateData(data) {
     return {
       ...data,
-      categoryKind: CATEGORY_KIND_JOBS,
     };
   }
 
@@ -89,11 +82,8 @@ class CategoryJobsListPage extends ListBasePage {
       page,
       size: this.pagination.pageSize,
       search: this.search,
-      kind: CATEGORY_KIND_JOBS,
     };
-    console.log(getDataList({ params }))
-    getDataList({ params })
-    
+    getDataList({ params });
   }
 
   getSearchFields() {
@@ -104,23 +94,16 @@ class CategoryJobsListPage extends ListBasePage {
         seachPlaceholder: t("searchPlaceHolder.name"),
         initialValue: this.search.name,
       },
-      {
-        key: "status",
-        seachPlaceholder: t("searchPlaceHolder.status"),
-        fieldType: FieldTypes.SELECT,
-        options: commonStatus,
-        initialValue: this.search.status,
-      },
     ];
   }
 
   getDetailLink(dataRow) {
-    return sitePathConfig.categoryJobsUpdate.path.replace(":id", dataRow.id);
+    return sitePathConfig.ranks.childrenKeys[1].replace(":id", dataRow.id);
   }
 
   render() {
     const { dataList, loading, t } = this.props;
-    const categoryData = dataList.data || [];
+    const ranksData = dataList.data || [];
     this.pagination.total = dataList.totalElements || 0;
     return (
       <div>
@@ -139,7 +122,7 @@ class CategoryJobsListPage extends ListBasePage {
           loading={loading}
           columns={this.columns}
           rowKey={(record) => record.id}
-          dataSource={categoryData}
+          dataSource={ranksData}
           pagination={this.pagination}
           onChange={this.handleTableChange}
         />
@@ -149,16 +132,16 @@ class CategoryJobsListPage extends ListBasePage {
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.category.tbCategoryLoading,
-  dataList: state.category.categoryData || {},
+  loading: state.ranks.tbRanksLoading,
+  dataList: state.ranks.ranksData || {},
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getDataList: (payload) => dispatch(actions.getCategoryList(payload)),
-  getDataById: (payload) => dispatch(actions.getCategoryById(payload)),
-  updateData: (payload) => dispatch(actions.updateCategory(payload)),
-  deleteData: (payload) => dispatch(actions.deleteCategory(payload)),
-  createData: (payload) => dispatch(actions.createCategory(payload)),
+  getDataList: (payload) => dispatch(actions.getRanksList(payload)),
+  getDataById: (payload) => dispatch(actions.getRanksById(payload)),
+  updateData: (payload) => dispatch(actions.updateRanks(payload)),
+  deleteData: (payload) => dispatch(actions.deleteRanks(payload)),
+  createData: (payload) => dispatch(actions.createRanks(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
 });
 
@@ -167,9 +150,9 @@ export default connect(
   mapDispatchToProps
 )(
   withTranslation([
-    "categoryListPage",
+    "ranksListPage",
     "listBasePage",
     "constants",
     "basicModal",
-  ])(CategoryJobsListPage)
+  ])(RanksListPage)
 );

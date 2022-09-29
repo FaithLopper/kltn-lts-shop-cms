@@ -8,6 +8,8 @@ import news from './news';
 import province from './province';
 import customer from './customer';
 import address from './address';
+import ranks from './ranks';
+
 const rootReducer = combineReducers({
     appCommon: appCommon.reducer,
     account: account.reducer,
@@ -18,6 +20,7 @@ const rootReducer = combineReducers({
     province:province.reducer,
     customer:customer.reducer,
     address:address.reducer,
+    ranks: ranks.reducer
 });
 
 export default rootReducer;

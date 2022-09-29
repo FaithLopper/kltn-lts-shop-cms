@@ -7,6 +7,7 @@ import {actions as newsActions, actionTypes as newsTypes} from './news';
 import {actions as provinceActions, actionTypes as provinceTypes} from './province';
 import {actions as customerActions, actionTypes as customerTypes} from './customer';
 import {actions as addressActions, actionTypes as addressTypes} from './address';
+import {actions as ranksActions, actionTypes as ranksTypes} from './ranks';
 
 export const actions = {
     ...appCommonActions,
@@ -18,6 +19,7 @@ export const actions = {
     ...provinceActions,
     ...customerActions,
     ...addressActions,
+    ...ranksActions
 }
 
 export const types = {
@@ -30,4 +32,5 @@ export const types = {
     ...provinceTypes,
     ...customerTypes,
     ...addressTypes,
+    ...ranksTypess
 }

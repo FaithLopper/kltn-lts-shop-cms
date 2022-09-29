@@ -9,7 +9,7 @@ import { AppConstants, UploadFileTypes, STATUS_ACTIVE } from "../../constants";
 import { showErrorMessage } from "../../services/notifyService";
 import DropdownField from "../common/entryForm/DropdownField";
 
-class CategoryUpdateForm extends BasicForm {
+class RanksUpdateForm extends BasicForm {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,12 +26,12 @@ class CategoryUpdateForm extends BasicForm {
       this.formRef.current.setFieldsValue(nextProps.dataDetail);
     }
     if (
-      nextProps.dataDetail.categoryImage !== this.state.logo &&
+      nextProps.dataDetail.avatar !== this.state.logo &&
       this.state.isUpdateLogo === false &&
-      nextProps.dataDetail.categoryImage !== undefined
+      nextProps.dataDetail.avatar !== undefined
     ) {
       this.setState({
-        logo: `${AppConstants.contentRootUrl}${nextProps.dataDetail.categoryImage}`,
+        logo: `${AppConstants.contentRootUrl}${nextProps.dataDetail.avatar}`,
       });
     }
   }
@@ -55,7 +55,7 @@ class CategoryUpdateForm extends BasicForm {
       params: { fileObjects: { file }, type: UploadFileTypes.AVATAR },
       onCompleted: (result) => {
         // this.otherData.logoPath = result.data.filePath;
-        this.setFieldValue("categoryImage", result.data.filePath);
+        this.setFieldValue("avatar", result.data.filePath);
         this.setState({ uploading: false });
         this.onValuesChange();
         onSuccess();
@@ -72,9 +72,7 @@ class CategoryUpdateForm extends BasicForm {
   getInitialFormValues = () => {
     const { isEditing, dataDetail } = this.props;
     if (!isEditing) {
-      return {
-        status: STATUS_ACTIVE,
-      };
+      return {};
     }
     return dataDetail;
   };
@@ -104,7 +102,7 @@ class CategoryUpdateForm extends BasicForm {
         <Card title="THÔNG TIN CƠ BẢN" bordered={false}>
           <div style={{ padding: "20px 6px" }}>
             <CropImageFiled
-              fieldName="categoryImage"
+              fieldName="avatar"
               loading={uploading}
               // label={t("form.label.avatar")}
               imageUrl={logo}
@@ -112,33 +110,25 @@ class CategoryUpdateForm extends BasicForm {
               uploadFile={this.uploadFileLogo}
               // disabled={loadingSave}
             />
-            <TextField
-              style={{ width: "50%" }}
-              fieldName="categoryName"
-              label={t("form.label.categoryName")}
-              required
-              // disabled={loadingSave}
-            />
-            <div style={{ width: "50%" }}>
-              {isEditing ? (
-                <DropdownField
-                  fieldName="status"
-                  label={t("form.label.status")}
+            <Row gutter={[16, 0]}>
+              <Col span={12}>
+                <TextField
+                  fieldName="name"
+                  label={t("form.label.name")}
                   required
-                  options={commonStatus}
                   // disabled={loadingSave}
                 />
-              ) : null}
-            </div>
-            <TextField
-              type="textarea"
-              fieldName="categoryDescription"
-              label={t("form.label.categoryDescription")}
-              required
-              style={{
-                height: 180,
-              }}
-            />
+              </Col>
+              <Col span={12}>
+                <TextField
+                  fieldName="target"
+                  label={t("form.label.target")}
+                  required
+                  type="number"
+                  // disabled={loadingSave}
+                />
+              </Col>
+            </Row>
           </div>
         </Card>
         <div className="footer-card-form">
@@ -153,4 +143,4 @@ class CategoryUpdateForm extends BasicForm {
   }
 }
 
-export default CategoryUpdateForm;
+export default RanksUpdateForm;

@@ -12,6 +12,7 @@ import {
     ShoppingCartOutlined,
     CarryOutOutlined,
     BankOutlined,
+    CrownOutlined
 } from '@ant-design/icons';
 import { sitePathConfig } from '../constants/sitePathConfig';
 import store from '../store';
@@ -54,15 +55,15 @@ const navMenuConfig = [
         icon: <UnorderedListOutlined />,
         children: [
             {
-                label: 'Category News',
+                label: 'CategoryNews',
                 ...sitePathConfig.categoryNews,
             },
             {
-                label: 'Category Jobs',
+                label: 'CategoryJobs',
                 ...sitePathConfig.categoryJobs,
             },
             {
-                label: 'Category Departments',
+                label: 'CategoryDepartments',
                 ...sitePathConfig.categoryDepartments,
             },
         ]
@@ -87,7 +88,17 @@ const navMenuConfig = [
             },
         ]
     },
-    
+    {
+        label: 'Ranks',
+        icon: <CrownOutlined />,
+        children: [
+            {
+            label: 'Ranks',
+                ...sitePathConfig.ranks,
+            },
+        ]
+        
+    },
 ]
 
 export { navMenuConfig };

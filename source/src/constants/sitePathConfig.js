@@ -19,6 +19,8 @@ import CustomerListPage from '../containers/customer/CustomerListPage';
 import CustomerUpdatePage from '../containers/customer/CustomerUpdatePage';
 import AddressListPage from '../containers/customer/AddressListPage';
 import AddressUpdatePage from '../containers/customer/AddressUpdatePage';
+import RanksListPage from '../containers/ranks/RanksListPage';
+import RanksUpdate from '../containers/ranks/RanksUpdate';
 
 export const sitePathConfig = {
     login: {
@@ -217,4 +219,27 @@ export const sitePathConfig = {
             apiConfig.addressCustomer.update.path,
         ]
     },
+    ranks: {
+        path:'/ranks',
+        component:RanksListPage,
+        childrenKeys: ['/ranks/create','/ranks/:id'],
+        permissions:[
+            apiConfig.ranks.getList.path,
+            apiConfig.ranks.getById.path,
+            apiConfig.ranks.create.path,
+            apiConfig.ranks.update.path,
+            apiConfig.ranks.delete.path,
+            apiConfig.ranks.ranksAutoComplete.path,
+        ]
+    },
+    ranksUpdate: {
+        path:'/ranks/:id',
+        component:RanksUpdate,
+        permissions:[
+            apiConfig.ranks.getById.path,
+            apiConfig.ranks.create.path,
+            apiConfig.ranks.update.path,
+            apiConfig.ranks.ranksAutoComplete.path,
+        ]
+    }
 }
