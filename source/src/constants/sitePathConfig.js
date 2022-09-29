@@ -15,6 +15,10 @@ import CategoryJobsListPage from '../containers/category/CategoryJobsListPage';
 import CategoryJobsUpdate from '../containers/category/CategoryJobsUpdate';
 import CategoryDepartmentsListPage from '../containers/category/CategoryDepartmentsListPage';
 import CategoryDepartmentsUpdate from '../containers/category/CategoryDepartmentsUpdate';
+import CustomerListPage from '../containers/customer/CustomerListPage';
+import CustomerUpdatePage from '../containers/customer/CustomerUpdatePage';
+import AddressListPage from '../containers/customer/AddressListPage';
+import AddressUpdatePage from '../containers/customer/AddressUpdatePage';
 import RanksListPage from '../containers/ranks/RanksListPage';
 import RanksUpdate from '../containers/ranks/RanksUpdate';
 
@@ -169,6 +173,50 @@ export const sitePathConfig = {
             apiConfig.province.update.path,
             apiConfig.province.delete.path,
             apiConfig.province.provinceAutoComplete.path,
+        ]
+    },
+    customer: {
+        path: '/customer',
+        component:CustomerListPage,
+        childrenKeys: ['/customer/create','/customer/:id'],  //nếu có trang Update thì để childPath dạng ['/parent/create','/parent/update']
+        permissions: [
+            apiConfig.customer.getList.path,
+            apiConfig.customer.getById.path,
+            apiConfig.customer.create.path,
+            apiConfig.customer.update.path,
+            apiConfig.customer.delete.path,
+            apiConfig.customer.customerAutoComplete.path,
+            apiConfig.addressCustomer.getList.path,
+        ]
+    },
+    customerUpdate: {
+        path: '/customer/:id',
+        component:CustomerUpdatePage,
+        permissions: [
+            apiConfig.customer.getById.path,
+            apiConfig.customer.create.path,
+            apiConfig.customer.update.path,
+        ]
+    },
+    address: {
+        path: '/address',
+        component:AddressListPage,
+        childrenKeys: ['/address/create','/address/:id'],  //nếu có trang Update thì để childPath dạng ['/parent/create','/parent/update']
+        permissions: [
+            apiConfig.addressCustomer.getList.path,
+            apiConfig.addressCustomer.getById.path,
+            apiConfig.addressCustomer.create.path,
+            apiConfig.addressCustomer.update.path,
+            apiConfig.addressCustomer.delete.path,
+        ]
+    },
+    addressUpdate: {
+        path: '/address/:id',
+        component:AddressUpdatePage,
+        permissions: [
+            apiConfig.addressCustomer.getById.path,
+            apiConfig.addressCustomer.create.path,
+            apiConfig.addressCustomer.update.path,
         ]
     },
     ranks: {

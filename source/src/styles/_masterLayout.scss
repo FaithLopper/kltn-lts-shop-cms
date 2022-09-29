@@ -186,16 +186,11 @@
         background: #fff;  
         width:fit-content;
         .ant-row {
-            // display: -ms-flexbox;
             display: flex;
-            // -ms-flex-flow: row wrap;
-            // flex-flow: row wrap;
-            // height: 80px;
         }
         .ant-card-body{
             min-height: 83.5vh;
         }
-
 }
 
 .overlay-panel-submenu {

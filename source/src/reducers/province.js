@@ -2,8 +2,8 @@ import {actionTypes, reduxUtil} from "../actions/province"
 
 const initialState={
     provinceData:{},
-    provinceLoading:false
-
+    provinceLoading:false,
+    provinceAutoComple:{}
 }
 const {createReducer,defineActionLoading,defineActionFailed,defineActionSuccess} = reduxUtil
 

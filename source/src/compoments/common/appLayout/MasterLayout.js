@@ -116,7 +116,7 @@ class MasterLayout extends Component {
             children,
         }= this.props
         const protoTypeName=children.type.WrappedComponent.prototype.constructor.name.toLowerCase();
-        return pathname.includes('create') || pathname.includes('update') || protoTypeName.includes('update') ? true: false
+        return pathname.includes('create') || pathname.includes('update') || pathname.includes('profile') || protoTypeName.includes('update') ? true: false
     }
     onReturn(onBack){
         this.returnHandle= onBack
@@ -189,8 +189,7 @@ class MasterLayout extends Component {
                         <Breadcrumb className="app-breadcrumb" separator=">">
                         <h2>{breadcrumbs ? breadcrumbs[breadcrumbs.length-1]?.name:""}</h2>
                                 <Breadcrumb.Item>
-                                    {/* <Link to="/">Home</Link> */}
-                                    {t('breadcrumbs.home')}
+                                    <Link to="/">{t('breadcrumbs.home')}</Link>
                                 </Breadcrumb.Item>
                                 {
                                     breadcrumbs
@@ -210,7 +209,7 @@ class MasterLayout extends Component {
                                     null
                                 }
                             </Breadcrumb>
-                            <div className={`content-wrapper ${contentClass}`} id='body-content-wrapper'>
+                            <div className={`content-wrapper ${contentClass} ${this.isSaveBasePage() ? 'save-base-page':'' }`} id='body-content-wrapper'>
                                 {React.cloneElement(children, {
                                     changeUserData: this.onChangeUserData,
                                     currentUser: userData,

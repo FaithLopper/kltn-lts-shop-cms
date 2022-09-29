@@ -1,7 +1,8 @@
 import React from "react";
-import { Form, Button } from "antd";
+import { Form, Button, Card, Col, Row } from "antd";
 import BasicForm from "../common/entryForm/BasicForm";
 import TextField from "../common/entryForm/TextField";
+import { SaveOutlined,StopOutlined} from "@ant-design/icons"
 import CropImageFiled from "../common/entryForm/CropImageFiled";
 import { FormItemLayoutConf } from "../../constants/formConfig";
 import { showErrorMessage } from "../../services/notifyService";
@@ -22,7 +23,7 @@ class ProfileForm extends BasicForm {
       avatarUploading: false,
     };
 
-    this.isEmployee = actions.getUserData()?.kind === UserTypes.EMPLOYEE
+    this.isEmployee = actions.getUserData()?.kind === UserTypes.EMPLOYEE;
   }
 
   componentDidMount() {
@@ -49,7 +50,9 @@ class ProfileForm extends BasicForm {
   compareToPassword = (rule, password) => {
     const newPassword = this.getFieldValue("password");
     if ((password || newPassword) && password !== newPassword) {
-      return Promise.reject(this.props.t('form.validationMessage.passwordNotMatch'));
+      return Promise.reject(
+        this.props.t("form.validationMessage.passwordNotMatch")
+      );
     } else {
       return Promise.resolve();
     }
@@ -116,62 +119,95 @@ class ProfileForm extends BasicForm {
 
     return (
       <Form
-        {...FormItemLayoutConf}
-        ref={this.formRef}
         onFinish={this.handleSubmit}
+        ref={this.formRef}
         initialValues={userData}
+        layout="vertical"
+        onValuesChange={this.onValuesChange}
+        style={{ width: "600px" }}
       >
-        <CropImageFiled
-          fieldName="avatar"
-          loading={avatarUploading}
-          label={t('form.label.avatar')}
-          imageUrl={avatar}
-          onChange={this.handleChangeAvatar}
-          uploadFile={this.uploadFileAvatar}
-          disabled={this.isEmployee}
-        />
-        <TextField fieldName="username" label={t('form.label.username')} disabled required />
-        <TextField
-          fieldName="fullName"
-          label={t('form.label.fullName')}
-          required
-          requiredMsg={t('form.validationMessage.fullNameRequire')}
-          disabled={this.isEmployee}
-        />
-        <TextField
-          type="password"
-          fieldName="oldPassword"
-          label={t('form.label.oldPassword')}
-          required
-          requiredMsg={t('form.validationMessage.passwordRequire')}
-        />
-        <TextField
-          type="password"
-          fieldName="password"
-          label={t('form.label.newPassword')}
-          validators={[this.validateToConfirmPassword]}
-        />
-        <TextField
-          type="password"
-          fieldName="confirmPassword"
-          label={t('form.label.confirmNewPassword')}
-          validators={[this.compareToPassword]}
-        />
-        <Form.Item
-          wrapperCol={{
-            xs: { span: 24, offset: 0 },
-            sm: { span: 16, offset: 8 },
-          }}
-        >
-          <Button
+        <Card title={t(`baseField:${"accountInfo"}`)} className="card-form" bordered={false}>
+          <Row gutter={[16, 0]}>
+            <Col span={12}>
+              <CropImageFiled
+                fieldName="avatar"
+                loading={avatarUploading}
+                label={t("form.label.avatar")}
+                imageUrl={avatar}
+                onChange={this.handleChangeAvatar}
+                uploadFile={this.uploadFileAvatar}
+              />
+            </Col>
+          </Row>
+          <Row gutter={[16, 0]}>
+            <Col span={12}>
+              <TextField
+                fieldName="username"
+                min={6}
+                validators={[Utils.validateUsernameForm]}
+                label={t("form.label.username")}
+                disabled
+                required
+              />
+            </Col>
+            <Col span={12}>
+              <TextField
+                fieldName="fullName"
+                label={t("form.label.fullName")}
+                required
+                requiredMsg={t("form.validationMessage.fullNameRequire")}
+              />
+            </Col>
+          </Row>
+          <Row gutter={[16, 0]}>
+            <Col span={12}>
+              <TextField
+                type="password"
+                fieldName="oldPassword"
+                label={t("form.label.oldPassword")}
+                required
+                requiredMsg={t("form.validationMessage.passwordRequire")}
+              />
+            </Col>
+            <Col span={12}>
+              <TextField
+                type="password"
+                fieldName="password"
+                label={t("form.label.newPassword")}
+                validators={[this.validateToConfirmPassword]}
+              />
+            </Col>
+          </Row>
+          <Row gutter={[16, 0]}>
+            <Col span={12}>
+              <TextField
+                type="password"
+                fieldName="confirmPassword"
+                label={t("form.label.confirmNewPassword")}
+                validators={[this.compareToPassword]}
+              />
+            </Col>
+          </Row>
+        </Card>
+        <div className="footer-card-form">
+          <Row gutter={16} justify="end">
+            <Col span={10}>
+            <Row gutter={16} justify="end">
+            <Col span={10}>
+            <Button
             loading={loading}
-            className="profile-form-button"
+            // className="profile-form-button"
             type="primary"
             htmlType="submit"
+            icon={<SaveOutlined />}
           >
-            {t('button.update')}
+              {t(`basicSavePage:${"saveButton"}`)}
           </Button>
-        </Form.Item>
+                </Col>
+        </Row>
+            </Col>
+          </Row>
+        </div>
       </Form>
     );
   }

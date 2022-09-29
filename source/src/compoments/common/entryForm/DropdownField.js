@@ -26,6 +26,7 @@ class DropdownField extends BaseField {
             labelInValue,
             onSelect,
             onChange,
+            onClick,
             noStyle,
             dropdownClassName,
             allowClear,
@@ -54,6 +55,7 @@ class DropdownField extends BaseField {
                     tagRender={tagRender}
                     dropdownClassName={dropdownClassName}
                     allowClear={allowClear}
+                    onClick={onClick}
                 >
                     {
                         options

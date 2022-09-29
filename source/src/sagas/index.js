@@ -6,6 +6,8 @@ import groupPermission from './groupPermission';
 import category from './category';
 import news from './news';
 import provinces from './province'
+import customer from './customer'
+import address from './address'
 import ranks from './ranks';
 const sagas = [
     ...appCommon,
@@ -15,6 +17,8 @@ const sagas = [
     ...category,
     ...news,
     ...provinces,
+    ...customer,
+    ...address,
     ...ranks
 ];
 

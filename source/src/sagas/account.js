@@ -98,9 +98,7 @@ function* updateProfile({ payload: { params, onCompleted, onError } }) {
     let userData;
     if(actions.getUserData()?.kind === UserTypes.ADMIN) {
       userData = yield call(sendRequest, apiConfig.account.updateProfileAdmin, params);
-    }
-    else {
-      userData = yield call(sendRequest, apiConfig.employee.updateProfile, params);
+      yield call(sendRequest, apiConfig.account.getAdminProfile)
     }
     handleApiResponse(userData, onCompleted, onError);
   } catch (error) {

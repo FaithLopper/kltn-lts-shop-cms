@@ -6,6 +6,8 @@ import groupPermission from './groupPermission';
 import category from './category';
 import news from './news';
 import province from './province';
+import customer from './customer';
+import address from './address';
 import ranks from './ranks';
 
 const rootReducer = combineReducers({
@@ -16,6 +18,8 @@ const rootReducer = combineReducers({
     category: category.reducer,
     news: news.reducer,
     province:province.reducer,
+    customer:customer.reducer,
+    address:address.reducer,
     ranks: ranks.reducer
 });
 

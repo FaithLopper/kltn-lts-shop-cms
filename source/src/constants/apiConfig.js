@@ -192,7 +192,72 @@ const apiConfig = {
             method:"GET",
             headers:baseHeader
         }
-      },
+    },
+    customer: {
+        getList: {
+            path: '/v1/customer/list',
+            method: 'GET',
+            headers: baseHeader
+        },
+        getById: {
+            path: '/v1/customer/get',
+            method: 'GET',
+            headers: baseHeader
+        },
+        create: {
+            path: '/v1/customer/create',
+            method: 'POST',
+            headers: baseHeader
+        },
+        update: {
+            path: '/v1/customer/update',
+            method: 'PUT',
+            headers: baseHeader
+        },
+        delete: {
+            path: '/v1/customer/delete',
+            method: 'DELETE',
+            headers: baseHeader
+        },
+        customerAutoComplete:{
+            path:"/v1/customer/auto-complete",
+            method:"GET",
+            headers:baseHeader
+        },
+      
+    },
+    addressCustomer: {
+        getList: {
+            path: '/v1/customer/address/list',
+            method: 'GET',
+            headers: baseHeader
+        },
+        getById: {
+            path: '/v1/customer/address/get',
+            method: 'GET',
+            headers: baseHeader
+        },
+        create: {
+            path: '/v1/customer/address/create',
+            method: 'POST',
+            headers: baseHeader
+        },
+        update: {
+            path: '/v1/customer/address/update',
+            method: 'PUT',
+            headers: baseHeader
+        },
+        delete: {
+            path: '/v1/customer/address/delete',
+            method: 'DELETE',
+            headers: baseHeader
+        },
+        setDefauldAddress:{
+            path:"/v1/customer/address/default",
+            method:"PUT",
+            headers:baseHeader
+        }
+    },
     ranks: {
         getList:{
             path:"/v1/ranks/list",

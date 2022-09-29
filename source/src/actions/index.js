@@ -5,6 +5,8 @@ import { actions as groupPermissionActions, actionTypes as groupPermissionTypes 
 import {actions as categoryActions, actionTypes as categoryTypes} from './category';
 import {actions as newsActions, actionTypes as newsTypes} from './news';
 import {actions as provinceActions, actionTypes as provinceTypes} from './province';
+import {actions as customerActions, actionTypes as customerTypes} from './customer';
+import {actions as addressActions, actionTypes as addressTypes} from './address';
 import {actions as ranksActions, actionTypes as ranksTypes} from './ranks';
 
 export const actions = {
@@ -15,6 +17,8 @@ export const actions = {
     ...categoryActions,
     ...newsActions,
     ...provinceActions,
+    ...customerActions,
+    ...addressActions,
     ...ranksActions
 }
 
@@ -26,5 +30,7 @@ export const types = {
     ...categoryTypes,
     ...newsTypes,
     ...provinceTypes,
+    ...customerTypes,
+    ...addressTypes,
     ...ranksTypes
 }
