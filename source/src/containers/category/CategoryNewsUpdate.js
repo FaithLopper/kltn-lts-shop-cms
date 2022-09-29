@@ -112,7 +112,6 @@ class CategoryNewsUpdate extends SaveBasePage {
   };
 
   prepareCreateData = (data) => {
-    console.log("create data", data);
     return {
       categoryKind: categoryKinds.CATEGORY_KIND_NEWS,
       status: 1,
@@ -121,10 +120,8 @@ class CategoryNewsUpdate extends SaveBasePage {
   };
 
   prepareUpdateData = (data) => {
-    console.log("update data", data);
     return {
       ...data,
-      // kind:categoryKinds.CATEGORY_KIND_NEWS,
       categoryImage: data.categoryImage,
       id: this.dataDetail.id,
     };

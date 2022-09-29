@@ -112,7 +112,6 @@ class CategoryDepartmentsUpdate extends SaveBasePage {
   };
 
   prepareCreateData = (data) => {
-    console.log("create data", data);
     return {
       categoryKind: categoryKinds.CATEGORY_KIND_DEPARTMENTS,
       status: 1,
@@ -121,7 +120,6 @@ class CategoryDepartmentsUpdate extends SaveBasePage {
   };
 
   prepareUpdateData = (data) => {
-    console.log("update data", data);
     return {
       ...data,
       categoryImage: data.categoryImage,

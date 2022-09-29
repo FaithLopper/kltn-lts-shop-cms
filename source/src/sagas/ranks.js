@@ -17,7 +17,6 @@ const {
 
 
 function* getRanksList({ payload: { params } }) {
-    console.log(params)
     const apiParams = apiConfig.ranks.getList;
     const searchParams = { page: params.page, size: params.size };
 
