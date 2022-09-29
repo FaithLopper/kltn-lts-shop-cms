@@ -46,7 +46,8 @@ class NewsListPage extends ListBasePage {
       this.renderIdColumn(),
       {
         title: <div style={{ textAlign: "center" }}> # </div>,
-        width: "80px",
+        width: "5px",
+        align: 'center',
         dataIndex: "avatar",
         render: (avatar) => (
           <Avatar
@@ -57,11 +58,11 @@ class NewsListPage extends ListBasePage {
           />
         ),
       },
-      { title: t("table.title"), dataIndex: "title" },
+      { title: t("table.title"), dataIndex: "title",width: "250px" },
       {
         title: t("table.category"),
         dataIndex: "categoryId",
-        minWidth: 100,
+        width: "250px",
         render: (categoryId) => {
           let selectedCategory;
           if (this.categoryOptions.length > 0) {
@@ -75,7 +76,7 @@ class NewsListPage extends ListBasePage {
       {
         title: t("table.pinTop"),
         dataIndex: "pinTop",
-        width: 80,
+        width: "250px",
         align: "center",
         render: (pinTop) => (
           <PushpinFilled style={{ color: pinTop === 1 ? "green" : "#ccc" }} />
@@ -309,8 +310,6 @@ class NewsListPage extends ListBasePage {
     const { dataList, loading, categoryAutoCompleteNews, uploadFile, t } =
       this.props;
     const {
-      isShowModifiedModal,
-      isShowModifiedLoading,
       isShowPreviewModal,
       isShowPreviewLoading,
     } = this.state;
@@ -346,23 +345,6 @@ class NewsListPage extends ListBasePage {
           onChange={this.handleTableChange}
           loading={loading}
         />
-        {/* <BasicModal
-          visible={isShowModifiedModal}
-          isEditing={this.isEditing}
-          objectName={this.objectName}
-          loading={isShowModifiedLoading}
-          onOk={this.onOkModal}
-          onCancel={this.onCancelModal}
-        >
-          <NewsForm
-            isEditing={this.isEditing}
-            dataDetail={this.isEditing ? this.dataDetail : {}}
-            categoryOptions={this.categoryOptions}
-            uploadFile={uploadFile}
-            loadingSave={isShowModifiedLoading}
-            t={t}
-          />
-        </BasicModal> */}
         <BasicModal
           visible={isShowPreviewModal}
           objectName={this.objectName}
