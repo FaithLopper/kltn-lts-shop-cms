@@ -173,7 +173,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getDataList: (payload) => dispatch(actions.getProvinceList(payload)),
   getProvinceAutoComple: (payload) =>
-    dispatch(actions.getProvinceAutocomple(payload)),
+  dispatch(actions.getProvinceAutocomple(payload)),
   getDataById: (payload) => dispatch(actions.getProvinceById(payload)),
   createData: (payload) => dispatch(actions.createProvince(payload)),
   updateData: (payload) => dispatch(actions.updateProvince(payload)),

@@ -232,11 +232,11 @@ class SaveBasePage extends Component {
         const {t}= this.props
 
         const disabledSubmit = customDisabledSubmitValue !== undefined ? customDisabledSubmitValue : !isChanged;
-        return (<Row gutter={16}>
-            <Col span={14}>
+        return (<Row gutter={16} justify="end">
+            <Col span={10}>
             <Button type="danger" key="cancel" onClick={this.onBack} icon={<StopOutlined />}> {t(`basicSavePage:${"cancelButton"}`) }</Button>
             </Col>
-            <Col span={1}>
+            <Col span={10}>
             <Button
                 key="submit"
                 htmlType="submit"
@@ -248,7 +248,7 @@ class SaveBasePage extends Component {
                 >
                {t(`basicSavePage:${"saveButton"}`)}
             </Button>
-                </Col>
+            </Col>
         </Row>);
     }
 

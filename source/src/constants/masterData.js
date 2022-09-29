@@ -34,8 +34,8 @@ export const commonKinds = [
 ]
 
 export const commonSex = [
-    { value: 0, label: 'Nữ' },
-    { value: 1, label: 'Nam' }
+    { value: 1, label: 'Nữ' },
+    { value: 2, label: 'Nam' }
 ]
 
 const GENDER_MALE = 1

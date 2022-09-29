@@ -22,6 +22,7 @@ export default {
         'CategoryDepartments': 'Danh mục phòng ban',
         'News': 'Tin tức',
         'Province':'Tỉnh thành',
+        'Customer':'Khách hàng',
         'Ranks': 'Cấp bậc khách hàng'
     },
     appHeader: {
@@ -102,6 +103,9 @@ export default {
         enter: 'nhập',
         requiredMsg: 'Vui lòng {{ action, lowercase }} {{ fieldTitle, lowercase }}',
         imageTooLarge: 'Hình tải lên cần nhỏ hơn 500KB!',
+        basicInfo:'THÔNG TIN CƠ BẢN',
+        accountInfo:'THÔNG TIN TÀI KHOẢN',
+        address:'THÔNG TIN ĐỊA CHỈ',
     },
     fileUploadField: {
         clickToUpload: 'Nhấp vào để tải lên',
@@ -205,29 +209,6 @@ export default {
             phone: 'Số điện thoại',
             createdDate: 'Ngày tạo',
             organize: 'Đơn vị',
-        },
-        form: {
-            label: {
-                newPassword:'Tạo mật khẩu mới',
-                password:'Mật khẩu',
-                avatar: 'Ảnh đại diện',
-                username: 'Tên đăng nhập',
-                fullName: 'Họ và tên',
-                password: 'Mật khẩu',
-                confirmPassword: 'Xác nhận mật khẩu',
-                newPassword: 'Mật khẩu mới',
-                confirmNewPassword: 'Xác nhận mật khẩu mới',
-                groupPermission: 'Nhóm quyền',
-                phone: 'Số điện thoại',
-                language: 'Ngôn ngữ',
-                status: 'Trạng thái',
-                organization: 'Đơn vị',
-                organizationPlaceHolder: 'Hãy chọn đơn vị',
-            },
-            validationMessage: {
-                phoneLengthRequire: 'Hãy nhập số',
-                comparePassword: 'Mật khẩu bạn nhập không khớp!',
-            }
         },
         message: {
             // updateProfileFail: 'Your profile failed. Please try again!',
@@ -509,6 +490,118 @@ export default {
         },
         createNewButton: "Tạo {{ var, lowercase }} mới",
       },
+      customerListPage: {
+        breadcrumbs: {
+            currentPage: 'Danh sách khách hàng',
+        },
+        objectName: 'khách hàng',
+        searchPlaceHolder: {
+            username: 'Tài khoản đăng nhập',
+            fullName: 'Họ và tên',
+            status: 'Chọn trạng thái',
+            organize: 'Chọn đơn vị',
+        },
+        table: {
+            avatar: '#',
+            username: 'Tên đăng nhập',
+            fullName: 'Họ và tên',
+            phone: 'Số điện thoại',
+            createdDate: 'Ngày tạo',
+            organize: 'Đơn vị',
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    customerUpdatePage: {
+        breadcrumbs: {
+            // currentPage: '{{ var }} quản trị viên',
+            parentPage:'Danh sách khách hàng',
+        },
+        objectName: 'khách hàng',
+        form: {
+            label: {
+                newPassword:'Tạo mật khẩu mới',
+                password:'Mật khẩu',
+                avatar: 'Ảnh đại diện',
+                username: 'Tên đăng nhập',
+                fullName: 'Họ và tên',
+                password: 'Mật khẩu',
+                confirmPassword: 'Xác nhận mật khẩu',
+                newPassword: 'Mật khẩu mới',
+                confirmNewPassword: 'Xác nhận mật khẩu mới',
+                groupPermission: 'Nhóm quyền',
+                phone: 'Số điện thoại',
+                language: 'Ngôn ngữ',
+                status: 'Trạng thái',
+                birthday:'Ngày sinh',
+                gender:'Giới tính'
+            },
+            validationMessage: {
+                phoneLengthRequire: 'Hãy nhập số',
+                comparePassword: 'Mật khẩu bạn nhập không khớp!',
+            }
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
+    },
+    addressListPage: {
+        breadcrumbs: {
+            currentPage: 'Danh sách địa chỉ',
+        },
+        objectName: 'địa chỉ',
+        searchPlaceHolder: {
+            username: 'Tài khoản đăng nhập',
+            fullName: 'Họ và tên',
+            status: 'Chọn trạng thái',
+            organize: 'Chọn đơn vị',
+        },
+        table: {
+            province: 'Tỉnh',
+            district: 'Huyện',
+            phone: 'Số điện thoại',
+            ward:'Phường/ Xã',
+            addressDetails:'Địa chỉ cụ thể',
+            receiverFullName:'Tên người nhận',
+            isDefault:'Mặc định'
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    addressUpdatePage: {
+        breadcrumbs: {
+            // currentPage: '{{ var }} quản trị viên',
+            parentPage:'Danh sách địa chỉ',
+        },
+        objectName: 'địa chỉ',
+        form: {
+            label: {
+                provinceId: 'Tỉnh/ Thành phố',
+                districtId: 'Quận/ Huyện',
+                phone: 'Số điện thoại',
+                wardId:'Phường/ Xã',
+                addressDetails:'Địa chỉ cụ thể',
+                receiverFullName:'Tên người nhận',
+                isDefault:'Mặc định',
+                status:'Tình trạng',
+            },
+            validationMessage: {
+                phoneLengthRequire: 'Hãy nhập số',
+                comparePassword: 'Mật khẩu bạn nhập không khớp!',
+            }
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
+    },
     ranksListPage: {
         breadcrumbs: {
             currentPage: 'Cấp bậc khách hàng',

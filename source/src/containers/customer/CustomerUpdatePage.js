@@ -1,31 +1,26 @@
 import React from 'react';
-// import ECatalogueLevel1Form from '../../components/eCatalogue/ECatalogueLevel1Form';
 import AdminLevel1Form from '../../compoments/user/AdminLevel1Form';
 import SaveBasePage from "../SaveBasePage";
 import LoadingWrapper from '../../compoments/common/elements/LoadingWrapper';
 import { connect } from 'react-redux';
-// import { eCatalogueActions } from '../../redux/actions';
 import { actions } from "../../actions";
-import { convertUtcToLocalTime } from '../../utils/datetimeHelper';
-import { showErrorMessage, showSucsessMessage } from "../../services/notifyService";
-// import { siteConfig } from "../../constants/siteConfig";
 import { sitePathConfig } from '../../constants/sitePathConfig';
-// import ObjectNotFound from "../../components/common/ObjectNotFound";
 import ObjectNotFound from '../../compoments/common/ObjectNotFound';
 import { withTranslation } from "react-i18next";
 import { UserTypes } from '../../constants';
-class UserAminUpdate extends SaveBasePage {
+import CustomerForm from '../../compoments/customer/CustomerForm';
+class CustomerUpdatePage extends SaveBasePage {
 
     constructor(props) {
         super(props);
         const { t } = this.props;
         this.objectName =  t("objectName");
-        this.getListUrl = sitePathConfig.admin.path;
+        this.getListUrl = sitePathConfig.customer.path;
         this.actionFooter= false
         this.breadcrumbs = [
             {
                 name:  t("breadcrumbs.parentPage"),
-                path:`${sitePathConfig.admin.path}`
+                path:`${sitePathConfig.customer.path}`
             },
             {
                 name:  this.isEditing? `${t(`listBasePage:${"update"}`)} ${this.objectName}` :`${t(`listBasePage:${"create"}`)} ${this.objectName}`,
@@ -40,15 +35,16 @@ class UserAminUpdate extends SaveBasePage {
     }
 
     getDataDetailMapping = (data) => {
-        const adminUserData = data
+        console.log(data);
+        const customerData = data
 
-        if (!adminUserData) {
+        if (!customerData) {
             this.setState({ objectNotFound: true });
-            return
+            return 
         }
 
         return {
-            ...adminUserData,
+            ...customerData,
         }
     }
 
@@ -105,8 +101,6 @@ class UserAminUpdate extends SaveBasePage {
 
     prepareCreateData = (data) => {
         return {
-            kind:UserTypes.ADMIN,
-            avatarPath: data.avatar,
             status: 1,
             ...data,
         };
@@ -115,8 +109,6 @@ class UserAminUpdate extends SaveBasePage {
     prepareUpdateData = (data) => {
         return {
             ...data,
-            kind:UserTypes.ADMIN,
-            avatarPath: data.avatar,
             id: this.dataDetail.id
         };
     }
@@ -145,7 +137,7 @@ class UserAminUpdate extends SaveBasePage {
 
         return (
             <LoadingWrapper loading={isGetDetailLoading}>
-                <AdminLevel1Form
+                <CustomerForm
                     setIsChangedFormValues={this.setIsChangedFormValues}
                     formId={this.getFormId()}
                     onSubmit={this.onSave}
@@ -166,9 +158,9 @@ class UserAminUpdate extends SaveBasePage {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getDataById: (payload) => dispatch(actions.getUserById(payload)),
-  createData: (payload) => dispatch(actions.createUser(payload)),
-  updateData: (payload) => dispatch(actions.updateUser(payload)),
+  getDataById: (payload) => dispatch(actions.getCustomerById(payload)),
+  createData: (payload) => dispatch(actions.createCustomer(payload)),
+  updateData: (payload) => dispatch(actions.updateCustomer(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
 })
 
@@ -176,4 +168,4 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['userAdminUpdatePage','listBasePage'])(UserAminUpdate));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['customerUpdatePage','listBasePage'])(CustomerUpdatePage));
