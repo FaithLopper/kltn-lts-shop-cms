@@ -33,6 +33,10 @@ const navMenuConfig = [
                 label: 'Admin',
                 ...sitePathConfig.admin
             },
+            {
+                label: 'Customer',
+                ...sitePathConfig.customer
+            },
         ]
     },
     {
@@ -82,8 +86,8 @@ const navMenuConfig = [
                 ...sitePathConfig.province,
             },
         ]
-        
     },
+    
 ]
 
 export { navMenuConfig };

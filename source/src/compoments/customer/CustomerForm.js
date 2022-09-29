@@ -4,11 +4,11 @@ import BasicForm from '../common/entryForm/BasicForm';
 import TextField from '../common/entryForm/TextField';
 import DatePickerField from '../common/entryForm/DatePickerField';
 import UploadImageField from '../common/entryForm/UploadImageField';
-import { convertDateTimeToString, convertUtcToLocalTime } from '../../utils/datetimeHelper';
+import { convertDateTimeToString, convertLocalTimeToUtc, convertStringToDateTime, convertUtcToLocalTime, convertUtcToTimezone } from '../../utils/datetimeHelper';
 import CropImageFiled from '../common/entryForm/CropImageFiled';
 import Utils from "../../utils";
 import { KeyOutlined, CopyOutlined } from '@ant-design/icons';
-import { commonStatus } from '../../constants/masterData';
+import { commonSex, commonStatus } from '../../constants/masterData';
 import {
     AppConstants,
     UploadFileTypes,
@@ -17,7 +17,8 @@ import {
   import { showErrorMessage } from "../../services/notifyService";
 import PasswordGeneratorField from '../common/entryForm/PasswordGeneratorField';
 import DropdownField from '../common/entryForm/DropdownField';
-class AdminLevel1Form extends BasicForm {
+import moment from 'moment';
+class CustomerForm extends BasicForm {
 
     constructor(props) {
         super(props)
@@ -31,10 +32,19 @@ class AdminLevel1Form extends BasicForm {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.dataDetail !== this.props.dataDetail) {
-            this.formRef.current.setFieldsValue(nextProps.dataDetail)
-        }
-        if(nextProps.dataDetail.avatar !== this.state.logo && this.state.isUpdateLogo === false && nextProps.dataDetail.avatar!==undefined){
-            this.setState({logo:`${AppConstants.contentRootUrl}${nextProps.dataDetail.avatar}`})
+            const {dataDetail}= nextProps
+            let data={
+                birthday:convertStringToDateTime(convertUtcToTimezone(dataDetail.birthday, "DD/MM/YYYY"), "DD/MM/YYYY", "DD/MM/YYYY"),
+                avatar:dataDetail.account.avatar,
+                username:dataDetail.account.username,
+                fullName:dataDetail.account.fullName,
+                phone:dataDetail.account.phone,
+                gender:dataDetail.gender,
+                email:dataDetail.account.email,
+                status:dataDetail.account.status,
+                avatar:dataDetail.account.avatar,
+            }
+            this.formRef.current.setFieldsValue(data)
         }
     }
 
@@ -44,9 +54,12 @@ class AdminLevel1Form extends BasicForm {
     }
 
     handleSubmit(formValues) {
+        console.log(formValues)
         const { onSubmit } = this.props
+        const birthday = convertLocalTimeToUtc(convertDateTimeToString(formValues.birthday, "DD/MM/YYYY"), "DD/MM/YYYY");
         onSubmit({
             ...formValues,
+            birthday:birthday
         })
     }
 
@@ -71,7 +84,7 @@ class AdminLevel1Form extends BasicForm {
 	};
 
 	getInitialFormValues = () => {
-		const { isEditing, dataDetail } = this.props;
+        const { isEditing, dataDetail } = this.props;
 		if (!isEditing) {
 		return {
 			status: STATUS_ACTIVE,
@@ -98,6 +111,7 @@ class AdminLevel1Form extends BasicForm {
 
     render() {
         const { formId, dataDetail, actions, isEditing,t } = this.props
+        console.log(dataDetail)
         const {
             uploading,
 			logo,
@@ -188,6 +202,25 @@ class AdminLevel1Form extends BasicForm {
                         </Row>
                         <Row gutter={[16, 0]}>
                         <Col span={12}>
+                        <DatePickerField
+                        fieldName="birthday"
+                        label={t('form.label.birthday')}
+                        format="DD/MM/YYYY"
+                        width="100%"
+                        placeholder={t('form.label.birthday')}
+                    />
+                        </Col>
+                       <Col span={12}>
+                       <DropdownField
+                        fieldName="gender"
+                        label={t("form.label.gender")}
+                        required
+                        options={commonSex}
+                    />
+                       </Col>
+                        </Row>
+                        <Row gutter={[16, 0]}>
+                        <Col span={12}>
                             <TextField fieldName="email" label="E-mail" type="email" 
                             // disabled={loadingSave}
                             />
@@ -213,4 +246,4 @@ class AdminLevel1Form extends BasicForm {
     }
 }
 
-export default AdminLevel1Form;
+export default CustomerForm;

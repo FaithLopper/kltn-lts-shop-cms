@@ -20,7 +20,7 @@ class GroupPermissionUpdate extends SaveBasePage {
         super(props);
         const { t } = this.props;
         this.objectName =  t("objectName");
-        this.getListUrl = sitePathConfig.admin.path;
+        this.getListUrl = sitePathConfig.groupPermission.path;
         this.actionFooter= false
         this.breadcrumbs = [
             {
@@ -157,7 +157,6 @@ class GroupPermissionUpdate extends SaveBasePage {
                     handleUploadImage={this.handleUploadImageField}
                     uploadFile={uploadFile}
                     t={t}
-
                     />
                     
             </LoadingWrapper>

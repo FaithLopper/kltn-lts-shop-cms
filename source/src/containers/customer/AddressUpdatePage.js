@@ -1,31 +1,27 @@
 import React from 'react';
-// import ECatalogueLevel1Form from '../../components/eCatalogue/ECatalogueLevel1Form';
 import AdminLevel1Form from '../../compoments/user/AdminLevel1Form';
 import SaveBasePage from "../SaveBasePage";
 import LoadingWrapper from '../../compoments/common/elements/LoadingWrapper';
 import { connect } from 'react-redux';
-// import { eCatalogueActions } from '../../redux/actions';
 import { actions } from "../../actions";
-import { convertUtcToLocalTime } from '../../utils/datetimeHelper';
-import { showErrorMessage, showSucsessMessage } from "../../services/notifyService";
-// import { siteConfig } from "../../constants/siteConfig";
 import { sitePathConfig } from '../../constants/sitePathConfig';
-// import ObjectNotFound from "../../components/common/ObjectNotFound";
 import ObjectNotFound from '../../compoments/common/ObjectNotFound';
 import { withTranslation } from "react-i18next";
-import { UserTypes } from '../../constants';
-class UserAminUpdate extends SaveBasePage {
+import { ProvinceKinds, UserTypes } from '../../constants';
+import CustomerForm from '../../compoments/customer/CustomerForm';
+import AddressForm from '../../compoments/customer/AddressForm';
+class AddressUpdatePage extends SaveBasePage {
 
     constructor(props) {
         super(props);
         const { t } = this.props;
         this.objectName =  t("objectName");
-        this.getListUrl = sitePathConfig.admin.path;
+        this.getListUrl = sitePathConfig.address.path;
         this.actionFooter= false
         this.breadcrumbs = [
             {
                 name:  t("breadcrumbs.parentPage"),
-                path:`${sitePathConfig.admin.path}`
+                path:`${sitePathConfig.customer.path}`
             },
             {
                 name:  this.isEditing? `${t(`listBasePage:${"update"}`)} ${this.objectName}` :`${t(`listBasePage:${"create"}`)} ${this.objectName}`,
@@ -105,8 +101,6 @@ class UserAminUpdate extends SaveBasePage {
 
     prepareCreateData = (data) => {
         return {
-            kind:UserTypes.ADMIN,
-            avatarPath: data.avatar,
             status: 1,
             ...data,
         };
@@ -115,8 +109,6 @@ class UserAminUpdate extends SaveBasePage {
     prepareUpdateData = (data) => {
         return {
             ...data,
-            kind:UserTypes.ADMIN,
-            avatarPath: data.avatar,
             id: this.dataDetail.id
         };
     }
@@ -136,16 +128,32 @@ class UserAminUpdate extends SaveBasePage {
         }
     }
 
+    handleLocation = (data)=>{
+        if(data[0].kind===ProvinceKinds.province.level){
+            this.provinceOption= data
+        }
+        else if(data[0].kind===ProvinceKinds.district.level){
+            this.districtOption= data
+        }
+        else if(data[0].kind===ProvinceKinds.commune.level){
+            this.communeOption= data
+        }
+    }
+
     render() {
         const { isGetDetailLoading, objectNotFound,  } = this.state
-        const {t,uploadFile}= this.props
+        const {t,uploadFile,getLocation,provinceList}= this.props
+        if(provinceList.length!==0){
+            this.handleLocation(provinceList.data)
+        }
         if (objectNotFound) {
             return <ObjectNotFound />
         }
+        const province = provinceList.data || [];
 
         return (
             <LoadingWrapper loading={isGetDetailLoading}>
-                <AdminLevel1Form
+                <AddressForm
                     setIsChangedFormValues={this.setIsChangedFormValues}
                     formId={this.getFormId()}
                     onSubmit={this.onSave}
@@ -156,8 +164,11 @@ class UserAminUpdate extends SaveBasePage {
                     handleRemoveImage={this.handleRemoveImageField}
                     handleUploadImage={this.handleUploadImageField}
                     uploadFile={uploadFile}
+                    getLocation={getLocation}
+                    provinceOption={this.provinceOption}
+                    districtOption={this.districtOption}
+                    communeOption={this.communeOption}
                     t={t}
-
                     />
                     
             </LoadingWrapper>
@@ -166,14 +177,14 @@ class UserAminUpdate extends SaveBasePage {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getDataById: (payload) => dispatch(actions.getUserById(payload)),
-  createData: (payload) => dispatch(actions.createUser(payload)),
-  updateData: (payload) => dispatch(actions.updateUser(payload)),
-  uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
+  getDataById: (payload) => dispatch(actions.getAddressById(payload)),
+  createData: (payload) => dispatch(actions.createAddress(payload)),
+  updateData: (payload) => dispatch(actions.updateAddress(payload)),
+  getLocation:(payload)=>dispatch(actions.getProvinceList(payload))
 })
 
 const mapStateToProps = state => ({
-
+    provinceList:state.province.provinceData|| []
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['userAdminUpdatePage','listBasePage'])(UserAminUpdate));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['addressUpdatePage','listBasePage'])(AddressUpdatePage));
