@@ -41,7 +41,7 @@ export const sitePathConfig = {
             apiConfig.user.createAdmin.path,
             apiConfig.user.updateAdmin.path,
             apiConfig.user.deleteAdmin.path
-        ]
+        ],
     },
     adminUpdate: {
         path: '/admins/:id',
@@ -178,7 +178,7 @@ export const sitePathConfig = {
     customer: {
         path: '/customer',
         component:CustomerListPage,
-        childrenKeys: ['/customer/create','/customer/:id'],  //nếu có trang Update thì để childPath dạng ['/parent/create','/parent/update']
+        childrenKeys: ['/customer/create','/customer/:id','/address'],  //nếu có trang Update thì để childPath dạng ['/parent/create','/parent/update']
         permissions: [
             apiConfig.customer.getList.path,
             apiConfig.customer.getById.path,
@@ -191,7 +191,7 @@ export const sitePathConfig = {
     },
     customerUpdate: {
         path: '/customer/:id',
-        childrenKeys: '/address',
+        // childrenKeys: ['/address'],
         component:CustomerUpdatePage,
         permissions: [
             apiConfig.customer.getById.path,
@@ -202,7 +202,7 @@ export const sitePathConfig = {
     address: {
         path: '/address',
         component:AddressListPage,
-        childrenKeys: ['/address/create','/address/:id'],  //nếu có trang Update thì để childPath dạng ['/parent/create','/parent/update']
+        childrenKeys: ['/address/create'],  //nếu có trang Update thì để childPath dạng ['/parent/create','/parent/update']
         permissions: [
             apiConfig.addressCustomer.getList.path,
             apiConfig.addressCustomer.getById.path,

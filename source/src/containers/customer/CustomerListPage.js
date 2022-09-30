@@ -86,6 +86,12 @@ class CustomerListPage extends ListBasePage {
     return sitePathConfig.customerUpdate.path.replace(':id', dataRow.id);
   }
 
+  renderButton(children, permissions){
+    return (<ElementWithPermission permissions={permissions}>
+        {children}
+    </ElementWithPermission>)
+}
+
   renderActionColumn() {
     const { t } = this.props;
     return {
@@ -97,12 +103,12 @@ class CustomerListPage extends ListBasePage {
             
             let toGo = `${sitePathConfig.address.path}?customerId=${dataRow.id}`
             actionColumns.push(
-                      <Link to={toGo}>
-
-              <Button type="link" className="no-padding">
-                      <HomeOutlined />
-                  </Button>
-                      </Link>
+              this.renderButton(<Link to={toGo}>
+                <Button type="link" className="no-padding">
+                        <HomeOutlined />
+                    </Button>
+                        </Link>,
+                        [sitePathConfig.customer.permissions[6]])
               )
               if (this.actionColumns.isEdit) {               
                 const detailLink = this.getDetailLink(dataRow);
