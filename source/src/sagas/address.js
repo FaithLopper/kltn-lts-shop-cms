@@ -14,16 +14,13 @@ const {
 
 function* getAddressList({ payload: {params} }){
     const apiParams = apiConfig.addressCustomer.getList;
-    console.log(params);
     const searchParams = { page: params.page, size: params.size,customerId:params.customerId };
     if (params.search)
     {
-        if (params.search.title)
-            searchParams.title = params.search.title;
-        if(params.search.status)
-            searchParams.status = params.search.status;
-        if(params.search.categoryId)
-            searchParams.categoryId = params.search.categoryId;
+        if (params.search.addressDetails)
+            searchParams.addressDetails = params.search.addressDetails;
+        if(params.search.receiverFullName)
+            searchParams.receiverFullName = params.search.receiverFullName;
     }
 
     try {

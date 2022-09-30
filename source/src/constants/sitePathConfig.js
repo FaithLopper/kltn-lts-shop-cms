@@ -191,6 +191,7 @@ export const sitePathConfig = {
     },
     customerUpdate: {
         path: '/customer/:id',
+        childrenKeys: '/address',
         component:CustomerUpdatePage,
         permissions: [
             apiConfig.customer.getById.path,

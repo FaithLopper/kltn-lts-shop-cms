@@ -19,12 +19,10 @@ function* getCustomerList({ payload: {params} }){
     const searchParams = { page: params.page, size: params.size };
     if (params.search)
     {
-        if (params.search.title)
-            searchParams.title = params.search.title;
-        if(params.search.status)
-            searchParams.status = params.search.status;
-        if(params.search.categoryId)
-            searchParams.categoryId = params.search.categoryId;
+        if (params.search.username)
+            searchParams.username = params.search.username;
+        if(params.search.fullName)
+            searchParams.fullName = params.search.fullName;
     }
 
     try {

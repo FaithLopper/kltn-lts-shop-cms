@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button, Avatar, Divider } from "antd";
-import { PlusOutlined, UserOutlined,MessageOutlined,EditOutlined,LockOutlined,DeleteOutlined,CheckOutlined } from "@ant-design/icons";
+import { PlusOutlined, UserOutlined,MessageOutlined,EditOutlined,LockOutlined,DeleteOutlined,CheckOutlined,HomeOutlined } from "@ant-design/icons";
 import { withTranslation } from "react-i18next";
 
 import ListBasePage from "../ListBasePage";
@@ -32,6 +32,7 @@ class CustomerListPage extends ListBasePage {
         title: "#",
         dataIndex: ["account","avatar"],
         align: 'center',
+        width: '80px',
         render: (avatar) => (
           <Avatar
             size="large"
@@ -41,8 +42,9 @@ class CustomerListPage extends ListBasePage {
         ),
       },
       { title:  t("table.fullName"), dataIndex: ["account", "fullName"]},
+      { title:  t("table.username"), dataIndex: ["account", "username"]},
       { title:  t("table.phone"),  dataIndex: ["account", "phone"]},
-      { title: "E-mail",  dataIndex: ["account", "email"], width: "200px" },
+      { title: "E-mail",  dataIndex: ["account", "email"]},
       this.renderStatusColumn(),
       this.renderActionColumn(),
     ];
@@ -98,7 +100,7 @@ class CustomerListPage extends ListBasePage {
                       <Link to={toGo}>
 
               <Button type="link" className="no-padding">
-                      <MessageOutlined />
+                      <HomeOutlined />
                   </Button>
                       </Link>
               )
@@ -116,12 +118,13 @@ class CustomerListPage extends ListBasePage {
                     to.pathname = detailLink;
                 }
                 actionColumns.push(
+                  this.renderEditButton(
                     <Link to={to}>
                         <Button type="link" className="no-padding">
                             <EditOutlined color="red" />
                         </Button>
                     </Link>
-                )
+                ))
             }
             if(this.actionColumns.isChangeStatus) {
                 actionColumns.push(

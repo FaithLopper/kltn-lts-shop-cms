@@ -8,24 +8,17 @@ import { withTranslation } from 'react-i18next';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
-let updatePath= ''
 
 const findNavMenuActive = (navMenu, pathname) => {
+
     const menuActive = Object.keys(navMenu).find(navMenuKey => {
         if(navMenu[navMenuKey].children)
         {
             return  !!navMenu[navMenuKey].children.find(
-                navChild => {
-                    if(navChild.childrenKeys){
-                        navChild.childrenKeys.map(item=>{
-                            updatePath= `${pathname.slice(0,pathname.indexOf('/',1))}/:id`
-                        })
-                    }
-                    return navChild.path === pathname 
-                    || navChild.childrenKeys?.includes(pathname)
-                    || navChild.childrenKeys?.includes(updatePath)
-                }
-                    
+                navChild => (
+                        navChild.path === pathname
+                        || navChild.childrenKeys?.includes(pathname)
+                    )
             ) || pathname.startsWith(navMenu[navMenuKey].path + '/');
         }
         else if(navMenu[navMenuKey].path === pathname)
@@ -51,7 +44,7 @@ const findNavMenuItemActive = (navMenu, pathname) => {
     });
 
     const activeMenu = menuList.find(menuItem => {
-        if(menuItem.childrenKeys && menuItem.childrenKeys.some(menuChildPath => pathname === menuChildPath || updatePath === menuChildPath))
+        if(menuItem.childrenKeys && menuItem.childrenKeys.some(menuChildPath => pathname === menuChildPath))
             return true;
         return pathname === menuItem.path;
     });
