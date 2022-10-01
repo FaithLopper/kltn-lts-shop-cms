@@ -21,6 +21,7 @@ import AddressListPage from '../containers/customer/AddressListPage';
 import AddressUpdatePage from '../containers/customer/AddressUpdatePage';
 import RanksListPage from '../containers/ranks/RanksListPage';
 import RanksUpdate from '../containers/ranks/RanksUpdate';
+import NewsUpdate from '../containers/adminNews/NewsUpdate';
 
 export const sitePathConfig = {
     login: {
@@ -131,6 +132,17 @@ export const sitePathConfig = {
         component:NewsListPage,
         permissions: [
             apiConfig.news.getList.path,
+            apiConfig.news.getById.path, //xxxx dup
+            apiConfig.news.create.path, //xxxx dup
+            apiConfig.news.update.path, //xxxx dup
+            apiConfig.news.delete.path,
+            apiConfig.news.categoryAutoComplete.path,
+        ]
+    },
+    adminNewsUpdate: {
+        path: '/news/:id',
+        component:NewsUpdate,
+        permissions: [
             apiConfig.news.getById.path, //xxxx dup
             apiConfig.news.create.path, //xxxx dup
             apiConfig.news.update.path, //xxxx dup

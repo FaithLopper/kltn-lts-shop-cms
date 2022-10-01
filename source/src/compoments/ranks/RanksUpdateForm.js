@@ -118,8 +118,6 @@ class RanksUpdateForm extends BasicForm {
                   required
                   // disabled={loadingSave}
                 />
-              </Col>
-              <Col span={12}>
                 <TextField
                   fieldName="target"
                   label={t("form.label.target")}

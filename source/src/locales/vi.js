@@ -356,7 +356,8 @@ export default {
     },
     adminNewsListPage: {
         breadcrumbs: {
-            currentPage: 'Tin tức'
+            currentPage: 'Tin tức',
+            parentPage: 'Tin tức'
         },
         objectName: 'tin tức',
         newsPreviewTitle: 'BẢN XEM THỬ',

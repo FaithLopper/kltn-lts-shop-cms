@@ -13,14 +13,12 @@ const initialState = {
 
 const reducer = createReducer({
         [defineActionLoading(GET_RANKS_LIST)]: (state) => {
-            console.log(state)
             return {
                 ...state,
                 tbRanksLoading: true
             }
         },
         [defineActionSuccess(GET_RANKS_LIST)]: (state, { ranksData }) => {
-            console.log(ranksData)
             return {
                 ...state,
                 ranksData,
