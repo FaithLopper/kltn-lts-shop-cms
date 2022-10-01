@@ -554,10 +554,8 @@ export default {
         },
         objectName: 'địa chỉ',
         searchPlaceHolder: {
-            username: 'Tài khoản đăng nhập',
-            fullName: 'Họ và tên',
-            status: 'Chọn trạng thái',
-            organize: 'Chọn đơn vị',
+            addressDetails:'Địa chỉ cụ thể',
+            receiverFullName:'Tên người nhận'
         },
         table: {
             province: 'Tỉnh',
