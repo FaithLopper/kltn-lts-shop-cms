@@ -55,7 +55,7 @@ class AddressListPage extends ListBasePage {
         title: t ? t('table.isDefault') : 'Status',
         dataIndex: 'isDefault',
         width: '100px',
-        render: (isDefault) =>{console.log(isDefault);  return <StatusTag status={isDefault}/>}
+        render: (isDefault) =><StatusTag status={isDefault}/>
     }
   }
 
@@ -67,11 +67,11 @@ class AddressListPage extends ListBasePage {
         seachPlaceholder: t('searchPlaceHolder.addressDetails'),
         initialValue: this.search.addressDetails,
       },
-      {
-        key: "receiverFullName",
-        seachPlaceholder: t('searchPlaceHolder.receiverFullName'),
-        initialValue: this.search.receiverFullName,
-      },
+      // {
+      //   key: "receiverFullName",
+      //   seachPlaceholder: t('searchPlaceHolder.receiverFullName'),
+      //   initialValue: this.search.receiverFullName,
+      // },
     ];
   }
 
