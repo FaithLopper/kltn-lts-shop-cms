@@ -23,7 +23,8 @@ export default {
         'News': 'Tin tức',
         'Province':'Tỉnh thành',
         'Customer':'Khách hàng',
-        'Ranks': 'Cấp bậc khách hàng'
+        'Ranks': 'Cấp bậc khách hàng',
+        'Employee': 'Nhân viên'
     },
     appHeader: {
         profile: 'Hồ sơ',
@@ -621,6 +622,47 @@ export default {
                 name: 'Tên cấp bậc',
                 target: 'Hạn mức tối thiểu để đạt được cấp bậc',
             },
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    userEmployListPage: {
+        breadcrumbs: {
+            currentPage: 'Nhân viên',
+            parentPage: 'Nhân viên'
+        },
+        objectName: 'nhân viên',
+        searchPlaceHolder: {
+            username: 'Điền tên đăng nhập',
+            categoryJobId: 'Chọn công việc',
+            categoryDepartmentId: 'Chọn phòng ban',
+            status: 'Chọn trạng thái',
+        },
+        table: {
+            avatar: '#',
+            username: 'Tên đăng nhập',
+            fullName: 'Tên đầy đủ',
+            email: 'Email',
+            phone: 'Số điện thoại',
+            departmentTitle: 'Thuộc phòng ban',
+            jobTitle: 'Chức vụ',
+            createdDate: 'Ngày tạo',
+        },
+        form: {
+            label: {
+                avatar: 'Ảnh đại diện',
+                username: 'Tên đăng nhập',
+                fullName: 'Tên đầy đủ',
+                email: 'Email',
+                phone: 'Số điện thoại',
+                departmentId: 'Thuộc phòng ban',
+                jobId: 'Chức vụ',
+                password: 'Mật khẩu',
+                newPassword: 'Mật khẩu mới',
+                status: 'Trạng thái',
+            },
+            validationMessage: {
+                avatarRequire: 'Hãy chọn ảnh đại diện',
+            }
         },
         createNewButton: 'Tạo {{ var, lowercase }} mới',
     },

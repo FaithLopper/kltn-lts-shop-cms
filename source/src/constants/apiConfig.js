@@ -127,7 +127,12 @@ const apiConfig = {
             path: '/v1/category/delete',
             method: 'DELETE',
             headers: baseHeader
-        }
+        },
+        categoryAutoComplete: {
+            path: '/v1/category/auto-complete',
+            method: 'GET',
+            headers: baseHeader
+        },
     },
     news: {
         getList: {

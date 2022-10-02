@@ -57,54 +57,53 @@ function* getUserEmployById({ payload: { params, onCompleted, onError } }) {
     }
 }
 
-// function* createUserEmploy({ payload: { params, onCompleted, onError } }) {
+function* createUserEmploy({ payload: { params, onCompleted, onError } }) {
+    try {
+        const apiParams = params.kind === UserTypes.EMPLOYEE ? apiConfig.employee.create : apiConfig.employee.create; // re check
+        const result = yield call(sendRequest, apiParams, params);
+        handleApiResponse(result, onCompleted, onError);
+    }
+    catch(error) {
+        onError(error);
+    }
+}
 
-//     try {
-//         const apiParams = params.kind === UserTypes.EMPLOYEE ? apiConfig.user.createAdmin : apiConfig.user.createShopAccount;
-//         const result = yield call(sendRequest, apiParams, params);
-//         handleApiResponse(result, onCompleted, onError);
-//     }
-//     catch(error) {
-//         onError(error);
-//     }
-// }
+function* updateUserEmploy({ payload: { params, onCompleted, onError } }) {
+    try {
+        const apiParams = params.kind === UserTypes.EMPLOYEE ? apiConfig.employee.update : apiConfig.employee.update; // re check
+        const result = yield call(sendRequest, apiParams, params);
+        handleApiResponse(result, onCompleted, onError);
+    }
+    catch(error) {
+        onError(error);
+    }
+}
 
-// function* updateUser({ payload: { params, onCompleted, onError } }) {
-//     try {
-//         const apiParams = params.kind === UserTypes.ADMIN ? apiConfig.user.updateAdmin : apiConfig.user.updateShopAccount;
-//         const result = yield call(sendRequest, apiParams, params);
-//         handleApiResponse(result, onCompleted, onError);
-//     }
-//     catch(error) {
-//         onError(error);
-//     }
-// }
+function* deleteUserEmployee({ payload: { params, onCompleted, onError } }) {
+    try {
+        const apiParams = {
+            ...apiConfig.employee.delete,
+            path: `${apiConfig.employee.delete.path}/${params.id}`
+        }
+        const result = yield call(sendRequest, apiParams);
+        handleApiResponse(result, onCompleted, onError);
 
-// function* deleteAdmin({ payload: { params, onCompleted, onError } }) {
-//     try {
-//         const apiParams = {
-//             ...apiConfig.user.deleteAdmin,
-//             path: `${apiConfig.user.deleteAdmin.path}/${params.id}`
-//         }
-//         const result = yield call(sendRequest, apiParams);
-//         handleApiResponse(result, onCompleted, onError);
-
-//         const { success, responseData } = result;
-//         if(!success || !responseData.result)
-//             yield put({ type: defineActionFailed(DELETE_ADMIN) });
-//     }
-//     catch(error) {
-//         yield put({ type: defineActionFailed(DELETE_ADMIN) });
-//         onError(error);
-//     }
-// }
+        const { success, responseData } = result;
+        if(!success || !responseData.result)
+            yield put({ type: defineActionFailed(DELETE_USER_EMPLOY) });
+    }
+    catch(error) {
+        yield put({ type: defineActionFailed(DELETE_USER_EMPLOY) });
+        onError(error);
+    }
+}
 
 const sagas = [
     takeLatest(defineActionLoading(GET_USER_EMPLOY_LIST), getUserEmployList),
     takeLatest(GET_USER_EMPLOY_BY_ID, getUserEmployById),
-    // takeLatest(CREATE_USER, createUser),
-    // takeLatest(UPDATE_USER, updateUser),
-    // takeLatest(defineActionLoading(DELETE_ADMIN), deleteAdmin),
+    takeLatest(CREATE_USER_EMPLOY, createUserEmploy),
+    takeLatest(UPDATE_USER_EMPLOY, updateUserEmploy),
+    takeLatest(defineActionLoading(DELETE_USER_EMPLOY), deleteUserEmployee),
 ]
 
 export default sagas;

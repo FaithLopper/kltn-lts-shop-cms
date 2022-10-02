@@ -104,7 +104,7 @@ class NewsListPage extends ListBasePage {
       isChangeStatus: false,
       isPreview: true,
     };
-    this.props.getCategoryAutoCompleteNews({ kind: 1 });
+    this.props.getCategoryAutoComplete({ kind: 1 }); //kind = 1 = news
     this.categoryOptions = [];
   }
 
@@ -364,7 +364,7 @@ class NewsListPage extends ListBasePage {
 const mapStateToProps = (state) => ({
   loading: state.news.newsListLoading,
   dataList: state.news.newsListData || {},
-  categoryAutoCompleteNews: state.news.categoryAutoCompleteNews || {},
+  categoryAutoCompleteNews: state.category.categoryAutoCompleteNews || {},
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -373,8 +373,8 @@ const mapDispatchToProps = (dispatch) => ({
   createData: (payload) => dispatch(actions.createNews(payload)),
   updateData: (payload) => dispatch(actions.updateNews(payload)),
   deleteData: (payload) => dispatch(actions.deleteNews(payload)),
-  getCategoryAutoCompleteNews: (payload) =>
-    dispatch(actions.getCategoryAutoCompleteNews(payload)),
+  getCategoryAutoComplete: (payload) =>
+    dispatch(actions.getCategoryAutoComplete(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
 });
 

@@ -26,17 +26,23 @@ import { STATUS_ACTIVE } from "../../constants";
 import { showErrorMessage } from "../../services/notifyService";
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import ElementWithPermission from "../../compoments/common/elements/ElementWithPermission";
+import StatusTag from "../../compoments/common/elements/StatusTag";
 import { Link } from "react-router-dom";
 class EmployeeListPage extends ListBasePage {
   initialSearch() {
-    return { title: "", status: undefined, categoryId: undefined };
+    return {
+      username: "",
+      status: undefined,
+      categoryDepartmentId: undefined,
+      categoryOptionsJob: undefined,
+    };
   }
 
   constructor(props) {
     super(props);
     const { t } = props;
     this.objectName = t("objectName");
-	this.objectListName = "employee";
+    this.objectListName = "employee";
     this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
     this.pagination.pageSize = DEFAULT_TABLE_ITEM_SIZE;
     this.columns = [
@@ -44,8 +50,8 @@ class EmployeeListPage extends ListBasePage {
       {
         title: <div style={{ textAlign: "center" }}> # </div>,
         width: "5px",
-        align: 'center',
-        dataIndex: ['account','avatar'],
+        align: "center",
+        dataIndex: ["account", "avatar"],
         render: (avatar) => (
           <Avatar
             className="customer-avatar"
@@ -55,37 +61,43 @@ class EmployeeListPage extends ListBasePage {
           />
         ),
       },
-      { title: t("table.title"), dataIndex: "title",width: "250px" },
       {
-        title: t("table.employee"),
-        dataIndex: "employeeId",
-        width: "250px",
-        render: (categoryId) => {
-          let selectedCategory;
-          if (this.categoryOptions.length > 0) {
-            selectedCategory = this.categoryOptions.find(
-              (e) => e.value === categoryId
-            );
-          }
-          return <span>{selectedCategory ? selectedCategory.label : ""}</span>;
-        },
+        title: t("table.username"),
+        dataIndex: ["account", "username"],
+        width: "150px",
       },
       {
-        title: t("table.pinTop"),
-        dataIndex: "pinTop",
-        width: "250px",
-        align: "center",
-        render: (pinTop) => (
-          <PushpinFilled style={{ color: pinTop === 1 ? "green" : "#ccc" }} />
-        ),
+        title: t("table.fullName"),
+        dataIndex: ["account", "fullName"],
+        width: "150px",
+      },
+      {
+        title: t("table.email"),
+        dataIndex: ["account", "email"],
+        width: "150px",
+      },
+      {
+        title: t("table.phone"),
+        dataIndex: ["account", "phone"],
+        width: "150px",
+      },
+      {
+        title: t("table.departmentTitle"),
+        dataIndex: ["department", "categoryName"],
+        width: "150px",
+      },
+      {
+        title: t("table.jobTitle"),
+        dataIndex: ["job", "categoryName"],
+        width: "100px",
       },
       {
         title: (
           <div style={{ paddingRight: "20px" }}>{t("table.createdDate")}</div>
         ),
         align: "right",
-        width: 135,
-        dataIndex: "createdDate",
+        width: 80,
+        dataIndex: ["account", "createdDate"],
         render: (createdDate) => (
           <div style={{ paddingRight: "20px" }}>
             {convertUtcToLocalTime(createdDate)}
@@ -95,14 +107,26 @@ class EmployeeListPage extends ListBasePage {
       this.renderStatusColumn(),
       this.renderActionColumn(),
     ];
+
     this.actionColumns = {
       isEdit: true,
       isDelete: true,
       isChangeStatus: false,
-      isPreview: true,
     };
-    this.props.getCategoryAutoCompleteNews({ kind: 1 });
-    this.categoryOptions = [];
+
+    this.categoryOptionsJob = [];
+    this.categoryOptionsDepartment = [];
+    this.getCategoryList();
+  }
+
+  renderStatusColumn() {
+    const { t } = this.props;
+    return {
+      title: t ? t("listBasePage:titleStatusCol") : "Status",
+      dataIndex: ["account", "status"],
+      width: "100px",
+      render: (status) => <StatusTag status={status} />,
+    };
   }
 
   getUserEmployDetailById(id) {
@@ -130,7 +154,8 @@ class EmployeeListPage extends ListBasePage {
     });
   }
 
-  renderUserEmployDetailButton(children) { // re check this shit
+  renderUserEmployDetailButton(children) {
+    // re check this shit
     const pathname = sitePathConfig.employee.path;
     const requiredPermissions = [];
     Object.keys(sitePathConfig) &&
@@ -162,27 +187,14 @@ class EmployeeListPage extends ListBasePage {
       align: "center",
       render: (dataRow) => {
         const actionColumns = [];
-        if (this.actionColumns.isPreview) {
-          actionColumns.push(
-            this.renderUserEmployDetailButton(
-              <Button
-                type="link"
-                onClick={() => this.getNewsDetailById(dataRow.id)}
-                className="no-padding"
-              >
-                <EyeOutlined />
-              </Button>
-            )
-          );
-        }
         if (this.actionColumns.isEdit) {
           actionColumns.push(
             this.renderEditButton(
-				<Link to={this.getDetailLink(dataRow)}>
-				<Button type="link" className="no-padding">
-				<EditOutlined />
-				</Button>
-			  </Link>
+              <Link to={this.getDetailLink(dataRow)}>
+                <Button type="link" className="no-padding">
+                  <EditOutlined />
+                </Button>
+              </Link>
             )
           );
         }
@@ -236,17 +248,24 @@ class EmployeeListPage extends ListBasePage {
     const { t } = this.props;
     return [
       {
-        key: "title",
-        seachPlaceholder: t("searchPlaceHolder.title"),
-        initialValue: this.search.title,
+        key: "username",
+        seachPlaceholder: t("searchPlaceHolder.username"),
+        initialValue: this.search.username,
       },
-      {
-        key: "categoryId",
-        seachPlaceholder: t("searchPlaceHolder.category"),
-        fieldType: FieldTypes.SELECT,
-        options: [...this.categoryOptions],
-        initialValue: this.search.categoryId,
-      },
+      // {
+      //   key: "categoryJobId",
+      //   seachPlaceholder: t("searchPlaceHolder.categoryJobId"),
+      //   fieldType: FieldTypes.SELECT,
+      //   options: [...this.categoryOptionsJob],
+      //   initialValue: this.search.categoryJobId,
+      // },
+      // {
+      //   key: "categoryDepartmentId",
+      //   seachPlaceholder: t("searchPlaceHolder.categoryDepartmentId"),
+      //   fieldType: FieldTypes.SELECT,
+      //   options: [...this.categoryOptionsDepartment],
+      //   initialValue: this.search.categoryDepartmentId,
+      // },
       {
         key: "status",
         seachPlaceholder: t("searchPlaceHolder.status"),
@@ -294,27 +313,41 @@ class EmployeeListPage extends ListBasePage {
       page,
       size: this.pagination.pageSize,
       search: this.search,
-      kind: 1,
     };
     getDataList({ params });
   }
 
   getDetailLink(dataRow) {
-    return sitePathConfig.adminNewsUpdate.path.replace(":id", dataRow.id);
+    return sitePathConfig.employeeUpdate.path.replace(":id", dataRow.id);
+  }
+
+  getCategoryList() {
+    this.props.getCategoryAutoComplete({ kind: 2 });
+    this.props.getCategoryAutoComplete({ kind: 3 });
   }
 
   render() {
-    const { dataList, loading, categoryAutoCompleteNews, t } =
-      this.props;
     const {
-      isShowPreviewModal,
-      isShowPreviewLoading,
-    } = this.state;
+      dataList,
+      loading,
+      categoryAutoCompleteJob,
+      categoryAutoCompleteDepartment,
+      t,
+    } = this.props;
     const employee = dataList.data || [];
-    console.log(employee)
     this.pagination.total = dataList.totalElements || 0;
-    this.categoryOptions = categoryAutoCompleteNews.data
-      ? categoryAutoCompleteNews.data.map((c) => {
+
+    this.categoryOptionsJob = categoryAutoCompleteJob.data
+      ? categoryAutoCompleteJob.data.map((c) => {
+          return {
+            value: c.id,
+            label: c.categoryName,
+          };
+        })
+      : [];
+
+    this.categoryOptionsDepartment = categoryAutoCompleteDepartment.data
+      ? categoryAutoCompleteDepartment.data.map((c) => {
           return {
             value: c.id,
             label: c.categoryName,
@@ -351,7 +384,9 @@ class EmployeeListPage extends ListBasePage {
 const mapStateToProps = (state) => ({
   loading: state.employee.tbUserEmployLoading,
   dataList: state.employee.userEmployListData || {},
-  categoryAutoCompleteNews: state.news.categoryAutoCompleteNews || {},
+  categoryAutoCompleteJob: state.category.categoryAutoCompleteJob || {},
+  categoryAutoCompleteDepartment:
+    state.category.categoryAutoCompleteDepartment || {},
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -359,9 +394,9 @@ const mapDispatchToProps = (dispatch) => ({
   // getDataById: (payload) => dispatch(actions.getUserEmployById(payload)),
   // createData: (payload) => dispatch(actions.createNews(payload)),
   // updateData: (payload) => dispatch(actions.updateNews(payload)),
-  // deleteData: (payload) => dispatch(actions.deleteNews(payload)),
-  getCategoryAutoCompleteNews: (payload) =>
-    dispatch(actions.getCategoryAutoCompleteNews(payload)),
+  deleteData: (payload) => dispatch(actions.deleteUserEmploy(payload)),
+  getCategoryAutoComplete: (payload) =>
+    dispatch(actions.getCategoryAutoComplete(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
 });
 
@@ -369,7 +404,7 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(
-  withTranslation(["adminNewsListPage", "listBasePage", "constants"])(
+  withTranslation(["userEmployListPage", "listBasePage", "constants"])(
     EmployeeListPage
   )
 );
