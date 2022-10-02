@@ -30,6 +30,7 @@ class UserAdminListPage extends ListBasePage {
         title: "#",
         dataIndex: "avatar",
         align: 'center',
+        width: '80px',
         render: (avatar) => (
           <Avatar
             size="large"

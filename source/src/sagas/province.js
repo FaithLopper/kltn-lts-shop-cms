@@ -53,7 +53,7 @@ function* getProvinceById({ payload: { params, onCompleted, onError } }) {
   try {
     const apiParams = {
       ...apiConfig.province.getById,
-      path: `${apiConfig.province.getById.path}?id=${params.id}`,
+      path: `${apiConfig.province.getById.path}/${params.id}`,
     };
     const result = yield call(sendRequest, apiParams);
     handleApiResponse(result, onCompleted, onError);

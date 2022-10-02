@@ -160,7 +160,8 @@ class AddressForm extends BasicForm {
                         
                 <Row gutter={[16, 0]}>
                         <Col span={12}>
-                                    <TextField
+                            <TextField
+                            disabled={true}
                             fieldName="receiverFullName"
                             label={t("form.label.receiverFullName")}
                             required
@@ -173,40 +174,44 @@ class AddressForm extends BasicForm {
                             label={t("form.label.phone")}
                             required
                             minLength={10}
-                            // disabled={loadingSave}
+                            disabled
+                            // disabledd={loadingSave}
                             />
                        </Col>
                         </Row>
                       
                         <Row gutter={[16, 0]}>
                         <Col span={8}>
-                        <DropdownField
-                        fieldName="provinceId"
+                        <TextField
+                        fieldName="province"
                         label={t("form.label.provinceId")}
                         required
+                        disabled
                         allowClear
-                        options={this.provinceOption}
+                        // options={this.provinceOption}
                         onClick={e=>this.locationOnSelect(ProvinceKinds.province.level)}
                         onSelect={value=>this.handleChangeLocation(value,ProvinceKinds.province.level)}
                     />
                         </Col>
                         <Col span={8}>
-                        <DropdownField
-                        fieldName="districtId"
+                        <TextField
+                        fieldName="district"
                         label={t("form.label.districtId")}
                         required
                         allowClear
-                        options={this.districtOption}
+                        disabled
+                        // options={this.districtOption}
                         onChange={value=>this.handleChangeLocation(value,ProvinceKinds.district.level)}
                     />
                         </Col>
                         <Col span={8}>
-                        <DropdownField
-                        fieldName="wardId"
+                        <TextField
+                        fieldName="ward"
                         label={t("form.label.wardId")}
                         required
+                        disabled
                         allowClear
-                        options={this.communeOption}
+                        // options={this.communeOption}
                         onChange={value=>this.handleChangeLocation(value,ProvinceKinds.commune.level)}
                     />
                         </Col>
@@ -216,6 +221,7 @@ class AddressForm extends BasicForm {
                             <TextField
                             fieldName="addressDetails"
                             required
+                            disabled={true}
                             label={t('form.label.addressDetails')}
                             />
                             </Col>
@@ -225,17 +231,18 @@ class AddressForm extends BasicForm {
                         <RadioField
                             fieldName="isDefault"
                             label={t('form.label.isDefault')}
+                            disabled
                             />
                         </Col>
                        <Col span={12}>
                        </Col>
                         </Row>
                 </Card>
-                <div className="footer-card-form">
+                {/* <div className="footer-card-form">
                     <Row gutter={16} justify="end">
                         <Col align="right" span={10}>{actions}</Col>
                     </Row>
-                </div>
+                </div> */}
             </Form>
         )
     }

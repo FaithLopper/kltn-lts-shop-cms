@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Avatar } from "antd";
-import { PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Avatar,Divider } from "antd";
+import { PlusOutlined, UserOutlined,EyeOutlined,LockOutlined,CheckOutlined,DeleteOutlined } from "@ant-design/icons";
 import { withTranslation } from "react-i18next";
 import qs from 'query-string'
 import ListBasePage from "../ListBasePage";
@@ -16,7 +16,7 @@ import { sitePathConfig } from "../../constants/sitePathConfig";
 import StatusTag from "../../compoments/common/elements/StatusTag";
 class AddressListPage extends ListBasePage {
   initialSearch() {
-    return { username: "", fullName: "" };
+    return { receiverFullName: "", addressDetails: "" };
   }
 
   constructor(props) {
@@ -30,6 +30,7 @@ class AddressListPage extends ListBasePage {
     this.columns = [
       this.renderIdColumn(),
       { title:  t("table.addressDetails"), dataIndex: "addressDetails"},
+      { title:  t("table.receiverFullName"), dataIndex: "receiverFullName"},
       { title:  t("table.province"), dataIndex: "province"},
       { title:  t("table.district"), dataIndex: "district"},
       { title:  t("table.ward"), dataIndex: "ward"},
@@ -37,7 +38,7 @@ class AddressListPage extends ListBasePage {
     ];
     this.actionColumns = {
       isEdit: true,
-      isDelete: true,
+      isDelete: false,
       isChangeStatus: false,
     };
 
@@ -47,20 +48,20 @@ class AddressListPage extends ListBasePage {
     const {t} = this.props;
     return [
       {
-        key: "username",
-        seachPlaceholder: t('searchPlaceHolder.username'),
-        initialValue: this.search.username,
+        key: "addressDetails",
+        seachPlaceholder: t('searchPlaceHolder.addressDetails'),
+        initialValue: this.search.addressDetails,
       },
       {
-        key: "fullName",
-        seachPlaceholder: t('searchPlaceHolder.fullName'),
-        initialValue: this.search.fullName,
+        key: "receiverFullName",
+        seachPlaceholder: t('searchPlaceHolder.receiverFullName'),
+        initialValue: this.search.receiverFullName,
       },
     ];
   }
 
   getDetailLink(dataRow) {
-    return sitePathConfig.adminUpdate.path.replace(':id', dataRow.id);
+    return sitePathConfig.addressUpdate.path.replace(':id', dataRow.id);
   }
   
   getList() {
@@ -69,6 +70,83 @@ class AddressListPage extends ListBasePage {
     const params = { page, size: this.pagination.pageSize,customerId:this.customerId, search: this.search,};
     getDataList({ params });
   }
+
+  renderActionColumn() {
+    const { t } = this.props;
+    return {
+        title: t ? t('listBasePage:titleActionCol') : 'Action',
+        width: '100px',
+        align: 'center',
+        render: (dataRow) => {
+            const actionColumns = [];
+            if (this.actionColumns.isEdit) {
+                const detailLink = this.getDetailLink(dataRow);
+                
+                let to = {
+                    state: { prevPath: this.props.location.pathname }
+                }
+                if (typeof detailLink === 'object') {
+                    to = {
+                        ...to,
+                        ...detailLink,
+                    }
+                } else {
+                    to.pathname = detailLink;
+                }
+                actionColumns.push(
+                    <Link to={to}>
+                        <Button type="link" className="no-padding">
+                            <EyeOutlined color="red" />
+                        </Button>
+                    </Link>
+                )
+            }
+            if(this.actionColumns.isChangeStatus) {
+                actionColumns.push(
+                    <Button type="link" onClick={(e) => {
+                        e.stopPropagation()
+                        this.showChangeStatusConfirm(dataRow)
+                    }} className="no-padding">
+                        {
+                            dataRow.status === STATUS_ACTIVE
+                            ?
+                            <LockOutlined/>
+                            :
+                            <CheckOutlined/>
+                        }
+                    </Button>
+                )
+            }
+            if(this.actionColumns.isDelete) {
+                actionColumns.push(
+                    this.renderDeleteButton((
+                        <Button type="link" onClick={(e) => {
+                            e.stopPropagation()
+                            this.showDeleteConfirm(dataRow.id)
+                        }} className="no-padding">
+                            { this.actionColumns.isDelete.icon || <DeleteOutlined/> }
+                        </Button>
+                    ))
+                )
+            }
+            const actionColumnsWithDivider = [];
+            actionColumns.forEach((action, index) => {
+                actionColumnsWithDivider.push(action);
+                if(index !== (actionColumns.length -1))
+                {
+                    actionColumnsWithDivider.push(<Divider type="vertical" />);
+                }
+            })
+            return (
+                <span>
+                    {
+                        actionColumnsWithDivider.map((action, index) => <span key={index}>{action}</span>)
+                    }
+                </span>
+            )
+        }
+    }  
+}
 
   render() {
     const {
@@ -81,7 +159,6 @@ class AddressListPage extends ListBasePage {
     const users = dataList.data || [];
     this.pagination.total = dataList.totalElements || 0;
     return (
-      
         <PageWrapper>
               {this.renderSearchForm()}
         <div className="action-bar">
