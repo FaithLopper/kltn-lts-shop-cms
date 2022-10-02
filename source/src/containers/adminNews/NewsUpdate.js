@@ -1,33 +1,24 @@
 import React from "react";
-import CategoryUpdateForm from "../../compoments/category/CategoryUpdateForm";
 import SaveBasePage from "../SaveBasePage";
 import LoadingWrapper from "../../compoments/common/elements/LoadingWrapper";
 import { connect } from "react-redux";
-// import { eCatalogueActions } from '../../redux/actions';
 import { actions } from "../../actions";
-import { convertUtcToLocalTime } from "../../utils/datetimeHelper";
-import {
-  showErrorMessage,
-  showSucsessMessage,
-} from "../../services/notifyService";
-// import { siteConfig } from "../../constants/siteConfig";
 import { sitePathConfig } from "../../constants/sitePathConfig";
-// import ObjectNotFound from "../../components/common/ObjectNotFound";
 import ObjectNotFound from "../../compoments/common/ObjectNotFound";
 import { withTranslation } from "react-i18next";
-import { UserTypes } from "../../constants";
-import { categoryKinds } from "../../constants/masterData";
-class CategoryNewsUpdate extends SaveBasePage {
+import NewsUpdateForm from "../../compoments/news/NewsUpdateForm";
+
+class NewsUpdate extends SaveBasePage {
   constructor(props) {
     super(props);
     const { t } = this.props;
-    this.objectName = `${t("objectName")} ${t("kind.news")}`;
-    this.getListUrl = sitePathConfig.categoryNews.path;
+    this.objectName = t("objectName");
+    this.getListUrl = sitePathConfig.adminNews.path;
     this.actionFooter = false;
     this.breadcrumbs = [
       {
-        name: `${t("breadcrumbs.parentPage")} ${t("kind.news")}`,
-        path: `${sitePathConfig.categoryNews.path}`,
+        name: t("breadcrumbs.parentPage"),
+        path: sitePathConfig.adminNews.path,
       },
       {
         name: this.isEditing
@@ -35,6 +26,9 @@ class CategoryNewsUpdate extends SaveBasePage {
           : `${t(`listBasePage:${"create"}`)} ${this.objectName}`,
       },
     ];
+
+    this.props.getCategoryAutoCompleteNews({ kind: 1 });
+    this.categoryOptions = [];
   }
 
   componentWillReceiveProps(nextProps) {
@@ -47,15 +41,15 @@ class CategoryNewsUpdate extends SaveBasePage {
   }
 
   getDataDetailMapping = (data) => {
-    const categoryNewsData = data;
+    const newsData = data;
 
-    if (!categoryNewsData) {
+    if (!newsData) {
       this.setState({ objectNotFound: true });
       return;
     }
 
     return {
-      ...categoryNewsData,
+      ...newsData,
     };
   };
 
@@ -71,7 +65,7 @@ class CategoryNewsUpdate extends SaveBasePage {
       this.showSuccessConfirmModal({
         onContinueEdit: () => {
           history.push(
-            sitePathConfig.categoryNewsUpdate.path.replace(":id", res.id)
+            sitePathConfig.adminNewsUpdate.path.replace(":id", res.id)
           );
         },
       });
@@ -113,8 +107,6 @@ class CategoryNewsUpdate extends SaveBasePage {
 
   prepareCreateData = (data) => {
     return {
-      categoryKind: categoryKinds.CATEGORY_KIND_NEWS,
-      status: 1,
       ...data,
     };
   };
@@ -122,7 +114,7 @@ class CategoryNewsUpdate extends SaveBasePage {
   prepareUpdateData = (data) => {
     return {
       ...data,
-      categoryImage: data.categoryImage,
+      avatar: data.avatar,
       id: this.dataDetail.id,
     };
   };
@@ -142,14 +134,23 @@ class CategoryNewsUpdate extends SaveBasePage {
 
   render() {
     const { isGetDetailLoading, objectNotFound } = this.state;
-    const { t, uploadFile } = this.props;
+    const { t, uploadFile, categoryAutoCompleteNews } = this.props;
+
+    this.categoryOptions = categoryAutoCompleteNews.data
+      ? categoryAutoCompleteNews.data.map((c) => {
+          return {
+            value: c.id,
+            label: c.categoryName,
+          };
+        })
+      : [];
     if (objectNotFound) {
       return <ObjectNotFound />;
     }
 
     return (
       <LoadingWrapper loading={isGetDetailLoading}>
-        <CategoryUpdateForm
+        <NewsUpdateForm
           setIsChangedFormValues={this.setIsChangedFormValues}
           formId={this.getFormId()}
           onSubmit={this.onSave}
@@ -159,6 +160,7 @@ class CategoryNewsUpdate extends SaveBasePage {
           actions={this.renderActions()}
           handleRemoveImage={this.handleRemoveImageField}
           handleUploadImage={this.handleUploadImageField}
+          categoryOptions={this.categoryOptions}
           uploadFile={uploadFile}
           t={t}
         />
@@ -168,16 +170,23 @@ class CategoryNewsUpdate extends SaveBasePage {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getDataById: (payload) => dispatch(actions.getCategoryById(payload)),
-  createData: (payload) => dispatch(actions.createCategory(payload)),
-  updateData: (payload) => dispatch(actions.updateCategory(payload)),
-  deleteData: (payload) => dispatch(actions.deleteCategory(payload)),
+  getDataById: (payload) => dispatch(actions.getNewsById(payload)),
+  createData: (payload) => dispatch(actions.createNews(payload)),
+  updateData: (payload) => dispatch(actions.updateNews(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
+  getCategoryAutoCompleteNews: (payload) =>
+    dispatch(actions.getCategoryAutoCompleteNews(payload)),
 });
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  categoryAutoCompleteNews: state.news.categoryAutoCompleteNews || {},
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withTranslation(["categoryListPage", "listBasePage"])(CategoryNewsUpdate));
+)(
+  withTranslation(["adminNewsListPage", "listBasePage", "constants"])(
+    NewsUpdate
+  )
+);

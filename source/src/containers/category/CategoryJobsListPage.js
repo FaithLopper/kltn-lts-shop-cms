@@ -91,7 +91,6 @@ class CategoryJobsListPage extends ListBasePage {
       search: this.search,
       kind: CATEGORY_KIND_JOBS,
     };
-    console.log(getDataList({ params }))
     getDataList({ params })
     
   }

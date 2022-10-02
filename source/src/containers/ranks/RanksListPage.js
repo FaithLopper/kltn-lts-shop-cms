@@ -112,7 +112,7 @@ class RanksListPage extends ListBasePage {
           {this.renderCreateNewButton(
             <Link to={this.getCreateLink()}>
               <Button type="primary">
-                <PlusOutlined />{" "}
+                <PlusOutlined />
                 {t("createNewButton", { var: t("objectName") })}
               </Button>
             </Link>
