@@ -9,6 +9,7 @@ import province from './province';
 import customer from './customer';
 import address from './address';
 import ranks from './ranks';
+import employee from './employee';
 
 const rootReducer = combineReducers({
     appCommon: appCommon.reducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     province:province.reducer,
     customer:customer.reducer,
     address:address.reducer,
-    ranks: ranks.reducer
+    ranks: ranks.reducer,
+    employee: employee.reducer,
 });
 
 export default rootReducer;

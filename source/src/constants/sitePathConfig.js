@@ -22,6 +22,7 @@ import AddressUpdatePage from '../containers/customer/AddressUpdatePage';
 import RanksListPage from '../containers/ranks/RanksListPage';
 import RanksUpdate from '../containers/ranks/RanksUpdate';
 import NewsUpdate from '../containers/adminNews/NewsUpdate';
+import EmployeeListPage from '../containers/employee/EmployeeListPage';
 
 export const sitePathConfig = {
     login: {
@@ -252,6 +253,16 @@ export const sitePathConfig = {
             apiConfig.ranks.create.path,
             apiConfig.ranks.update.path,
             apiConfig.ranks.ranksAutoComplete.path,
+        ]
+    },
+    employee : {
+        path:'/employee',
+        component:EmployeeListPage,
+        permissions:[
+            apiConfig.employee.getById.path,
+            apiConfig.employee.create.path,
+            apiConfig.employee.update.path,
+            apiConfig.employee.employeeAutoComplete.path,
         ]
     }
 }

@@ -290,5 +290,37 @@ const apiConfig = {
             headers:baseHeader
         }
       },
+    employee: {
+        getList:{
+            path:"/v1/employee/list",
+            method:"GET",
+            headers:baseHeader
+        },
+        getById:{
+            path:"/v1/employee/get",
+            method:"GET",
+            headers:baseHeader
+        },
+        create:{
+            path:"/v1/employee/create",
+            method:"POST",
+            headers:baseHeader
+        },
+        update:{
+            path:"/v1/employee/update",
+            method:"PUT",
+            headers:baseHeader
+        },
+        delete:{
+            path:"/v1/employee/delete",
+            method:"DELETE",
+            headers:baseHeader
+        },
+        employeeAutoComplete:{
+            path:"/v1/employee/auto-complete",
+            method:"GET",
+            headers:baseHeader
+        }
+      },
 }
 export default apiConfig;
