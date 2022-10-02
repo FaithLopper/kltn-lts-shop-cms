@@ -5,7 +5,9 @@ import { useTranslation } from 'react-i18next';
 import Utils from '../../../utils';
 
 const StatusTag = ({status}) => {
+    console.log(status)
     const statusItem = Utils.getCommonStatusItem(status);
+    console.log(statusItem);
     const { t } = useTranslation('constants');
         if(statusItem)
             return (

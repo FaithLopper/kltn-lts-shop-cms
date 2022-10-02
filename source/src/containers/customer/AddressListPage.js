@@ -26,14 +26,19 @@ class AddressListPage extends ListBasePage {
     this.objectListName = 'address';
     const {customerId} = qs.parse(search);
     this.customerId=customerId
-    this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
+    this.breadcrumbs = [
+      {name: t('breadcrumbs.parentPage'),
+      path:`${sitePathConfig.customer.path}`},
+      {name: t('breadcrumbs.currentPage'),}
+  ];
     this.columns = [
       this.renderIdColumn(),
-      { title:  t("table.addressDetails"), dataIndex: "addressDetails"},
       { title:  t("table.receiverFullName"), dataIndex: "receiverFullName"},
       { title:  t("table.province"), dataIndex: "province"},
       { title:  t("table.district"), dataIndex: "district"},
       { title:  t("table.ward"), dataIndex: "ward"},
+      { title:  t("table.addressDetails"), dataIndex: "addressDetails"},
+      this.renderStatusColumn(),
       this.renderActionColumn(),
     ];
     this.actionColumns = {
@@ -42,6 +47,16 @@ class AddressListPage extends ListBasePage {
       isChangeStatus: false,
     };
 
+  }
+
+  renderStatusColumn() {
+    const { t } = this.props;
+    return {
+        title: t ? t('table.isDefault') : 'Status',
+        dataIndex: 'isDefault',
+        width: '100px',
+        render: (isDefault) =>{console.log(isDefault);  return <StatusTag status={isDefault}/>}
+    }
   }
 
   getSearchFields() {

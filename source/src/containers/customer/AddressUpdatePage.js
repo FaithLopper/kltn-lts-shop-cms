@@ -24,6 +24,10 @@ class AddressUpdatePage extends SaveBasePage {
                 path:`${sitePathConfig.customer.path}`
             },
             {
+                name:  t("breadcrumbs.parentPage1"),
+                path:`${sitePathConfig.address.path}`
+            },
+            {
                 name:  this.isEditing? `${t(`listBasePage:${"update"}`)} ${this.objectName}` :`${t(`listBasePage:${"create"}`)} ${this.objectName}`,
             },
         ];

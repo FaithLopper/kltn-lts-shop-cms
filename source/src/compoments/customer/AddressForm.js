@@ -228,11 +228,11 @@ class AddressForm extends BasicForm {
                         </Row>
                         <Row gutter={[16, 0]}>
                         <Col span={12}>
-                        <RadioField
+                        {/* <RadioField
                             fieldName="isDefault"
                             label={t('form.label.isDefault')}
                             disabled
-                            />
+                            /> */}
                         </Col>
                        <Col span={12}>
                        </Col>
