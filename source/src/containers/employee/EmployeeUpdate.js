@@ -7,18 +7,19 @@ import { sitePathConfig } from "../../constants/sitePathConfig";
 import ObjectNotFound from "../../compoments/common/ObjectNotFound";
 import { withTranslation } from "react-i18next";
 import NewsUpdateForm from "../../compoments/news/NewsUpdateForm";
+import EmployeeUpdateForm from "../../compoments/employee/EmployeeUpdateForm";
 
-class NewsUpdate extends SaveBasePage {
+class EmployeeUpdate extends SaveBasePage {
   constructor(props) {
     super(props);
     const { t } = this.props;
     this.objectName = t("objectName");
-    this.getListUrl = sitePathConfig.adminNews.path;
+    this.getListUrl = sitePathConfig.employee.path;
     this.actionFooter = false;
     this.breadcrumbs = [
       {
         name: t("breadcrumbs.parentPage"),
-        path: sitePathConfig.adminNews.path,
+        path: sitePathConfig.employee.path,
       },
       {
         name: this.isEditing
@@ -27,8 +28,9 @@ class NewsUpdate extends SaveBasePage {
       },
     ];
 
-    this.props.getCategoryAutoComplete({ kind: 1 });
-    this.categoryOptionsNews = [];
+    this.categoryOptionsJob = [];
+    this.categoryOptionsDepartment = [];
+    this.getCategoryList();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,15 +43,15 @@ class NewsUpdate extends SaveBasePage {
   }
 
   getDataDetailMapping = (data) => {
-    const newsData = data;
+    const employeeData = data;
 
-    if (!newsData) {
+    if (!employeeData) {
       this.setState({ objectNotFound: true });
       return;
     }
 
     return {
-      ...newsData,
+      ...employeeData,
     };
   };
 
@@ -65,7 +67,7 @@ class NewsUpdate extends SaveBasePage {
       this.showSuccessConfirmModal({
         onContinueEdit: () => {
           history.push(
-            sitePathConfig.adminNewsUpdate.path.replace(":id", res.id)
+            sitePathConfig.employeeUpdate.path.replace(":id", res.id)
           );
         },
       });
@@ -132,25 +134,40 @@ class NewsUpdate extends SaveBasePage {
     }
   };
 
+  getCategoryList() {
+    this.props.getCategoryAutoComplete({ kind: 2 });
+    this.props.getCategoryAutoComplete({ kind: 3 });
+  }
+
   render() {
     const { isGetDetailLoading, objectNotFound } = this.state;
-    const { t, uploadFile, categoryAutoCompleteNews } = this.props;
+    const { t, uploadFile, categoryAutoCompleteJob, categoryAutoCompleteDepartment } = this.props;
 
-    this.categoryOptionsNews = categoryAutoCompleteNews.data
-      ? categoryAutoCompleteNews.data.map((c) => {
+    this.categoryOptionsJob = categoryAutoCompleteJob.data
+      ? categoryAutoCompleteJob.data.map((c) => {
           return {
             value: c.id,
             label: c.categoryName,
           };
         })
       : [];
+
+    this.categoryOptionsDepartment = categoryAutoCompleteDepartment.data
+      ? categoryAutoCompleteDepartment.data.map((c) => {
+          return {
+            value: c.id,
+            label: c.categoryName,
+          };
+        })
+      : [];
+
     if (objectNotFound) {
       return <ObjectNotFound />;
     }
 
     return (
       <LoadingWrapper loading={isGetDetailLoading}>
-        <NewsUpdateForm
+        <EmployeeUpdateForm
           setIsChangedFormValues={this.setIsChangedFormValues}
           formId={this.getFormId()}
           onSubmit={this.onSave}
@@ -160,7 +177,8 @@ class NewsUpdate extends SaveBasePage {
           actions={this.renderActions()}
           handleRemoveImage={this.handleRemoveImageField}
           handleUploadImage={this.handleUploadImageField}
-          categoryOptions={this.categoryOptionsNews}
+          categoryOptionsJob={this.categoryOptionsJob}
+          categoryOptionsDepartment={this.categoryOptionsDepartment}
           uploadFile={uploadFile}
           t={t}
         />
@@ -170,23 +188,25 @@ class NewsUpdate extends SaveBasePage {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getDataById: (payload) => dispatch(actions.getNewsById(payload)),
-  createData: (payload) => dispatch(actions.createNews(payload)),
-  updateData: (payload) => dispatch(actions.updateNews(payload)),
+  getDataById: (payload) => dispatch(actions.getUserEmployById(payload)),
+  createData: (payload) => dispatch(actions.createUserEmploy(payload)),
+  updateData: (payload) => dispatch(actions.updateUserEmploy(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
   getCategoryAutoComplete: (payload) =>
     dispatch(actions.getCategoryAutoComplete(payload)),
 });
 
 const mapStateToProps = (state) => ({
-  categoryAutoCompleteNews: state.category.categoryAutoCompleteNews || {},
+  categoryAutoCompleteJob: state.category.categoryAutoCompleteJob || {},
+  categoryAutoCompleteDepartment:
+    state.category.categoryAutoCompleteDepartment || {},
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(
-  withTranslation(["adminNewsListPage", "listBasePage", "constants"])(
-    NewsUpdate
+  withTranslation(["userEmployListPage", "listBasePage", "constants"])(
+    EmployeeUpdate
   )
 );

@@ -34,6 +34,9 @@ import AddressUpdatePage from '../containers/customer/AddressUpdatePage';
 import RanksListPage from '../containers/ranks/RanksListPage';
 import RanksUpdate from '../containers/ranks/RanksUpdate';
 import CustomerListPage from '../containers/customer/CustomerListPage';
+import NewsUpdate from '../containers/adminNews/NewsUpdate';
+import EmployeeListPage from '../containers/employee/EmployeeListPage';
+import EmployeeUpdate from '../containers/employee/EmployeeUpdate';
 const RootRoute = () => {
     const {
         admin,
@@ -58,6 +61,9 @@ const RootRoute = () => {
         addressUpdate,
         ranks,
         ranksUpdate,
+        adminNewsUpdate,
+        employee,
+        employeeUpdate
     } = sitePathConfig;
     
     return (
@@ -91,7 +97,7 @@ const RootRoute = () => {
                 <PrivateRoute exact path={categoryJobsUpdate.path} component={CategoryJobsUpdate}/>
                 <PrivateRoute exact path={categoryDepartments.path} component={CategoryDepartmentsListPage}/>
                 <PrivateRoute exact path={categoryDepartmentsUpdate.path} component={CategoryDepartmentsUpdate}/>
-                <PrivateRoute exact path={adminNews.path} component={NewsListPage}/>
+                <PrivateRoute exact path={adminNewsUpdate.path} component={NewsUpdate}/>
                 <PrivateRoute exact path={province.path} component={ProvinceListPage}/>
                 <PrivateRoute exact path={district.path} component={DistrictListPage}/>
                 <PrivateRoute exact path={commune.path} component={CommuneListPage}/>
@@ -101,6 +107,8 @@ const RootRoute = () => {
                 <PrivateRoute exact path={addressUpdate.path} component={AddressUpdatePage}/>
                 <PrivateRoute exact path={ranks.path} component={RanksListPage}/>
                 <PrivateRoute exact path={ranksUpdate.path} component={RanksUpdate}/>
+                <PrivateRoute exact path={employee.path} component={EmployeeListPage}/>
+                <PrivateRoute exact path={employeeUpdate.path} component={EmployeeUpdate}/>
                 {/* Error Page */}
                 <PrivateRoute exact path={forbidden.path} component={Forbidden}/>
                 {/* <Route exact path="/error" component={ErrorServer} /> */}

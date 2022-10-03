@@ -38,6 +38,10 @@ const navMenuConfig = [
                 label: 'Customer',
                 ...sitePathConfig.customer
             },
+            {
+                label: 'Employee',
+                ...sitePathConfig.employee
+            },
         ]
     },
     {
