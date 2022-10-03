@@ -497,13 +497,13 @@ class ListBasePage extends Component {
                     } else {
                         to.pathname = detailLink;
                     }
-                    actionColumns.push(
+                    actionColumns.push(this.renderEditButton((
                         <Link to={to}>
                             <Button type="link" className="no-padding">
                                 <EditOutlined color="red" />
                             </Button>
                         </Link>
-                    )
+                    )))
                 }
                 if(this.actionColumns.isChangeStatus) {
                     actionColumns.push(

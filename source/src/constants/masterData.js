@@ -14,6 +14,8 @@ export const commonStatus = [
     { value: STATUS_ACTIVE, label: 'Kích hoạt', color: 'green' },
     { value: STATUS_PENDING, label: 'Đang chờ', color: 'warning' },
     { value: STATUS_LOCK, label: 'Đang khóa', color: 'red' },
+    { value: true, label: 'Mặc định', color: 'green' },
+    { value: false, label: 'Thường', color: 'warning' },
 ]
 
 export const categoryType = [

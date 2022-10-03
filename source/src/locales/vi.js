@@ -552,6 +552,7 @@ export default {
     addressListPage: {
         breadcrumbs: {
             currentPage: 'Danh sách địa chỉ',
+            parentPage: 'Danh sách khách hàng',
         },
         objectName: 'địa chỉ',
         searchPlaceHolder: {
@@ -565,7 +566,7 @@ export default {
             ward:'Phường/ Xã',
             addressDetails:'Địa chỉ cụ thể',
             receiverFullName:'Tên người nhận',
-            isDefault:'Mặc định'
+            isDefault:'Loại địa chỉ'
         },
         message: {
             // updateProfileFail: 'Your profile failed. Please try again!',
@@ -576,7 +577,8 @@ export default {
     addressUpdatePage: {
         breadcrumbs: {
             // currentPage: '{{ var }} quản trị viên',
-            parentPage:'Danh sách địa chỉ',
+            parentPage1:'Danh sách địa chỉ',
+            parentPage:'Danh sách khách hàng',
         },
         objectName: 'địa chỉ',
         form: {
