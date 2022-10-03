@@ -127,7 +127,12 @@ const apiConfig = {
             path: '/v1/category/delete',
             method: 'DELETE',
             headers: baseHeader
-        }
+        },
+        categoryAutoComplete: {
+            path: '/v1/category/auto-complete',
+            method: 'GET',
+            headers: baseHeader
+        },
     },
     news: {
         getList: {
@@ -286,6 +291,38 @@ const apiConfig = {
         },
         ranksAutoComplete:{
             path:"/v1/ranks/auto-complete",
+            method:"GET",
+            headers:baseHeader
+        }
+      },
+    employee: {
+        getList:{
+            path:"/v1/employee/list",
+            method:"GET",
+            headers:baseHeader
+        },
+        getById:{
+            path:"/v1/employee/get",
+            method:"GET",
+            headers:baseHeader
+        },
+        create:{
+            path:"/v1/employee/create",
+            method:"POST",
+            headers:baseHeader
+        },
+        update:{
+            path:"/v1/employee/update",
+            method:"PUT",
+            headers:baseHeader
+        },
+        delete:{
+            path:"/v1/employee/delete",
+            method:"DELETE",
+            headers:baseHeader
+        },
+        employeeAutoComplete:{
+            path:"/v1/employee/auto-complete",
             method:"GET",
             headers:baseHeader
         }

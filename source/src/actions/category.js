@@ -10,6 +10,7 @@ export const actionTypes = {
     GET_CATEGORY_BY_ID: defineAction('GET_CATEGORY_BY_ID'),
     UPDATE_CATEGORY: defineAction('UPDATE_CATEGORY'),
     DELETE_CATEGORY: defineAction('DELETE_CATEGORY'),
+    GET_CATEGORY_AUTOCOMPLETE : defineAction('GET_CATEGORY_AUTOCOMPLETE')
 }
 
 export const actions = {
@@ -17,5 +18,6 @@ export const actions = {
     createCategory: createAction(actionTypes.CREATE_CATEGORY),
     getCategoryById: createAction(actionTypes.GET_CATEGORY_BY_ID),
     updateCategory: createAction(actionTypes.UPDATE_CATEGORY),
-    deleteCategory: createActionWithLoading(actionTypes.DELETE_CATEGORY)
+    deleteCategory: createActionWithLoading(actionTypes.DELETE_CATEGORY),
+    getCategoryAutoComplete: createActionWithLoading(actionTypes.GET_CATEGORY_AUTOCOMPLETE)
 }

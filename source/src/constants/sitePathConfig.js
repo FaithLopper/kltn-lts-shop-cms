@@ -1,27 +1,29 @@
-import apiConfig from './apiConfig';
-import LoginPage from '../containers/account/LoginPage';
-import ProfilePage from '../containers/account/ProfilePage';
+import apiConfig from "./apiConfig";
+import LoginPage from "../containers/account/LoginPage";
+import ProfilePage from "../containers/account/ProfilePage";
 // import DashBoard from '../containers/Dashboard';
-import UserAdminListPage from '../containers/users/UserAdminListPage';
-import GroupPermissionListPage from '../containers/groupPermission/GroupPermissionListPage';
-import NewsListPage from '../containers/adminNews/NewsListPage';
-import UserAminUpdate from '../containers/users/UserAminUpdate';
-import ProvinceListPage from '../containers/province/ProvinceListPage';
-import DistrictListPage from '../containers/province/DistrictListPage';
-import CommuneListPage from '../containers/province/CommuneListPage';
-import CategoryNewsListPage from '../containers/category/CategoryNewsListPage';
-import CategoryNewsUpdate from '../containers/category/CategoryNewsUpdate';
-import CategoryJobsListPage from '../containers/category/CategoryJobsListPage';
-import CategoryJobsUpdate from '../containers/category/CategoryJobsUpdate';
-import CategoryDepartmentsListPage from '../containers/category/CategoryDepartmentsListPage';
-import CategoryDepartmentsUpdate from '../containers/category/CategoryDepartmentsUpdate';
-import CustomerListPage from '../containers/customer/CustomerListPage';
-import CustomerUpdatePage from '../containers/customer/CustomerUpdatePage';
-import AddressListPage from '../containers/customer/AddressListPage';
-import AddressUpdatePage from '../containers/customer/AddressUpdatePage';
-import RanksListPage from '../containers/ranks/RanksListPage';
-import RanksUpdate from '../containers/ranks/RanksUpdate';
-import NewsUpdate from '../containers/adminNews/NewsUpdate';
+import UserAdminListPage from "../containers/users/UserAdminListPage";
+import GroupPermissionListPage from "../containers/groupPermission/GroupPermissionListPage";
+import NewsListPage from "../containers/adminNews/NewsListPage";
+import UserAminUpdate from "../containers/users/UserAminUpdate";
+import ProvinceListPage from "../containers/province/ProvinceListPage";
+import DistrictListPage from "../containers/province/DistrictListPage";
+import CommuneListPage from "../containers/province/CommuneListPage";
+import CategoryNewsListPage from "../containers/category/CategoryNewsListPage";
+import CategoryNewsUpdate from "../containers/category/CategoryNewsUpdate";
+import CategoryJobsListPage from "../containers/category/CategoryJobsListPage";
+import CategoryJobsUpdate from "../containers/category/CategoryJobsUpdate";
+import CategoryDepartmentsListPage from "../containers/category/CategoryDepartmentsListPage";
+import CategoryDepartmentsUpdate from "../containers/category/CategoryDepartmentsUpdate";
+import CustomerListPage from "../containers/customer/CustomerListPage";
+import CustomerUpdatePage from "../containers/customer/CustomerUpdatePage";
+import AddressListPage from "../containers/customer/AddressListPage";
+import AddressUpdatePage from "../containers/customer/AddressUpdatePage";
+import RanksListPage from "../containers/ranks/RanksListPage";
+import RanksUpdate from "../containers/ranks/RanksUpdate";
+import NewsUpdate from "../containers/adminNews/NewsUpdate";
+import EmployeeListPage from "../containers/employee/EmployeeListPage";
+import EmployeeUpdate from "../containers/employee/EmployeeUpdate";
 
 export const sitePathConfig = {
     login: {
@@ -255,5 +257,29 @@ export const sitePathConfig = {
             apiConfig.ranks.update.path,
             apiConfig.ranks.ranksAutoComplete.path,
         ]
-    }
+    },
+    employee: {
+        path: "/employee",
+        component: EmployeeListPage,
+        permissions: [
+            apiConfig.employee.getList.path,
+            apiConfig.employee.getById.path,
+            apiConfig.employee.create.path,
+            apiConfig.employee.update.path,
+            apiConfig.employee.delete.path,
+            apiConfig.employee.employeeAutoComplete.path,
+        ],
+      },
+      employeeUpdate: {
+        path: "/employee/:id",
+        component: EmployeeUpdate,
+        permissions: [
+            apiConfig.employee.getList.path,
+            apiConfig.employee.getById.path,
+            apiConfig.employee.create.path,
+            apiConfig.employee.update.path,
+            apiConfig.employee.delete.path,
+            apiConfig.employee.employeeAutoComplete.path,
+        ],
+      },
 }
