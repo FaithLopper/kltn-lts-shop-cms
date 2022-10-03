@@ -109,6 +109,11 @@ class ListBasePage extends Component {
         }
     }
 
+    componentDidMount(){
+        const contentBody= document.getElementById("body-content-wrapper")
+        contentBody.classList.remove("save-base-page");
+    }
+
     loadDataTable(currentProps) {
         const queryString = qs.parse(currentProps.location.search);
         this.pagination.current = 1;
