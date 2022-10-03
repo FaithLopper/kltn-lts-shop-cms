@@ -24,7 +24,8 @@ export default {
         'Province':'Tỉnh thành',
         'Customer':'Khách hàng',
         'Ranks': 'Cấp bậc khách hàng',
-        'Employee': 'Nhân viên'
+        'Employee': 'Nhân viên',
+        'customerManagement': 'Quản lý khách hàng',
     },
     appHeader: {
         profile: 'Hồ sơ',
