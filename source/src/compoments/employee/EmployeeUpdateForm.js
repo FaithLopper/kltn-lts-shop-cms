@@ -135,7 +135,6 @@ class EmployeeUpdateForm extends BasicForm {
                 imageUrl={logo}
                 onChange={this.handleChangeLogo}
                 uploadFile={this.uploadFileLogo}
-                required
                 requiredMsg={t("form.validationMessage.avatarRequire")}
               />
             </Col>
@@ -177,6 +176,7 @@ class EmployeeUpdateForm extends BasicForm {
                         );
                         this.setState({ curPassword: curPass });
                         this.setFieldValue("password", curPass);
+                        this.onValuesChange()
                       }}
                     >
                       <KeyOutlined style={{ alignSelf: "center" }} />

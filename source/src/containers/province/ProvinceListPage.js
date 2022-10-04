@@ -22,7 +22,6 @@ class ProvinceListPage extends ListBasePage {
     this.objectName = t("objectName");
     
     this.columns = [
-      this.renderIdColumn(),
       { title: t("table.provinceName"),render: (dataRow) => {
         return (
             <span className="routing" onClick={()=>{

@@ -32,7 +32,6 @@ class AddressListPage extends ListBasePage {
       {name: t('breadcrumbs.currentPage'),}
   ];
     this.columns = [
-      this.renderIdColumn(),
       { title:  t("table.receiverFullName"), dataIndex: "receiverFullName"},
       { title:  t("table.province"), dataIndex: "province"},
       { title:  t("table.district"), dataIndex: "district"},

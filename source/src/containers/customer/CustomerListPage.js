@@ -29,7 +29,6 @@ class CustomerListPage extends ListBasePage {
     this.objectListName = 'customer';
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
     this.columns = [
-      this.renderIdColumn(),
       {
         title: "#",
         dataIndex: ["account","avatar"],

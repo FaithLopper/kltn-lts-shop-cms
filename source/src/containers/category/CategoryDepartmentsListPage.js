@@ -27,7 +27,6 @@ class CategoryDepartmentsListPage extends ListBasePage {
     this.objectListName = "category-departments";
     this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
     this.columns = [
-      this.renderIdColumn(),
       {
         title: "#",
         dataIndex: "categoryImage",

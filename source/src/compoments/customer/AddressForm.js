@@ -236,7 +236,21 @@ class AddressForm extends BasicForm {
                         </Col>
                        <Col span={12}>
                        </Col>
+                    
                         </Row>
+                        <Row >
+                        <Col span={24}>
+                        <TextField
+                        type="textarea"
+                        fieldName="note"
+                        label={t("form.label.note")}
+                        disabled={true}
+                        style={{
+                            height: 180,
+                        }}
+            />
+                        </Col>
+                       </Row>
                 </Card>
                 {/* <div className="footer-card-form">
                     <Row gutter={16} justify="end">
