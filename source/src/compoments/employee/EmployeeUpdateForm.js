@@ -16,9 +16,6 @@ class EmployeeUpdateForm extends BasicForm {
     super(props);
     this.state = {
       logo: "",
-      avatar: props.dataDetail.accountDto?.avatar
-        ? `${AppConstants.contentRootUrl}${props.dataDetail.accountDto?.avatar}`
-        : "",
       uploading: false,
       curPassword: null,
       isUpdateLogo: false,
@@ -28,8 +25,13 @@ class EmployeeUpdateForm extends BasicForm {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     if (nextProps.dataDetail !== this.props.dataDetail) {
-      this.formRef.current.setFieldsValue(nextProps.dataDetail);
+      this.formRef.current.setFieldsValue({
+        ...nextProps.dataDetail.account,
+        jobId: nextProps.dataDetail.job?.id,
+        departmentId: nextProps.dataDetail.department?.id,
+      });
     }
     if (
       Object.keys(nextProps.dataDetail).length !== 0 &&
@@ -40,7 +42,6 @@ class EmployeeUpdateForm extends BasicForm {
       this.setState({
         logo: `${AppConstants.contentRootUrl}${nextProps.dataDetail.account.avatar}`,
       });
-      this.setFieldValue("avatar", nextProps.dataDetail.account.avatar);
     }
   }
 
@@ -51,18 +52,12 @@ class EmployeeUpdateForm extends BasicForm {
 
   handleSubmit(formValues) {
     const { onSubmit } = this.props;
-    onSubmit({
-      ...formValues.account,
-      departmentId: formValues.department.id,
-      jobId: formValues.job.id,
-      groupId: 165, // role employee
-      avatar: formValues.avatar,
-      password: formValues.password,
-    });
+    // console.log(formValues)
+    onSubmit(formValues);
   }
 
   uploadFileLogo = (file, onSuccess) => {
-    const { uploadFile, dataDetail } = this.props;
+    const { uploadFile } = this.props;
     this.setState({ uploading: true });
     uploadFile({
       params: { fileObjects: { file }, type: UploadFileTypes.AVATAR },
@@ -86,10 +81,7 @@ class EmployeeUpdateForm extends BasicForm {
     if (!isEditing) {
       return {};
     }
-    console.log(dataDetail);
-    return {
-      ...dataDetail,
-    };
+    return dataDetail;
   };
 
   handleChangeLogo = (info) => {
@@ -136,7 +128,6 @@ class EmployeeUpdateForm extends BasicForm {
                 imageUrl={logo}
                 onChange={this.handleChangeLogo}
                 uploadFile={this.uploadFileLogo}
-                required
                 requiredMsg={t("form.validationMessage.avatarRequire")}
               />
             </Col>
@@ -145,7 +136,7 @@ class EmployeeUpdateForm extends BasicForm {
           <Row gutter={16}>
             <Col span={12}>
               <TextField
-                fieldName={["account", "username"]}
+                fieldName="username"
                 label={t("form.label.username")}
                 required
                 disabled={isEditing}
@@ -200,14 +191,14 @@ class EmployeeUpdateForm extends BasicForm {
           <Row gutter={16}>
             <Col span={12}>
               <TextField
-                fieldName={["account", "fullName"]}
+                fieldName="fullName"
                 label={t("form.label.fullName")}
                 required
               />
             </Col>
             <Col span={12}>
               <DropdownField
-                fieldName={["account", "status"]}
+                fieldName="status"
                 label={t("form.label.status")}
                 required
                 options={commonStatus}
@@ -219,14 +210,14 @@ class EmployeeUpdateForm extends BasicForm {
             <Col span={12}>
               <TextField
                 type="email"
-                fieldName={["account", "email"]}
+                fieldName="email"
                 label={t("form.label.email")}
                 required
               />
             </Col>
             <Col span={12}>
               <TextField
-                fieldName={["account", "phone"]}
+                fieldName="phone"
                 label={t("form.label.phone")}
                 required
               />
@@ -236,7 +227,7 @@ class EmployeeUpdateForm extends BasicForm {
           <Row gutter={16}>
             <Col span={12}>
               <DropdownField
-                fieldName={["department", "id"]}
+                fieldName="departmentId"
                 label={t("form.label.departmentId")}
                 required
                 options={categoryOptionsDepartment}
@@ -244,7 +235,7 @@ class EmployeeUpdateForm extends BasicForm {
             </Col>
             <Col span={12}>
               <DropdownField
-                fieldName={["job", "id"]}
+                fieldName="jobId"
                 label={t("form.label.jobId")}
                 required
                 options={categoryOptionsJob}

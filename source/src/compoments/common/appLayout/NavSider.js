@@ -86,8 +86,6 @@ class NavSider extends Component {
         if(userData?.kind === UserTypes.EMPLOYEE){
             menuConfig = employeeNavMenuConfig
         }
-        console.log('menuConfig',menuConfig)
-        console.log('userData', userData)
         const availableMenu = menuConfig.filter(navMenu => {
             if(navMenu.handleOnClick) {
                 return userData.permissions?.indexOf(navMenu.permissions[0]) > -1;

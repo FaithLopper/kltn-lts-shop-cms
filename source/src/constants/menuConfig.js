@@ -125,7 +125,6 @@ const employeeNavMenuConfig = [
           },
       ],
   },
-
 ]
 
 export { navMenuConfig, employeeNavMenuConfig};

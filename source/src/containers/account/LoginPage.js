@@ -63,6 +63,7 @@ class LoginPage extends Component {
 
   redirectToAuthPage(userData){
     if(!Object.keys(sitePathConfig).find(key => {
+      console.log(key)
       if(sitePathConfig[key].permissions && userData.permissions.indexOf(sitePathConfig[key].permissions[0]) > -1) {
         console.log(sitePathConfig[key].path)
         this.props.history.push(sitePathConfig[key].path);

@@ -110,13 +110,13 @@ class EmployeeUpdate extends SaveBasePage {
   prepareCreateData = (data) => {
     return {
       ...data,
+      groupId: 165, //role employee
     };
   };
 
   prepareUpdateData = (data) => {
     return {
       ...data,
-      avatar: data.avatar,
       id: this.dataDetail.id,
     };
   };
