@@ -169,6 +169,7 @@ class EmployeeUpdateForm extends BasicForm {
                         );
                         this.setState({ curPassword: curPass });
                         this.setFieldValue("password", curPass);
+                        this.onValuesChange()
                       }}
                     >
                       <KeyOutlined style={{ alignSelf: "center" }} />

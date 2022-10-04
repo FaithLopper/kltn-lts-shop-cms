@@ -64,22 +64,22 @@ class EmployeeListPage extends ListBasePage {
       {
         title: t("table.username"),
         dataIndex: ["account", "username"],
-        width: "150px",
+        width: "130px",
       },
       {
         title: t("table.fullName"),
         dataIndex: ["account", "fullName"],
-        width: "150px",
+        width: "130px",
       },
       {
         title: t("table.email"),
         dataIndex: ["account", "email"],
-        width: "150px",
+        width: "130px",
       },
       {
         title: t("table.phone"),
         dataIndex: ["account", "phone"],
-        width: "150px",
+        width: "130px",
       },
       {
         title: t("table.departmentTitle"),
@@ -89,21 +89,21 @@ class EmployeeListPage extends ListBasePage {
       {
         title: t("table.jobTitle"),
         dataIndex: ["job", "categoryName"],
-        width: "100px",
+        width: "150px",
       },
-      {
-        title: (
-          <div style={{ paddingRight: "20px" }}>{t("table.createdDate")}</div>
-        ),
-        align: "right",
-        width: 80,
-        dataIndex: ["account", "createdDate"],
-        render: (createdDate) => (
-          <div style={{ paddingRight: "20px" }}>
-            {convertUtcToLocalTime(createdDate)}
-          </div>
-        ),
-      },
+      // {
+      //   title: (
+      //     <div style={{ paddingRight: "20px" }}>{t("table.createdDate")}</div>
+      //   ),
+      //   align: "right",
+      //   width: 80,
+      //   dataIndex: ["account", "createdDate"],
+      //   render: (createdDate) => (
+      //     <div style={{ paddingRight: "20px" }}>
+      //       {convertUtcToLocalTime(createdDate)}
+      //     </div>
+      //   ),
+      // },
       this.renderStatusColumn(),
       this.renderActionColumn(),
     ];
@@ -251,6 +251,11 @@ class EmployeeListPage extends ListBasePage {
         key: "username",
         seachPlaceholder: t("searchPlaceHolder.username"),
         initialValue: this.search.username,
+      },
+      {
+        key: "fullName",
+        seachPlaceholder: t("searchPlaceHolder.fullName"),
+        initialValue: this.search.fullName,
       },
       // {
       //   key: "categoryJobId",

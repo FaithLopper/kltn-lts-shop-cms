@@ -26,14 +26,19 @@ class AddressListPage extends ListBasePage {
     this.objectListName = 'address';
     const {customerId} = qs.parse(search);
     this.customerId=customerId
-    this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
+    this.breadcrumbs = [
+      {name: t('breadcrumbs.parentPage'),
+      path:`${sitePathConfig.customer.path}`},
+      {name: t('breadcrumbs.currentPage'),}
+  ];
     this.columns = [
       this.renderIdColumn(),
-      { title:  t("table.addressDetails"), dataIndex: "addressDetails"},
       { title:  t("table.receiverFullName"), dataIndex: "receiverFullName"},
       { title:  t("table.province"), dataIndex: "province"},
       { title:  t("table.district"), dataIndex: "district"},
       { title:  t("table.ward"), dataIndex: "ward"},
+      { title:  t("table.addressDetails"), dataIndex: "addressDetails"},
+      this.renderStatusColumn(),
       this.renderActionColumn(),
     ];
     this.actionColumns = {
@@ -44,6 +49,16 @@ class AddressListPage extends ListBasePage {
 
   }
 
+  renderStatusColumn() {
+    const { t } = this.props;
+    return {
+        title: t ? t('table.isDefault') : 'Status',
+        dataIndex: 'isDefault',
+        width: '100px',
+        render: (isDefault) =><StatusTag status={isDefault}/>
+    }
+  }
+
   getSearchFields() {
     const {t} = this.props;
     return [
@@ -52,11 +67,12 @@ class AddressListPage extends ListBasePage {
         seachPlaceholder: t('searchPlaceHolder.addressDetails'),
         initialValue: this.search.addressDetails,
       },
-      {
-        key: "receiverFullName",
-        seachPlaceholder: t('searchPlaceHolder.receiverFullName'),
-        initialValue: this.search.receiverFullName,
-      },
+      // {
+      //   key: "receiverFullName",
+      //   seachPlaceholder: t('searchPlaceHolder.receiverFullName'),
+      //   initialValue: this.search.receiverFullName,
+      // },
+      
     ];
   }
 

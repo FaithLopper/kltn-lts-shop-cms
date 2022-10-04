@@ -31,7 +31,9 @@ const Utils = {
     getCommonStatusItem(status) {
         const allStatus = [
             ...commonStatus,
-            { value: STATUS_DELETE, label: 'Xóa', color: 'red' }
+            { value: STATUS_DELETE, label: 'Xóa', color: 'red' },
+            { value: true, label: 'Mặc định', color: 'green' },
+            { value: false, label: 'Thường', color: 'warning' },
         ]
         const statusItem = allStatus.find(item => item.value === status);
         return statusItem;

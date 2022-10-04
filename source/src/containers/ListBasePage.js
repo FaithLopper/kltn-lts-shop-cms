@@ -109,6 +109,11 @@ class ListBasePage extends Component {
         }
     }
 
+    componentDidMount(){
+        const contentBody= document.getElementById("body-content-wrapper")
+        contentBody.classList.remove("save-base-page");
+    }
+
     loadDataTable(currentProps) {
         const queryString = qs.parse(currentProps.location.search);
         this.pagination.current = 1;
@@ -497,13 +502,13 @@ class ListBasePage extends Component {
                     } else {
                         to.pathname = detailLink;
                     }
-                    actionColumns.push(
+                    actionColumns.push(this.renderEditButton((
                         <Link to={to}>
                             <Button type="link" className="no-padding">
                                 <EditOutlined color="red" />
                             </Button>
                         </Link>
-                    )
+                    )))
                 }
                 if(this.actionColumns.isChangeStatus) {
                     actionColumns.push(

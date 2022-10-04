@@ -192,7 +192,7 @@ export const sitePathConfig = {
     customer: {
         path: '/customer',
         component:CustomerListPage,
-        childrenKeys: ['/customer/create','/customer/:id','/address'],  //nếu có trang Update thì để childPath dạng ['/parent/create','/parent/update']
+        childrenKeys: ['/customer/create','/customer/:id','/address','/address/:id'],  //nếu có trang Update thì để childPath dạng ['/parent/create','/parent/update']
         permissions: [
             apiConfig.customer.getList.path,
             apiConfig.customer.getById.path,
@@ -228,11 +228,12 @@ export const sitePathConfig = {
     addressUpdate: {
         path: '/address/:id',
         component:AddressUpdatePage,
+        menuActivePath:'/customer',
         permissions: [
             apiConfig.addressCustomer.getById.path,
             apiConfig.addressCustomer.create.path,
             apiConfig.addressCustomer.update.path,
-        ]
+        ],
     },
     ranks: {
         path:'/ranks',
@@ -259,6 +260,7 @@ export const sitePathConfig = {
     },
     employee: {
         path: "/employee",
+        childrenKeys:["/employee/:id","/employee/create"],
         component: EmployeeListPage,
         permissions: [
             apiConfig.employee.getList.path,

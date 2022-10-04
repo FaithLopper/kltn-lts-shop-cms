@@ -53,6 +53,10 @@ class SaveBasePage extends Component {
         const contentBody= document.getElementById("body-content-wrapper")
         contentBody.classList.add("save-base-page");
     }
+    componentWillUnmount(){
+        const contentBody= document.getElementById("body-content-wrapper")
+        contentBody.classList.remove("save-base-page");
+    }
 
     setIsChangedFormValues = (flag) => {
         const { isChanged } = this.state;
