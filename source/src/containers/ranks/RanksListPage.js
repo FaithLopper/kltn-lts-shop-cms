@@ -46,6 +46,10 @@ class RanksListPage extends ListBasePage {
           return dataRow.name;
         },
       },
+      {
+        title: t("table.target"),
+        dataIndex:"target"
+      },
       this.renderActionColumn(),
     ];
     this.actionColumns = {
@@ -81,6 +85,7 @@ class RanksListPage extends ListBasePage {
     const params = {
       page,
       size: this.pagination.pageSize,
+      sort:"target,desc",
       search: this.search,
     };
     getDataList({ params });

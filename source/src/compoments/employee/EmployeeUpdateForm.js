@@ -86,7 +86,6 @@ class EmployeeUpdateForm extends BasicForm {
     if (!isEditing) {
       return {};
     }
-    console.log(dataDetail);
     return {
       ...dataDetail,
     };

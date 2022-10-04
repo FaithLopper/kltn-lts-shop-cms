@@ -260,6 +260,7 @@ export const sitePathConfig = {
     },
     employee: {
         path: "/employee",
+        childrenKeys:["/employee/:id","/employee/create"],
         component: EmployeeListPage,
         permissions: [
             apiConfig.employee.getList.path,

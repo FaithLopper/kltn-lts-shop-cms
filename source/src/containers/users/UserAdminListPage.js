@@ -13,9 +13,11 @@ import { AppConstants, UserTypes, GroupPermissonTypes, STATUS_ACTIVE } from "../
 import PageWrapper from "../../compoments/common/PageWrapper";
 import { Link } from 'react-router-dom';
 import { sitePathConfig } from "../../constants/sitePathConfig";
+import { FieldTypes } from "../../constants/formConfig";
+import { commonStatus } from "../../constants/masterData";
 class UserAdminListPage extends ListBasePage {
   initialSearch() {
-    return { username: "", fullName: "" };
+    return { username: "", fullName: "" ,status: null};
   }
 
   constructor(props) {
@@ -73,6 +75,13 @@ class UserAdminListPage extends ListBasePage {
         seachPlaceholder: t('searchPlaceHolder.fullName'),
         initialValue: this.search.fullName,
       },
+      {
+        key: "status",
+        seachPlaceholder: t("searchPlaceHolder.status"),
+        fieldType: FieldTypes.SELECT,
+        options: commonStatus,
+        initialValue: this.search.status,
+    },
     ];
   }
 

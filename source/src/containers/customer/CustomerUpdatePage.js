@@ -35,7 +35,6 @@ class CustomerUpdatePage extends SaveBasePage {
     }
 
     getDataDetailMapping = (data) => {
-        console.log(data);
         const customerData = data
 
         if (!customerData) {

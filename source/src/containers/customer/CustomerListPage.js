@@ -15,9 +15,11 @@ import { Link } from 'react-router-dom';
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import StatusTag from "../../compoments/common/elements/StatusTag";
 import ElementWithPermission from "../../compoments/common/elements/ElementWithPermission";
+import { FieldTypes } from "../../constants/formConfig";
+import { commonStatus } from "../../constants/masterData";
 class CustomerListPage extends ListBasePage {
   initialSearch() {
-    return { username: "", fullName: "" };
+    return { username: "", fullName: "",status: null };
   }
 
   constructor(props) {
@@ -79,6 +81,13 @@ class CustomerListPage extends ListBasePage {
         seachPlaceholder: t('searchPlaceHolder.fullName'),
         initialValue: this.search.fullName,
       },
+      {
+        key: "status",
+        seachPlaceholder: t("searchPlaceHolder.status"),
+        fieldType: FieldTypes.SELECT,
+        options: commonStatus,
+        initialValue: this.search.status,
+    },
     ];
   }
 
