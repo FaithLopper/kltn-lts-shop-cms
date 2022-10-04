@@ -91,19 +91,19 @@ class EmployeeListPage extends ListBasePage {
         dataIndex: ["job", "categoryName"],
         width: "100px",
       },
-      {
-        title: (
-          <div style={{ paddingRight: "20px" }}>{t("table.createdDate")}</div>
-        ),
-        align: "right",
-        width: 80,
-        dataIndex: ["account", "createdDate"],
-        render: (createdDate) => (
-          <div style={{ paddingRight: "20px" }}>
-            {convertUtcToLocalTime(createdDate)}
-          </div>
-        ),
-      },
+      // {
+      //   title: (
+      //     <div style={{ paddingRight: "20px" }}>{t("table.createdDate")}</div>
+      //   ),
+      //   align: "right",
+      //   width: 80,
+      //   dataIndex: ["account", "createdDate"],
+      //   render: (createdDate) => (
+      //     <div style={{ paddingRight: "20px" }}>
+      //       {convertUtcToLocalTime(createdDate)}
+      //     </div>
+      //   ),
+      // },
       this.renderStatusColumn(),
       this.renderActionColumn(),
     ];
@@ -251,6 +251,11 @@ class EmployeeListPage extends ListBasePage {
         key: "username",
         seachPlaceholder: t("searchPlaceHolder.username"),
         initialValue: this.search.username,
+      },
+      {
+        key: "fullName",
+        seachPlaceholder: t("searchPlaceHolder.fullName"),
+        initialValue: this.search.fullName,
       },
       // {
       //   key: "categoryJobId",

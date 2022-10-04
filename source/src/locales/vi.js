@@ -146,7 +146,7 @@ export default {
         form: {
             label: {
                 avatar: 'Hình đại diện',
-                username: 'Tài khoản',
+                username: 'Tài khoản đăng nhập',
                 fullName: 'Họ và tên',
                 phone: 'Số điện thoại',
                 taxNumber: 'Mã số thuế',
@@ -205,7 +205,7 @@ export default {
         },
         table: {
             avatar: '#',
-            username: 'Tên đăng nhập',
+            username: 'Tài khoản đăng nhập',
             fullName: 'Họ và tên',
             phone: 'Số điện thoại',
             createdDate: 'Ngày tạo',
@@ -228,7 +228,7 @@ export default {
                 newPassword:'Tạo mật khẩu mới',
                 password:'Mật khẩu',
                 avatar: 'Ảnh đại diện',
-                username: 'Tên đăng nhập',
+                username: 'Tài khoản đăng nhập',
                 fullName: 'Họ và tên',
                 password: 'Mật khẩu',
                 confirmPassword: 'Xác nhận mật khẩu',
@@ -504,7 +504,7 @@ export default {
         },
         table: {
             avatar: '#',
-            username: 'Tên đăng nhập',
+            username: 'Tài khoản đăng nhập',
             fullName: 'Họ và tên',
             phone: 'Số điện thoại',
             createdDate: 'Ngày tạo',
@@ -527,7 +527,7 @@ export default {
                 newPassword:'Tạo mật khẩu mới',
                 password:'Mật khẩu',
                 avatar: 'Ảnh đại diện',
-                username: 'Tên đăng nhập',
+                username: 'Tài khoản đăng nhập',
                 fullName: 'Họ và tên',
                 password: 'Mật khẩu',
                 confirmPassword: 'Xác nhận mật khẩu',
@@ -558,7 +558,10 @@ export default {
         objectName: 'địa chỉ',
         searchPlaceHolder: {
             addressDetails:'Địa chỉ cụ thể',
-            receiverFullName:'Tên người nhận'
+            receiverFullName:'Tên người nhận',
+            provinceId:'Tên Tỉnh/ Thành Phố',
+            districtId:'Tên Quận/ Huyện',
+            wardId:'Tên Phường/ Xã'
         },
         table: {
             province: 'Tỉnh',
@@ -610,11 +613,11 @@ export default {
         },
         objectName: 'cấp bậc khách hàng',
         searchPlaceHolder: {
-            name: 'tên cấp bậc',
+            name: 'Tên cấp bậc',
         },
         table: {
             name: 'Cấp bậc',
-
+            target:'Mức điểm',
         },
         form: {
             label: {
@@ -632,15 +635,16 @@ export default {
         },
         objectName: 'nhân viên',
         searchPlaceHolder: {
-            username: 'Điền tên đăng nhập',
+            username: 'Tài khoản đăng nhập',
+            fullName:'Họ và Tên',
             categoryJobId: 'Chọn công việc',
             categoryDepartmentId: 'Chọn phòng ban',
             status: 'Chọn trạng thái',
         },
         table: {
             avatar: '#',
-            username: 'Tên đăng nhập',
-            fullName: 'Tên đầy đủ',
+            username: 'Tài khoản đăng nhập',
+            fullName: 'Họ và tên',
             email: 'Email',
             phone: 'Số điện thoại',
             departmentTitle: 'Thuộc phòng ban',
@@ -650,8 +654,8 @@ export default {
         form: {
             label: {
                 avatar: 'Ảnh đại diện',
-                username: 'Tên đăng nhập',
-                fullName: 'Tên đầy đủ',
+                username: 'Tài khoản đăng nhập',
+                fullName: 'Họ và tên',
                 email: 'Email',
                 phone: 'Số điện thoại',
                 departmentId: 'Thuộc phòng ban',

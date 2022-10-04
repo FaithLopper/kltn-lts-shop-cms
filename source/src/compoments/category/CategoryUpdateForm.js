@@ -112,14 +112,17 @@ class CategoryUpdateForm extends BasicForm {
               uploadFile={this.uploadFileLogo}
               // disabled={loadingSave}
             />
-            <TextField
-              style={{ width: "50%" }}
+            <Row gutter={8}>
+              <Col span={12}>
+              <TextField
+              // style={{ width: "45%" }}
               fieldName="categoryName"
               label={t("form.label.categoryName")}
               required
               // disabled={loadingSave}
             />
-            <div style={{ width: "50%" }}>
+              </Col>
+              <Col span={12}>
               {isEditing ? (
                 <DropdownField
                   fieldName="status"
@@ -129,7 +132,10 @@ class CategoryUpdateForm extends BasicForm {
                   // disabled={loadingSave}
                 />
               ) : null}
-            </div>
+              </Col>
+            </Row>
+           
+           
             <TextField
               type="textarea"
               fieldName="categoryDescription"

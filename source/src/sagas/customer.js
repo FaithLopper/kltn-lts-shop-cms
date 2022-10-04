@@ -23,6 +23,8 @@ function* getCustomerList({ payload: {params} }){
             searchParams.username = params.search.username;
         if(params.search.fullName)
             searchParams.fullName = params.search.fullName;
+        if(params.search.status)
+            searchParams.status = params.search.status;
     }
 
     try {

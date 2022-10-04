@@ -54,7 +54,6 @@ class CustomerForm extends BasicForm {
     }
 
     handleSubmit(formValues) {
-        console.log(formValues)
         const { onSubmit } = this.props
         const birthday = convertLocalTimeToUtc(convertDateTimeToString(formValues.birthday, "DD/MM/YYYY"), "DD/MM/YYYY");
         onSubmit({
@@ -111,7 +110,6 @@ class CustomerForm extends BasicForm {
 
     render() {
         const { formId, dataDetail, actions, isEditing,t } = this.props
-        console.log(dataDetail)
         const {
             uploading,
 			logo,

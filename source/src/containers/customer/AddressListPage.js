@@ -72,6 +72,7 @@ class AddressListPage extends ListBasePage {
       //   seachPlaceholder: t('searchPlaceHolder.receiverFullName'),
       //   initialValue: this.search.receiverFullName,
       // },
+      
     ];
   }
 

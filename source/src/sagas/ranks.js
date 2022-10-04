@@ -18,7 +18,7 @@ const {
 
 function* getRanksList({ payload: { params } }) {
     const apiParams = apiConfig.ranks.getList;
-    const searchParams = { page: params.page, size: params.size };
+    const searchParams = { page: params.page, size: params.size,sort:params.sort };
 
     if(params.kind) {
         searchParams.kind = params.kind
