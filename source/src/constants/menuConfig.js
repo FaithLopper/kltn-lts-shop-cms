@@ -101,8 +101,30 @@ const navMenuConfig = [
                 ...sitePathConfig.ranks,
             },
         ]
-        
     },
 ]
 
-export { navMenuConfig };
+const employeeNavMenuConfig = [
+  {
+      label: 'customerManagement',
+      icon: <UsergroupAddOutlined />,
+      children: [
+          {
+              label: 'Customer',
+              ...sitePathConfig.customer
+          },
+      ]
+  },
+  {
+      label: 'News',
+      icon: <FileTextOutlined />,
+      children: [
+          {
+              label: 'News',
+              ...sitePathConfig.adminNews
+          },
+      ],
+  },
+]
+
+export { navMenuConfig, employeeNavMenuConfig};

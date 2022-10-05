@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Spin } from 'antd';
 import { Link } from 'react-router-dom';
-import { navMenuConfig } from '../../../constants/menuConfig';
+import { employeeNavMenuConfig, navMenuConfig } from '../../../constants/menuConfig';
 import logoUrl from '../../../assets/images/logo.jpg';
-import { AppConstants } from '../../../constants'
+import { AppConstants, UserTypes } from '../../../constants'
 import { withTranslation } from 'react-i18next';
 
 const { Sider } = Layout;
@@ -79,7 +79,14 @@ class NavSider extends Component {
         const {
             loadingMenuItem,
         } = this.state;
-        const availableMenu = navMenuConfig.filter(navMenu => {
+        let menuConfig = [];
+        if(userData?.kind === UserTypes.ADMIN){
+            menuConfig = navMenuConfig
+        }
+        if(userData?.kind === UserTypes.EMPLOYEE){
+            menuConfig = employeeNavMenuConfig
+        }
+        const availableMenu = menuConfig.filter(navMenu => {
             if(navMenu.handleOnClick) {
                 return userData.permissions?.indexOf(navMenu.permissions[0]) > -1;
             }

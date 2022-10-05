@@ -63,22 +63,22 @@ class EmployeeListPage extends ListBasePage {
       {
         title: t("table.username"),
         dataIndex: ["account", "username"],
-        width: "150px",
+        width: "130px",
       },
       {
         title: t("table.fullName"),
         dataIndex: ["account", "fullName"],
-        width: "150px",
+        width: "130px",
       },
       // {
       //   title: t("table.email"),
       //   dataIndex: ["account", "email"],
-      //   width: "150px",
+      //   width: "130px",
       // },
       // {
       //   title: t("table.phone"),
       //   dataIndex: ["account", "phone"],
-      //   width: "150px",
+      //   width: "130px",
       // },
       {
         title: t("table.departmentTitle"),
@@ -88,7 +88,7 @@ class EmployeeListPage extends ListBasePage {
       {
         title: t("table.jobTitle"),
         dataIndex: ["job", "categoryName"],
-        width: "100px",
+        width: "150px",
       },
       // {
       //   title: (

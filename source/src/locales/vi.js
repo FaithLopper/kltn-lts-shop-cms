@@ -24,7 +24,8 @@ export default {
         'Province':'Tỉnh thành',
         'Customer':'Khách hàng',
         'Ranks': 'Cấp bậc khách hàng',
-        'Employee': 'Nhân viên'
+        'Employee': 'Nhân viên',
+        'customerManagement': 'Quản lý khách hàng',
     },
     appHeader: {
         profile: 'Hồ sơ',
@@ -635,7 +636,7 @@ export default {
         },
         objectName: 'nhân viên',
         searchPlaceHolder: {
-            username: 'Tên đăng nhập',
+            username: 'Tài khoản',
             fullName:'Họ và Tên',
             categoryJobId: 'Chọn công việc',
             categoryDepartmentId: 'Chọn phòng ban',
@@ -643,7 +644,7 @@ export default {
         },
         table: {
             avatar: '#',
-            username: 'Tên đăng nhập',
+            username: 'Tài khoản',
             fullName: 'Họ và tên',
             email: 'Email',
             phone: 'Số điện thoại',

@@ -37,6 +37,12 @@ import CustomerListPage from '../containers/customer/CustomerListPage';
 import NewsUpdate from '../containers/adminNews/NewsUpdate';
 import EmployeeListPage from '../containers/employee/EmployeeListPage';
 import EmployeeUpdate from '../containers/employee/EmployeeUpdate';
+import { UserTypes } from '../constants';
+import { actions } from '../actions';
+
+const { getUserData } = actions;
+const userData = getUserData();
+
 const RootRoute = () => {
     const {
         admin,
@@ -65,14 +71,30 @@ const RootRoute = () => {
         employee,
         employeeUpdate
     } = sitePathConfig;
-    
+
+    const getUserHomeNavigation =()=>{
+        if(userData?.kind === UserTypes.ADMIN){
+            return {
+                pathname: admin.path,
+                state: { isRedirectToHomePage: true }
+            }
+        }
+        if(userData?.kind === UserTypes.EMPLOYEE){
+            return{
+                pathname: adminNews.path,
+                state: { isRedirectToHomePage: true }
+            }
+        }
+        return {
+            pathname: "/login",
+            state: { isRedirectToHomePage: true }
+        }
+    }
+
     return (
         <BrowserRouter>
             <Switch>
-                <Redirect exact from="/" to={{
-                    pathname: admin.path,
-                    state: { isRedirectToHomePage: true }
-                }}/>
+                <Redirect exact from="/" to={getUserHomeNavigation()}/>
                 <PublicRoute exact path={login.path} component={LoginPage} />
                 {/* {Object.keys(sitePathConfig).map(key => {
                     // const CompRoute = siteConfig[key].isPublic ? PublicRoute : PrivateRoute;
