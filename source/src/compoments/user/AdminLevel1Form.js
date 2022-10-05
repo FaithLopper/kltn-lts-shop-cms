@@ -59,6 +59,7 @@ class AdminLevel1Form extends BasicForm {
 			// this.otherData.logoPath = result.data.filePath;
 			this.setFieldValue("avatar", result.data.filePath);
 			this.setState({ uploading: false })
+            this.onValuesChange();
 			onSuccess();
 		},
 		onError: (err) => {
@@ -161,6 +162,7 @@ class AdminLevel1Form extends BasicForm {
                                         const curPass = Utils.generateRandomPassword(6, true, true, false, false, true)
                                         this.setState({curPassword: curPass})
                                         this.setFieldValue('password', curPass)
+                                        this.onValuesChange()
                                     }}
                                 >
                                     <KeyOutlined style={{ alignSelf: 'center'}}/>

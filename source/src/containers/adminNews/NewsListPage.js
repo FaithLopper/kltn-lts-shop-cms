@@ -43,7 +43,6 @@ class NewsListPage extends ListBasePage {
     this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
     this.pagination.pageSize = DEFAULT_TABLE_ITEM_SIZE;
     this.columns = [
-      this.renderIdColumn(),
       {
         title: <div style={{ textAlign: "center" }}> # </div>,
         width: "5px",

@@ -46,7 +46,6 @@ class EmployeeListPage extends ListBasePage {
     this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
     this.pagination.pageSize = DEFAULT_TABLE_ITEM_SIZE;
     this.columns = [
-      this.renderIdColumn(),
       {
         title: <div style={{ textAlign: "center" }}> # </div>,
         width: "5px",
@@ -71,16 +70,16 @@ class EmployeeListPage extends ListBasePage {
         dataIndex: ["account", "fullName"],
         width: "130px",
       },
-      {
-        title: t("table.email"),
-        dataIndex: ["account", "email"],
-        width: "130px",
-      },
-      {
-        title: t("table.phone"),
-        dataIndex: ["account", "phone"],
-        width: "130px",
-      },
+      // {
+      //   title: t("table.email"),
+      //   dataIndex: ["account", "email"],
+      //   width: "130px",
+      // },
+      // {
+      //   title: t("table.phone"),
+      //   dataIndex: ["account", "phone"],
+      //   width: "130px",
+      // },
       {
         title: t("table.departmentTitle"),
         dataIndex: ["department", "categoryName"],

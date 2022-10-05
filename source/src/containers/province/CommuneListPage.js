@@ -37,7 +37,6 @@ class CommuneListPage extends ListBasePage {
     this.parentSearchprovinceName=parentSearchprovinceName
     this.objectName = t("objectName");
     this.columns = [
-      this.renderIdColumn(),
       { title: t("table.provinceName"), dataIndex: "name" },
       this.renderActionColumnModal(),
     ];

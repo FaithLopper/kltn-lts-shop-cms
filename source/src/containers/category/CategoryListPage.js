@@ -30,7 +30,6 @@ class CategoryImportListPage extends ListBasePage {
             { name: t("breadcrumbs.currentPage") },
         ];
         this.columns = [
-        this.renderIdColumn(),
         {
             title: "#",
             dataIndex: "categoryImage",

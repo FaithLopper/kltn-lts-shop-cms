@@ -36,7 +36,6 @@ class CategoryListPage extends ListBasePage {
             },
         ];
         this.columns = [
-        this.renderIdColumn(),
         {
             title: "#",
             dataIndex: "categoryImage",
