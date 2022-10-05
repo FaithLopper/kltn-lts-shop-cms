@@ -632,6 +632,7 @@ class ListBasePage extends Component {
                 onResetForm={this.onResetFormSearch}
                 hiddenAction={hiddenAction}
                 initialValues={this.search}
+                
                 />;
         return null;
     }

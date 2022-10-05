@@ -27,7 +27,6 @@ class UserAdminListPage extends ListBasePage {
     this.objectListName = 'admins';
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
     this.columns = [
-      this.renderIdColumn(),
       {
         title: "#",
         dataIndex: "avatar",

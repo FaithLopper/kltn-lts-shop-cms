@@ -23,7 +23,6 @@ class RanksListPage extends ListBasePage {
     this.objectListName = "ranks";
     this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
     this.columns = [
-      this.renderIdColumn(),
       {
         title: "#",
         dataIndex: "avatar",
