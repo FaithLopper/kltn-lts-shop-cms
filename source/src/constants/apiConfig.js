@@ -325,7 +325,17 @@ const apiConfig = {
             path:"/v1/employee/auto-complete",
             method:"GET",
             headers:baseHeader
-        }
+        },
+        getEmployeeProfile: {
+            path:  '/v1/employee/profile',
+            method: 'GET',
+            headers: baseHeader,
+        },
+        updateProfile: {
+            path:  '/v1/employee/update-profile',
+            method: 'PUT',
+            headers: baseHeader,
+        },
       },
 }
 export default apiConfig;

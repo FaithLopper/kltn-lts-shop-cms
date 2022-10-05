@@ -22,18 +22,29 @@ class LoginPage extends Component {
   onLogin(valueForm) {
     const { login, setUserData } = this.props;
     this.setState({ loading: true });
-
+    console.log('vao 0')
     login({
       params: valueForm,
       onCompleted: (responseData) => {
         if (responseData && responseData.token) {
+          console.log('vao 1')
           if (setUserData(responseData)) {
+            console.log('vao 2')
             // this.props.history.push(sitePathConfig.admin.path);
-            if (responseData.kind === UserTypes.ADMIN
-              || responseData.kind === UserTypes.EMPLOYEE)
+            if (responseData.kind === UserTypes.ADMIN)
+            {
+              console.log('vao ADMIN')
               this.redirectToAuthPage(getUserData());
+            }
+            console.log(responseData)
+            if (responseData.kind === UserTypes.EMPLOYEE)
+            {
+              console.log('vao EMPLOYEE',getUserData())
+              this.redirectToAuthPage(getUserData());
+            }
           }
         } else {
+          console.log('deo vao 1')
           this.setState({ loading: false });
           showErrorMessage(
             "Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại!"
@@ -41,6 +52,7 @@ class LoginPage extends Component {
         }
       },
       onError: (err) => {
+        console.log('deo vao 2')
         this.setState({ loading: false });
         showErrorMessage(
           "Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại!"
@@ -51,7 +63,9 @@ class LoginPage extends Component {
 
   redirectToAuthPage(userData){
     if(!Object.keys(sitePathConfig).find(key => {
+      console.log(key)
       if(sitePathConfig[key].permissions && userData.permissions.indexOf(sitePathConfig[key].permissions[0]) > -1) {
+        console.log(sitePathConfig[key].path)
         this.props.history.push(sitePathConfig[key].path);
         return true;
       }
