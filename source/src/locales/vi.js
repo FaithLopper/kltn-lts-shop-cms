@@ -147,7 +147,7 @@ export default {
         form: {
             label: {
                 avatar: 'Hình đại diện',
-                username: 'Tên đăng nhập',
+                username: 'Tài khoản',
                 fullName: 'Họ và tên',
                 phone: 'Số điện thoại',
                 taxNumber: 'Mã số thuế',
@@ -199,14 +199,14 @@ export default {
         },
         objectName: 'quản trị viên',
         searchPlaceHolder: {
-            username: 'Tên đăng nhập',
+            username: 'Tài khoản',
             fullName: 'Họ và tên',
             status: 'Chọn trạng thái',
             organize: 'Chọn đơn vị',
         },
         table: {
             avatar: '#',
-            username: 'Tên đăng nhập',
+            username: 'Tài khoản',
             fullName: 'Họ và tên',
             phone: 'Số điện thoại',
             createdDate: 'Ngày tạo',
@@ -229,7 +229,7 @@ export default {
                 newPassword:'Tạo mật khẩu mới',
                 password:'Mật khẩu',
                 avatar: 'Ảnh đại diện',
-                username: 'Tên đăng nhập',
+                username: 'Tài khoản',
                 fullName: 'Họ và tên',
                 password: 'Mật khẩu',
                 confirmPassword: 'Xác nhận mật khẩu',
@@ -498,14 +498,14 @@ export default {
         },
         objectName: 'khách hàng',
         searchPlaceHolder: {
-            username: 'Tên đăng nhập',
+            username: 'Tài khoản',
             fullName: 'Họ và tên',
             status: 'Chọn trạng thái',
             organize: 'Chọn đơn vị',
         },
         table: {
             avatar: '#',
-            username: 'Tên đăng nhập',
+            username: 'Tài khoản',
             fullName: 'Họ và tên',
             phone: 'Số điện thoại',
             createdDate: 'Ngày tạo',
@@ -528,7 +528,7 @@ export default {
                 newPassword:'Tạo mật khẩu mới',
                 password:'Mật khẩu',
                 avatar: 'Ảnh đại diện',
-                username: 'Tên đăng nhập',
+                username: 'Tài khoản',
                 fullName: 'Họ và tên',
                 password: 'Mật khẩu',
                 confirmPassword: 'Xác nhận mật khẩu',
@@ -596,6 +596,7 @@ export default {
                 receiverFullName:'Tên người nhận',
                 isDefault:'Mặc định',
                 status:'Tình trạng',
+                note:'Ghi chú',
             },
             validationMessage: {
                 phoneLengthRequire: 'Hãy nhập số',
@@ -655,7 +656,7 @@ export default {
         form: {
             label: {
                 avatar: 'Ảnh đại diện',
-                username: 'Tên đăng nhập',
+                username: 'Tài khoản',
                 fullName: 'Họ và tên',
                 email: 'Email',
                 phone: 'Số điện thoại',
