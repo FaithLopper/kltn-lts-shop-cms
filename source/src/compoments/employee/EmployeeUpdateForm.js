@@ -25,7 +25,6 @@ class EmployeeUpdateForm extends BasicForm {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if (nextProps.dataDetail !== this.props.dataDetail) {
       this.formRef.current.setFieldsValue({
         ...nextProps.dataDetail.account,

@@ -17,9 +17,14 @@ const {
 
 function* login({ payload: { params, onCompleted, onError } }) {
   try {
-    const result = yield call(sendRequest, apiConfig.account.login, params);
+    let cmsParams = {
+      ...params,
+      app: "APP_WEB_CMS"
+    }
+    
+    const result = yield call(sendRequest, apiConfig.account.login, cmsParams);
     const { success, responseData } = result;
-    console.log(responseData)
+    
     if (success && responseData.result) {
       let apiParams;
       if(responseData.data?.kind === UserTypes.ADMIN) {
