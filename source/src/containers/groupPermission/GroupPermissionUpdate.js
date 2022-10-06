@@ -92,8 +92,9 @@ class GroupPermissionUpdate extends SaveBasePage {
 
     onBack = () => {
         if (this.state.isChanged) {
+            const {t}= this.props
             this.showWarningConfirmModal({
-                title: "Are you sure want to quit? Your data will not be saved",
+                title: t("basicSavePage:onBack"),
                 onOk: () => {
                     this.props.history.push(this.getListUrl)
                 }

@@ -100,16 +100,17 @@ class CategoryDepartmentsUpdate extends SaveBasePage {
 
   onBack = () => {
     if (this.state.isChanged) {
-      this.showWarningConfirmModal({
-        title: "Are you sure want to quit? Your data will not be saved",
-        onOk: () => {
-          this.props.history.push(this.getListUrl);
-        },
-      });
+        const {t}= this.props
+        this.showWarningConfirmModal({
+            title: t("basicSavePage:onBack"),
+            onOk: () => {
+                this.props.history.push(this.getListUrl)
+            }
+        });
     } else {
-      this.props.history.push(this.getListUrl);
+        this.props.history.push(this.getListUrl)
     }
-  };
+}
 
   prepareCreateData = (data) => {
     return {
