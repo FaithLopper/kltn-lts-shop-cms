@@ -71,6 +71,7 @@ export const sitePathConfig = {
     },
     categoryNews: {
         path: '/category-news',
+        childrenKeys:['/category-news/:id','/category-news/create'],
         component:CategoryNewsListPage,
         permissions: [
             apiConfig.category.getList.path,
@@ -90,6 +91,7 @@ export const sitePathConfig = {
     },
     categoryJobs: {
         path: '/category-jobs',
+        childrenKeys:['/category-jobs/:id','/category-jobs/create'],
         component:CategoryJobsListPage,
         permissions: [
             apiConfig.category.getList.path,
@@ -109,6 +111,7 @@ export const sitePathConfig = {
     },
     categoryDepartments: {
         path: '/category-departments',
+        childrenKeys:['/category-departments/:id','/category-departments/create'],
         component:CategoryDepartmentsListPage,
         permissions: [
             apiConfig.category.getList.path,
@@ -132,6 +135,7 @@ export const sitePathConfig = {
     adminNews: {
         path: '/news',
         component:NewsListPage,
+        childrenKeys:['/news/:id','/news/create'],
         permissions: [
             apiConfig.news.getList.path,
             apiConfig.news.getById.path, //xxxx dup
