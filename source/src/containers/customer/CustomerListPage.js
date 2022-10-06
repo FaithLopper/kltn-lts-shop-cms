@@ -42,8 +42,8 @@ class CustomerListPage extends ListBasePage {
           />
         ),
       },
-      { title:  t("table.fullName"), dataIndex: ["account", "fullName"]},
       { title:  t("table.username"), dataIndex: ["account", "username"]},
+      { title:  t("table.fullName"), dataIndex: ["account", "fullName"]},
       { title:  t("table.phone"),  dataIndex: ["account", "phone"]},
       { title: "E-mail",  dataIndex: ["account", "email"]},
       this.renderStatusColumn(),

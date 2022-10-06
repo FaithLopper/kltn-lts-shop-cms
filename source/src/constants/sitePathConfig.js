@@ -135,6 +135,7 @@ export const sitePathConfig = {
     adminNews: {
         path: '/news',
         component:NewsListPage,
+        childrenKeys:['/news/:id','/news/create'],
         permissions: [
             apiConfig.news.getList.path,
             apiConfig.news.getById.path, //xxxx dup
