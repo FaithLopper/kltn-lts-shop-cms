@@ -87,8 +87,9 @@ class CustomerUpdatePage extends SaveBasePage {
 
     onBack = () => {
         if (this.state.isChanged) {
+            const {t}= this.props
             this.showWarningConfirmModal({
-                title: "Are you sure want to quit? Your data will not be saved",
+                title: t("basicSavePage:onBack"),
                 onOk: () => {
                     this.props.history.push(this.getListUrl)
                 }
@@ -101,6 +102,7 @@ class CustomerUpdatePage extends SaveBasePage {
     prepareCreateData = (data) => {
         return {
             status: 1,
+            groupId:151,
             ...data,
         };
     }

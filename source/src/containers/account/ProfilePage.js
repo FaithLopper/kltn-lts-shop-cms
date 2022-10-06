@@ -71,6 +71,17 @@ class ProfilePage extends Component {
       ...profileData,
     };
   };
+
+  componentDidMount(){
+    const contentBody= document.getElementById("body-content-wrapper")
+    contentBody.classList.add("save-base-page");
+  }
+  
+  componentWillUnmount(){
+    const contentBody= document.getElementById("body-content-wrapper")
+    contentBody.classList.remove("save-base-page");
+  }
+  
   render() {
     const { uploadFile, fullScreenLoading, t } = this.props;
     const { loading } = this.state;

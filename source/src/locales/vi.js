@@ -98,6 +98,7 @@ export default {
         createMessage:'tạo mới',
         updateMessage:'cập nhật',
         okText:'Trở về danh sách',
+        onBack:'Bạn có chắc trở về trang trước? Dữ liệu sẽ không được lưu lại',
         Continue:'Tiếp tục'
     },
     baseField: {

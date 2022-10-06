@@ -110,13 +110,13 @@ class CustomerListPage extends ListBasePage {
             const actionColumns = [];
             
             let toGo = `${sitePathConfig.address.path}?customerId=${dataRow.id}`
-            actionColumns.push(
+              actionColumns.push(
               this.renderButton(<Link to={toGo}>
                 <Button type="link" className="no-padding">
                         <HomeOutlined />
                     </Button>
                         </Link>,
-                        [sitePathConfig.customer.permissions[6]])
+                [sitePathConfig.customer.permissions[6]])
               )
               if (this.actionColumns.isEdit) {               
                 const detailLink = this.getDetailLink(dataRow);
