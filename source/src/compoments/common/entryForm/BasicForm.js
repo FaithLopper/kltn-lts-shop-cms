@@ -16,8 +16,6 @@ class BasicForm extends Component {
     }
 
     setFieldValue(fieldName, value) {
-        console.log("fieldName",fieldName)
-        console.log("value",value)
         this.formRef.current.setFieldsValue({[fieldName]: value});
     }
 
