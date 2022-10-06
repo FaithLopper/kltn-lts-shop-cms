@@ -109,6 +109,10 @@ const employeeNavMenuConfig = [
       label: 'customerManagement',
       icon: <UsergroupAddOutlined />,
       children: [
+        {
+            label: 'Admin',
+            ...sitePathConfig.admin
+        },
           {
               label: 'Customer',
               ...sitePathConfig.customer

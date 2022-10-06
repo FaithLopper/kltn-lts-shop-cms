@@ -163,7 +163,7 @@ class CustomerForm extends BasicForm {
                         type="password"
                         fieldName="password"
                         label={isEditing ? t("form.label.newPassword") : t("form.label.password")}
-                        required={!isEditing}
+                        required
                         minLength={6}
                         disabled
                         value={this.getFieldValue('password')}

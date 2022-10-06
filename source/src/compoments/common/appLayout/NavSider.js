@@ -84,7 +84,7 @@ class NavSider extends Component {
             menuConfig = navMenuConfig
         }
         if(userData?.kind === UserTypes.EMPLOYEE){
-            menuConfig = employeeNavMenuConfig
+            menuConfig = navMenuConfig
         }
         const availableMenu = menuConfig.filter(navMenu => {
             if(navMenu.handleOnClick) {
