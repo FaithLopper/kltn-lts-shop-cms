@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 import { Form, Col, Row, Card, Button, message } from 'antd';
 import BasicForm from '../common/entryForm/BasicForm';
 import TextField from '../common/entryForm/TextField';
@@ -28,14 +28,20 @@ class StoreUpdateForm extends BasicForm {
             logo: "",
 			uploading: false,
             curPassword: null,
-            isUpdateLogo:false
+            isUpdateLogo:false,
+            provinceOption:[],
+            districtOption:[],
+            communeOption:[],
         }
-        this.provinceOption=[]
-        this.districtOption=[]
-        this.communeOption=[]
+        // this.provinceOption=[],
+        // this.districtOption=[],
+        // this.communeOption=[],
+        this.provinceId=null
+        this.districtId=null
+        this.communeId=null
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps,currentProps) {
         if (nextProps.dataDetail !== this.props.dataDetail) {
             const {dataDetail}= nextProps
             let data={
@@ -43,9 +49,32 @@ class StoreUpdateForm extends BasicForm {
             }
             this.formRef.current.setFieldsValue(data)
         }
-        if(nextProps.dataDetail.avatar !== this.state.logo && this.state.isUpdateLogo === false && nextProps.dataDetail.avatar!==undefined){
-            this.setState({logo:`${AppConstants.contentRootUrl}${nextProps.dataDetail.avatar}`})
+        const {communeOption,provinceOption, districtOption } =nextProps;
+        if(provinceOption){
+            this.setState({
+                provinceOption:provinceOption.map(item=>{
+                    return {value:item.id,label:item.name}
+                })
+            })
         }
+        if(nextProps.districtOption !== this.state.districtOption){
+            if(districtOption){ 
+                this.setState({
+                    districtOption:districtOption.map(item=>{
+                        return {value:item.id,label:item.name}
+                    })
+                })
+            }
+        }
+
+        if(communeOption){
+            this.setState({
+                communeOption:communeOption.map(item=>{
+                    return {value:item.id,label:item.name}
+                })
+            })
+        }
+        // console.log(this.state.provinceOption)
     }
 
     onValuesChange = () => {
@@ -60,24 +89,8 @@ class StoreUpdateForm extends BasicForm {
         })
     }
 
-
 	getInitialFormValues = () => {
         const { isEditing, dataDetail,communeOption,provinceOption, districtOption } = this.props;
-		if(provinceOption){
-            this.provinceOption= provinceOption.map(item=>{
-                return {value:item.id,label:item.name}
-            })
-        }
-        if(districtOption){
-            this.districtOption= districtOption.map(item=>{
-                return {value:item.id,label:item.name}
-            })
-        }
-        if(communeOption){
-            this.communeOption= communeOption.map(item=>{
-                return {value:item.id,label:item.name}
-            })
-        }
         if (!isEditing) {
 		return {
 			status: STATUS_ACTIVE,
@@ -104,7 +117,6 @@ class StoreUpdateForm extends BasicForm {
     handleChangeLocation =(id,kind)=>{
         const {getLocation}= this.props
         if(kind === ProvinceKinds.province.level){
-            console.log("here");
             const { getDataList } = this.props;
             const params = {
               page:0,
@@ -112,7 +124,13 @@ class StoreUpdateForm extends BasicForm {
               kind: ProvinceKinds.district.name,
               parentId: id,
             };
-            getLocation({ params });
+            if(id !== this.provinceId){
+                this.provinceId=id
+                this.setState({
+                    districtOption:[]
+                })
+                getLocation({ params });          
+            }
         }
         if(kind === ProvinceKinds.district.level){
             const { getDataList } = this.props;
@@ -122,14 +140,20 @@ class StoreUpdateForm extends BasicForm {
               kind: ProvinceKinds.commune.name,
               parentId: id,
             };
-            getLocation({ params });
+            if(id !== this.districtId){
+                getLocation({ params });
+                this.districtId=id
+                this.setState({
+                    communeOption:[]
+                })
+            }
         }
     }
 
     locationOnSelect=(kind)=>{
         const {getLocation}= this.props
         const params = { page:0, size: 64,search:{kind:kind}};
-        if(this.provinceOption.length===0){
+        if(this.state.provinceOption.length===0){
             getLocation({params})
         }
     }
@@ -137,10 +161,11 @@ class StoreUpdateForm extends BasicForm {
     render() {
         const { formId, dataDetail, actions, isEditing,t } = this.props
         const {
-            uploading,
-			logo,
-            curPassword
+            provinceOption,
+            districtOption,
+            communeOption
         } = this.state
+        console.log(districtOption);
         return (
             <Form
                 id={formId}
@@ -169,9 +194,9 @@ class StoreUpdateForm extends BasicForm {
                         label={t("form.label.provinceId")}
                         // required
                         allowClear
-                        options={this.provinceOption}
+                        options={provinceOption}
                         onClick={e=>this.locationOnSelect(ProvinceKinds.province.level)}
-                        onSelect={value=>this.handleChangeLocation(value,ProvinceKinds.province.level)}
+                        onChange={value=>this.handleChangeLocation(value,ProvinceKinds.province.level)}
                     />
                         </Col>
                         <Col span={8}>
@@ -180,7 +205,7 @@ class StoreUpdateForm extends BasicForm {
                         label={t("form.label.districtId")}
                         // required
                         allowClear
-                        options={this.districtOption}
+                        options={districtOption}
                         onChange={value=>this.handleChangeLocation(value,ProvinceKinds.district.level)}
                     />
                         </Col>
@@ -190,7 +215,7 @@ class StoreUpdateForm extends BasicForm {
                         label={t("form.label.wardId")}
                         // required
                         allowClear
-                        options={this.communeOption}
+                        options={communeOption}
                         onChange={value=>this.handleChangeLocation(value,ProvinceKinds.commune.level)}
                     />
                         </Col>
