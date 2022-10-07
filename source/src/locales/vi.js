@@ -26,6 +26,7 @@ export default {
         'Ranks': 'Cấp bậc khách hàng',
         'Employee': 'Nhân viên',
         'customerManagement': 'Quản lý khách hàng',
+        'Store':'Quản lí kho',
     },
     appHeader: {
         profile: 'Hồ sơ',
@@ -672,5 +673,53 @@ export default {
             }
         },
         createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    storeListPage: {
+        breadcrumbs: {
+            currentPage: 'Quản lí kho',
+        },
+        objectName: 'kho',
+        searchPlaceHolder: {
+            name: 'Tên kho',
+            addressDetails: 'Địa chỉ cụ thể',
+        },
+        table: {
+            name: 'Tên kho',
+            addressDetails: 'Địa chỉ cụ thể',
+            provinceId:'Tên Tỉnh/ Thành Phố',
+            districtId:'Tên Quận/ Huyện',
+            wardId:'Tên Phường/ Xã'
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    storeUpdatePage: {
+        breadcrumbs: {
+            // currentPage: '{{ var }} quản trị viên',
+            parentPage:'Quản lí kho',
+        },
+        objectName: 'kho',
+        form: {
+            label: {
+                "addressDetails": "Đại chỉ cụ thể",
+                "latitude": "Độ rộng",
+                "longitude": "Độ dài",
+                "name": "Tên kho",
+                "provinceId":'Tên Tỉnh/ Thành Phố',
+                "districtId":'Tên Quận/ Huyện',
+                "wardId":'Tên Phường/ Xã'
+            },
+            validationMessage: {
+                phoneLengthRequire: 'Hãy nhập số',
+                comparePassword: 'Mật khẩu bạn nhập không khớp!',
+            }
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
     },
 }

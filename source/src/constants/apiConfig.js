@@ -337,5 +337,37 @@ const apiConfig = {
             headers: baseHeader,
         },
       },
+      store: {
+        getList: {
+            path: '/v1/store/list',
+            method: 'GET',
+            headers: baseHeader
+        },
+        getById: {
+            path: '/v1/store/get',
+            method: 'GET',
+            headers: baseHeader
+        },
+        create: {
+            path: '/v1/store/create',
+            method: 'POST',
+            headers: baseHeader
+        },
+        update: {
+            path: '/v1/store/update',
+            method: 'PUT',
+            headers: baseHeader
+        },
+        delete: {
+            path: '/v1/store/delete',
+            method: 'DELETE',
+            headers: baseHeader
+        },
+        getStoreAutoCompleted:{
+            path: '/v1/store/auto-complete',
+            method: 'GET',
+            headers: baseHeader
+        }
+    },
 }
 export default apiConfig;

@@ -287,4 +287,26 @@ export const sitePathConfig = {
             apiConfig.employee.employeeAutoComplete.path,
         ],
       },
+    store: {
+        path: "/store",
+        childrenKeys:["/store/:id","/store/create"],
+        component: EmployeeListPage,
+        permissions: [
+            apiConfig.store.getList.path,
+            apiConfig.store.getById.path,
+            apiConfig.store.create.path,
+            apiConfig.store.update.path,
+            apiConfig.store.delete.path,
+            apiConfig.store.getStoreAutoCompleted.path,
+        ],
+      },
+    storeUpdate: {
+        path: "/store/:id",
+        component: EmployeeUpdate,
+        permissions: [
+            apiConfig.store.getById.path,
+            apiConfig.store.create.path,
+            apiConfig.store.update.path,
+        ],
+      },
 }

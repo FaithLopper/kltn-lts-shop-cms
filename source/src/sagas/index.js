@@ -10,6 +10,7 @@ import customer from './customer'
 import address from './address'
 import ranks from './ranks';
 import employee from './employee'
+import store from './store'
 
 const sagas = [
     ...appCommon,
@@ -22,7 +23,8 @@ const sagas = [
     ...customer,
     ...address,
     ...ranks,
-    ...employee
+    ...employee,
+    ...store,
 ];
 
 function* rootSaga() {

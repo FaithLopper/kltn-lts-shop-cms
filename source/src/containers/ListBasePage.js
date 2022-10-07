@@ -482,6 +482,18 @@ class ListBasePage extends Component {
 
     renderActionColumn() {
         const { t } = this.props;
+        const permissions= [];
+        const { location : { pathname }} = this.props;
+        Object.keys(sitePathConfig) && Object.keys(sitePathConfig).forEach(key=>{
+            if(sitePathConfig[key].path === pathname){
+                // permissions.push(sitePathConfig[key].permissions?.[1]) //Get by id
+                permissions.push(sitePathConfig[key].permissions?.[3]) //Update
+                permissions.push(sitePathConfig[key].permissions?.[4]) //Delete
+            }
+        })
+        const userData = getUserData();
+        const isRender= permissions.some(permission=>userData.permissions.indexOf(permission) > 0)
+        if(isRender)
         return {
             title: t ? t('listBasePage:titleActionCol') : 'Action',
             width: '100px',
@@ -554,7 +566,9 @@ class ListBasePage extends Component {
                     </span>
                 )
             }
-        }  
+        }
+        else
+            return {}  
     }
 
     renderActionColumnModal() {
@@ -669,7 +683,7 @@ class ListBasePage extends Component {
         const requiredPermissions = [];
         Object.keys(sitePathConfig) && Object.keys(sitePathConfig).forEach(key=>{
             if(sitePathConfig[key].path === pathname){
-                requiredPermissions.push(sitePathConfig[key].permissions?.[1]) //Get by id
+                // requiredPermissions.push(sitePathConfig[key].permissions?.[1]) //Get by id
                 requiredPermissions.push(sitePathConfig[key].permissions?.[3]) //Update
             }
         })
