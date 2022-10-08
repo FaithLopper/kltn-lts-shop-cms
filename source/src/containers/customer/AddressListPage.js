@@ -88,6 +88,8 @@ class AddressListPage extends ListBasePage {
 
   renderActionColumn() {
     const { t } = this.props;
+    const isRender= this.checkRenderActionColumn()
+    if(isRender)
     return {
         title: t ? t('listBasePage:titleActionCol') : 'Action',
         width: '100px',
@@ -160,7 +162,8 @@ class AddressListPage extends ListBasePage {
                 </span>
             )
         }
-    }  
+    }
+    return {}
 }
 
   render() {
