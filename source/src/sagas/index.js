@@ -11,6 +11,8 @@ import address from './address'
 import ranks from './ranks';
 import employee from './employee'
 import store from './store'
+import variant from './variant'
+import variantTemplate from './variantTemplate'
 
 const sagas = [
     ...appCommon,
@@ -25,6 +27,8 @@ const sagas = [
     ...ranks,
     ...employee,
     ...store,
+    ...variant,
+    ...variantTemplate,
 ];
 
 function* rootSaga() {

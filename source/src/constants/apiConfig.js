@@ -369,5 +369,69 @@ const apiConfig = {
             headers: baseHeader
         }
     },
+    variant: {
+        getList: {
+            path: '/v1/variant/list',
+            method: 'GET',
+            headers: baseHeader
+        },
+        getById: {
+            path: '/v1/variant/get',
+            method: 'GET',
+            headers: baseHeader
+        },
+        create: {
+            path: '/v1/variant/create',
+            method: 'POST',
+            headers: baseHeader
+        },
+        update: {
+            path: '/v1/variant/update',
+            method: 'PUT',
+            headers: baseHeader
+        },
+        delete: {
+            path: '/v1/variant/delete',
+            method: 'DELETE',
+            headers: baseHeader
+        },
+        getVariantAutoCompleted:{
+            path: '/v1/variant/auto-complete',
+            method: 'GET',
+            headers: baseHeader
+        }
+    },
+    variantTemplate: {
+        getList: {
+            path: '/v1/variant-template/list',
+            method: 'GET',
+            headers: baseHeader
+        },
+        getById: {
+            path: '/v1/variant-template/get',
+            method: 'GET',
+            headers: baseHeader
+        },
+        create: {
+            path: '/v1/variant-template/create',
+            method: 'POST',
+            headers: baseHeader
+        },
+        update: {
+            path: '/v1/variant-template/update',
+            method: 'PUT',
+            headers: baseHeader
+        },
+        delete: {
+            path: '/v1/variant-template/delete',
+            method: 'DELETE',
+            headers: baseHeader
+        },
+        getVariantTemplateAutoCompleted:{
+            path: '/v1/variant-template/auto-complete',
+            method: 'GET',
+            headers: baseHeader
+        }
+    },
 }
 export default apiConfig;
