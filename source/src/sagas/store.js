@@ -17,13 +17,12 @@ const {
 function* getStoreList({ payload: {params} }){
     const apiParams = apiConfig.store.getList;
     const searchParams = { page: params.page, size: params.size };
-    searchParams.kind = params.kind;
     if (params.search)
     {
         if (params.search.name)
-            searchParams.title = params.search.name;
+            searchParams.name = params.search.name;
         if(params.search.addressDetails)
-            searchParams.status = params.search.addressDetails;
+            searchParams.addressDetails = params.search.addressDetails;
     }
 
     try {

@@ -28,10 +28,10 @@ class StoreListPage extends ListBasePage {
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
     this.columns = [
       { title:  t("table.name"), dataIndex: "name" },
-      { title:  t("table.provinceId"), dataIndex: "provinceId" },
-      { title:  t("table.districtId"), dataIndex: "districtId" },
-      { title:  t("table.wardId"), dataIndex: "wardId" },
       { title:  t("table.addressDetails"), dataIndex: "addressDetails" },
+      { title:  t("table.location"), dataIndex: ["ward","name"],colSpan:3,width: '150px', },
+      { title:  t("table.districtId"), dataIndex: ["district","name"],colSpan:0,width: '150px', },
+      { title:  t("table.location"), dataIndex: ["province","name"],colSpan:0,width: '150px',},
       this.renderActionColumn(),
     ];
     this.actionColumns = {

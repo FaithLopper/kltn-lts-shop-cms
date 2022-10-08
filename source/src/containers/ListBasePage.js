@@ -480,8 +480,7 @@ class ListBasePage extends Component {
         return '';
     }
 
-    renderActionColumn() {
-        const { t } = this.props;
+    checkRenderActionColumn(){
         const permissions= [];
         const { location : { pathname }} = this.props;
         Object.keys(sitePathConfig) && Object.keys(sitePathConfig).forEach(key=>{
@@ -490,9 +489,14 @@ class ListBasePage extends Component {
                 permissions.push(sitePathConfig[key].permissions?.[3]) //Update
                 permissions.push(sitePathConfig[key].permissions?.[4]) //Delete
             }
-        })
+        })  
         const userData = getUserData();
-        const isRender= permissions.some(permission=>userData.permissions.indexOf(permission) > 0)
+        return permissions.some(permission=>userData.permissions.indexOf(permission) > 0)
+    }
+    
+    renderActionColumn() {
+        const { t } = this.props;
+        const isRender= this.checkRenderActionColumn()
         if(isRender)
         return {
             title: t ? t('listBasePage:titleActionCol') : 'Action',

@@ -41,7 +41,6 @@ class StoreUpdatePage extends SaveBasePage {
     }
 
     getDataDetailMapping = (data) => {
-        console.log(data)
         const storeUserData = data
 
         if (!storeUserData) {
@@ -134,26 +133,10 @@ class StoreUpdatePage extends SaveBasePage {
         }
     }
 
-    handleLocation = (data)=>{
-        console.log(data)
-        if(data[0]?.kind===ProvinceKinds.province.level){
-            this.provinceOption= data
-        }
-        else if(data[0]?.kind===ProvinceKinds.district.level){
-            this.districtOption= data
-        }
-        else if(data[0]?.kind===ProvinceKinds.commune.level){
-            this.communeOption= data
-        }
-    }
 
     render() {
         const { isGetDetailLoading, objectNotFound,  } = this.state
-        const {t,uploadFile,getLocation,provinceList}= this.props
-        const province = provinceList.data || [];
-        if(province.length!==0){
-            this.handleLocation(province)
-        }
+        const {t,uploadFile,getLocation,getLocationDetail}= this.props
         if (objectNotFound) {
             return <ObjectNotFound />
         }
@@ -172,12 +155,9 @@ class StoreUpdatePage extends SaveBasePage {
                     handleUploadImage={this.handleUploadImageField}
                     uploadFile={uploadFile}
                     getLocation={getLocation}
-                    provinceOption={this.provinceOption}
-                    districtOption={this.districtOption}
-                    communeOption={this.communeOption}
+                    getLocationDetail={getLocationDetail}
                     t={t}
                     />
-                    
             </LoadingWrapper>
         )
     }
@@ -187,7 +167,8 @@ const mapDispatchToProps = dispatch => ({
   getDataById: (payload) => dispatch(actions.getStoreById(payload)),
   createData: (payload) => dispatch(actions.createStore(payload)),
   updateData: (payload) => dispatch(actions.updateStore(payload)),
-  getLocation:(payload)=>dispatch(actions.getProvinceList(payload))
+  getLocation: (payload) => dispatch(actions.getLocation(payload)),
+  getLocationDetail: (payload) => dispatch(actions.getLocationDetail(payload)),
 })
 
 const mapStateToProps = state => ({

@@ -573,7 +573,8 @@ export default {
             ward:'Phường/ Xã',
             addressDetails:'Địa chỉ cụ thể',
             receiverFullName:'Tên người nhận',
-            isDefault:'Loại địa chỉ'
+            isDefault:'Loại địa chỉ',
+            location:'Tỉnh thành',
         },
         message: {
             // updateProfileFail: 'Your profile failed. Please try again!',
@@ -688,7 +689,8 @@ export default {
             addressDetails: 'Địa chỉ cụ thể',
             provinceId:'Tên Tỉnh/ Thành Phố',
             districtId:'Tên Quận/ Huyện',
-            wardId:'Tên Phường/ Xã'
+            wardId:'Tên Phường/ Xã',
+            "location":'Tỉnh thành'
         },
         message: {
             // updateProfileFail: 'Your profile failed. Please try again!',
@@ -704,13 +706,13 @@ export default {
         objectName: 'kho',
         form: {
             label: {
-                "addressDetails": "Đại chỉ cụ thể",
-                "latitude": "Độ rộng",
-                "longitude": "Độ dài",
+                "addressDetails": "Địa chỉ cụ thể",
+                "latitude": "Vĩ độ",
+                "longitude": "Kinh độ",
                 "name": "Tên kho",
                 "provinceId":'Tên Tỉnh/ Thành Phố',
                 "districtId":'Tên Quận/ Huyện',
-                "wardId":'Tên Phường/ Xã'
+                "wardId":'Tên Phường/ Xã',
             },
             validationMessage: {
                 phoneLengthRequire: 'Hãy nhập số',

@@ -93,7 +93,6 @@ class UserAminUpdate extends SaveBasePage {
     onBack = () => {
         if (this.state.isChanged) {
             const {t}= this.props
-
             this.showWarningConfirmModal({
                 title: t("basicSavePage:onBack"),
                 onOk: () => {

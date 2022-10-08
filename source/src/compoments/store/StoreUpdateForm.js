@@ -1,5 +1,5 @@
 import React, { Children } from 'react';
-import { Form, Col, Row, Card, Button, message } from 'antd';
+import { Form, Col, Row, Card, Button, message, Result } from 'antd';
 import BasicForm from '../common/entryForm/BasicForm';
 import TextField from '../common/entryForm/TextField';
 import RadioField from '../common/entryForm/RadioField';
@@ -25,56 +25,18 @@ class StoreUpdateForm extends BasicForm {
     constructor(props) {
         super(props)
         this.state = {
-            logo: "",
-			uploading: false,
-            curPassword: null,
-            isUpdateLogo:false,
             provinceOption:[],
             districtOption:[],
             communeOption:[],
         }
-        // this.provinceOption=[],
-        // this.districtOption=[],
-        // this.communeOption=[],
         this.provinceId=null
         this.districtId=null
         this.communeId=null
-    }
-
-    componentWillReceiveProps(nextProps,currentProps) {
-        if (nextProps.dataDetail !== this.props.dataDetail) {
-            const {dataDetail}= nextProps
-            let data={
-                ...dataDetail
-            }
-            this.formRef.current.setFieldsValue(data)
-        }
-        const {communeOption,provinceOption, districtOption } =nextProps;
-        if(provinceOption){
-            this.setState({
-                provinceOption:provinceOption.map(item=>{
-                    return {value:item.id,label:item.name}
-                })
-            })
-        }
-        if(nextProps.districtOption !== this.state.districtOption){
-            if(districtOption){ 
-                this.setState({
-                    districtOption:districtOption.map(item=>{
-                        return {value:item.id,label:item.name}
-                    })
-                })
-            }
-        }
-
-        if(communeOption){
-            this.setState({
-                communeOption:communeOption.map(item=>{
-                    return {value:item.id,label:item.name}
-                })
-            })
-        }
-        // console.log(this.state.provinceOption)
+        this.onGetLocationComplete= this.onGetLocationComplete.bind(this)
+        this.getInitialFormValues=this.getInitialFormValues.bind(this)
+        this.getLocationDetail=this.getLocationDetail.bind(this)
+        this.handleChangeLocation=this.handleChangeLocation.bind(this)
+        this.locationOnSelect=this.locationOnSelect.bind(this)
     }
 
     onValuesChange = () => {
@@ -90,7 +52,7 @@ class StoreUpdateForm extends BasicForm {
     }
 
 	getInitialFormValues = () => {
-        const { isEditing, dataDetail,communeOption,provinceOption, districtOption } = this.props;
+        const { isEditing, dataDetail} = this.props;
         if (!isEditing) {
 		return {
 			status: STATUS_ACTIVE,
@@ -100,61 +62,140 @@ class StoreUpdateForm extends BasicForm {
             ...dataDetail,
         };
 	};
+    
 
-    handleChangeLogo = (info) => {
-		if (info.file.status === "done") {
-		Utils.getBase64(info.file.originFileObj, (logo) =>{
-			this.setState({ logo:logo,isUpdateLogo:true })
+    getLocationDetail(dataDetail){
+        const {getLocationDetail}= this.props
+        if(Object.keys(dataDetail).length!==0){      
+            getLocationDetail({
+                    params: { page:0, size: 64,provinceKind:ProvinceKinds.province.level
+                        ,districtKind:ProvinceKinds.district.level,districtParentId:dataDetail.district.parentId
+                        ,wardKind:ProvinceKinds.commune.level,wardParentId:dataDetail.ward.parentId
+                    },
+                    onCompleted:(responseData)=>{
+                        if(responseData?.result){
+                            const {province,district,commune}= responseData.data
+                                this.setState({
+                                    provinceOption:province.data.map(item=>{
+                                        return {value:item.id,label:item.name}
+                                    })
+                                })
+                                this.setState({
+                                    districtOption:district.data.map(item=>{
+                                        return {value:item.id,label:item.name}
+                                    })
+                                })
+                                this.setState({
+                                    communeOption:commune.data.map(item=>{
+                                        return {value:item.id,label:item.name}
+                                    })
+                                })
+                                this.provinceId=dataDetail.province.id
+                                this.districtId=dataDetail.district.id
+                                this.communeId=dataDetail.ward.id
+                        }
+                    },
+                    onError:this.onGetLocationError,
+            })
         }
-		);
-		}
-	};
+        }   
 
-    copyToClipboardAlert = () => {
-        const { t } = this.props;
-        message.success( t('constants:successMessage.copied'));
-    };
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.dataDetail !== this.props.dataDetail) {
+            const {dataDetail}= nextProps
+            let data={
+                ...dataDetail
+            }
+            this.formRef.current.setFieldsValue(data)
+            this.setFieldValue("provinceId",data.province.id)
+            this.setFieldValue("districtId",data.district.id)
+            this.setFieldValue("wardId",data.ward.id)
+            if(this.provinceId === null){
+                this.getLocationDetail(dataDetail)
+            }
+        }
+    }
+
     handleChangeLocation =(id,kind)=>{
         const {getLocation}= this.props
         if(kind === ProvinceKinds.province.level){
             const { getDataList } = this.props;
-            const params = {
-              page:0,
-              size: 64,
-              kind: ProvinceKinds.district.name,
-              parentId: id,
-            };
+            const params = { page:0, size: 64,kind:ProvinceKinds.district.level,parentId:id};
             if(id !== this.provinceId){
+                if(params.parentId!==undefined){
+                    getLocation({
+                        params,
+                        onCompleted:this.onGetLocationComplete,
+                        onError:this.onGetLocationError,
+                    })   
+                }   
                 this.provinceId=id
                 this.setState({
-                    districtOption:[]
+                    districtOption:[],
+                    communeOption:[],
                 })
-                getLocation({ params });          
+                this.setFieldValue("districtId",undefined)   
+                this.setFieldValue("wardId",undefined)     
             }
         }
         if(kind === ProvinceKinds.district.level){
             const { getDataList } = this.props;
-            const params = {
-              page:0,
-              size: 64,
-              kind: ProvinceKinds.commune.name,
-              parentId: id,
-            };
+            const params = { page:0, size: 64,kind:ProvinceKinds.commune.level,parentId:id};
             if(id !== this.districtId){
-                getLocation({ params });
-                this.districtId=id
                 this.setState({
                     communeOption:[]
+                })
+                if(params.parentId!==undefined){
+                    getLocation({
+                    params,
+                    onCompleted:this.onGetLocationComplete,
+                    onError:this.onGetLocationError,
+                }) }   
+                this.districtId=id
+                this.setFieldValue("wardId",undefined)       
+            }
+        }
+    }
+
+    onGetLocationComplete(responseData){
+        if(responseData?.result){
+            const data= responseData.data?.data
+            const options=data.map(item=>{
+                return {value:item.id,label:item.name}
+            })
+            if(data[0]?.kind===ProvinceKinds.province.level){
+                this.setState({
+                    provinceOption:options
+                })
+            }
+            else if(data[0]?.kind===ProvinceKinds.district.level){
+                this.setState({
+                    districtOption:options
+                })
+            }
+            else if(data[0]?.kind===ProvinceKinds.commune.level){
+                this.setState({
+                    communeOption:options
                 })
             }
         }
     }
 
+    onGetLocationError(error){
+
+    }
+
+
     locationOnSelect=(kind)=>{
         const {getLocation}= this.props
-        const params = { page:0, size: 64,search:{kind:kind}};
+        const params = { page:0, size: 64,kind:kind};
         if(this.state.provinceOption.length===0){
-            getLocation({params})
+            getLocation({
+                params,
+                onCompleted:this.onGetLocationComplete,
+                onError:this.onGetLocationError,
+            })
         }
     }
 
@@ -165,7 +206,6 @@ class StoreUpdateForm extends BasicForm {
             districtOption,
             communeOption
         } = this.state
-        console.log(districtOption);
         return (
             <Form
                 id={formId}
@@ -183,7 +223,7 @@ class StoreUpdateForm extends BasicForm {
                             <TextField
                             fieldName="name"
                             label={t("form.label.name")}
-                            // required
+                            required
                         />
                         </Col>
                         </Row>
@@ -192,7 +232,7 @@ class StoreUpdateForm extends BasicForm {
                         <DropdownField
                         fieldName="provinceId"
                         label={t("form.label.provinceId")}
-                        // required
+                        required
                         allowClear
                         options={provinceOption}
                         onClick={e=>this.locationOnSelect(ProvinceKinds.province.level)}
@@ -203,7 +243,7 @@ class StoreUpdateForm extends BasicForm {
                         <DropdownField
                         fieldName="districtId"
                         label={t("form.label.districtId")}
-                        // required
+                        required
                         allowClear
                         options={districtOption}
                         onChange={value=>this.handleChangeLocation(value,ProvinceKinds.district.level)}
@@ -213,7 +253,7 @@ class StoreUpdateForm extends BasicForm {
                         <DropdownField
                         fieldName="wardId"
                         label={t("form.label.wardId")}
-                        // required
+                        required
                         allowClear
                         options={communeOption}
                         onChange={value=>this.handleChangeLocation(value,ProvinceKinds.commune.level)}
@@ -224,7 +264,7 @@ class StoreUpdateForm extends BasicForm {
                         <Col span={24}>
                             <TextField
                             fieldName="addressDetails"
-                            // required
+                            required
                             label={t('form.label.addressDetails')}
                             />
                             </Col>
@@ -232,16 +272,16 @@ class StoreUpdateForm extends BasicForm {
                         <Row gutter={[16, 0]}>
                         <Col span={12}>
                             <TextField
-                            type="number"
-                            fieldName="latitude"
-                            label={t('form.label.latitude')}
+                             type="number"
+                            fieldName="longitude"
+                            label={t('form.label.longitude')}
                             />
                             </Col>
                         <Col span={12}>
                             <TextField
-                             type="number"
-                            fieldName="longitude"
-                            label={t('form.label.longitude')}
+                            type="number"
+                            fieldName="latitude"
+                            label={t('form.label.latitude')}
                             />
                             </Col>
                         </Row>

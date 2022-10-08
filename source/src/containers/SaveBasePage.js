@@ -175,7 +175,7 @@ class SaveBasePage extends Component {
         if (this.warningOnBack && this.state.isChanged) {
             const {t}= this.props
             this.showWarningConfirmModal({
-                // title: t('basicSavePage.onBack'),
+                title: t('basicSavePage.onBack'),
                 onOk: doBack,
             });
         } else {
