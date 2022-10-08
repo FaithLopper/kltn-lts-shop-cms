@@ -23,7 +23,7 @@ class CategoryProductUpdate extends SaveBasePage {
       },
       {
         name: this.isEditing
-          ? `${t(`listBasePage:${"update"}`)} ${this.objectName} ${this.dataId}`
+          ? `${t(`listBasePage:${"update"}`)} ${this.objectName}`
           : `${t(`listBasePage:${"create"}`)} ${this.objectName}`,
       },
     ];
@@ -45,7 +45,7 @@ class CategoryProductUpdate extends SaveBasePage {
       this.setState({ objectNotFound: true });
       return;
     }
-
+    console.log(categoryProductData)
     return {
       ...categoryProductData,
     };

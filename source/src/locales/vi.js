@@ -680,12 +680,21 @@ export default {
             parentPage: 'Danh mục sản phẩm',
         },
         objectName: 'Danh mục sản phẩm',
+        searchPlaceHolder: {
+            name: 'Tên danh mục',
+            status: 'Chọn trạng thái',
+        },
+        table: {
+            name: 'Tên danh mục',
+        },
         form: {
             label: {
                 icon: 'Icon danh mục',
                 name: 'Tên danh mục',
                 status: 'Trạng thái',
                 note: 'Ghi chú',
+                orderSort:'Thứ tự danh mục',
+                parentName:'Thuộc danh mục'
             },
         },
         createNewButton: 'Tạo {{ var, lowercase }} mới',

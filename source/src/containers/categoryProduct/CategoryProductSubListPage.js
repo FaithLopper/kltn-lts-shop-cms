@@ -12,8 +12,10 @@ import { actions } from "../../actions";
 import { FieldTypes } from "../../constants/formConfig";
 import { AppConstants } from "../../constants";
 import { commonStatus } from "../../constants/masterData";
+import CategoryProductSubForm from "../../compoments/categoryProduct/CategoryProductSubForm";
+import BasicModal from "../../compoments/common/modal/BasicModal";
 
-class CategoryProductListPage extends ListBasePage {
+class CategoryProductSubListPage extends ListBasePage {
   initialSearch() {
     return { name: "", status: null };
   }
@@ -21,10 +23,24 @@ class CategoryProductListPage extends ListBasePage {
   constructor(props) {
     super(props);
     const { t } = props;
-    
+
+    const {
+      location: { search },
+    } = this.props;
+
+    const { parentId, parentName } = qs.parse(search);
+    this.parentId = parentId;
+    this.parentName = parentName;
+
     this.objectName = t("objectName");
     this.objectListName = "category-product";
-    this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
+    this.breadcrumbs = [
+      {
+        name: t("breadcrumbs.parentPage"),
+        path: `${sitePathConfig.categoryProduct.path}`,
+      },
+      { name: `${parentName}`, path: `` },
+    ];
     this.columns = [
       {
         title: "#",
@@ -45,20 +61,11 @@ class CategoryProductListPage extends ListBasePage {
       {
         title: t("table.name"),
         render: (dataRow) => {
-          return (
-            <span
-              className="routing"
-              onClick={() => {
-                this.handleRouting(dataRow.id, dataRow.name);
-              }}
-            >
-              {dataRow.name}
-            </span>
-          );
+          return dataRow.name;
         },
       },
       this.renderStatusColumn(),
-      this.renderActionColumn(),
+      this.renderActionColumnModal(),
     ];
     this.actionColumns = {
       isEdit: true,
@@ -67,22 +74,29 @@ class CategoryProductListPage extends ListBasePage {
     };
   }
 
-  handleRouting(parentId, parentName) {
-    const {
-      location: { search, pathname },
-      history,
-    } = this.props;
-    const queryString = qs.parse(search);
-    const result = {};
-    Object.keys(queryString).map((q) => {
-      result[`parentSearch${q}`] = queryString[q];
-    });
-    history.push(
-      `${pathname}-sub?${qs.stringify({ ...result, parentId, parentName })}`
-    );
-  }
+  //   handleRouting(parentId, parentName) {
+  //     const {
+  //       location: { search, pathname },
+  //       history,
+  //     } = this.props;
+  //     const queryString = qs.parse(search);
+  //     const result = {};
+  //     Object.keys(queryString).map((q) => {
+  //       result[`parentSearch${q}`] = queryString[q];
+  //     });
+  //     history.push(
+  //       `${pathname}-sub?${qs.stringify({ ...result, parentId, parentName })}`
+  //     );
+  //   }
 
   prepareCreateData(data) {
+    return {
+      ...data,
+    };
+  }
+  prepareUpdateData(data) {
+
+    console.log('update',data)
     return {
       ...data,
     };
@@ -96,6 +110,7 @@ class CategoryProductListPage extends ListBasePage {
       page,
       size: this.pagination.pageSize,
       search: this.search,
+      parentId: this.parentId,
     };
     getDataList({ params });
   }
@@ -118,25 +133,27 @@ class CategoryProductListPage extends ListBasePage {
     ];
   }
 
-  getDetailLink(dataRow) {
-    return sitePathConfig.categoryProductUpdate.path.replace(":id", dataRow.id);
-  }
-
   render() {
-    const { dataList, loading, t } = this.props;
+    const { dataList, loading, t, uploadFile } = this.props;
     const categoryData = dataList.data || [];
     this.pagination.total = dataList.totalElements || 0;
+    const { isShowModifiedModal, isShowModifiedLoading } = this.state;
+    this.dataDetail.parentName = this.parentName;
+    this.dataDetail.parentId = this.parentId;
     return (
       <div>
         {this.renderSearchForm()}
         <div className="action-bar">
           {this.renderCreateNewButton(
-            <Link to={this.getCreateLink()}>
-              <Button type="primary">
-                <PlusOutlined />{" "}
-                {t("createNewButton", { var: t("objectName") })}
-              </Button>
-            </Link>
+            <Button
+              type="primary"
+              onClick={() => this.onShowModifiedModal(false)}
+            >
+              <PlusOutlined />{" "}
+              {t("createNewButton", {
+                var: t(`constants:${"CategoryProductSub"}`, ""),
+              })}
+            </Button>
           )}
         </div>
         <BaseTable
@@ -147,6 +164,34 @@ class CategoryProductListPage extends ListBasePage {
           pagination={this.pagination}
           onChange={this.handleTableChange}
         />
+        <BasicModal
+          visible={isShowModifiedModal}
+          isEditing={this.isEditing}
+          objectName={this.objectName}
+          loading={isShowModifiedLoading}
+          onOk={this.onOkModal}
+          onCancel={this.onCancelModal}
+          width={500}
+        >
+          <CategoryProductSubForm
+            visible={isShowModifiedModal}
+            dataDetail={
+              this.isEditing
+                ? this.dataDetail
+                : {
+                    parentName: this.dataDetail.parentName,
+                    parentId: this.dataDetail.parentId,
+                  }
+            }
+            isEditing={this.isEditing}
+            objectName={this.objectName}
+            loading={isShowModifiedLoading}
+            onOk={this.onOkModal}
+            onCancel={this.onCancelModal}
+            uploadFile={uploadFile}
+            t={t}
+          />
+        </BasicModal>
       </div>
     );
   }
@@ -171,9 +216,9 @@ export default connect(
   mapDispatchToProps
 )(
   withTranslation([
-    "categoryListPage",
+    "categoryProductListPage",
     "listBasePage",
     "constants",
     "basicModal",
-  ])(CategoryProductListPage)
+  ])(CategoryProductSubListPage)
 );

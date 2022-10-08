@@ -26,6 +26,7 @@ import EmployeeListPage from "../containers/employee/EmployeeListPage";
 import EmployeeUpdate from "../containers/employee/EmployeeUpdate";
 import CategoryProductListPage from "../containers/categoryProduct/CategoryProductListPage";
 import CategoryProductUpdate from "../containers/categoryProduct/CategoryProductUpdate";
+import CategoryProductSubListPage from "../containers/categoryProduct/CategoryProductSubListPage";
 
 export const sitePathConfig = {
     login: {
@@ -305,6 +306,18 @@ export const sitePathConfig = {
       categoryProductUpdate: {
         path: "/category-product/:id",
         component: CategoryProductUpdate,
+        permissions: [
+            apiConfig.productCategory.getList.path,
+            apiConfig.productCategory.getById.path,
+            apiConfig.productCategory.create.path,
+            apiConfig.productCategory.update.path,
+            apiConfig.productCategory.delete.path,
+            apiConfig.productCategory.productCategoryAutoComplete.path,
+        ],
+      },
+      categoryProductSub: {
+        path: "/category-product-sub",
+        component: CategoryProductSubListPage,
         permissions: [
             apiConfig.productCategory.getList.path,
             apiConfig.productCategory.getById.path,

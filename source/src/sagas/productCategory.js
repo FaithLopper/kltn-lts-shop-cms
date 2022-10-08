@@ -27,7 +27,7 @@ function* getProductCategoryList({ payload: { params } }) {
     if(params.parentId) {
         searchParams.parentId = params.parentId
     }
-
+    console.log(params)
     if(params.search) {
         if(params.search.name) {
             searchParams.name = params.search.name

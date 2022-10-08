@@ -43,7 +43,6 @@ class CategoryProductUpdateForm extends BasicForm {
 
   handleSubmit(formValues) {
     const { onSubmit } = this.props;
-    console.log(formValues)
     onSubmit({
       ...formValues,
     });
@@ -107,7 +106,7 @@ class CategoryProductUpdateForm extends BasicForm {
             <CropImageFiled
               fieldName="icon"
               loading={uploading}
-            //   label={t("form.label.icon")}
+              //   label={t("form.label.icon")}
               imageUrl={logo}
               onChange={this.handleChangeLogo}
               uploadFile={this.uploadFileLogo}
