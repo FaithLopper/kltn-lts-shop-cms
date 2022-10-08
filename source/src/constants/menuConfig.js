@@ -12,7 +12,8 @@ import {
     ShoppingCartOutlined,
     CarryOutOutlined,
     BankOutlined,
-    CrownOutlined
+    CrownOutlined,
+    HomeOutlined
 } from '@ant-design/icons';
 import { sitePathConfig } from '../constants/sitePathConfig';
 import store from '../store';
@@ -99,6 +100,16 @@ const navMenuConfig = [
             {
             label: 'Ranks',
                 ...sitePathConfig.ranks,
+            },
+        ]
+    },
+    {
+        label: 'Store',
+        icon: <HomeOutlined />,
+        children: [
+            {
+            label: 'Store',
+                ...sitePathConfig.store,
             },
         ]
     },

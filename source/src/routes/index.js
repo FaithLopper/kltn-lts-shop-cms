@@ -39,6 +39,8 @@ import EmployeeListPage from '../containers/employee/EmployeeListPage';
 import EmployeeUpdate from '../containers/employee/EmployeeUpdate';
 import { UserTypes } from '../constants';
 import { actions } from '../actions';
+import StoreListPage from '../containers/store/StoreListPage';
+import StoreUpdatePage from '../containers/store/StoreUpdatePage';
 
 const { getUserData } = actions;
 const userData = getUserData();
@@ -69,7 +71,9 @@ const RootRoute = () => {
         ranksUpdate,
         adminNewsUpdate,
         employee,
-        employeeUpdate
+        employeeUpdate,
+        store,
+        storeUpdate,
     } = sitePathConfig;
 
     const getUserHomeNavigation =()=>{
@@ -131,6 +135,8 @@ const RootRoute = () => {
                 <PrivateRoute exact path={ranksUpdate.path} component={RanksUpdate}/>
                 <PrivateRoute exact path={employee.path} component={EmployeeListPage}/>
                 <PrivateRoute exact path={employeeUpdate.path} component={EmployeeUpdate}/>
+                <PrivateRoute exact path={store.path} component={StoreListPage}/>
+                <PrivateRoute exact path={storeUpdate.path} component={StoreUpdatePage}/>
                 {/* Error Page */}
                 <PrivateRoute exact path={forbidden.path} component={Forbidden}/>
                 {/* <Route exact path="/error" component={ErrorServer} /> */}
