@@ -109,11 +109,11 @@ class AddressListPage extends ListBasePage {
                     to.pathname = detailLink;
                 }
                 actionColumns.push(
-                    <Link to={to}>
-                        <Button type="link" className="no-padding">
-                            <EyeOutlined color="red" />
-                        </Button>
-                    </Link>
+                  this.renderEditButton(<Link to={to}>
+                    <Button type="link" className="no-padding">
+                        <EyeOutlined color="red" />
+                    </Button>
+                </Link>)    
                 )
             }
             if(this.actionColumns.isChangeStatus) {

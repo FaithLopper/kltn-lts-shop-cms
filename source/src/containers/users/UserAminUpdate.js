@@ -92,8 +92,10 @@ class UserAminUpdate extends SaveBasePage {
 
     onBack = () => {
         if (this.state.isChanged) {
+            const {t}= this.props
+
             this.showWarningConfirmModal({
-                title: "Are you sure want to quit? Your data will not be saved",
+                title: t("basicSavePage:onBack"),
                 onOk: () => {
                     this.props.history.push(this.getListUrl)
                 }
@@ -108,6 +110,7 @@ class UserAminUpdate extends SaveBasePage {
             kind:UserTypes.ADMIN,
             avatarPath: data.avatar,
             status: 1,
+            groupId:32,
             ...data,
         };
     }
