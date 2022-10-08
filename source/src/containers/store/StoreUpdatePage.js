@@ -1,32 +1,33 @@
 import React from 'react';
-// import ECatalogueLevel1Form from '../../components/eCatalogue/ECatalogueLevel1Form';
 import AdminLevel1Form from '../../compoments/user/AdminLevel1Form';
 import SaveBasePage from "../SaveBasePage";
 import LoadingWrapper from '../../compoments/common/elements/LoadingWrapper';
 import { connect } from 'react-redux';
-// import { eCatalogueActions } from '../../redux/actions';
 import { actions } from "../../actions";
-import { convertUtcToLocalTime } from '../../utils/datetimeHelper';
-import { showErrorMessage, showSucsessMessage } from "../../services/notifyService";
-// import { siteConfig } from "../../constants/siteConfig";
 import { sitePathConfig } from '../../constants/sitePathConfig';
-// import ObjectNotFound from "../../components/common/ObjectNotFound";
 import ObjectNotFound from '../../compoments/common/ObjectNotFound';
 import { withTranslation } from "react-i18next";
-import { UserTypes } from '../../constants';
-class UserAminUpdate extends SaveBasePage {
+import { ProvinceKinds, UserTypes } from '../../constants';
+import CustomerForm from '../../compoments/customer/CustomerForm';
+import AddressForm from '../../compoments/customer/AddressForm';
+import StoreUpdateForm from '../../compoments/store/StoreUpdateForm';
+class StoreUpdatePage extends SaveBasePage {
 
     constructor(props) {
         super(props);
         const { t } = this.props;
         this.objectName =  t("objectName");
-        this.getListUrl = sitePathConfig.admin.path;
+        this.getListUrl = sitePathConfig.store.path;
         this.actionFooter= false
         this.breadcrumbs = [
             {
                 name:  t("breadcrumbs.parentPage"),
-                path:`${sitePathConfig.admin.path}`
+                path:`${sitePathConfig.store.path}`
             },
+            // {
+            //     name:  t("breadcrumbs.parentPage1"),
+            //     path:`${sitePathConfig.address.path}`
+            // },
             {
                 name:  this.isEditing? `${t(`listBasePage:${"update"}`)} ${this.objectName}` :`${t(`listBasePage:${"create"}`)} ${this.objectName}`,
             },
@@ -40,15 +41,15 @@ class UserAminUpdate extends SaveBasePage {
     }
 
     getDataDetailMapping = (data) => {
-        const adminUserData = data
+        const storeUserData = data
 
-        if (!adminUserData) {
+        if (!storeUserData) {
             this.setState({ objectNotFound: true });
             return
         }
 
         return {
-            ...adminUserData,
+            ...storeUserData,
         }
     }
 
@@ -63,7 +64,7 @@ class UserAminUpdate extends SaveBasePage {
         if (res?.result) {
             this.showSuccessConfirmModal({
                 onContinueEdit: () => {
-                    history.push(sitePathConfig.adminUpdate.path.replace(':id', res.id))
+                    history.push(sitePathConfig.storeUpdate.path.replace(':id', res.id))
                 }
             })
         } else if (res?.result===false) {
@@ -106,10 +107,6 @@ class UserAminUpdate extends SaveBasePage {
 
     prepareCreateData = (data) => {
         return {
-            kind:UserTypes.ADMIN,
-            avatarPath: data.avatar,
-            status: 1,
-            groupId:32,
             ...data,
         };
     }
@@ -117,8 +114,6 @@ class UserAminUpdate extends SaveBasePage {
     prepareUpdateData = (data) => {
         return {
             ...data,
-            kind:UserTypes.ADMIN,
-            avatarPath: data.avatar,
             id: this.dataDetail.id
         };
     }
@@ -138,16 +133,17 @@ class UserAminUpdate extends SaveBasePage {
         }
     }
 
+
     render() {
         const { isGetDetailLoading, objectNotFound,  } = this.state
-        const {t,uploadFile}= this.props
+        const {t,uploadFile,getLocation,getLocationDetail}= this.props
         if (objectNotFound) {
             return <ObjectNotFound />
         }
 
         return (
             <LoadingWrapper loading={isGetDetailLoading}>
-                <AdminLevel1Form
+                <StoreUpdateForm
                     setIsChangedFormValues={this.setIsChangedFormValues}
                     formId={this.getFormId()}
                     onSubmit={this.onSave}
@@ -158,24 +154,25 @@ class UserAminUpdate extends SaveBasePage {
                     handleRemoveImage={this.handleRemoveImageField}
                     handleUploadImage={this.handleUploadImageField}
                     uploadFile={uploadFile}
+                    getLocation={getLocation}
+                    getLocationDetail={getLocationDetail}
                     t={t}
-
                     />
-                    
             </LoadingWrapper>
         )
     }
 }
 
 const mapDispatchToProps = dispatch => ({
-  getDataById: (payload) => dispatch(actions.getUserById(payload)),
-  createData: (payload) => dispatch(actions.createUser(payload)),
-  updateData: (payload) => dispatch(actions.updateUser(payload)),
-  uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
+  getDataById: (payload) => dispatch(actions.getStoreById(payload)),
+  createData: (payload) => dispatch(actions.createStore(payload)),
+  updateData: (payload) => dispatch(actions.updateStore(payload)),
+  getLocation: (payload) => dispatch(actions.getLocation(payload)),
+  getLocationDetail: (payload) => dispatch(actions.getLocationDetail(payload)),
 })
 
 const mapStateToProps = state => ({
-
+    provinceList:state.province.provinceData|| []
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['userAdminUpdatePage','listBasePage'])(UserAminUpdate));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['storeUpdatePage','listBasePage'])(StoreUpdatePage));

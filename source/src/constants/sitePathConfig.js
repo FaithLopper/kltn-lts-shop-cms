@@ -327,4 +327,70 @@ export const sitePathConfig = {
             apiConfig.productCategory.productCategoryAutoComplete.path,
         ],
       },
+    store: {
+        path: "/store",
+        childrenKeys:["/store/:id","/store/create"],
+        component: EmployeeListPage,
+        permissions: [
+            apiConfig.store.getList.path,
+            apiConfig.store.getById.path,
+            apiConfig.store.create.path,
+            apiConfig.store.update.path,
+            apiConfig.store.delete.path,
+            apiConfig.store.getStoreAutoCompleted.path,
+        ],
+      },
+    storeUpdate: {
+        path: "/store/:id",
+        component: EmployeeUpdate,
+        permissions: [
+            apiConfig.store.getById.path,
+            apiConfig.store.create.path,
+            apiConfig.store.update.path,
+        ],
+      },
+    variant: {
+        path: "/variant",
+        childrenKeys:["/variant/:id","/variant/create"],
+        component: EmployeeListPage,
+        permissions: [
+            apiConfig.variant.getList.path,
+            apiConfig.variant.getById.path,
+            apiConfig.variant.create.path,
+            apiConfig.variant.update.path,
+            apiConfig.variant.delete.path,
+            apiConfig.variant.getVariantAutoCompleted.path,
+        ],
+      },
+    variantUpdate: {
+        path: "/variant/:id",
+        component: EmployeeUpdate,
+        permissions: [
+            apiConfig.variant.getById.path,
+            apiConfig.variant.create.path,
+            apiConfig.variant.update.path,
+        ],
+    },
+    variantTemplate: {
+        path: "/variant-template",
+        childrenKeys:["/variant-template/:id","/variant-template/create"],
+        component: EmployeeListPage,
+        permissions: [
+            apiConfig.variantTemplate.getList.path,
+            apiConfig.variantTemplate.getById.path,
+            apiConfig.variantTemplate.create.path,
+            apiConfig.variantTemplate.update.path,
+            apiConfig.variantTemplate.delete.path,
+            apiConfig.variantTemplate.getVariantTemplateAutoCompleted.path,
+        ],
+      },
+    variantTemplateUpdate: {
+        path: "/variant-template/:id",
+        component: EmployeeUpdate,
+        permissions: [
+            apiConfig.variantTemplate.getById.path,
+            apiConfig.variantTemplate.create.path,
+            apiConfig.variantTemplate.update.path,
+        ],
+    },
 }

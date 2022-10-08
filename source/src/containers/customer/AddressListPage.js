@@ -33,10 +33,10 @@ class AddressListPage extends ListBasePage {
   ];
     this.columns = [
       { title:  t("table.receiverFullName"), dataIndex: "receiverFullName"},
-      { title:  t("table.province"), dataIndex: "province"},
-      { title:  t("table.district"), dataIndex: "district"},
-      { title:  t("table.ward"), dataIndex: "ward"},
-      { title:  t("table.addressDetails"), dataIndex: "addressDetails"},
+      { title:  t("table.addressDetails"), dataIndex: "addressDetails" },
+      { title:  t("table.location"), dataIndex: ["ward"],colSpan:3,width: '150px', },
+      { title:  t("table.districtId"), dataIndex: ["district"],colSpan:0,width: '150px', },
+      { title:  t("table.location"), dataIndex: ["province"],colSpan:0,width: '150px',},
       this.renderStatusColumn(),
       this.renderActionColumn(),
     ];
@@ -88,6 +88,8 @@ class AddressListPage extends ListBasePage {
 
   renderActionColumn() {
     const { t } = this.props;
+    const isRender= this.checkRenderActionColumn()
+    if(isRender)
     return {
         title: t ? t('listBasePage:titleActionCol') : 'Action',
         width: '100px',
@@ -160,7 +162,8 @@ class AddressListPage extends ListBasePage {
                 </span>
             )
         }
-    }  
+    }
+    return {}
 }
 
   render() {
