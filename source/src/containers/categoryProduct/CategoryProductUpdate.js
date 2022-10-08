@@ -45,7 +45,7 @@ class CategoryProductUpdate extends SaveBasePage {
       this.setState({ objectNotFound: true });
       return;
     }
-    console.log(categoryProductData)
+
     return {
       ...categoryProductData,
     };

@@ -95,8 +95,6 @@ class CategoryProductSubListPage extends ListBasePage {
     };
   }
   prepareUpdateData(data) {
-
-    console.log('update',data)
     return {
       ...data,
     };

@@ -27,7 +27,7 @@ function* getProductCategoryList({ payload: { params } }) {
     if(params.parentId) {
         searchParams.parentId = params.parentId
     }
-    console.log(params)
+
     if(params.search) {
         if(params.search.name) {
             searchParams.name = params.search.name
@@ -85,7 +85,7 @@ function* updateProductCategory({ payload: { params, onCompleted, onError } }) {
 }
 
 function* deleteProductCategory({ payload: { params, onCompleted, onError } }) {
-    console.log('vao')
+
     try {
         const apiParams = {
             ...apiConfig.productCategory.delete,
