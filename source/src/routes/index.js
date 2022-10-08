@@ -39,6 +39,8 @@ import EmployeeListPage from '../containers/employee/EmployeeListPage';
 import EmployeeUpdate from '../containers/employee/EmployeeUpdate';
 import { UserTypes } from '../constants';
 import { actions } from '../actions';
+import CategoryProductListPage from '../containers/categoryProduct/CategoryProductListPage';
+import CategoryProductUpdate from '../containers/categoryProduct/CategoryProductUpdate';
 
 const { getUserData } = actions;
 const userData = getUserData();
@@ -69,7 +71,9 @@ const RootRoute = () => {
         ranksUpdate,
         adminNewsUpdate,
         employee,
-        employeeUpdate
+        employeeUpdate,
+        categoryProduct,
+        categoryProductUpdate
     } = sitePathConfig;
 
     const getUserHomeNavigation =()=>{
@@ -131,6 +135,8 @@ const RootRoute = () => {
                 <PrivateRoute exact path={ranksUpdate.path} component={RanksUpdate}/>
                 <PrivateRoute exact path={employee.path} component={EmployeeListPage}/>
                 <PrivateRoute exact path={employeeUpdate.path} component={EmployeeUpdate}/>
+                <PrivateRoute exact path={categoryProduct.path} component={CategoryProductListPage}/>
+                <PrivateRoute exact path={categoryProductUpdate.path} component={CategoryProductUpdate}/>
                 {/* Error Page */}
                 <PrivateRoute exact path={forbidden.path} component={Forbidden}/>
                 {/* <Route exact path="/error" component={ErrorServer} /> */}

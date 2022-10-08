@@ -337,5 +337,37 @@ const apiConfig = {
             headers: baseHeader,
         },
       },
+      productCategory: {
+        getList:{
+            path:"/v1/product-category/list",
+            method:"GET",
+            headers:baseHeader
+        },
+        getById:{
+            path:"/v1/product-category/get",
+            method:"GET",
+            headers:baseHeader
+        },
+        create:{
+            path:"/v1/product-category/create",
+            method:"POST",
+            headers:baseHeader
+        },
+        update:{
+            path:"/v1/product-category/update",
+            method:"PUT",
+            headers:baseHeader
+        },
+        delete:{
+            path:"/v1/product-category/delete",
+            method:"DELETE",
+            headers:baseHeader
+        },
+        productCategoryAutoComplete:{
+            path:"/v1/product-category/auto-complete",
+            method:"GET",
+            headers:baseHeader
+        }
+      },
 }
 export default apiConfig;

@@ -70,6 +70,10 @@ const navMenuConfig = [
                 label: 'CategoryDepartments',
                 ...sitePathConfig.categoryDepartments,
             },
+            {
+                label: 'CategoryProduct',
+                ...sitePathConfig.categoryProduct,
+            },
         ]
     },
     {

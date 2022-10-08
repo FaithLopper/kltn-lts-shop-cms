@@ -26,6 +26,7 @@ export default {
         'Ranks': 'Cấp bậc khách hàng',
         'Employee': 'Nhân viên',
         'customerManagement': 'Quản lý khách hàng',
+        'CategoryProduct': 'Danh mục sản phẩm',
     },
     appHeader: {
         profile: 'Hồ sơ',
@@ -670,6 +671,22 @@ export default {
             validationMessage: {
                 avatarRequire: 'Hãy chọn ảnh đại diện',
             }
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    categoryProductListPage: {
+        breadcrumbs: {
+            currentPage: 'Danh mục sản phẩm',
+            parentPage: 'Danh mục sản phẩm',
+        },
+        objectName: 'Danh mục sản phẩm',
+        form: {
+            label: {
+                icon: 'Icon danh mục',
+                name: 'Tên danh mục',
+                status: 'Trạng thái',
+                note: 'Ghi chú',
+            },
         },
         createNewButton: 'Tạo {{ var, lowercase }} mới',
     },
