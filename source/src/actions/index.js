@@ -26,7 +26,7 @@ export const actions = {
     ...addressActions,
     ...ranksActions,
     ...employeeActions,
-    ...productCategoryActions
+    ...productCategoryActions,
     ...storeActions,
     ...variantActions,
     ...variantTemplateActions,

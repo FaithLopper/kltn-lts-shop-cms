@@ -71,6 +71,12 @@ const navMenuConfig = [
                 label: 'CategoryDepartments',
                 ...sitePathConfig.categoryDepartments,
             },
+        ]
+    },
+    {
+        label: 'CategoryProduct',
+        icon: <UnorderedListOutlined />,
+        children: [
             {
                 label: 'CategoryProduct',
                 ...sitePathConfig.categoryProduct,
