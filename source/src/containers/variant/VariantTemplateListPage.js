@@ -14,20 +14,19 @@ import PageWrapper from "../../compoments/common/PageWrapper";
 import { Link } from 'react-router-dom';
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import ElementWithPermission from "../../compoments/common/elements/ElementWithPermission";
-class VariantListPage extends ListBasePage {
+class VariantTempleteListPage extends ListBasePage {
   initialSearch() {
-    return { name: "", value: ""};
+    return { name: ""};
   }
 
   constructor(props) {
     super(props);
     const {t} = this.props;
     this.objectName =  t("objectName");
-    this.objectListName = 'variant';
+    this.objectListName = 'variant-template';
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
     this.columns = [
       { title:  t("table.name"), dataIndex: "name"},
-      { title:  t("table.price"), dataIndex: "price"},
       this.renderActionColumn(),
     ];
     this.actionColumns = {
@@ -45,16 +44,11 @@ class VariantListPage extends ListBasePage {
         seachPlaceholder: t('searchPlaceHolder.name'),
         initialValue: this.search.name,
       },
-      // {
-      //   key: "value",
-      //   seachPlaceholder: t('searchPlaceHolder.value'),
-      //   initialValue: this.search.value,
-      // },
     ];
   }
 
   getDetailLink(dataRow) {
-    return sitePathConfig.variantUpdate.path.replace(':id', dataRow.id);
+    return sitePathConfig.variantTemplateUpdate.path.replace(':id', dataRow.id);
   }
 
   renderButton(children, permissions){
@@ -99,16 +93,15 @@ class VariantListPage extends ListBasePage {
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.variant.variantListLoading,
-  dataList: state.variant.variantListData || {},
-  customerAutoComplete:state.variant.variantAutoComplete || {}
+  loading: state.variantTemplate.variantTemplateListLoading,
+  dataList: state.variantTemplate.variantTemplateListData || {},
+  customerAutoComplete:state.variantTemplate.variantTemplateAutoComplete || {}
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getDataList: (payload) => dispatch(actions.getVariantList(payload)),
-  getDataById: (payload) => dispatch(actions.getVariantById(payload)),
+  getDataList: (payload) => dispatch(actions.getVariantTemplateList(payload)),
+  getDataById: (payload) => dispatch(actions.getVariantTemplateById(payload)),
   deleteData: (payload) => dispatch(actions.deleteVariant(payload)),
-  // uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['variantListPage','listBasePage'])(VariantListPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['variantTemplateListPage','listBasePage'])(VariantTempleteListPage));

@@ -330,7 +330,6 @@ export const sitePathConfig = {
     store: {
         path: "/store",
         childrenKeys:["/store/:id","/store/create"],
-        component: EmployeeListPage,
         permissions: [
             apiConfig.store.getList.path,
             apiConfig.store.getById.path,
@@ -342,7 +341,6 @@ export const sitePathConfig = {
       },
     storeUpdate: {
         path: "/store/:id",
-        component: EmployeeUpdate,
         permissions: [
             apiConfig.store.getById.path,
             apiConfig.store.create.path,
@@ -352,7 +350,6 @@ export const sitePathConfig = {
     variant: {
         path: "/variant",
         childrenKeys:["/variant/:id","/variant/create"],
-        component: EmployeeListPage,
         permissions: [
             apiConfig.variant.getList.path,
             apiConfig.variant.getById.path,
@@ -364,7 +361,6 @@ export const sitePathConfig = {
       },
     variantUpdate: {
         path: "/variant/:id",
-        component: EmployeeUpdate,
         permissions: [
             apiConfig.variant.getById.path,
             apiConfig.variant.create.path,
@@ -374,7 +370,6 @@ export const sitePathConfig = {
     variantTemplate: {
         path: "/variant-template",
         childrenKeys:["/variant-template/:id","/variant-template/create"],
-        component: EmployeeListPage,
         permissions: [
             apiConfig.variantTemplate.getList.path,
             apiConfig.variantTemplate.getById.path,
@@ -386,7 +381,6 @@ export const sitePathConfig = {
       },
     variantTemplateUpdate: {
         path: "/variant-template/:id",
-        component: EmployeeUpdate,
         permissions: [
             apiConfig.variantTemplate.getById.path,
             apiConfig.variantTemplate.create.path,

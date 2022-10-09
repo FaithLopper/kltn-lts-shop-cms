@@ -15,6 +15,8 @@ import {
   import { showErrorMessage } from "../../services/notifyService";
 import PasswordGeneratorField from '../common/entryForm/PasswordGeneratorField';
 import DropdownField from '../common/entryForm/DropdownField';
+import NumericField from '../common/entryForm/NumericField';
+import RichTextField from '../common/entryForm/RichTextField';
 class VariantUpdateForm extends BasicForm {
 
     constructor(props) {
@@ -70,46 +72,31 @@ class VariantUpdateForm extends BasicForm {
                 <Card title={t(`baseField:${"basicInfo"}`)} className="card-form" bordered={false}>
                         <Row gutter={[16, 0]}>
                         <Col span={12}>
-                            <TextField
-                            fieldName="kind"
-                            type="number"
-                            label={t("form.label.kind")}
-                            options={variantKinds}
-                            required
-                            />
-                        </Col>
-                        <Col span={12}>
                             <TextField fieldName="name" label={t("form.label.name")} required 
                             // disabled={loadingSave}
                             />
                         </Col>
-                        </Row>
-                        <Row gutter={[16, 0]}>
-                            <Col span={12}>
-                            </Col>
-                            <Col span={12}>
-                            <TextField
-                            type="number"
-                            fieldName="price"
-                            label={t("form.label.price")}
-                            required
-                            // disabled={loadingSave}
-                            />
-                        </Col>
-                        </Row>
-                        <Row gutter={[16, 0]}>
                         <Col span={12}>
-                            <TextField fieldName="value"  label={t("form.label.value")}
-                            required
-                            // disabled={loadingSave}
-                            />
+                        <NumericField
+							fieldName="price"
+							label={t("form.label.price") + " (VNĐ)"}
+							min={0}
+							max={Infinity}
+							width="100%"
+							parser={(value) => Utils.formatIntegerNumber(value)}
+						/>
                         </Col>
-                       <Col span={12}>
-                       <TextField fieldName="variantTemplateId"  label={t("form.label.variantTemplateId")}
-                            required
-                            // disabled={loadingSave}
-                            />
-                       </Col>
+                        </Row>
+                        <Row gutter={[16, 0]}>
+                        <Col span={24}>
+                                <RichTextField
+                        label={t("form.label.description")}
+                        fieldName="description"
+                        // disabled={loadingSave}
+                        // required
+                    />
+                        </Col>
+                
                         </Row>
                 </Card>
                 <div className="footer-card-form">

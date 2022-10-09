@@ -30,7 +30,7 @@ export default {
         'Store':'Quản lí chi nhánh',
         'Product':'Sản phẩm',
         'Variant':'Thuộc tính',
-        'Variant Template':'Thuộc tính mẫu'
+        'Variant Template':'Bộ thuộc tính'
     },
     appHeader: {
         profile: 'Hồ sơ',
@@ -770,13 +770,9 @@ export default {
         objectName: 'thuộc tính',
         form: {
             label: {
-                "addressDetails": "Địa chỉ cụ thể",
-                "latitude": "Vĩ độ",
-                "longitude": "Kinh độ",
-                "name": "Tên thuộc tính",
-                "provinceId":'Tên Tỉnh/ Thành Phố',
-                "districtId":'Tên Quận/ Huyện',
-                "wardId":'Tên Phường/ Xã',
+                'name':'Tên thuộc tính',
+                'price':'Giá cả',
+                'description':'Mô tả'
             },
             validationMessage: {
                 phoneLengthRequire: 'Hãy nhập số',
@@ -787,6 +783,44 @@ export default {
             // updateProfileFail: 'Your profile failed. Please try again!',
             // updateProfileSuccess: 'Your profile have been updated!'
         },
-    }
+    },
+    variantTemplateListPage: {
+        breadcrumbs: {
+            currentPage: 'Bộ thuộc tính',
+        },
+        objectName: 'bộ thuộc tính',
+        searchPlaceHolder: {
+            name: 'Tên thuộc tính',
+        },
+        table: {
+            name: 'Tên bộ thuộc tính',
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    variantTemplateUpdatePage: {
+        breadcrumbs: {
+            // currentPage: '{{ var }} quản trị viên',
+            parentPage:'Bộ Thuộc tính',
+        },
+        objectName: 'bộ thuộc tính',
+        form: {
+            label: {
+                'name':'Tên bộ thuộc tính',
+                'price':'Giá cả',
+            },
+            validationMessage: {
+                phoneLengthRequire: 'Hãy nhập số',
+                comparePassword: 'Mật khẩu bạn nhập không khớp!',
+            }
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
+    },
     
 }

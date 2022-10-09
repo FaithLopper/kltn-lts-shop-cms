@@ -1,2 +1,2 @@
-REACT_APP_API = http://192.168.1.97:8383
+REACT_APP_API = https://shop-api.developteam.net
 GENERATE_SOURCEMAP=true
