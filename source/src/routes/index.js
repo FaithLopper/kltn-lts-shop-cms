@@ -41,6 +41,8 @@ import { UserTypes } from '../constants';
 import { actions } from '../actions';
 import StoreListPage from '../containers/store/StoreListPage';
 import StoreUpdatePage from '../containers/store/StoreUpdatePage';
+import variant from '../reducers/variant';
+import VariantListPage from '../containers/variant/VariantListPage';
 
 const { getUserData } = actions;
 const userData = getUserData();
@@ -137,6 +139,7 @@ const RootRoute = () => {
                 <PrivateRoute exact path={employeeUpdate.path} component={EmployeeUpdate}/>
                 <PrivateRoute exact path={store.path} component={StoreListPage}/>
                 <PrivateRoute exact path={storeUpdate.path} component={StoreUpdatePage}/>
+                <PrivateRoute exact path={variant.path} component={VariantListPage}/>
                 {/* Error Page */}
                 <PrivateRoute exact path={forbidden.path} component={Forbidden}/>
                 {/* <Route exact path="/error" component={ErrorServer} /> */}

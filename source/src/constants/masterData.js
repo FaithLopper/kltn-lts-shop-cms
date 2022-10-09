@@ -73,4 +73,10 @@ export const categoryKinds = {
     CATEGORY_KIND_DEPARTMENTS,
 }
 
+export const variantKinds = [
+    { value: 1, label: 'Kích thước' },
+    { value: 2, label: 'Màu sắc' },
+    { value: 10, label: 'Khác' },
+]
+
 export const ASPECT_CATEGORY_AVATAR = 16/9
