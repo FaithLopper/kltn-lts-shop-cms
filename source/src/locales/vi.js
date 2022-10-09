@@ -26,7 +26,8 @@ export default {
         'Ranks': 'Cấp bậc khách hàng',
         'Employee': 'Nhân viên',
         'customerManagement': 'Quản lý khách hàng',
-        'CategoryProduct': 'Quản lý sản phẩm',
+        'Product': 'Sản phẩm',
+        'categoryProductManagement': 'Quản lý danh mục',
         'Store':'Quản lí kho',
     },
     appHeader: {
