@@ -682,6 +682,7 @@ export default {
             parentPage: 'Danh mục sản phẩm',
         },
         objectName: 'Danh mục sản phẩm',
+        objectNameSub: 'Danh mục phụ',
         searchPlaceHolder: {
             name: 'Tên danh mục',
             status: 'Chọn trạng thái',

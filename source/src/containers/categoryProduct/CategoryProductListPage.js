@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Avatar, Tag, Button } from "antd";
+import { Avatar, Button } from "antd";
 import { UserOutlined, PlusOutlined } from "@ant-design/icons";
 import qs from "query-string";
 import { withTranslation } from "react-i18next";
@@ -80,12 +80,6 @@ class CategoryProductListPage extends ListBasePage {
     history.push(
       `${pathname}-sub?${qs.stringify({ ...result, parentId, parentName })}`
     );
-  }
-
-  prepareCreateData(data) {
-    return {
-      ...data,
-    };
   }
 
   getList() {

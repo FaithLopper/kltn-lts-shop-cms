@@ -27,6 +27,7 @@ import EmployeeUpdate from "../containers/employee/EmployeeUpdate";
 import CategoryProductListPage from "../containers/categoryProduct/CategoryProductListPage";
 import CategoryProductUpdate from "../containers/categoryProduct/CategoryProductUpdate";
 import CategoryProductSubListPage from "../containers/categoryProduct/CategoryProductSubListPage";
+import CategoryProductSubUpdate from "../containers/categoryProduct/CategoryProductSubUpdate";
 
 export const sitePathConfig = {
     login: {
@@ -292,7 +293,7 @@ export const sitePathConfig = {
       },
       categoryProduct: {
         path: "/category-product",
-        childrenKeys: ['/category-product/create','/category-product/:id','/category-product-sub'],
+        childrenKeys: ['/category-product/create','/category-product/:id','/category-product-sub','/category-product-sub/:id'],
         component: CategoryProductListPage,
         permissions: [
             apiConfig.productCategory.getList.path,
@@ -317,7 +318,20 @@ export const sitePathConfig = {
       },
       categoryProductSub: {
         path: "/category-product-sub",
+        childrenKeys: ['/category-product-sub/create','/category-product-sub/:id'],
         component: CategoryProductSubListPage,
+        permissions: [
+            apiConfig.productCategory.getList.path,
+            apiConfig.productCategory.getById.path,
+            apiConfig.productCategory.create.path,
+            apiConfig.productCategory.update.path,
+            apiConfig.productCategory.delete.path,
+            apiConfig.productCategory.productCategoryAutoComplete.path,
+        ],
+      },
+      categoryProductSubUpdate: {
+        path: "/category-product-sub/:id",
+        component: CategoryProductSubUpdate,
         permissions: [
             apiConfig.productCategory.getList.path,
             apiConfig.productCategory.getById.path,
