@@ -10,6 +10,7 @@ import customer from './customer';
 import address from './address';
 import ranks from './ranks';
 import employee from './employee';
+import productCategory from './productCategory';
 import store from './store';
 import variant from './variant';
 import variantTemplate from './variantTemplate';
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
     address:address.reducer,
     ranks: ranks.reducer,
     employee: employee.reducer,
+    productCategory: productCategory.reducer,
     store: store.reducer,
     variant: variant.reducer,
     variantTemplate: variantTemplate.reducer,
