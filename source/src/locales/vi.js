@@ -26,6 +26,7 @@ export default {
         'Ranks': 'Cấp bậc khách hàng',
         'Employee': 'Nhân viên',
         'customerManagement': 'Quản lý khách hàng',
+        'CategoryProduct': 'Quản lý sản phẩm',
         'Store':'Quản lí chi nhánh',
         'Product':'Sản phẩm',
         'Variant':'Thuộc tính',
@@ -673,6 +674,31 @@ export default {
         },
         createNewButton: 'Tạo {{ var, lowercase }} mới',
     },
+    categoryProductListPage: {
+        breadcrumbs: {
+            currentPage: 'Danh mục sản phẩm',
+            parentPage: 'Danh mục sản phẩm',
+        },
+        objectName: 'Danh mục sản phẩm',
+        searchPlaceHolder: {
+            name: 'Tên danh mục',
+            status: 'Chọn trạng thái',
+        },
+        table: {
+            name: 'Tên danh mục',
+        },
+        form: {
+            label: {
+                icon: 'Icon danh mục',
+                name: 'Tên danh mục',
+                status: 'Trạng thái',
+                note: 'Ghi chú',
+                orderSort:'Thứ tự danh mục',
+                parentName:'Thuộc danh mục'
+            },
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
     storeListPage: {
         breadcrumbs: {
             currentPage: 'Quản lí chi nhánh',
@@ -761,5 +787,6 @@ export default {
             // updateProfileFail: 'Your profile failed. Please try again!',
             // updateProfileSuccess: 'Your profile have been updated!'
         },
-    },
+    }
+    
 }

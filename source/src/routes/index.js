@@ -39,6 +39,9 @@ import EmployeeListPage from '../containers/employee/EmployeeListPage';
 import EmployeeUpdate from '../containers/employee/EmployeeUpdate';
 import { UserTypes } from '../constants';
 import { actions } from '../actions';
+import CategoryProductListPage from '../containers/categoryProduct/CategoryProductListPage';
+import CategoryProductUpdate from '../containers/categoryProduct/CategoryProductUpdate';
+import CategoryProductSubListPage from '../containers/categoryProduct/CategoryProductSubListPage';
 import StoreListPage from '../containers/store/StoreListPage';
 import StoreUpdatePage from '../containers/store/StoreUpdatePage';
 import variant from '../reducers/variant';
@@ -74,6 +77,9 @@ const RootRoute = () => {
         adminNewsUpdate,
         employee,
         employeeUpdate,
+        categoryProduct,
+        categoryProductUpdate,
+        categoryProductSub,
         store,
         storeUpdate,
     } = sitePathConfig;
@@ -137,6 +143,9 @@ const RootRoute = () => {
                 <PrivateRoute exact path={ranksUpdate.path} component={RanksUpdate}/>
                 <PrivateRoute exact path={employee.path} component={EmployeeListPage}/>
                 <PrivateRoute exact path={employeeUpdate.path} component={EmployeeUpdate}/>
+                <PrivateRoute exact path={categoryProduct.path} component={CategoryProductListPage}/>
+                <PrivateRoute exact path={categoryProductUpdate.path} component={CategoryProductUpdate}/>
+                <PrivateRoute exact path={categoryProductSub.path} component={CategoryProductSubListPage}/>
                 <PrivateRoute exact path={store.path} component={StoreListPage}/>
                 <PrivateRoute exact path={storeUpdate.path} component={StoreUpdatePage}/>
                 <PrivateRoute exact path={variant.path} component={VariantListPage}/>

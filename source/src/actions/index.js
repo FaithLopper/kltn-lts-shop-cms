@@ -9,6 +9,7 @@ import {actions as customerActions, actionTypes as customerTypes} from './custom
 import {actions as addressActions, actionTypes as addressTypes} from './address';
 import {actions as ranksActions, actionTypes as ranksTypes} from './ranks';
 import {actions as employeeActions, actionTypes as employeeTypes} from './employee';
+import {actions as productCategoryActions, actionTypes as productCategoryTypes} from './productCategory';
 import {actions as storeActions, actionTypes as storeTypes} from './store';
 import {actions as variantActions, actionTypes as variantTypes} from './variant';
 import {actions as variantTemplateActions, actionTypes as variantTemplateTypes} from './variantTemplate';
@@ -25,6 +26,7 @@ export const actions = {
     ...addressActions,
     ...ranksActions,
     ...employeeActions,
+    ...productCategoryActions,
     ...storeActions,
     ...variantActions,
     ...variantTemplateActions,
@@ -42,6 +44,7 @@ export const types = {
     ...addressTypes,
     ...ranksTypes,
     ...employeeTypes,
+    ...productCategoryTypes,
     ...storeTypes,
     ...variantTypes,
     ...variantTemplateTypes,
