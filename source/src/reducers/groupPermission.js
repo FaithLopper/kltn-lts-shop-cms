@@ -4,7 +4,8 @@ const { createReducer, defineActionSuccess, defineActionLoading } = reduxUtil;
 const {
     GET_GROUP_PERMISSION_LIST,
     GET_PERMISSION_LIST,
-    SEARCH_GROUP_PERMISSION
+    SEARCH_GROUP_PERMISSION,
+    GROUP_PERMISSION_AUTOCOMPLETE
 } = actionTypes;
 
 const initialState = {
@@ -47,7 +48,22 @@ const reducer = createReducer({
                 ...state,
                 permissions
             }
-        }
+        },
+        [defineActionLoading(GROUP_PERMISSION_AUTOCOMPLETE)]: (state) => {
+            return {
+                ...state,
+                tbGroupPermissionLoading: true
+            }
+        },
+        [defineActionSuccess(GROUP_PERMISSION_AUTOCOMPLETE)]: (
+            state, { groupPermissionData }
+          ) => {
+            return {
+                ...state,
+                groupPermissionData,
+                tbGroupPermissionLoading: false
+            }
+          },
     },
     initialState
 )

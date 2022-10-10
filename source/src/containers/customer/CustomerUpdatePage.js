@@ -26,6 +26,8 @@ class CustomerUpdatePage extends SaveBasePage {
                 name:  this.isEditing? `${t(`listBasePage:${"update"}`)} ${this.objectName}` :`${t(`listBasePage:${"create"}`)} ${this.objectName}`,
             },
         ];
+        this.GroupPermisisonList = [];
+        this.getCategoryList();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -102,7 +104,7 @@ class CustomerUpdatePage extends SaveBasePage {
     prepareCreateData = (data) => {
         return {
             status: 1,
-            groupId:151,
+            groupId: data.group.id, //role customer
             ...data,
         };
     }
@@ -129,12 +131,27 @@ class CustomerUpdatePage extends SaveBasePage {
         }
     }
 
+    getCategoryList() {
+        this.props.getGroupPermisionAutoComplete({
+          params: { kind: UserTypes.CUSTOMER },
+        });
+      }
+
     render() {
         const { isGetDetailLoading, objectNotFound,  } = this.state
-        const {t,uploadFile}= this.props
+        const {t,uploadFile,dataList}= this.props
         if (objectNotFound) {
             return <ObjectNotFound />
         }
+
+        this.GroupPermisisonList = dataList.data
+        ? dataList.data.map((g) => {
+            return {
+              value: g.id,
+              label: g.name,
+            };
+          })
+        : [];
 
         return (
             <LoadingWrapper loading={isGetDetailLoading}>
@@ -148,9 +165,9 @@ class CustomerUpdatePage extends SaveBasePage {
                     actions={this.renderActions()}
                     handleRemoveImage={this.handleRemoveImageField}
                     handleUploadImage={this.handleUploadImageField}
+                    groupPermission={this.GroupPermisisonList}
                     uploadFile={uploadFile}
                     t={t}
-
                     />
                     
             </LoadingWrapper>
@@ -163,10 +180,12 @@ const mapDispatchToProps = dispatch => ({
   createData: (payload) => dispatch(actions.createCustomer(payload)),
   updateData: (payload) => dispatch(actions.updateCustomer(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
+  getGroupPermisionAutoComplete: (payload) =>
+  dispatch(actions.groupPermissionAutoComplete(payload)),
 })
 
 const mapStateToProps = state => ({
-
+    dataList: state.groupPermission.groupPermissionData || {},
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['customerUpdatePage','listBasePage'])(CustomerUpdatePage));

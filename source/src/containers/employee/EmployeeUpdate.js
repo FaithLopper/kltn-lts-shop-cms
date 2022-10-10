@@ -8,6 +8,8 @@ import ObjectNotFound from "../../compoments/common/ObjectNotFound";
 import { withTranslation } from "react-i18next";
 import NewsUpdateForm from "../../compoments/news/NewsUpdateForm";
 import EmployeeUpdateForm from "../../compoments/employee/EmployeeUpdateForm";
+import { UserTypes } from "../../constants";
+import { categoryKinds } from "../../constants/masterData";
 
 class EmployeeUpdate extends SaveBasePage {
   constructor(props) {
@@ -30,6 +32,7 @@ class EmployeeUpdate extends SaveBasePage {
 
     this.categoryOptionsJob = [];
     this.categoryOptionsDepartment = [];
+    this.GroupPermisisonList = [];
     this.getCategoryList();
   }
 
@@ -96,22 +99,22 @@ class EmployeeUpdate extends SaveBasePage {
 
   onBack = () => {
     if (this.state.isChanged) {
-        const {t}= this.props
-        this.showWarningConfirmModal({
-            title: t("basicSavePage:onBack"),
-            onOk: () => {
-                this.props.history.push(this.getListUrl)
-            }
-        });
+      const { t } = this.props;
+      this.showWarningConfirmModal({
+        title: t("basicSavePage:onBack"),
+        onOk: () => {
+          this.props.history.push(this.getListUrl);
+        },
+      });
     } else {
-        this.props.history.push(this.getListUrl)
+      this.props.history.push(this.getListUrl);
     }
-}
+  };
 
   prepareCreateData = (data) => {
     return {
       ...data,
-      groupId: 165, //role employee
+      groupId: data.group.id, //role employee
     };
   };
 
@@ -136,13 +139,26 @@ class EmployeeUpdate extends SaveBasePage {
   };
 
   getCategoryList() {
-    this.props.getCategoryAutoComplete({ kind: 2 });
-    this.props.getCategoryAutoComplete({ kind: 3 });
+    this.props.getCategoryAutoComplete({
+      kind: categoryKinds.CATEGORY_KIND_JOBS,
+    });
+    this.props.getCategoryAutoComplete({
+      kind: categoryKinds.CATEGORY_KIND_DEPARTMENTS,
+    });
+    this.props.getGroupPermisionAutoComplete({
+      params: { kind: UserTypes.EMPLOYEE },
+    });
   }
 
   render() {
     const { isGetDetailLoading, objectNotFound } = this.state;
-    const { t, uploadFile, categoryAutoCompleteJob, categoryAutoCompleteDepartment } = this.props;
+    const {
+      t,
+      uploadFile,
+      categoryAutoCompleteJob,
+      categoryAutoCompleteDepartment,
+      dataList,
+    } = this.props;
 
     this.categoryOptionsJob = categoryAutoCompleteJob.data
       ? categoryAutoCompleteJob.data.map((c) => {
@@ -158,6 +174,15 @@ class EmployeeUpdate extends SaveBasePage {
           return {
             value: c.id,
             label: c.categoryName,
+          };
+        })
+      : [];
+
+    this.GroupPermisisonList = dataList.data
+      ? dataList.data.map((g) => {
+          return {
+            value: g.id,
+            label: g.name,
           };
         })
       : [];
@@ -180,6 +205,7 @@ class EmployeeUpdate extends SaveBasePage {
           handleUploadImage={this.handleUploadImageField}
           categoryOptionsJob={this.categoryOptionsJob}
           categoryOptionsDepartment={this.categoryOptionsDepartment}
+          groupPermission={this.GroupPermisisonList}
           uploadFile={uploadFile}
           t={t}
         />
@@ -193,11 +219,14 @@ const mapDispatchToProps = (dispatch) => ({
   createData: (payload) => dispatch(actions.createUserEmploy(payload)),
   updateData: (payload) => dispatch(actions.updateUserEmploy(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
+  getGroupPermisionAutoComplete: (payload) =>
+    dispatch(actions.groupPermissionAutoComplete(payload)),
   getCategoryAutoComplete: (payload) =>
     dispatch(actions.getCategoryAutoComplete(payload)),
 });
 
 const mapStateToProps = (state) => ({
+  dataList: state.groupPermission.groupPermissionData || {},
   categoryAutoCompleteJob: state.category.categoryAutoCompleteJob || {},
   categoryAutoCompleteDepartment:
     state.category.categoryAutoCompleteDepartment || {},

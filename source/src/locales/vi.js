@@ -245,6 +245,7 @@ export default {
                 status: 'Trạng thái',
                 organization: 'Đơn vị',
                 organizationPlaceHolder: 'Hãy chọn đơn vị',
+                groupId: 'Nhóm quyền'
             },
             validationMessage: {
                 phoneLengthRequire: 'Hãy nhập số',
@@ -670,6 +671,7 @@ export default {
                 password: 'Mật khẩu',
                 newPassword: 'Mật khẩu mới',
                 status: 'Trạng thái',
+                groupId: 'Nhóm quyền',
             },
             validationMessage: {
                 avatarRequire: 'Hãy chọn ảnh đại diện',

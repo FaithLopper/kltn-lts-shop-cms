@@ -12,7 +12,7 @@ export const actionTypes = {
     CREATE_GROUP_PERMISSION: defineAction('CREATE_GROUP_PERMISSION'),
     UPDATE_GROUP_PERMISSION: defineAction('UPDATE_GROUP_PERMISSION'),
     DELETE_GROUP_PERMISSION: defineAction('DELETE_GROUP_PERMISSION'),
-    GET_GROUP_PERMISSION_CB: defineAction('GET_GROUP_PERMISSION_CB'),
+    GROUP_PERMISSION_AUTOCOMPLETE: defineAction('GROUP_PERMISSION_AUTOCOMPLETE'),
 }
 
 export const actions = {
@@ -23,5 +23,5 @@ export const actions = {
     createGroupPermission: createAction(actionTypes.CREATE_GROUP_PERMISSION),
     updateGroupPermission: createAction(actionTypes.UPDATE_GROUP_PERMISSION),
     deleteGroupPermission: createAction(actionTypes.DELETE_GROUP_PERMISSION),
-    getGroupPermissionCb: createAction(actionTypes.GET_GROUP_PERMISSION_CB)
+    groupPermissionAutoComplete: createActionWithLoading(actionTypes.GROUP_PERMISSION_AUTOCOMPLETE)
 }
