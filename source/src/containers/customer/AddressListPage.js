@@ -32,11 +32,11 @@ class AddressListPage extends ListBasePage {
       {name: t('breadcrumbs.currentPage'),}
   ];
     this.columns = [
-      { title:  t("table.receiverFullName"), dataIndex: "receiverFullName"},
-      { title:  t("table.addressDetails"), dataIndex: "addressDetails" },
-      { title:  t("table.location"), dataIndex: ["ward"],colSpan:3,width: '150px', },
-      { title:  t("table.districtId"), dataIndex: ["district"],colSpan:0,width: '150px', },
-      { title:  t("table.location"), dataIndex: ["province"],colSpan:0,width: '150px',},
+      { title:  t("table.receiverFullName"), dataIndex: "receiverFullName",width: '200px'},
+      { title:  t("table.address"), dataIndex: "province",width: '300px', render:(text,record)=>
+      <span>
+        {`${record.addressDetails}, ${record.ward}, ${record.district}, ${text}`}
+      </span>},
       this.renderStatusColumn(),
       this.renderActionColumn(),
     ];
