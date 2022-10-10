@@ -85,6 +85,18 @@ function* createVariant({payload: {params, onCompleted, onError}})
     }
 }
 
+function* getVariantListModal({payload: {params, onCompleted, onError}})
+{
+    try{
+        const result = yield call (sendRequest, apiConfig.variant.getList, params);
+        handleApiResponse(result, onCompleted, onError);
+    }
+    catch(error)
+    {
+        onError(error);
+    }
+}
+
 function* updateVariant({payload: {params, onCompleted, onError}})
 {
     try{
@@ -123,6 +135,7 @@ const sagas = [
     takeLatest(defineActionLoading(GET_VARIANT_AUTOCOMPLETE), getVariantAutoComplete),
     takeLatest(actionTypes.GET_VARIANT_BY_ID, getVariant),
     takeLatest(actionTypes.CREATE_VARIANT, createVariant),
+    takeLatest(actionTypes.GET_VARIANT_LIST_MODAL, getVariantListModal),
     takeLatest(actionTypes.UPDATE_VARIANT, updateVariant),
     takeLatest(defineActionLoading(DELETE_VARIANT), deleteVariant),
 ]

@@ -161,6 +161,7 @@ class VariantTemplateUpdatePage extends SaveBasePage {
                     handleUploadImage={this.handleUploadImageField}
                     uploadFile={uploadFile}
                     t={t}
+                    getList={this.props.getDataList}
                     />
             </LoadingWrapper>
         )
@@ -171,6 +172,7 @@ const mapDispatchToProps = dispatch => ({
   getDataById: (payload) => dispatch(actions.getVariantTemplateById(payload)),
   createData: (payload) => dispatch(actions.createVariantTemplate(payload)),
   updateData: (payload) => dispatch(actions.updateVariantTemplate(payload)),
+  getDataList: (payload) => dispatch(actions.getVariantListModal(payload)),
 })
 
 const mapStateToProps = state => ({

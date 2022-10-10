@@ -550,3 +550,26 @@ h2{
 .add-variant{
     position: sticky;
 }
+
+.row-checkbox{
+    .ant-form-item{
+        flex-direction: row !important;
+    }
+    .ant-checkbox{
+        margin-left: 25px;
+        padding-bottom: 6px;
+    }
+}
+
+.variant-delete-icon{
+    padding-left: 6px;
+    padding-right: 15px !important;
+    padding-bottom: 61px;
+    display: flex;
+    align-items: center;
+}
+
+.variant-config-wrapper{
+    border-bottom: solid 1px #f7f2f2;
+    margin-bottom: 19px;
+}

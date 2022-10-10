@@ -94,7 +94,7 @@ class VariantUpdateForm extends BasicForm {
                         fieldName="description"
                         // disabled={loadingSave}
                         // required
-                    />
+                    />  
                         </Col>
                 
                         </Row>
