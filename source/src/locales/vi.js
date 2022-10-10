@@ -26,7 +26,8 @@ export default {
         'Ranks': 'Cấp bậc khách hàng',
         'Employee': 'Nhân viên',
         'customerManagement': 'Quản lý khách hàng',
-        'CategoryProduct': 'Quản lý sản phẩm',
+        'Product': 'Sản phẩm',
+        'categoryProductManagement': 'Quản lý danh mục',
         'Store':'Quản lí kho',
     },
     appHeader: {
@@ -682,6 +683,7 @@ export default {
             parentPage: 'Danh mục sản phẩm',
         },
         objectName: 'Danh mục sản phẩm',
+        objectNameSub: 'Danh mục phụ',
         searchPlaceHolder: {
             name: 'Tên danh mục',
             status: 'Chọn trạng thái',

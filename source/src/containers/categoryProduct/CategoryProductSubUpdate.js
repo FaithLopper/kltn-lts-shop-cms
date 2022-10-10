@@ -7,18 +7,40 @@ import { sitePathConfig } from "../../constants/sitePathConfig";
 import ObjectNotFound from "../../compoments/common/ObjectNotFound";
 import { withTranslation } from "react-i18next";
 import CategoryProductUpdateForm from "../../compoments/categoryProduct/CategoryProductUpdateForm";
+import qs from "query-string";
 
-class CategoryProductUpdate extends SaveBasePage {
+class CategoryProductSubUpdate extends SaveBasePage {
   constructor(props) {
     super(props);
     const { t } = this.props;
-    this.objectName = t("objectName");
-    this.getListUrl = sitePathConfig.categoryProduct.path;
+
+    const {
+      location: { search },
+    } = this.props;
+
+    const { parentId, parentName } = qs.parse(search);
+    this.parentId = parentId;
+    this.parentName = parentName;
+
+    this.objectName = t("objectNameSub");
+    this.getListUrl = `${sitePathConfig.categoryProductSub.path}?${qs.stringify(
+      {
+        parentId: this.parentId,
+        parentName: this.parentName,
+      }
+    )}`;
     this.actionFooter = false;
     this.breadcrumbs = [
       {
         name: t("breadcrumbs.parentPage"),
-        path: sitePathConfig.categoryProduct.path,
+        path: `${sitePathConfig.categoryProduct.path}`,
+      },
+      {
+        name: `${t("breadcrumbs.parentPage")} ${this.parentName}`,
+        path: `${sitePathConfig.categoryProductSub.path}?${qs.stringify({
+          parentId: this.parentId,
+          parentName: this.parentName,
+        })}`,
       },
       {
         name: this.isEditing
@@ -62,7 +84,7 @@ class CategoryProductUpdate extends SaveBasePage {
       this.showSuccessConfirmModal({
         onContinueEdit: () => {
           history.push(
-            sitePathConfig.categoryProduct.childrenKeys[1].replace(
+            sitePathConfig.categoryProduct.childrenKeys[3].replace(
               ":id",
               res.id
             )
@@ -109,15 +131,17 @@ class CategoryProductUpdate extends SaveBasePage {
   prepareCreateData = (data) => {
     return {
       ...data,
-      orderSort: 1
+      parentId: this.parentId,
+      orderSort: 1,
+      isChild: true,
     };
   };
 
   prepareUpdateData = (data) => {
     return {
       ...data,
-      orderSort: 1,
       id: this.dataDetail.id,
+      orderSort: 1,
     };
   };
 
@@ -137,6 +161,7 @@ class CategoryProductUpdate extends SaveBasePage {
   render() {
     const { isGetDetailLoading, objectNotFound } = this.state;
     const { t, uploadFile } = this.props;
+
     if (objectNotFound) {
       return <ObjectNotFound />;
     }
@@ -173,4 +198,8 @@ const mapStateToProps = (state) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withTranslation(["categoryProductListPage", "listBasePage"])(CategoryProductUpdate));
+)(
+  withTranslation(["categoryProductListPage", "listBasePage"])(
+    CategoryProductSubUpdate
+  )
+);
