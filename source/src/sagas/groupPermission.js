@@ -5,11 +5,8 @@ import { actionTypes, reduxUtil } from "../actions/groupPermission";
 import apiConfig from "../constants/apiConfig";
 import { handleApiResponse } from "../utils/apiHelper";
 
-const {
-  defineActionLoading,
-  defineActionSuccess,
-  defineActionFailed,
-} = reduxUtil;
+const { defineActionLoading, defineActionSuccess, defineActionFailed } =
+  reduxUtil;
 
 const {
   GET_GROUP_PERMISSION_LIST,
@@ -19,6 +16,7 @@ const {
   UPDATE_GROUP_PERMISSION,
   DELETE_GROUP_PERMISSION,
   SEARCH_GROUP_PERMISSION,
+  GROUP_PERMISSION_AUTOCOMPLETE,
 } = actionTypes;
 
 function* getList({ payload: { params } }) {
@@ -121,6 +119,23 @@ function* deleteRole({ payload: { params, onCompleted, onError } }) {
   }
 }
 
+function* getGroupPermissionAutoComplete({ payload: { params } }) {
+  const apiParams = apiConfig.groupPermission.groupPermissionAutoComplete;
+  const searchParams = {};
+  if (params.kind) {
+    searchParams.kind = params.kind;
+  }
+  try {
+    const result = yield call(sendRequest, apiParams, searchParams);
+    yield put({
+      type: defineActionSuccess(GROUP_PERMISSION_AUTOCOMPLETE),
+      groupPermissionData: result.responseData.data,
+    });
+  } catch (error) {
+    yield put({ type: defineActionFailed(GROUP_PERMISSION_AUTOCOMPLETE) });
+  }
+}
+
 const sagas = [
   takeLatest(defineActionLoading(GET_GROUP_PERMISSION_LIST), getList),
   takeLatest(defineActionLoading(GET_PERMISSION_LIST), getPermissionList),
@@ -132,6 +147,7 @@ const sagas = [
   takeLatest(CREATE_GROUP_PERMISSION, create),
   takeLatest(UPDATE_GROUP_PERMISSION, update),
   takeLatest(DELETE_GROUP_PERMISSION, deleteRole),
+  takeLatest(defineActionLoading(GROUP_PERMISSION_AUTOCOMPLETE), getGroupPermissionAutoComplete),
 ];
 
 export default sagas;

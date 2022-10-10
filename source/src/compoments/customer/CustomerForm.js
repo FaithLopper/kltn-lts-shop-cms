@@ -43,6 +43,7 @@ class CustomerForm extends BasicForm {
                 email:dataDetail.account.email,
                 status:dataDetail.account.status,
                 avatar:dataDetail.account.avatar,
+                group: dataDetail.account.group
             }
             this.formRef.current.setFieldsValue(data)
         }
@@ -56,6 +57,7 @@ class CustomerForm extends BasicForm {
     handleSubmit(formValues) {
         const { onSubmit } = this.props
         const birthday = convertLocalTimeToUtc(convertDateTimeToString(formValues.birthday, "DD/MM/YYYY"), "DD/MM/YYYY");
+
         onSubmit({
             ...formValues,
             birthday:birthday
@@ -110,7 +112,7 @@ class CustomerForm extends BasicForm {
     };
 
     render() {
-        const { formId, dataDetail, actions, isEditing,t } = this.props
+        const { formId, dataDetail, actions, isEditing,t,groupPermission } = this.props
         const {
             uploading,
 			logo,
@@ -139,6 +141,17 @@ class CustomerForm extends BasicForm {
                             // disabled={loadingSave}
                             />
                         </Col>
+                        </Row>
+                        <Row gutter={16}>
+                            <Col span={12}>
+                            <DropdownField
+                                fieldName={["group", "id"]}
+                                label={t("form.label.groupPermission")}
+                                required
+                                options={groupPermission}
+                                disabled={isEditing}
+                            />
+                            </Col>
                         </Row>
                         <Row gutter={[16, 0]}>
                         <Col span={12}>

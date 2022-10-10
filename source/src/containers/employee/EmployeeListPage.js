@@ -63,12 +63,10 @@ class EmployeeListPage extends ListBasePage {
       {
         title: t("table.username"),
         dataIndex: ["account", "username"],
-        width: "130px",
       },
       {
         title: t("table.fullName"),
         dataIndex: ["account", "fullName"],
-        width: "130px",
       },
       // {
       //   title: t("table.email"),
@@ -83,12 +81,10 @@ class EmployeeListPage extends ListBasePage {
       {
         title: t("table.departmentTitle"),
         dataIndex: ["department", "categoryName"],
-        width: "150px",
       },
       {
         title: t("table.jobTitle"),
         dataIndex: ["job", "categoryName"],
-        width: "150px",
       },
       // {
       //   title: (
@@ -177,71 +173,6 @@ class EmployeeListPage extends ListBasePage {
   onCancelPreviewModal = () => {
     this.setState({ isShowPreviewModal: false, isShowPreviewLoading: false });
   };
-
-  renderActionColumn() {
-    const { t } = this.props;
-    return {
-      title: t ? t("listBasePage:titleActionCol") : "Action",
-      width: "100px",
-      align: "center",
-      render: (dataRow) => {
-        const actionColumns = [];
-        if (this.actionColumns.isEdit) {
-          actionColumns.push(
-            this.renderEditButton(
-              <Link to={this.getDetailLink(dataRow)}>
-                <Button type="link" className="no-padding">
-                  <EditOutlined />
-                </Button>
-              </Link>
-            )
-          );
-        }
-        if (this.actionColumns.isChangeStatus) {
-          actionColumns.push(
-            <Button
-              type="link"
-              onClick={() => this.showChangeStatusConfirm(dataRow)}
-              className="no-padding"
-            >
-              {dataRow.status === STATUS_ACTIVE ? (
-                <LockOutlined />
-              ) : (
-                <CheckOutlined />
-              )}
-            </Button>
-          );
-        }
-        if (this.actionColumns.isDelete) {
-          actionColumns.push(
-            this.renderDeleteButton(
-              <Button
-                type="link"
-                onClick={() => this.showDeleteConfirm(dataRow.id)}
-                className="no-padding"
-              >
-                <DeleteOutlined />
-              </Button>
-            )
-          );
-        }
-        const actionColumnsWithDivider = [];
-        actionColumns.forEach((action, index) => {
-          actionColumnsWithDivider.push(action);
-          if (index !== actionColumns.length - 1) {
-            actionColumnsWithDivider.push(<Divider type="vertical" />);
-          }
-        });
-        return (
-          <span>
-            {actionColumnsWithDivider.map((action, index) => (
-              <span key={index}>{action}</span>
-            ))}
-          </span>
-        );
-      },
-    };
-  }
 
   getSearchFields() {
     const { t } = this.props;

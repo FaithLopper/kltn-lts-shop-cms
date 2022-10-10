@@ -127,7 +127,7 @@ const navMenuConfig = [
                 ...sitePathConfig.variantTemplate,
             },
             {
-                label: 'CategoryProduct',
+                label: 'categoryProductManagement',
                 ...sitePathConfig.categoryProduct,
             },
         ]

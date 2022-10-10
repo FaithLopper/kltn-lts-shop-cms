@@ -52,7 +52,7 @@ class EmployeeUpdateForm extends BasicForm {
   handleSubmit(formValues) {
     const { onSubmit } = this.props;
     // console.log(formValues)
-    onSubmit(formValues);
+    onSubmit({ ...formValues });
   }
 
   uploadFileLogo = (file, onSuccess) => {
@@ -104,6 +104,7 @@ class EmployeeUpdateForm extends BasicForm {
       categoryOptionsDepartment,
       t,
       isEditing,
+      groupPermission,
     } = this.props;
     const { uploading, logo, curPassword } = this.state;
 
@@ -131,6 +132,17 @@ class EmployeeUpdateForm extends BasicForm {
               />
             </Col>
           </Row>
+          <Row gutter={16}>
+            <Col span={12}>
+              <DropdownField
+                fieldName={["group", "id"]}
+                label={t("form.label.groupId")}
+                required
+                options={groupPermission}
+                disabled={isEditing}
+              />
+            </Col>
+          </Row>
 
           <Row gutter={16}>
             <Col span={12}>
@@ -139,6 +151,7 @@ class EmployeeUpdateForm extends BasicForm {
                 label={t("form.label.username")}
                 required
                 disabled={isEditing}
+                validators={[Utils.validateUsernameForm]}
               />
             </Col>
             <Col span={12}>
@@ -168,7 +181,7 @@ class EmployeeUpdateForm extends BasicForm {
                         );
                         this.setState({ curPassword: curPass });
                         this.setFieldValue("password", curPass);
-                        this.onValuesChange()
+                        this.onValuesChange();
                       }}
                     >
                       <KeyOutlined style={{ alignSelf: "center" }} />

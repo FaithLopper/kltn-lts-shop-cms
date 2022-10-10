@@ -43,6 +43,7 @@ class CategoryProductUpdateForm extends BasicForm {
 
   handleSubmit(formValues) {
     const { onSubmit } = this.props;
+
     onSubmit({
       ...formValues,
     });
@@ -120,15 +121,6 @@ class CategoryProductUpdateForm extends BasicForm {
                   required
                   // disabled={loadingSave}
                 />
-                <TextField
-                  fieldName="orderSort"
-                  label={t("form.label.orderSort")}
-                  required
-                  type="number"
-                  // disabled={loadingSave}
-                />
-              </Col>
-              <Col span={12}>
                 {isEditing && (
                   <DropdownField
                     fieldName="status"

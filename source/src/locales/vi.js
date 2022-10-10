@@ -26,11 +26,12 @@ export default {
         'Ranks': 'Cấp bậc khách hàng',
         'Employee': 'Nhân viên',
         'customerManagement': 'Quản lý khách hàng',
+        'categoryProductManagement': 'Quản lý danh mục sản phẩm',
         'CategoryProduct': 'Quản lý sản phẩm',
         'Store':'Quản lí chi nhánh',
         'Product':'Sản phẩm',
         'Variant':'Thuộc tính',
-        'Variant Template':'Bộ thuộc tính'
+        'Variant Template':'Nhóm thuộc tính'
     },
     appHeader: {
         profile: 'Hồ sơ',
@@ -247,6 +248,7 @@ export default {
                 status: 'Trạng thái',
                 organization: 'Đơn vị',
                 organizationPlaceHolder: 'Hãy chọn đơn vị',
+                groupId: 'Nhóm quyền'
             },
             validationMessage: {
                 phoneLengthRequire: 'Hãy nhập số',
@@ -667,6 +669,7 @@ export default {
                 password: 'Mật khẩu',
                 newPassword: 'Mật khẩu mới',
                 status: 'Trạng thái',
+                groupId: 'Nhóm quyền',
             },
             validationMessage: {
                 avatarRequire: 'Hãy chọn ảnh đại diện',
@@ -680,6 +683,7 @@ export default {
             parentPage: 'Danh mục sản phẩm',
         },
         objectName: 'Danh mục sản phẩm',
+        objectNameSub: 'Danh mục phụ',
         searchPlaceHolder: {
             name: 'Tên danh mục',
             status: 'Chọn trạng thái',
