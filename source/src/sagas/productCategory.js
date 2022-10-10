@@ -38,8 +38,6 @@ function* getProductCategoryList({ payload: { params } }) {
   }
   try {
     if (params.isChild && !params.parentId) {
-      console.log("cant find id ");
-
       throw new Error("can't find parent category");
     }
 

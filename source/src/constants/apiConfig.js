@@ -101,6 +101,11 @@ const apiConfig = {
             method: 'DELETE',
             headers: baseHeader
         },
+        groupPermissionAutoComplete: {
+            path: '/v1/group/list_combobox',
+            method: 'GET',
+            headers: baseHeader
+        },
     },
     category: {
         getList: {

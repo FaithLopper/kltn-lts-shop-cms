@@ -45,6 +45,7 @@ class AdminLevel1Form extends BasicForm {
 
     handleSubmit(formValues) {
         const { onSubmit } = this.props
+        
         onSubmit({
             ...formValues,
         })
@@ -98,7 +99,7 @@ class AdminLevel1Form extends BasicForm {
     };
 
     render() {
-        const { formId, dataDetail, actions, isEditing,t } = this.props
+        const { formId, dataDetail, actions, isEditing,t , groupPermission } = this.props
         const {
             uploading,
 			logo,
@@ -126,6 +127,17 @@ class AdminLevel1Form extends BasicForm {
                             uploadFile={this.uploadFileLogo}
                             // disabled={loadingSave}
                             />
+                        </Col>
+                        </Row>
+                        <Row gutter={[16, 0]} >
+                        <Col span={12}>
+                        <DropdownField
+                fieldName={["group","id"]}
+                label={t("form.label.groupId")}
+                required
+                options={groupPermission}
+                disabled={isEditing}
+              />
                         </Col>
                         </Row>
                         <Row gutter={[16, 0]}>

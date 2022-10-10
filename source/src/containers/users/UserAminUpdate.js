@@ -31,6 +31,8 @@ class UserAminUpdate extends SaveBasePage {
                 name:  this.isEditing? `${t(`listBasePage:${"update"}`)} ${this.objectName}` :`${t(`listBasePage:${"create"}`)} ${this.objectName}`,
             },
         ];
+        this.getGroupPermissionList()
+        this.GroupPermisisonList = [];
     }
 
     componentWillReceiveProps(nextProps) {
@@ -109,8 +111,8 @@ class UserAminUpdate extends SaveBasePage {
             kind:UserTypes.ADMIN,
             avatarPath: data.avatar,
             status: 1,
-            groupId:32,
             ...data,
+            groupId: data.group.id,
         };
     }
 
@@ -138,9 +140,22 @@ class UserAminUpdate extends SaveBasePage {
         }
     }
 
+    getGroupPermissionList() {
+        this.props.getAutoComplete({params:{ kind: UserTypes.ADMIN }});
+      }
+
     render() {
-        const { isGetDetailLoading, objectNotFound,  } = this.state
-        const {t,uploadFile}= this.props
+        const { isGetDetailLoading, objectNotFound  } = this.state
+        const {t, uploadFile, dataList}= this.props
+
+        this.GroupPermisisonList = dataList.data ? dataList.data.map((g) => {
+          return {
+            value: g.id,
+            label: g.name,
+          };
+        })
+      : [];
+
         if (objectNotFound) {
             return <ObjectNotFound />
         }
@@ -159,7 +174,7 @@ class UserAminUpdate extends SaveBasePage {
                     handleUploadImage={this.handleUploadImageField}
                     uploadFile={uploadFile}
                     t={t}
-
+                    groupPermission={this.GroupPermisisonList}
                     />
                     
             </LoadingWrapper>
@@ -169,13 +184,14 @@ class UserAminUpdate extends SaveBasePage {
 
 const mapDispatchToProps = dispatch => ({
   getDataById: (payload) => dispatch(actions.getUserById(payload)),
+  getAutoComplete: (payload) => dispatch(actions.groupPermissionAutoComplete(payload)),
   createData: (payload) => dispatch(actions.createUser(payload)),
   updateData: (payload) => dispatch(actions.updateUser(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
 })
 
 const mapStateToProps = state => ({
-
+    dataList: state.groupPermission.groupPermissionData || {},
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['userAdminUpdatePage','listBasePage'])(UserAminUpdate));
