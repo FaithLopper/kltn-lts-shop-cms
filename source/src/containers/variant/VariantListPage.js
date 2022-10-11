@@ -27,7 +27,7 @@ class VariantListPage extends ListBasePage {
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
     this.columns = [
       { title:  t("table.name"), dataIndex: "name"},
-      { title:  t("table.price"), dataIndex: "price"},
+      { title:  t("table.price"), align:"right",dataIndex: "price"},
       this.renderActionColumn(),
     ];
     this.actionColumns = {

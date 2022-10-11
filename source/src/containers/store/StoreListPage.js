@@ -27,8 +27,8 @@ class StoreListPage extends ListBasePage {
     this.objectListName = 'store';
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
     this.columns = [
-      { title:  t("table.name"), dataIndex: "name" ,width:"200px"},
-      { title:  t("table.address"), dataIndex: ["province","name"],width: '300px', render:(text,record)=>
+      { title:  t("table.name"), dataIndex: "name"},
+      { title:  t("table.address"), dataIndex: ["province","name"], render:(text,record)=>
       <span>
         {`${record.addressDetails}, ${record.ward.name}, ${record.district.name}, ${text}`}
       </span>},
