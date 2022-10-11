@@ -12,7 +12,7 @@ import {
     UploadFileTypes,
     STATUS_ACTIVE,
   } from "../../constants";
-  import { showErrorMessage } from "../../services/notifyService";
+  import { showErrorMessage, showWarningMessage } from "../../services/notifyService";
 import PasswordGeneratorField from '../common/entryForm/PasswordGeneratorField';
 import DropdownField from '../common/entryForm/DropdownField';
 import NumericField from '../common/entryForm/NumericField';
@@ -23,6 +23,7 @@ import BasicModal from '../common/modal/BasicModal';
 import VariantListForm from './VariantListForm';
 import { connect } from 'react-redux';
 import {SaveOutlined} from '@ant-design/icons';
+import FieldSet from '../common/elements/FieldSet'
 class VariantTemplateForm extends BasicForm {
 
     constructor(props) {
@@ -34,6 +35,7 @@ class VariantTemplateForm extends BasicForm {
             dataList:[],
             name:"",
             id:null,
+            formChanged:false,
         }
         this.configIndex=0
         this.selectedVariant=null
@@ -68,11 +70,23 @@ class VariantTemplateForm extends BasicForm {
 
     handleSubmit(formValues) {
         const { onSubmit } = this.props;
-        onSubmit({
-            name:this.state.name,
-            variantConfigs:this.state.templateConfigData,
-            id:this.state.id,
+        const {templateConfigData,name,id}= this.state
+        let pass=true
+        templateConfigData.map(item =>{
+            if(item.variantIds.length === 0 || item.variantIds.length === undefined){
+                pass =false
+            }
+            console.log(item.variantIds)
         })
+        if(pass)
+        onSubmit({
+            name:name,
+            variantConfigs:templateConfigData,
+            id:id,
+        })
+        else{
+            showWarningMessage('Cấu hình thuộc tính phải chọn ít nhất một thuộc tính')
+        }
     }
 
 
@@ -122,20 +136,27 @@ class VariantTemplateForm extends BasicForm {
                 <div className='variant-config-wrapper'>
 
                 <Row gutter={[12, 18]}>
-                    <Col span={2} type="flex" align="middle" className='variant-delete-icon'>
-                        <MinusCircleOutlined style={{'fontSize':"19px","color":"red"}} onClick={()=>this.removeVariant(item.index)}/>
-                    </Col>
                     <Col span={8}>
                         <Row gutter={[16, 0]}>
                             <Col span={24}>
-                               <Form.Item required name={item.id ? `name_${item.id}` :`name_${item.index}`}>
+                               <Form.Item rules={[
+                                    {
+                                        required: true,
+                                        message: 'Nhập tên cấu hình thuộc tính!',
+                                    },
+                                    ]} name={item.id ? `name_${item.id}` :`name_${item.index}`}>
                                 <Input placeholder='Tên' onChange={e=> this.setConfigField(e.target.value,item.index,1)}/>
                                </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={[16, 0]}>
                               <Col span={24}>
-                              <Form.Item required name={ item.id ?`choiceKind_${item.id}`:`choiceKind_${item.index}`}>
+                              <Form.Item rules={[
+                                    {
+                                        required: true,
+                                        message: 'Chọn loại nhóm thuộc tính!',
+                                    },
+                                    ]} name={ item.id ?`choiceKind_${item.id}`:`choiceKind_${item.index}`}>
                                 <Select placeholder='Loại' options={variantTemplateConfig} onSelect={e=> this.setConfigField(e,item.index,2)}/>
                                </Form.Item>
                             </Col>
@@ -153,6 +174,7 @@ class VariantTemplateForm extends BasicForm {
                         </div>
                     </Col>
                     <Col span={14}>
+                    <FieldSet title='Danh sách thuộc tính'>
                         <Row gutter={[12, 0]}>
                                 <Col span={24}>
                                 {item.variantIds.lenght !==0 ? 
@@ -179,6 +201,10 @@ class VariantTemplateForm extends BasicForm {
                                 </Button>
                                 </Col>
                         </Row>
+                    </FieldSet>
+                    </Col>
+                    <Col span={2} type="flex" align="middle" className='variant-delete-icon'>
+                        <MinusCircleOutlined style={{'fontSize':"19px","color":"red"}} onClick={()=>this.removeVariant(item.index)}/>
                     </Col>
                 </Row>
                                     
@@ -230,9 +256,13 @@ class VariantTemplateForm extends BasicForm {
 
     removeVariant =(index)=>{
         const {templateConfigData} = this.state
-        this.setState({
+        if(templateConfigData.length > 1)
+            this.setState({
             templateConfigData:templateConfigData.filter(itemArray => itemArray.index !== index)
         })
+        if(templateConfigData.length === 1){
+            showWarningMessage('Phải có ít nhất một bộ thuộc tính')
+        }
     }
 
     removeVariantItem =(data,key,parenIndex)=>{
@@ -282,6 +312,12 @@ class VariantTemplateForm extends BasicForm {
         this.setState({ isShowModifiedModal: true });
     }
 
+    formValidate(){
+        const {templateConfigData}= this.state
+        if(templateConfigData.length === 0)
+            return true
+    }
+
     render() {
         const { formId, actions, isEditing,t} = this.props
         const {dataList,name}= this.state
@@ -302,15 +338,20 @@ class VariantTemplateForm extends BasicForm {
                 // onValuesChange={this.onValuesChange}
                 style={{width:"600px"}}
             >
-                <Card title='THÔNG TIN THUỘC TÍNH' className="card-form" bordered={false}>
+                <Card title='THÔNG TIN NHÓM THUỘC TÍNH ' className="card-form" bordered={false}>
                         <Row gutter={[16, 0]}>
                             <Col span={12}>
-                        <Form.Item required  name='name'>
+                        <Form.Item  name='name' rules={[
+          {
+            required: true,
+            message: 'Nhập tên nhóm thuộc tính!',
+          },
+        ]}>
                                 <Input placeholder='Tên nhóm thuộc tính' onChange={e =>this.setState({name:e.target.value})}/>
                             </Form.Item>
                         </Col>
                         </Row>
-                        <Card title='Thuộc tính' className="card-form" bordered={false}>
+                        <FieldSet className="customer-fieldset-variant-template" title='Cấu hình thuộc tính' >
                             {/* <Row gutter={[16, 0]}>
                             <Col span={10}>
                             <TextField fieldName="name" label={t("form.label.name")} required 
@@ -326,7 +367,7 @@ class VariantTemplateForm extends BasicForm {
                             Thêm nhóm thuộc tính 
                             </Button>
                             </Col>
-                        </Card>
+                        </FieldSet>
                         <Row gutter={[16, 0]}>
                         <Col span={24}>
                         
@@ -345,6 +386,7 @@ class VariantTemplateForm extends BasicForm {
                     type="primary"
                     form='form-variant-template'
                     icon={<SaveOutlined />}
+                    disabled={this.formValidate()}
                     >
                 {t(`basicSavePage:${"saveButton"}`)}
                 </Button>
