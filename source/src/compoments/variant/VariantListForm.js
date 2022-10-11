@@ -19,21 +19,34 @@ class VariantListForm extends BasicForm {
   }
 
   renderActionColumn() {
-    const {onVariantSelect}= this.props
+    const {selectedVariantArray}= this.props
+    const avaiableArray= selectedVariantArray.map(item =>item.id)
+    console.log(avaiableArray)
     return {
         title:  'Hành động',
         width: '100px',
         align: 'center',
         render: (dataRow) => {
-            return (
-            <Button
+          let isExist=false
+          avaiableArray.map(item=>{
+            if(item === dataRow.id) 
+              isExist=true
+              })
+          if(isExist)
+              return   (<Button
+              type="primary"
+              disabled
+              >
+                Chọn
+              </Button>)
+        return ( <Button
             type="primary"
             onClick={e =>this.handleSelect(dataRow)}
             >
               Chọn
             </Button>)
-        }
     }
+  }
 }
 
   handleSelect(dataRow){
@@ -41,22 +54,17 @@ class VariantListForm extends BasicForm {
   }
 
 
-handleTableChange(pagination, filters, sorter) {
-    const pager = { ...this.pagination };
-    pager.current = pagination.current;
-    this.pagination = pager;
-}
 
   render() {
-    const { formId,dataSource, loading } = this.props;
+    const { formId,dataSource, loading, selectedVariantArray} = this.props;
     return (
         <BaseTable
         loading={loading}
         columns={this.columns}
         rowKey={(record) => record.id}
         dataSource={dataSource}
-        pagination={this.pagination}
         onChange={this.handleTableChange}
+        pagination={{ defaultPageSize: 10, showSizeChanger: true}}
       />
     );
   }

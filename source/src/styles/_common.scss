@@ -82,18 +82,19 @@ body {
     margin-top: 2em;
 }
 
-.custom-fieldset {
-    padding: 1em;
-    border: 1px solid #f0f0f0;
-    legend {
-        font-size: 16px;
-        display: unset;
-        width: unset;
-        padding: 0 10px;
-        border-bottom: unset;
-        margin: unset;
-    }
-}
+// .custom-fieldset {
+//     padding: 1em;
+//     border: 1px solid #f0f0f0;
+//     legend {
+//         font-size: 16px;
+//         display: unset;
+//         width: unset;
+//         padding: 0 10px;
+//         border-bottom: unset;
+//         margin: unset;
+//         color: rgb(140, 140, 140);
+//     }
+// }
 
 .bold-fieldset {
     >legend {
@@ -287,10 +288,12 @@ body {
 
 .custom-fieldset {
     padding: 1em;
-    border: 1px solid #cdcdcd;
-    // border: 1px solid #f0f0f0;
-    margin-bottom: 50px;
-
+    // border: 1px solid #cdcdcd;
+    border: 1px solid #f0f0f0;
+    // margin-bottom: 50px;
+    legend{
+        color: rgb(140, 140, 140) !important;
+    }
 }
 
 .custom-fieldset legend{
@@ -566,10 +569,36 @@ h2{
     padding-right: 15px !important;
     padding-bottom: 61px;
     display: flex;
-    align-items: center;
+    // align-items: center;
 }
 
 .variant-config-wrapper{
     border-bottom: solid 1px #f7f2f2;
     margin-bottom: 19px;
+    .ant-form-item {
+        margin-bottom: 6px;
+    }
+    .custom-fieldset {
+        padding: 1em;
+        border: 1px solid #f0f0f0;
+        margin-top: -11px;
+        legend{
+            color: rgb(140, 140, 140);
+        }
+    }
+}
+
+.customer-fieldset-variant-template{
+    padding: 1em;
+    border: 1px solid #f0f0f0;
+    legend {
+        font-size: 16px;
+        display: unset;
+        width: unset;
+        padding: 0 10px;
+        border-bottom: unset;
+        margin: unset;
+        font-weight: bold;
+        color:black;
+    }
 }

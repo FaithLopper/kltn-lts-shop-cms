@@ -54,6 +54,10 @@ const navMenuConfig = [
                 label: 'Role',
                 ...sitePathConfig.groupPermission
             },
+            {
+                label: 'Province',
+                ...sitePathConfig.province,
+            },
         ]
     },
     {
@@ -83,16 +87,6 @@ const navMenuConfig = [
                 ...sitePathConfig.adminNews
             },
         ],
-    },
-    {
-        label: 'Province',
-        icon: <BankOutlined />,
-        children: [
-            {
-                label: 'Province',
-                ...sitePathConfig.province,
-            },
-        ]
     },
     {
         label: 'Ranks',

@@ -40,6 +40,7 @@ class VariantUpdateForm extends BasicForm {
         const { onSubmit } = this.props
         onSubmit({
             ...formValues,
+            price: formValues.price ?  formValues.price:0
         })
     }
 
