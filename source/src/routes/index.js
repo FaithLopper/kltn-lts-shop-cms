@@ -44,6 +44,10 @@ import CategoryProductUpdate from '../containers/categoryProduct/CategoryProduct
 import CategoryProductSubListPage from '../containers/categoryProduct/CategoryProductSubListPage';
 import StoreListPage from '../containers/store/StoreListPage';
 import StoreUpdatePage from '../containers/store/StoreUpdatePage';
+import VariantListPage from '../containers/variant/VariantListPage';
+import VariantUpdatePage from '../containers/variant/VariantUpdatePage';
+import VariantTemplateListPage from '../containers/variant/VariantTemplateListPage';
+import VariantTemplateUpdatePage from '../containers/variant/VariantTemplateUpdatePage';
 import CategoryProductSubUpdate from '../containers/categoryProduct/CategoryProductSubUpdate';
 const { getUserData } = actions;
 const userData = getUserData();
@@ -80,6 +84,10 @@ const RootRoute = () => {
         categoryProductSub,
         store,
         storeUpdate,
+        variant,
+        variantTemplate,
+        variantUpdate,
+        variantTemplateUpdate,
         categoryProductSubUpdate
     } = sitePathConfig;
 
@@ -147,6 +155,10 @@ const RootRoute = () => {
                 <PrivateRoute exact path={categoryProductSub.path} component={CategoryProductSubListPage}/>
                 <PrivateRoute exact path={store.path} component={StoreListPage}/>
                 <PrivateRoute exact path={storeUpdate.path} component={StoreUpdatePage}/>
+                <PrivateRoute exact path={variant.path} component={VariantListPage}/>
+                <PrivateRoute exact path={variantTemplate.path} component={VariantTemplateListPage}/>
+                <PrivateRoute exact path={variantTemplateUpdate.path} component={VariantTemplateUpdatePage}/>
+                <PrivateRoute exact path={variantUpdate.path} component={VariantUpdatePage}/>
                 <PrivateRoute exact path={categoryProductSubUpdate.path} component={CategoryProductSubUpdate}/>
                 {/* Error Page */}
                 <PrivateRoute exact path={forbidden.path} component={Forbidden}/>

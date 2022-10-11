@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Avatar } from "antd";
-import { PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Avatar, Divider } from "antd";
+import { PlusOutlined, UserOutlined,MessageOutlined,EditOutlined,LockOutlined,DeleteOutlined,CheckOutlined,HomeOutlined } from "@ant-design/icons";
 import { withTranslation } from "react-i18next";
 
 import ListBasePage from "../ListBasePage";
@@ -13,25 +13,21 @@ import { AppConstants, UserTypes, GroupPermissonTypes, STATUS_ACTIVE } from "../
 import PageWrapper from "../../compoments/common/PageWrapper";
 import { Link } from 'react-router-dom';
 import { sitePathConfig } from "../../constants/sitePathConfig";
-import { FieldTypes } from "../../constants/formConfig";
-import { commonStatus } from "../../constants/masterData";
-class StoreListPage extends ListBasePage {
+import ElementWithPermission from "../../compoments/common/elements/ElementWithPermission";
+class VariantListPage extends ListBasePage {
   initialSearch() {
-    return { name: "", addressDetails: ""};
+    return { name: "", value: ""};
   }
 
   constructor(props) {
     super(props);
     const {t} = this.props;
     this.objectName =  t("objectName");
-    this.objectListName = 'store';
+    this.objectListName = 'variant';
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
     this.columns = [
-      { title:  t("table.name"), dataIndex: "name" ,width:"200px"},
-      { title:  t("table.address"), dataIndex: ["province","name"],width: '300px', render:(text,record)=>
-      <span>
-        {`${record.addressDetails}, ${record.ward.name}, ${record.district.name}, ${text}`}
-      </span>},
+      { title:  t("table.name"), dataIndex: "name"},
+      { title:  t("table.price"), dataIndex: "price"},
       this.renderActionColumn(),
     ];
     this.actionColumns = {
@@ -49,23 +45,28 @@ class StoreListPage extends ListBasePage {
         seachPlaceholder: t('searchPlaceHolder.name'),
         initialValue: this.search.name,
       },
-      {
-        key: "addressDetails",
-        seachPlaceholder: t('searchPlaceHolder.addressDetails'),
-        initialValue: this.search.addressDetails,
-      },
+      // {
+      //   key: "value",
+      //   seachPlaceholder: t('searchPlaceHolder.value'),
+      //   initialValue: this.search.value,
+      // },
     ];
   }
 
   getDetailLink(dataRow) {
-    return sitePathConfig.storeUpdate.path.replace(':id', dataRow.id);
+    return sitePathConfig.variantUpdate.path.replace(':id', dataRow.id);
   }
+
+  renderButton(children, permissions){
+    return (<ElementWithPermission permissions={permissions}>
+        {children}
+    </ElementWithPermission>)
+}
 
   render() {
     const {
       dataList,
       loading,
-      uploadFile,
       t,
     } = this.props;
     const users = dataList.data || [];
@@ -80,7 +81,7 @@ class StoreListPage extends ListBasePage {
           <Button
           type="primary"
         >
-          <PlusOutlined /> {t("createNewButton", { var: this.objectName}) }
+          <PlusOutlined /> {t("createNewButton", { var: t(`objectName`, "") })}
         </Button></Link>
           ))}
         </div>
@@ -98,16 +99,16 @@ class StoreListPage extends ListBasePage {
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.store.storeListLoading,
-  dataList: state.store.storeListData || {},
+  loading: state.variant.variantListLoading,
+  dataList: state.variant.variantListData || {},
+  customerAutoComplete:state.variant.variantAutoComplete || {}
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getDataList: (payload) => dispatch(actions.getStoreList(payload)),
-  getDataById: (payload) => dispatch(actions.getStoreById(payload)),
-  createData: (payload) => dispatch(actions.createStore(payload)),
-  updateData: (payload) => dispatch(actions.updateStore(payload)),
-  deleteData: (payload) => dispatch(actions.deleteStore(payload)),
+  getDataList: (payload) => dispatch(actions.getVariantList(payload)),
+  getDataById: (payload) => dispatch(actions.getVariantById(payload)),
+  deleteData: (payload) => dispatch(actions.deleteVariant(payload)),
+  // uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['storeListPage','listBasePage'])(StoreListPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['variantListPage','listBasePage'])(VariantListPage));

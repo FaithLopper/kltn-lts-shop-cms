@@ -26,9 +26,12 @@ export default {
         'Ranks': 'Cấp bậc khách hàng',
         'Employee': 'Nhân viên',
         'customerManagement': 'Quản lý khách hàng',
-        'Product': 'Sản phẩm',
-        'categoryProductManagement': 'Quản lý danh mục',
-        'Store':'Quản lí kho',
+        'categoryProductManagement': 'Quản lý danh mục sản phẩm',
+        'CategoryProduct': 'Quản lý sản phẩm',
+        'Store':'Quản lí chi nhánh',
+        'Product':'Sản phẩm',
+        'Variant':'Thuộc tính',
+        'Variant Template':'Nhóm thuộc tính'
     },
     appHeader: {
         profile: 'Hồ sơ',
@@ -570,14 +573,9 @@ export default {
             wardId:'Tên Phường/ Xã'
         },
         table: {
-            province: 'Tỉnh',
-            district: 'Huyện',
-            phone: 'Số điện thoại',
-            ward:'Phường/ Xã',
-            addressDetails:'Địa chỉ cụ thể',
+            address:'Địa chỉ',
             receiverFullName:'Tên người nhận',
-            isDefault:'Loại địa chỉ',
-            location:'Tỉnh thành',
+            isDefault:'Loại địa chỉ'
         },
         message: {
             // updateProfileFail: 'Your profile failed. Please try again!',
@@ -707,20 +705,16 @@ export default {
     },
     storeListPage: {
         breadcrumbs: {
-            currentPage: 'Quản lí kho',
+            currentPage: 'Quản lí chi nhánh',
         },
-        objectName: 'kho',
+        objectName: 'chi nhánh',
         searchPlaceHolder: {
-            name: 'Tên kho',
+            name: 'Tên chi nhánh',
             addressDetails: 'Địa chỉ cụ thể',
         },
         table: {
-            name: 'Tên kho',
-            addressDetails: 'Địa chỉ cụ thể',
-            provinceId:'Tên Tỉnh/ Thành Phố',
-            districtId:'Tên Quận/ Huyện',
-            wardId:'Tên Phường/ Xã',
-            "location":'Tỉnh thành'
+            name: 'Tên chi nhánh',
+            address: 'Địa chỉ',
         },
         message: {
             // updateProfileFail: 'Your profile failed. Please try again!',
@@ -731,15 +725,15 @@ export default {
     storeUpdatePage: {
         breadcrumbs: {
             // currentPage: '{{ var }} quản trị viên',
-            parentPage:'Quản lí kho',
+            parentPage:'Quản lí chi nhánh',
         },
-        objectName: 'kho',
+        objectName: 'chi nhánh',
         form: {
             label: {
                 "addressDetails": "Địa chỉ cụ thể",
                 "latitude": "Vĩ độ",
                 "longitude": "Kinh độ",
-                "name": "Tên kho",
+                "name": "Tên chi nhánh",
                 "provinceId":'Tên Tỉnh/ Thành Phố',
                 "districtId":'Tên Quận/ Huyện',
                 "wardId":'Tên Phường/ Xã',
@@ -753,6 +747,84 @@ export default {
             // updateProfileFail: 'Your profile failed. Please try again!',
             // updateProfileSuccess: 'Your profile have been updated!'
         },
-    }
+    },
+    variantListPage: {
+        breadcrumbs: {
+            currentPage: 'Thuộc tính',
+        },
+        objectName: 'thuộc tính',
+        searchPlaceHolder: {
+            name: 'Tên thuộc tính',
+        },
+        table: {
+            name: 'Tên thuộc tính',
+            price:'Giá',
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    variantUpdatePage: {
+        breadcrumbs: {
+            // currentPage: '{{ var }} quản trị viên',
+            parentPage:'Thuộc tính',
+        },
+        objectName: 'thuộc tính',
+        form: {
+            label: {
+                'name':'Tên thuộc tính',
+                'price':'Giá cả',
+                'description':'Mô tả'
+            },
+            validationMessage: {
+                phoneLengthRequire: 'Hãy nhập số',
+                comparePassword: 'Mật khẩu bạn nhập không khớp!',
+            }
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
+    },
+    variantTemplateListPage: {
+        breadcrumbs: {
+            currentPage: 'Bộ thuộc tính',
+        },
+        objectName: 'bộ thuộc tính',
+        searchPlaceHolder: {
+            name: 'Tên thuộc tính',
+        },
+        table: {
+            name: 'Tên bộ thuộc tính',
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    variantTemplateUpdatePage: {
+        breadcrumbs: {
+            // currentPage: '{{ var }} quản trị viên',
+            parentPage:'Bộ Thuộc tính',
+        },
+        objectName: 'bộ thuộc tính',
+        form: {
+            label: {
+                'name':'Tên bộ thuộc tính',
+                'price':'Giá cả',
+            },
+            validationMessage: {
+                phoneLengthRequire: 'Hãy nhập số',
+                comparePassword: 'Mật khẩu bạn nhập không khớp!',
+            }
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
+    },
     
 }
