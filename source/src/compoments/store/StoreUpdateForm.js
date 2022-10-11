@@ -1,5 +1,5 @@
 import React, { Children } from 'react';
-import { Form, Col, Row, Card, Button, message, Result } from 'antd';
+import { Form, Col, Row, Card, Button, message, Result, Select } from 'antd';
 import BasicForm from '../common/entryForm/BasicForm';
 import TextField from '../common/entryForm/TextField';
 import RadioField from '../common/entryForm/RadioField';
@@ -18,7 +18,7 @@ import {
   } from "../../constants";
   import { showErrorMessage } from "../../services/notifyService";
 import PasswordGeneratorField from '../common/entryForm/PasswordGeneratorField';
-import DropdownField from '../common/entryForm/DropdownField';
+import DropdownFieldWithSearch from '../common/entryForm/DropdownFieldWithSearch';
 import CheckBoxField from '../common/entryForm/CheckBoxField';
 class StoreUpdateForm extends BasicForm {
 
@@ -229,7 +229,7 @@ class StoreUpdateForm extends BasicForm {
                         </Row>
                         <Row gutter={[16, 0]}>
                         <Col span={8}>
-                        <DropdownField
+                        <DropdownFieldWithSearch
                         fieldName="provinceId"
                         label={t("form.label.provinceId")}
                         required
@@ -240,7 +240,7 @@ class StoreUpdateForm extends BasicForm {
                     />
                         </Col>
                         <Col span={8}>
-                        <DropdownField
+                        <DropdownFieldWithSearch
                         fieldName="districtId"
                         label={t("form.label.districtId")}
                         required
@@ -250,7 +250,7 @@ class StoreUpdateForm extends BasicForm {
                     />
                         </Col>
                         <Col span={8}>
-                        <DropdownField
+                        <DropdownFieldWithSearch
                         fieldName="wardId"
                         label={t("form.label.wardId")}
                         required

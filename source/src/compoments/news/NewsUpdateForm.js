@@ -11,6 +11,7 @@ import DropdownField from "../common/entryForm/DropdownField";
 import CheckBoxField from "../common/entryForm/CheckBoxField";
 import RichTextField from "../common/entryForm/RichTextField";
 import NumericField from "../common/entryForm/NumericField";
+import DropdownFieldWithSearch from "../common/entryForm/DropdownFieldWithSearch";
 
 class NewsUpdateForm extends BasicForm {
   constructor(props) {
@@ -182,7 +183,7 @@ class NewsUpdateForm extends BasicForm {
               />
             </Col>
             <Col span={12}>
-              <DropdownField
+              <DropdownFieldWithSearch
                 fieldName="categoryId"
                 label={t("form.label.category")}
                 required

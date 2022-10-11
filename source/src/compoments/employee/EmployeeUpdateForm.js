@@ -10,6 +10,7 @@ import { showErrorMessage } from "../../services/notifyService";
 import DropdownField from "../common/entryForm/DropdownField";
 import PasswordGeneratorField from "../common/entryForm/PasswordGeneratorField";
 import { KeyOutlined, CopyOutlined } from "@ant-design/icons";
+import DropdownFieldWithSearch from "../common/entryForm/DropdownFieldWithSearch";
 
 class EmployeeUpdateForm extends BasicForm {
   constructor(props) {
@@ -239,7 +240,7 @@ class EmployeeUpdateForm extends BasicForm {
 
           <Row gutter={16}>
             <Col span={12}>
-              <DropdownField
+              <DropdownFieldWithSearch
                 fieldName="departmentId"
                 label={t("form.label.departmentId")}
                 required
@@ -247,7 +248,7 @@ class EmployeeUpdateForm extends BasicForm {
               />
             </Col>
             <Col span={12}>
-              <DropdownField
+              <DropdownFieldWithSearch
                 fieldName="jobId"
                 label={t("form.label.jobId")}
                 required

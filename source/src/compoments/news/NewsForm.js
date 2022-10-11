@@ -18,6 +18,7 @@ import {
   } from "../../constants";
   import Utils from "../../utils";
   import { showErrorMessage } from "../../services/notifyService";
+import DropdownFieldWithSearch from "../common/entryForm/DropdownFieldWithSearch";
 
 
 class NewsForm extends BasicForm {
@@ -153,7 +154,7 @@ class NewsForm extends BasicForm {
             />
             </Col>
             <Col span={12}>
-                <DropdownField
+                <DropdownFieldWithSearch
                 fieldName="categoryId"
                 label={t('form.label.category')}
                 required
