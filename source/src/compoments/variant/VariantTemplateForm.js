@@ -76,7 +76,6 @@ class VariantTemplateForm extends BasicForm {
             if(item.variantIds.length === 0 || item.variantIds.length === undefined){
                 pass =false
             }
-            console.log(item.variantIds)
         })
         if(pass)
         onSubmit({
@@ -236,7 +235,7 @@ class VariantTemplateForm extends BasicForm {
         const { getList, showFullScreenLoading, hideFullScreenLoading } = this.props;
         getList(
             {
-                params:{page:0,size:100},
+                params:{},
                 onCompleted: ({data}) => {
                     this.setState({
                         dataList:  this.getDataDetailMapping(data)
@@ -322,7 +321,6 @@ class VariantTemplateForm extends BasicForm {
         const { formId, actions, isEditing,t} = this.props
         const {dataList,name}= this.state
         const variantData = dataList.data || [];
-        console.log(this.state.templateConfigData)
         const {
             isShowModifiedModal,
             isShowModifiedLoading,

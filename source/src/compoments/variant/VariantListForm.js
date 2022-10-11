@@ -45,8 +45,6 @@ class VariantListForm extends BasicForm {
             >
               Chọn
             </Button>)
-
-
     }
   }
 }
@@ -56,11 +54,6 @@ class VariantListForm extends BasicForm {
   }
 
 
-handleTableChange(pagination, filters, sorter) {
-    const pager = { ...this.pagination };
-    pager.current = pagination.current;
-    this.pagination = pager;
-}
 
   render() {
     const { formId,dataSource, loading, selectedVariantArray} = this.props;
@@ -70,8 +63,8 @@ handleTableChange(pagination, filters, sorter) {
         columns={this.columns}
         rowKey={(record) => record.id}
         dataSource={dataSource}
-        pagination={this.pagination}
         onChange={this.handleTableChange}
+        pagination={{ defaultPageSize: 10, showSizeChanger: true}}
       />
     );
   }
