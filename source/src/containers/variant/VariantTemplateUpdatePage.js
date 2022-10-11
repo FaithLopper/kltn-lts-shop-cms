@@ -42,15 +42,23 @@ class VariantTemplateUpdatePage extends SaveBasePage {
     }
 
     getDataDetailMapping = (data) => {
-        const adminUserData = data
-
-        if (!adminUserData) {
+        const variantConfigData = data
+        if (!variantConfigData) {
             this.setState({ objectNotFound: true });
             return
         }
-
+        const dataConfig= {
+            ...variantConfigData,
+            variantConfigs:variantConfigData.variantConfigs.map(item =>{
+                return {
+                    ...item,
+                    variantIds:item.variants,
+                    index:item.id
+                }
+            })
+        }
         return {
-            ...adminUserData,
+            ...dataConfig,
         }
     }
 
@@ -107,21 +115,26 @@ class VariantTemplateUpdatePage extends SaveBasePage {
     }
 
     prepareCreateData = (data) => {
+        let temp= data.variantConfigs.map(item =>{
+           return { ...item,
+            variantIds: item.variantIds.map(variant=>variant.id
+            )}
+        })
         return {
-            kind:UserTypes.ADMIN,
-            avatarPath: data.avatar,
-            status: 1,
-            groupId:32,
             ...data,
+            variantConfigs:temp,
         };
     }
 
     prepareUpdateData = (data) => {
+        let temp= data.variantConfigs.map(item =>{
+            return { ...item,
+             variantIds: item.variantIds.map(variant=>variant.id
+             )}
+         })
         return {
             ...data,
-            kind:UserTypes.ADMIN,
-            avatarPath: data.avatar,
-            id: this.dataDetail.id
+            variantConfigs:temp,
         };
     }
 
@@ -146,7 +159,6 @@ class VariantTemplateUpdatePage extends SaveBasePage {
         if (objectNotFound) {
             return <ObjectNotFound />
         }
-
         return (
             <LoadingWrapper loading={isGetDetailLoading}>
                 <VariantTemplateForm

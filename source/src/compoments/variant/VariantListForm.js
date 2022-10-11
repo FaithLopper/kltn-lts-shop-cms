@@ -19,21 +19,36 @@ class VariantListForm extends BasicForm {
   }
 
   renderActionColumn() {
-    const {onVariantSelect}= this.props
+    const {selectedVariantArray}= this.props
+    const avaiableArray= selectedVariantArray.map(item =>item.id)
+    console.log(avaiableArray)
     return {
         title:  'Hành động',
         width: '100px',
         align: 'center',
         render: (dataRow) => {
-            return (
-            <Button
+          let isExist=false
+          avaiableArray.map(item=>{
+            if(item === dataRow.id) 
+              isExist=true
+              })
+          if(isExist)
+              return   (<Button
+              type="primary"
+              disabled
+              >
+                Chọn
+              </Button>)
+        return ( <Button
             type="primary"
             onClick={e =>this.handleSelect(dataRow)}
             >
               Chọn
             </Button>)
-        }
+
+
     }
+  }
 }
 
   handleSelect(dataRow){
@@ -48,7 +63,7 @@ handleTableChange(pagination, filters, sorter) {
 }
 
   render() {
-    const { formId,dataSource, loading } = this.props;
+    const { formId,dataSource, loading, selectedVariantArray} = this.props;
     return (
         <BaseTable
         loading={loading}

@@ -101,7 +101,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getDataList: (payload) => dispatch(actions.getVariantTemplateList(payload)),
   getDataById: (payload) => dispatch(actions.getVariantTemplateById(payload)),
-  deleteData: (payload) => dispatch(actions.deleteVariant(payload)),
+  deleteData: (payload) => dispatch(actions.deleteVariantTemplate(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['variantTemplateListPage','listBasePage'])(VariantTempleteListPage));
