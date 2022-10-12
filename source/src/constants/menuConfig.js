@@ -124,6 +124,10 @@ const navMenuConfig = [
                 label: 'categoryProductManagement',
                 ...sitePathConfig.categoryProduct,
             },
+            {
+                label: 'Product',
+                ...sitePathConfig.product,
+            },
         ]
     },
 ]

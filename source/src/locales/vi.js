@@ -31,7 +31,8 @@ export default {
         'Store':'Quản lí chi nhánh',
         'Product':'Sản phẩm',
         'Variant':'Thuộc tính',
-        'Variant Template':'Nhóm thuộc tính'
+        'Variant Template':'Nhóm thuộc tính',
+        'Product':'Sản phẩm',
     },
     appHeader: {
         profile: 'Hồ sơ',
@@ -826,5 +827,44 @@ export default {
             // updateProfileSuccess: 'Your profile have been updated!'
         },
     },
-    
+    productListPage: {
+        breadcrumbs: {
+            currentPage: 'Sản phẩm',
+        },
+        objectName: 'sản phẩm',
+        searchPlaceHolder: {
+            name: 'Tên sản phẩm',
+        },
+        table: {
+            name: 'Tên sản phẩm',
+            price:'Giá',
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    productUpdatePage: {
+        breadcrumbs: {
+            // currentPage: '{{ var }} quản trị viên',
+            parentPage:'Sản phẩm',
+        },
+        objectName: 'sản phẩm',
+        form: {
+            label: {
+                'name':'Tên sản phẩm',
+                'price':'Giá cả',
+                'description':'Mô tả'
+            },
+            validationMessage: {
+                phoneLengthRequire: 'Hãy nhập số',
+                comparePassword: 'Mật khẩu bạn nhập không khớp!',
+            }
+        },
+        message: {
+            // updateProfileFail: 'Your profile failed. Please try again!',
+            // updateProfileSuccess: 'Your profile have been updated!'
+        },
+    },
 }

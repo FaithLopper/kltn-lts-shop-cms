@@ -49,6 +49,8 @@ import VariantUpdatePage from '../containers/variant/VariantUpdatePage';
 import VariantTemplateListPage from '../containers/variant/VariantTemplateListPage';
 import VariantTemplateUpdatePage from '../containers/variant/VariantTemplateUpdatePage';
 import CategoryProductSubUpdate from '../containers/categoryProduct/CategoryProductSubUpdate';
+import ProductListPage from '../containers/product/ProductListPage';
+import ProductUpdatePage from '../containers/product/ProductUpdatePage';
 const { getUserData } = actions;
 const userData = getUserData();
 
@@ -88,7 +90,9 @@ const RootRoute = () => {
         variantTemplate,
         variantUpdate,
         variantTemplateUpdate,
-        categoryProductSubUpdate
+        categoryProductSubUpdate,
+        product,
+        productUpdate
     } = sitePathConfig;
 
     const getUserHomeNavigation =()=>{
@@ -160,6 +164,8 @@ const RootRoute = () => {
                 <PrivateRoute exact path={variantTemplateUpdate.path} component={VariantTemplateUpdatePage}/>
                 <PrivateRoute exact path={variantUpdate.path} component={VariantUpdatePage}/>
                 <PrivateRoute exact path={categoryProductSubUpdate.path} component={CategoryProductSubUpdate}/>
+                <PrivateRoute exact path={product.path} component={ProductListPage}/>
+                <PrivateRoute exact path={productUpdate.path} component={ProductUpdatePage}/>
                 {/* Error Page */}
                 <PrivateRoute exact path={forbidden.path} component={Forbidden}/>
                 {/* <Route exact path="/error" component={ErrorServer} /> */}

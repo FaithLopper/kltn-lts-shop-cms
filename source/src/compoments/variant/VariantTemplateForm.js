@@ -164,7 +164,7 @@ class VariantTemplateForm extends BasicForm {
                         <Row gutter={[16, 0]}>
                               <Col span={24}>
                                                 <CheckBoxField
-                                                label='Đề xuất'
+                                                label='Bắt buộc'
                                                 onChange={e=> this.setConfigField(e.target.value,item.index,3)}
                                 fieldName={item.id ?`isRequired_${item.id}`:`isRequired_${item.index}` }
                                 />
@@ -172,7 +172,7 @@ class VariantTemplateForm extends BasicForm {
                         </Row>
                         </div>
                     </Col>
-                    <Col span={14}>
+                    <Col span={15}>
                     <FieldSet title='Danh sách thuộc tính'>
                         <Row gutter={[12, 0]}>
                                 <Col span={24}>
@@ -180,9 +180,14 @@ class VariantTemplateForm extends BasicForm {
                                     <>
                                     {item.variantIds.map((data,index) => {
                                         return <Row gutter={8}>
-                                            <Col span={22}> 
+                                            <Col span={16}> 
                                                 <Form.Item>
-                                                    <Input value={data.name}/>
+                                                    <Input value={data.name} disabled/>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col span={6}> 
+                                                <Form.Item>
+                                                    <Input value={data.price} disabled/>
                                                 </Form.Item>
                                             </Col>
                                             <Col span={2}> 
@@ -202,7 +207,7 @@ class VariantTemplateForm extends BasicForm {
                         </Row>
                     </FieldSet>
                     </Col>
-                    <Col span={2} type="flex" align="middle" className='variant-delete-icon'>
+                    <Col span={1} type="flex" align="middle" className='variant-delete-icon'>
                         <MinusCircleOutlined style={{'fontSize':"19px","color":"red"}} onClick={()=>this.removeVariant(item.index)}/>
                     </Col>
                 </Row>
