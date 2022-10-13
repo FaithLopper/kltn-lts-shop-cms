@@ -737,7 +737,7 @@ export default {
                 "provinceId":'Tên Tỉnh/ Thành Phố',
                 "districtId":'Tên Quận/ Huyện',
                 "wardId":'Tên Phường/ Xã',
-                "MapCordinateTitle": 'Định vị tọa độ',
+                "MapCordinateTitle": 'Tọa độ',
                 "cordinate": "Kinh độ, vĩ độ",
             },
             validationMessage: {

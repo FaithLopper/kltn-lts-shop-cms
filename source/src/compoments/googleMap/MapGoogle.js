@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Input } from "antd";
-import TextField from "../common/entryForm/TextField";
 import { compose, withProps } from "recompose";
 import {
   withScriptjs,
@@ -20,46 +18,40 @@ const MapGoogle = compose(
   withScriptjs,
   withGoogleMap
 )((props) => {
-  const [cordinate, setCordinate] = useState({
-    lat: 0,
-    lng: 0,
-  });
+  const getInitVal = () => {
+    const { getter } = props;
+    const lat = parseFloat(getter("latitude"));
+    const lng = parseFloat(getter("longitude"));
+
+    return {
+      lat: lat ? lat : 13.068776734357721, //init val, local vvn
+      lng: lng ? lng : 108.62462668273137,
+    };
+  };
+
+  const [cordinate, setCordinate] = useState(getInitVal());
+
+  const setNewVal = (ev) => {
+    const { setter, onValueChange } = props;
+    const newCordinate = {
+      lat: ev.latLng.lat(),
+      lng: ev.latLng.lng(),
+    };
+    onValueChange();
+    setCordinate(newCordinate); // set state use for marker
+    setter("latitude", newCordinate.lat); // set form ref
+    setter("longitude", newCordinate.lng); // set form ref
+  };
 
   useEffect(() => {
-    setCordinate({
-      lat: props.latitude ? props.latitude : 13.068776734357721,
-      lng: props.longitude ? props.longitude : 108.62462668273137,
-    });
+    getInitVal();
   }, []);
 
   return (
     <>
-      <Row style={{ marginTop: 20 }} gutter={[16, 0]}>
-        <Col span={12}>
-          <label style={{ marginBottom: 5, marginRight: 50 }}>
-            {props.t("form.label.cordinate")}:
-          </label>
-          <Input
-            type="string"
-            value={`${cordinate.lat}, ${cordinate.lng}`}
-            style={{ width: 350, textAlign: "center" }}
-            disabled
-          />
-        </Col>
-      </Row>
       <GoogleMap
-        onClick={(ev) => {
-          const newCordinate = {
-            lat: ev.latLng.lat(),
-            lng: ev.latLng.lng(),
-          };
-          setCordinate(newCordinate);
-          props.handleChangeCordinate(newCordinate);
-        }}
-        defaultCenter={{
-          lat: props.latitude ? props.latitude : 13.068776734357721,
-          lng: props.longitude ? props.longitude : 108.62462668273137,
-        }}
+        onClick={(ev) => setNewVal(ev)}
+        defaultCenter={cordinate}
         defaultZoom={3}
       >
         {props.isMarkerShown && (

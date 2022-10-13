@@ -50,7 +50,6 @@ class TextField extends BaseField {
             className,
             onChange,
         } = this.props;
-
         return (
             <Form.Item
                 className={className}

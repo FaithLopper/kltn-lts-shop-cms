@@ -8,7 +8,7 @@ import UploadImageField from '../common/entryForm/UploadImageField';
 import { convertDateTimeToString, convertLocalTimeToUtc, convertUtcToLocalTime } from '../../utils/datetimeHelper';
 import CropImageFiled from '../common/entryForm/CropImageFiled';
 import Utils from "../../utils";
-import {  AimOutlined } from '@ant-design/icons';
+import {  GoogleOutlined } from '@ant-design/icons';
 import { commonSex, commonStatus } from '../../constants/masterData';
 import {
     AppConstants,
@@ -21,6 +21,7 @@ import PasswordGeneratorField from '../common/entryForm/PasswordGeneratorField';
 import DropdownFieldWithSearch from '../common/entryForm/DropdownFieldWithSearch';
 import BasicModal from '../common/modal/BasicModal';
 import MapGoogle from '../googleMap/MapGoogle';
+import CordinateInputField from '../common/entryForm/CordinateInputField';
 class StoreUpdateForm extends BasicForm {
 
     constructor(props) {
@@ -48,12 +49,9 @@ class StoreUpdateForm extends BasicForm {
     }
 
     handleSubmit(formValues) {
-        const { onSubmit, dataDetail } = this.props
-
+        const { onSubmit } = this.props
         onSubmit({
             ...formValues,
-            latitude: dataDetail.latitude,
-            longitude: dataDetail.longitude
         })
     }
 
@@ -223,13 +221,6 @@ class StoreUpdateForm extends BasicForm {
     this.setState({ isShowModal: false, isShowLoading: false });
     };
 
-    handleChangeCordinate = (newValue) => {
-        const { dataDetail } = this.props
-        dataDetail.latitude = newValue.lat
-        dataDetail.longitude = newValue.lng
-        this.onValuesChange();
-    };
-
     render() {
         const { formId, dataDetail, actions, isEditing,t } = this.props
         const {
@@ -304,7 +295,20 @@ class StoreUpdateForm extends BasicForm {
                             />
                             </Col>
                         </Row>
-                        <Button onClick={this.onShowModal}><AimOutlined /> {t("form.label.MapCordinateTitle")}</Button>
+                        <Row gutter={[16, 0]}>
+                        <Col span={24}>
+                        <CordinateInputField
+                            type='number'
+                            style={{
+                                textAlign: 'center',
+                                }}
+                            label={t('form.label.MapCordinateTitle')} 
+                            latFieldName="latitude" lngFieldName="longitude"
+                            suffix={
+                                <Button width={1} onClick={this.onShowModal}><GoogleOutlined /></Button>
+                            } />
+                        </Col>
+                        </Row>
                         <BasicModal
                         visible={isShowModal}
                         objectName={this.objectName}
@@ -313,15 +317,16 @@ class StoreUpdateForm extends BasicForm {
                         title={t("form.label.MapCordinateTitle")}
                         width={"50vw"}
                         maskClosable={true}
-                        bodyStyle={{height: 520}}
                         >
                         <MapGoogle
                             isMarkerShown={this.state.isMarkerShown}
                             onMarkerClick={this.handleMarkerClick}
                             latitude={dataDetail?.latitude}
                             longitude={dataDetail?.longitude}
-                            handleChangeCordinate={this.handleChangeCordinate}
+                            setter={(name, value) => this.setFieldValue(name, value)}
+                            getter={(name) => this.getFieldValue(name)}
                             t={t}
+                            onValueChange={()=> this.onValuesChange()}
                         />
                         </BasicModal>
                 </Card>
