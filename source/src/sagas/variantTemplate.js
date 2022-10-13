@@ -11,6 +11,7 @@ const {
     GET_VARIANT_TEMPLATE_LIST,
     GET_VARIANT_TEMPLATE_AUTOCOMPLETE,
     DELETE_VARIANT_TEMPLATE,
+    GET_VARIANT_TEMPLATE_LIST_MODAL
 } = actionTypes;
 
 function* getVariantTemplateList({ payload: {params} }){
@@ -85,6 +86,18 @@ function* createVariantTemplate({payload: {params, onCompleted, onError}})
     }
 }
 
+function* getVariantTemplateModal({payload: {params, onCompleted, onError}})
+{
+    try{
+        const result = yield call (sendRequest, apiConfig.variantTemplate.getList, params);
+        handleApiResponse(result, onCompleted, onError);
+    }
+    catch(error)
+    {
+        onError(error);
+    }
+}
+
 function* updateVariantTemplate({payload: {params, onCompleted, onError}})
 {
     try{
@@ -123,6 +136,7 @@ const sagas = [
     takeLatest(defineActionLoading(GET_VARIANT_TEMPLATE_AUTOCOMPLETE), getVariantTemplateAutoComplete),
     takeLatest(actionTypes.GET_VARIANT_TEMPLATE_BY_ID, getVariantTemplate),
     takeLatest(actionTypes.CREATE_VARIANT_TEMPLATE, createVariantTemplate),
+    takeLatest(actionTypes.GET_VARIANT_TEMPLATE_LIST_MODAL, getVariantTemplateModal),
     takeLatest(actionTypes.UPDATE_VARIANT_TEMPLATE, updateVariantTemplate),
     takeLatest(defineActionLoading(DELETE_VARIANT_TEMPLATE), deleteVariantTemplate),
 ]

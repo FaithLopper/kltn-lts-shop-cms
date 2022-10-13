@@ -181,7 +181,7 @@ class VariantTemplateForm extends BasicForm {
                                     {item.variantIds.map((data,index) => {
                                         return <Row gutter={8}>
                                             <Col span={16}> 
-                                                <Form.Item>
+                                            <Form.Item>
                                                     <Input value={data.name} disabled/>
                                                 </Form.Item>
                                             </Col>
@@ -355,17 +355,8 @@ class VariantTemplateForm extends BasicForm {
                         </Col>
                         </Row>
                         <FieldSet className="customer-fieldset-variant-template" title='Cấu hình thuộc tính' >
-                            {/* <Row gutter={[16, 0]}>
-                            <Col span={10}>
-                            <TextField fieldName="name" label={t("form.label.name")} required 
-                            // disabled={loadingSave}
-                                />
-                            </Col>
-                            </Row> */}
                             <Col span={24}>
-
                             {this.renderTemplateConfig()}
-
                             <Button type="dashed" className='add-variant' onClick={()=>{this.addConfigItem()}} block icon={<PlusOutlined />}  >
                             Thêm nhóm thuộc tính 
                             </Button>

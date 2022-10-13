@@ -41,6 +41,7 @@
   "devDependencies": {
     "antd": "^4.3.3",
     "antd-img-crop": "^3.9.0",
+    "array-move": "^1.0.0",
     "body-scroll-lock": "^4.0.0-beta.0",
     "env-cmd": "^10.0.1",
     "fuse.js": "^6.4.6",
@@ -63,6 +64,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.2.0",
     "react-slick": "^0.28.1",
+    "react-sortable-hoc": "^2.0.0",
     "react-to-print": "^2.9.0",
     "redux": "^4.0.1",
     "redux-saga": "^1.0.2",

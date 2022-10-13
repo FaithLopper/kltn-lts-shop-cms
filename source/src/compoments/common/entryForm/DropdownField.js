@@ -32,6 +32,7 @@ class DropdownField extends BaseField {
             allowClear,
             t,
             noTranslate,
+            defaultValue,
         } = this.props;
 
         let optionValueKey = optionValue || 'value';
@@ -56,6 +57,7 @@ class DropdownField extends BaseField {
                     dropdownClassName={dropdownClassName}
                     allowClear={allowClear}
                     onClick={onClick}
+                    defaultValue={defaultValue}
                 >
                     {
                         options

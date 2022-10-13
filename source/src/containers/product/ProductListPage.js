@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button, Avatar, Divider } from "antd";
+import { Image } from 'antd'
 import { PlusOutlined, UserOutlined,MessageOutlined,EditOutlined,LockOutlined,DeleteOutlined,CheckOutlined,HomeOutlined } from "@ant-design/icons";
 import { withTranslation } from "react-i18next";
 
@@ -14,6 +15,10 @@ import PageWrapper from "../../compoments/common/PageWrapper";
 import { Link } from 'react-router-dom';
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import ElementWithPermission from "../../compoments/common/elements/ElementWithPermission";
+import Utils from "../../utils";
+import { productKind } from "../../constants/masterData";
+
+const { getUserData } = actions;
 class ProductListPage extends ListBasePage {
   initialSearch() {
     return { name: "", value: ""};
@@ -25,9 +30,59 @@ class ProductListPage extends ListBasePage {
     this.objectName =  t("objectName");
     this.objectListName = 'product';
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
+      this.state={
+        categoryId:[]
+      }
     this.columns = [
-      { title:  t("table.name"), dataIndex: "name"},
-      { title:  t("table.price"), align:"right",dataIndex: "price"},
+      {
+        title: "Hình ảnh",
+        dataIndex: "image",
+        align: 'center',
+        width: '100px',
+        render: (image) => (
+          <div className="product-image">
+            <Avatar
+              shape="square"
+              size="large"
+              icon={<UserOutlined />}
+              src={image ? `${AppConstants.contentRootUrl}${image}` : null}
+            />
+          </div>
+        //   <image
+        //   // width={200}
+        //   src={image ? `${AppConstants.contentRootUrl}${image}` : "error"}
+        // />
+        ),
+      },
+      { title:  t("table.name"), dataIndex: "name",width:'250px'},
+      {
+        title: t("table.price") + ' (VNĐ)',
+        dataIndex: "price",
+        align: 'right',
+        width:'100px',
+        render: (price) => (
+          <div className="force-one-line">{(Utils.formatMoney(price || 0))}</div>
+          )
+        },
+        { title:  t("table.productCategoryId"), align:"center",with:"150px",dataIndex: "productCategoryId",render:(productCategoryId)=>{
+            const {categoryId} = this.state
+            let text=''
+            if(categoryId.length !==0)
+              categoryId.map(item =>{
+                if(item.value === productCategoryId)
+                  text= item.label
+              })
+            return <span>{text}</span>
+        }},
+        { title:  t("table.kind"), align:"center",with:"150px",dataIndex: "kind",render:(kind)=>{
+          let text=''
+          productKind.map(item =>{
+            if(item.value === kind)
+              text = item.label
+          })
+          return <span>{text}</span>
+      }},
+      this.renderStatusColumn(),
       this.renderActionColumn(),
     ];
     this.actionColumns = {
@@ -56,6 +111,31 @@ class ProductListPage extends ListBasePage {
   getDetailLink(dataRow) {
     return sitePathConfig.productUpdate.path.replace(':id', dataRow.id);
   }
+
+  componentWillMount() {
+    const { changeBreadcrumb ,getProductCategoryCombobox} = this.props;
+    if(this.breadcrumbs.length > 0) {
+        changeBreadcrumb(this.breadcrumbs);
+    }
+    this.userData = getUserData();
+    if(this.checkPermission())
+        this.loadDataTable(this.props);
+      
+    getProductCategoryCombobox({
+          params: {},
+          onCompleted: (responseData)=>{
+              const {result,data}= responseData
+              if(result){
+                  this.setState({
+                      categoryId:data.data?.map(item =>{
+                          return {value:item.id,label:item.name}
+                      })
+                  })
+              }
+          },
+          onError: this.onSaveError
+      })
+}
 
 
   render() {
@@ -103,6 +183,7 @@ const mapDispatchToProps = (dispatch) => ({
   getDataList: (payload) => dispatch(actions.getProductList(payload)),
   getDataById: (payload) => dispatch(actions.getProductById(payload)),
   deleteData: (payload) => dispatch(actions.deleteProduct(payload)),
+  getProductCategoryCombobox:(payload)=> dispatch(actions.getProductCategoryCombobox(payload)),
   // uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
 });
 

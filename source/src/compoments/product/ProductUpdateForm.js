@@ -1,35 +1,109 @@
 import React from 'react';
-import { Form, Col, Row, Card, Button, message } from 'antd';
+import { Form, Col, Row, Card, Button, message, Input, Select } from 'antd';
 import BasicForm from '../common/entryForm/BasicForm';
 import TextField from '../common/entryForm/TextField';
 import { convertDateTimeToString, convertUtcToLocalTime } from '../../utils/datetimeHelper';
 import CropImageFiled from '../common/entryForm/CropImageFiled';
 import Utils from "../../utils";
-import { KeyOutlined, CopyOutlined } from '@ant-design/icons';
-import { commonStatus, variantKinds } from '../../constants/masterData';
+import { KeyOutlined, CopyOutlined ,MinusCircleOutlined,PlusOutlined} from '@ant-design/icons';
+import { commonStatus, productKind, variantKinds, variantTemplateConfig } from '../../constants/masterData';
 import {
     AppConstants,
     UploadFileTypes,
     STATUS_ACTIVE,
   } from "../../constants";
-  import { showErrorMessage } from "../../services/notifyService";
+  import { showErrorMessage, showWarningMessage } from "../../services/notifyService";
 import PasswordGeneratorField from '../common/entryForm/PasswordGeneratorField';
 import DropdownField from '../common/entryForm/DropdownField';
 import NumericField from '../common/entryForm/NumericField';
 import RichTextField from '../common/entryForm/RichTextField';
+import TextArea from 'antd/lib/input/TextArea';
+import CheckBoxField from '../common/entryForm/CheckBoxField';
+import FieldSet from '../common/elements/FieldSet';
+import BasicModal from '../common/modal/BasicModal';
+import VariantListForm from '../variant/VariantListForm';
+import VariantTemplateSortable from './VariantTemplateSortable';
+import arrayMove from "array-move";
+import VariantTemplateListForm from '../variant/VariantTemplateListForm';
 class ProductUpdateForm extends BasicForm {
 
     constructor(props) {
         super(props)
         this.state = {
+            image: "",
+			uploading: false,
+            isUpdateLogo:false,
+            templateConfigData:[],
+            isShowModifiedModal: false,
+            isShowModifiedLoading: false,
+            dataList:[],
+            dataListTemplate:[],
+            name:"",
+            id:null,
+            formChanged:false,
+            isTemplate:false,
         }
+        this.configIndex=0
+        this.selectedVariant=null
+        this.onShowModifiedModal= this.onShowModifiedModal.bind(this)
+        this.onCancelModal= this.onCancelModal.bind(this)
+        this.onVariantSelect= this.onVariantSelect.bind(this)
+        this.onVariantTemplateSelect= this.onVariantTemplateSelect.bind(this)
+        this.removeVariantItem=this.removeVariantItem.bind(this)
+        this.removeVariant=this.removeVariant.bind(this)
+        this.addVariantTemplateItem= this.addVariantTemplateItem.bind(this)
+        this.addImageVariant= this.addImageVariant.bind(this)
+        this.changeVariant= this.changeVariant.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.dataDetail !== this.props.dataDetail) {
             this.formRef.current.setFieldsValue(nextProps.dataDetail)
+            this.setState({
+                templateConfigData:nextProps.dataDetail.variantConfigs,
+                id:nextProps.dataDetail.id
+            })
+            const {variantConfigs} = nextProps.dataDetail
+            variantConfigs.map(item =>{
+                this.setFieldValue(`name_${item.id}`,item.name)
+                this.setFieldValue(`choiceKind_${item.id}`,item.choiceKind)
+                this.setFieldValue(`isRequired_${item.id}`,item.isRequired)
+            })
+        }
+        if(nextProps.dataDetail.image !== this.state.image && this.state.isUpdateLogo === false && nextProps.dataDetail.image!==undefined){
+            this.setState({image:`${AppConstants.contentRootUrl}${nextProps.dataDetail.image}`})
         }
     }
+
+    uploadFileLogo = (file, onSuccess) => {
+		const { uploadFile } = this.props;
+		this.setState({ uploading: true });
+		uploadFile({
+		params: { fileObjects: { file }, type: UploadFileTypes.AVATAR },
+		onCompleted: (result) => {
+			// this.otherData.logoPath = result.data.filePath;
+			this.setFieldValue("image", result.data.filePath);
+			this.setState({ uploading: false })
+            this.onValuesChange();
+			onSuccess();
+		},
+		onError: (err) => {
+			if (err && err.message) {
+			showErrorMessage(err.message);
+			this.setState({ uploading: false });
+			}
+		},
+		});
+	};
+
+    handleChangeLogo = (info) => {
+		if (info.file.status === "done") {
+		Utils.getBase64(info.file.originFileObj, (logo) =>{
+			this.setState({ image:logo,isUpdateLogo:true })
+        }
+		);
+		}
+	};
 
     onValuesChange = () => {
         const { setIsChangedFormValues } = this.props
@@ -38,8 +112,11 @@ class ProductUpdateForm extends BasicForm {
 
     handleSubmit(formValues) {
         const { onSubmit } = this.props
+        const {templateConfigData,id}= this.state
         onSubmit({
-            ...formValues,
+           ...formValues,
+           id:id,
+           productConfigs:templateConfigData,
         })
     }
 
@@ -55,10 +132,360 @@ class ProductUpdateForm extends BasicForm {
         };
 	};
 
+    addConfigItem =()=>{
+        this.setState({
+            templateConfigData:[    
+                ...this.state.templateConfigData,
+                {
+                    index:this.configIndex++,
+                    name:"",
+                    choiceKind:"",
+                    isRequired:false,
+                    variantIds:[]
+                }
+            ]
+        })
+    }
+
+    getDataDetailMapping(data) {
+        return data;
+    }
+
+    addVariantItem =(index,_index)=>{
+        const { getList, showFullScreenLoading, hideFullScreenLoading } = this.props;
+        getList(
+            {
+                params:{},
+                onCompleted: ({data}) => {
+                    this.setState({
+                        dataList:  this.getDataDetailMapping(data)
+                    })
+                    this.selectedVariant= index
+                    this.selectedVariantArray= _index
+                    this.setState({
+                        isTemplate:false
+                    })
+                    this.onShowModifiedModal(true);
+                    // hideFullScreenLoading();
+                },
+                onError: (err) => {
+                  console.log(err)
+                }
+            }
+        )
+        
+    }
+
+    addVariantTemplateItem =()=>{
+        const { getListTemplate, showFullScreenLoading, hideFullScreenLoading } = this.props;
+        getListTemplate(
+            {
+                params:{},
+                onCompleted: ({data}) => {
+                    this.setState({
+                        dataListTemplate:  this.getDataDetailMapping(data),
+                        isTemplate:true
+                    })
+                    this.onShowModifiedModal(true);
+                    // hideFullScreenLoading();
+                },
+                onError: (err) => {
+                  console.log(err)
+                }
+            }
+        )
+        
+    }
+
+    removeVariant =(index)=>{
+        const {templateConfigData} = this.state
+            this.setState({
+            templateConfigData:templateConfigData.filter(itemArray => itemArray.index !== index)
+    })
+        }
+
+    removeVariantItem =(data,key,parenIndex)=>{
+        const {templateConfigData} = this.state
+        const temp= templateConfigData.map((item,index)=>{
+                    if(item.index === parenIndex){
+                        return {
+                            ...item,
+                            variantIds:item.variantIds.filter(function(itemArray) {
+                                return itemArray.id !== key
+                            })
+                        }
+                    }
+                    return item
+                })
+            this.setState({
+                templateConfigData:temp
+            })
+        }
+
+
+    onVariantSelect(variant) {
+        const {templateConfigData} = this.state
+        this.setState({
+            templateConfigData:templateConfigData.map((item,index)=>{
+                if(item.index === this.selectedVariant){
+                    return {
+                        ...item,
+                        variantIds:[
+                            ...item.variantIds,
+                            variant,
+                        ]
+                    }
+                }
+                return item
+            })
+        })
+        this.onValuesChange();
+        this.setState({ isShowModifiedModal: false, isShowModifiedLoading: false });
+    }
+
+    onVariantTemplateSelect(template) {
+        const {templateConfigData} = this.state
+        const {getTemplate} = this.props
+        getTemplate(
+            {
+                params:{id:template.id},
+                onCompleted: ({data}) => {
+                        const temp= [
+                            ...templateConfigData,
+                            ...data.variantConfigs.map(item =>{
+                                return {
+                                    ...item,
+                                    index:item.id,
+                                    variantIds:item.variants
+                                }
+                            })
+                        ]
+                        this.setState({
+                            templateConfigData:temp
+                        })
+                },
+                onError: (err) => {
+                  console.log(err)
+                }
+            }
+        )
+        this.onValuesChange();
+        this.setState({ isShowModifiedModal: false, isShowModifiedLoading: false });
+    }
+
+    componentDidMount(){
+      
+    }
+    componentDidUpdate(){
+        const{templateConfigData}= this.state
+        if(templateConfigData.length !==0){
+            templateConfigData.map(item =>{
+                this.setFieldValue(`name_${item.id}`,item.name)
+                this.setFieldValue(`choiceKind_${item.id}`,item.choiceKind)
+                this.setFieldValue(`isRequired_${item.id}`,item.isRequired)
+            })
+        }
+    }
+
+
+    onCancelModal() {
+        this.setState({ isShowModifiedModal: false, isShowModifiedLoading: false });
+    }
+
+    onShowModifiedModal() {
+        this.setState({ isShowModifiedModal: true });
+    }
+
+    formValidate(){
+        const {templateConfigData}= this.state
+        if(templateConfigData.length === 0)
+            return true
+    }
+
+    setConfigField(text, index,kind){
+        const {templateConfigData} = this.state
+        this.setState({
+            templateConfigData:templateConfigData.map((item,key)=>{
+                if(item.index === index){
+                    if(kind ===1)
+                        return {
+                        ...item,
+                        name:text
+                        }
+                    else if(kind === 2)
+                        return {
+                            ...item,
+                            choiceKind:text
+                    }
+                    else if(kind === 3)
+                        return {
+                            ...item,
+                            isRequired:!item.isRequired
+                        }
+                }
+                return item
+            })
+        })
+    }
+
+    onSortEnd = ({oldIndex, newIndex,data,id}) => {
+            const {templateConfigData}= this.state
+            let dataSorted=arrayMove(data, oldIndex, newIndex)
+            console.log(data,dataSorted)
+            console.log(templateConfigData);
+            console.log(id);
+            this.setState({
+            data: arrayMove(data, oldIndex, newIndex),
+            templateConfigData:templateConfigData.map((item,index) =>{
+                if(item.index===  id){
+                    return {
+                        ...item,
+                        variantIds:dataSorted
+                    }
+                }
+                return item
+            }
+            )
+        });
+      };
+
+      addImageVariant(path,index,id){
+        const {templateConfigData}= this.state
+        let temp= templateConfigData.map(item =>{
+            if(item.index === id){
+                return {
+                    ...item,
+                    variantIds:item.variantIds.map(item_1 =>{
+                        if(item_1.id === index){
+                            return {
+                                ...item_1,
+                                image:path
+                            }
+                        }
+                        return item_1
+                    })
+                }
+            }
+            return item
+        })
+        this.setState({
+            templateConfigData:temp
+        })
+      }
+
+      changeVariant(text,id, index, type){
+            const {templateConfigData}= this.state
+            console.log(text,id, index, type);
+            let temp= templateConfigData.map(item =>{
+                if(item.index === id){
+                    return {
+                        ...item,
+                        variantIds:item.variantIds.map(item_1 =>{
+                            if(item_1.id === index){
+                                if(type ===1)
+                                    return {
+                                        ...item_1,
+                                        name:text
+                                    }
+                                else if(type ===2 )
+                                    return {
+                                        ...item_1,
+                                        price:text
+                                    }
+                            }
+                            return item_1
+                        })
+                    }
+                }
+                return item
+            })
+            this.setState({
+                templateConfigData:temp
+            })
+            // console.log(templateConfigData)
+      }
+
+    renderTemplateConfig =()=>{
+        const {templateConfigData}= this.state
+        const {isEditing} = this.props
+        return templateConfigData.map((item,_index)=>{
+            return (<>
+                <div className='variant-config-wrapper'>
+                <Row gutter={[12, 18]}>
+                    <Col span={8}>
+                        <Row gutter={[16, 0]}>
+                            <Col span={24}>
+                               <Form.Item rules={[
+                                    {
+                                        required: true,
+                                        message: 'Nhập tên cấu hình thuộc tính!',
+                                    },
+                                    ]} name={item.id ? `name_${item.id}` :`name_${item.index}`}>
+                                <Input placeholder='Tên' onChange={e=> this.setConfigField(e.target.value,item.index,1)}/>
+                               </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={[16, 0]}>
+                              <Col span={24}>
+                              <Form.Item rules={[
+                                    {
+                                        required: true,
+                                        message: 'Chọn loại nhóm thuộc tính!',
+                                    },
+                                    ]} name={ item.id ?`choiceKind_${item.id}`:`choiceKind_${item.index}`}>
+                                <Select placeholder='Loại' options={variantTemplateConfig} onSelect={e=> this.setConfigField(e,item.index,2)}/>
+                               </Form.Item>
+                            </Col>
+                        </Row>
+                        <div className='row-checkbox'>
+                        <Row gutter={[16, 0]}>
+                              <Col span={24}>
+                                                <CheckBoxField
+                                                label='Bắt buộc'
+                                                onChange={e=> this.setConfigField(e.target.value,item.index,3)}
+                                fieldName={item.id ?`isRequired_${item.id}`:`isRequired_${item.index}` }
+                                />
+                            </Col>
+                        </Row>
+                        </div>
+                    </Col>
+                    <Col span={15}>
+                    <FieldSet title='Danh sách thuộc tính'>
+                        <Row gutter={[12, 0]}>
+                                <VariantTemplateSortable changeVariant={this.changeVariant} addImageVariant={this.addImageVariant}  uploadFile={this.props.uploadFile} onSortEnd={this.onSortEnd} removeVariantItem={this.removeVariantItem}  data={item.variantIds} id={item.index}/>
+                                <Col span={20}>
+                                <Button type="dashed" onClick={()=>{this.addVariantItem(item.index,_index)}} block icon={<PlusOutlined />}  >
+                                    Thêm thuộc tính
+                                </Button>
+                                </Col>
+                        </Row>
+                    </FieldSet>
+                    </Col>
+                    <Col span={1} type="flex" align="middle" className='variant-delete-icon'>
+                        <MinusCircleOutlined style={{'fontSize':"19px","color":"red"}} onClick={()=>this.removeVariant(item.index)}/>
+                    </Col>
+                </Row>                                    
+                </div>
+                </>)
+        })
+    }
 
     render() {
-        const { formId, dataDetail, actions, isEditing,t } = this.props
+        const { formId, dataDetail, actions, isEditing,t ,categoryId} = this.props
+        const {
+            uploading,
+			image,
+            isShowModifiedModal,
+            isShowModifiedLoading,
+            dataList,
+            dataListTemplate,
+            isTemplate,
+            templateConfigData
+        } = this.state
+        const variantData = dataList.data || [];
+        const variantTemplateData = dataListTemplate.data || [];
         return (
+            <>
             <Form
                 id={formId}
                 onFinish={this.handleSubmit}
@@ -66,9 +493,25 @@ class ProductUpdateForm extends BasicForm {
                 initialValues={this.getInitialFormValues()}
                 layout="vertical"
                 onValuesChange={this.onValuesChange}
-                style={{width:"600px"}}
+                style={{width:"800px"}}
             >
-                <Card title={t(`baseField:${"basicInfo"}`)} className="card-form" bordered={false}>
+                <Card title='THÔNG TIN SẢN PHẨM' className="card-form" bordered={false}>
+                    <div className='product-wrapper'>
+
+                     <Row gutter={[16, 0]} >
+                        <Col span={12}>
+                            <CropImageFiled
+                            aspect={1.5}   
+                            fieldName="image"  
+                            loading={uploading}
+                            label={t("form.label.image")}
+                            imageUrl={image}
+                            onChange={this.handleChangeLogo}
+                            uploadFile={this.uploadFileLogo}
+                            // disabled={loadingSave}
+                            />
+                        </Col>
+                        </Row>
                         <Row gutter={[16, 0]}>
                         <Col span={12}>
                             <TextField fieldName="name" label={t("form.label.name")} required 
@@ -76,8 +519,27 @@ class ProductUpdateForm extends BasicForm {
                             />
                         </Col>
                         <Col span={12}>
+                        <DropdownField
+                        fieldName="kind"
+                        label={t("form.label.kind")}
+                        required
+                        options={productKind}
+                        />
+                        </Col>
+                            </Row>
+                        <Row gutter={[16, 0]}>
+                        <Col span={12}>
+                        <DropdownField
+                        fieldName="categoryId"
+                        label={t("form.label.categoryId")}
+                        required
+                        options={categoryId}
+                        />
+                        </Col>
+                        <Col span={12}>
                         <NumericField
 							fieldName="price"
+                            required
 							label={t("form.label.price") + " (VNĐ)"}
 							min={0}
 							max={Infinity}
@@ -88,15 +550,59 @@ class ProductUpdateForm extends BasicForm {
                         </Row>
                         <Row gutter={[16, 0]}>
                         <Col span={24}>
-                                <RichTextField
-                        label={t("form.label.description")}
-                        fieldName="description"
-                        // disabled={loadingSave}
-                        // required
-                    />  
+                        <TextField
+                    type="textarea"
+                    fieldName="description"
+                    label={t("form.label.description")}
+                    // required
+                    style={{
+                        height: 100
+                    }}/>
                         </Col>
-                
+                        
                         </Row>
+                        <Row gutter={[16, 0]}>
+                        <Col span={12}>
+                        <DropdownField
+                        fieldName="status"
+                        label={t("form.label.status")}
+                        required
+                        defaultValue={STATUS_ACTIVE}
+                        options={commonStatus}
+                        />
+                        </Col>
+                       
+                        <Col span={12}>
+                        <CheckBoxField
+                        fieldName="isSoldOut"
+                        label={t("form.label.isSoldOut")}
+                        defaultValue={false}
+                        />
+                        </Col>
+                        </Row>
+                        <FieldSet className="customer-fieldset-variant-template" title='Cấu hình thuộc tính' >
+                            <Col span={24}>
+                            {this.renderTemplateConfig()}
+
+                            <Row gutter={[16,0]}>
+                                <Col span={8}>
+                            <Button type="dashed" className='add-variant' onClick={()=>{this.addConfigItem()}} block icon={<PlusOutlined />}  >
+                            Tạo bộ thuộc tính
+                            </Button>
+
+                                </Col>
+                                <Col span={12}>
+                            <Button type="dashed" className='add-variant' onClick={()=>{this.addVariantTemplateItem()}} block icon={<PlusOutlined />}  >
+                            Thêm bộ thuộc tính có sẵn
+                            </Button>
+                                </Col>
+                            </Row>
+                            </Col>
+                            <Col span={24}>
+                           
+                            </Col>
+                        </FieldSet>
+                        </div>
                 </Card>
                 <div className="footer-card-form">
                     <Row gutter={16} justify="end">
@@ -104,6 +610,28 @@ class ProductUpdateForm extends BasicForm {
                     </Row>
                 </div>
             </Form>
+             <BasicModal
+             visible={isShowModifiedModal}
+             loading={isShowModifiedLoading}
+           //   onOk={this.onOkModal}
+             onCancel={this.onCancelModal}
+             >
+                {
+                    isTemplate ?  <VariantTemplateListForm
+                    t={t}
+                    dataSource={variantTemplateData}
+                    onVariantTemplateSelect={this.onVariantTemplateSelect}
+                 //    selectedVariantArray={this.state.templateConfigData[this.selectedVariantArray]?.variantIds || []}
+                    /> :
+                    <VariantListForm
+                    t={t}
+                    dataSource={variantData}
+                    onVariantSelect={this.onVariantSelect}
+                    selectedVariantArray={this.state.templateConfigData[this.selectedVariantArray]?.variantIds || []}
+                    /> 
+                }
+           </BasicModal>
+               </>
         )
     }
 }

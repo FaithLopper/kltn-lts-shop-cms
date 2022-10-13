@@ -838,6 +838,8 @@ export default {
         table: {
             name: 'Tên sản phẩm',
             price:'Giá',
+            productCategoryId:'Danh mục',
+            kind:'Loại sản phẩm',
         },
         message: {
             // updateProfileFail: 'Your profile failed. Please try again!',
@@ -855,7 +857,12 @@ export default {
             label: {
                 'name':'Tên sản phẩm',
                 'price':'Giá cả',
-                'description':'Mô tả'
+                'description':'Mô tả',
+                'image':'Hình ảnh',
+                'status':'Tình trạng',
+                'kind':'Loại sản phẩm',
+                'categoryId':'Danh mục sản phẩm',
+                'isSoldOut':'Đã bán hết'
             },
             validationMessage: {
                 phoneLengthRequire: 'Hãy nhập số',
