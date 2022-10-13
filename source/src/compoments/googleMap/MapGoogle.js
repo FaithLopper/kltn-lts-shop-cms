@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { compose, withProps } from "recompose";
 import {
   withScriptjs,
@@ -42,10 +42,6 @@ const MapGoogle = compose(
     setter("latitude", newCordinate.lat); // set form ref
     setter("longitude", newCordinate.lng); // set form ref
   };
-
-  useEffect(() => {
-    getInitVal();
-  }, []);
 
   return (
     <>
