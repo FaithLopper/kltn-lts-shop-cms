@@ -738,6 +738,8 @@ export default {
                 "provinceId":'Tên Tỉnh/ Thành Phố',
                 "districtId":'Tên Quận/ Huyện',
                 "wardId":'Tên Phường/ Xã',
+                "MapCordinateTitle": 'Tọa độ',
+                "cordinate": "Kinh độ, vĩ độ",
             },
             validationMessage: {
                 phoneLengthRequire: 'Hãy nhập số',
@@ -816,6 +818,7 @@ export default {
             label: {
                 'name':'Tên bộ thuộc tính',
                 'price':'Giá cả',
+                'required': 'required'
             },
             validationMessage: {
                 phoneLengthRequire: 'Hãy nhập số',

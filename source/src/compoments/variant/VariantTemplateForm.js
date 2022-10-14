@@ -129,7 +129,7 @@ class VariantTemplateForm extends BasicForm {
 
     renderTemplateConfig =()=>{
         const {templateConfigData}= this.state
-        const {isEditing} = this.props
+        const {isEditing, t} = this.props
         return templateConfigData.map((item,_index)=>{
             return (<>
                 <div className='variant-config-wrapper'>
@@ -161,13 +161,18 @@ class VariantTemplateForm extends BasicForm {
                             </Col>
                         </Row>
                         <div className='row-checkbox'>
-                        <Row gutter={[16, 0]}>
-                              <Col span={24}>
+                        <Row gutter={[16, 0]} style={{marginTop: 7}}>
+                              <Col width={30}>
                                                 <CheckBoxField
-                                                label='Bắt buộc'
+                    
+                                                width={30}
                                                 onChange={e=> this.setConfigField(e.target.value,item.index,3)}
                                 fieldName={item.id ?`isRequired_${item.id}`:`isRequired_${item.index}` }
                                 />
+                               
+                            </Col>
+                              <Col >
+                              <label>{t("form.label.required")}</label>
                             </Col>
                         </Row>
                         </div>

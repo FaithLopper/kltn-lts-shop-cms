@@ -8,7 +8,7 @@ import UploadImageField from '../common/entryForm/UploadImageField';
 import { convertDateTimeToString, convertLocalTimeToUtc, convertUtcToLocalTime } from '../../utils/datetimeHelper';
 import CropImageFiled from '../common/entryForm/CropImageFiled';
 import Utils from "../../utils";
-import { KeyOutlined, CopyOutlined } from '@ant-design/icons';
+import {  GoogleOutlined } from '@ant-design/icons';
 import { commonSex, commonStatus } from '../../constants/masterData';
 import {
     AppConstants,
@@ -19,7 +19,9 @@ import {
   import { showErrorMessage } from "../../services/notifyService";
 import PasswordGeneratorField from '../common/entryForm/PasswordGeneratorField';
 import DropdownFieldWithSearch from '../common/entryForm/DropdownFieldWithSearch';
-import CheckBoxField from '../common/entryForm/CheckBoxField';
+import BasicModal from '../common/modal/BasicModal';
+import MapGoogle from '../googleMap/MapGoogle';
+import CordinateInputField from '../common/entryForm/CordinateInputField';
 class StoreUpdateForm extends BasicForm {
 
     constructor(props) {
@@ -28,6 +30,8 @@ class StoreUpdateForm extends BasicForm {
             provinceOption:[],
             districtOption:[],
             communeOption:[],
+            isShowModal: false,
+            isShowLoading: false
         }
         this.provinceId=null
         this.districtId=null
@@ -182,11 +186,6 @@ class StoreUpdateForm extends BasicForm {
         }
     }
 
-    onGetLocationError(error){
-
-    }
-
-
     locationOnSelect=(kind)=>{
         const {getLocation}= this.props
         const params = { page:0, size: 64,kind:kind};
@@ -199,13 +198,40 @@ class StoreUpdateForm extends BasicForm {
         }
     }
 
+    componentDidMount() {
+        this.delayedShowMarker();
+    }
+    
+    delayedShowMarker = () => {
+        setTimeout(() => {
+          this.setState({ isMarkerShown: true });
+        }, 1500);
+    };
+    
+    handleMarkerClick = () => {
+        this.setState({ isMarkerShown: false });
+        this.delayedShowMarker();
+    };
+
+    onShowModal = () => {
+        this.setState({ isShowModal: true });
+    };
+    
+    onCancelModal = () => {
+    this.setState({ isShowModal: false, isShowLoading: false });
+    };
+
     render() {
         const { formId, dataDetail, actions, isEditing,t } = this.props
         const {
             provinceOption,
             districtOption,
-            communeOption
+            communeOption,
+            isShowModal,
+            isShowLoading,
         } = this.state
+
+
         return (
             <Form
                 id={formId}
@@ -270,21 +296,39 @@ class StoreUpdateForm extends BasicForm {
                             </Col>
                         </Row>
                         <Row gutter={[16, 0]}>
-                        <Col span={12}>
-                            <TextField
-                             type="number"
-                            fieldName="longitude"
-                            label={t('form.label.longitude')}
-                            />
-                            </Col>
-                        <Col span={12}>
-                            <TextField
-                            type="number"
-                            fieldName="latitude"
-                            label={t('form.label.latitude')}
-                            />
-                            </Col>
+                        <Col span={24}>
+                        <CordinateInputField
+                            type='number'
+                            style={{
+                                textAlign: 'center',
+                                }}
+                            label={t('form.label.MapCordinateTitle')} 
+                            latFieldName="latitude" lngFieldName="longitude"
+                            suffix={
+                                <Button width={1} onClick={this.onShowModal}><GoogleOutlined /></Button>
+                            } />
+                        </Col>
                         </Row>
+                        <BasicModal
+                        visible={isShowModal}
+                        objectName={this.objectName}
+                        loading={isShowLoading}
+                        onCancel={this.onCancelModal}
+                        title={t("form.label.MapCordinateTitle")}
+                        width={"50vw"}
+                        maskClosable={true}
+                        >
+                        <MapGoogle
+                            isMarkerShown={this.state.isMarkerShown}
+                            onMarkerClick={this.handleMarkerClick}
+                            latitude={dataDetail?.latitude}
+                            longitude={dataDetail?.longitude}
+                            setter={(name, value) => this.setFieldValue(name, value)}
+                            getter={(name) => this.getFieldValue(name)}
+                            t={t}
+                            onValueChange={()=> this.onValuesChange()}
+                        />
+                        </BasicModal>
                 </Card>
                 <div className="footer-card-form">
                     <Row gutter={16} justify="end">
