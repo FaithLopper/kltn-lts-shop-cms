@@ -8,6 +8,7 @@ import { PlusOutlined, LoadingOutlined,UploadOutlined, PaperClipOutlined } from 
 import BaseField from '../common/entryForm/BaseField';
 
 import { withTranslation } from 'react-i18next';
+import { AppConstants } from '../../constants';
 
 class CropImageFiled extends BaseField {
     
@@ -24,7 +25,7 @@ class CropImageFiled extends BaseField {
     getContent() {
         const { showUploadList, fileList, maxFile, imageUrl, loading } = this.props;
         if(imageUrl) {
-            return <PaperClipOutlined style={{"fontSize":"18px","cursor":"pointer","color":"green"}}/>;
+            return <img className="img-uploaded" src={`${AppConstants.contentRootUrl}${imageUrl}`} alt="field-upload" />;
         }
         else if(showUploadList && fileList && fileList.length === maxFile) {
             return null;
@@ -36,8 +37,9 @@ class CropImageFiled extends BaseField {
 
     renderUploadButton() {
         const { loading, showUploadList, style, t } = this.props;
-        return (
-           <UploadOutlined style={{"fontSize":"18px","cursor":"pointer"}}/>
+        return (<>
+          {loading ? <LoadingOutlined /> : <UploadOutlined style={{"fontSize":"22px","cursor":"pointer"}}/>}  
+        </>
         );
     }
     render() {
@@ -54,6 +56,7 @@ class CropImageFiled extends BaseField {
             index
         } = this.props;
         const aspectValue = aspect || 1;
+        console.log(showUploadList)
         return (
             <Form.Item
                 label={label}
@@ -61,22 +64,6 @@ class CropImageFiled extends BaseField {
                 rules={this.getRules()}
                 valuePropName={fieldName}
             >
-                {
-                    showUploadList
-                    ?
-                        <ImgCrop aspect={aspectValue}>
-                            <Upload
-                                fileList={fileList}
-                                disabled={disabled}
-                                accept={accept}
-                                customRequest={this.uploadFile}
-                                beforeUpload={beforeUpload}
-                                onChange={onChange}
-                            >
-                                {this.getContent()}
-                            </Upload>
-                        </ImgCrop>
-                    :
                         <ImgCrop aspect={aspectValue}>
                             <Upload
                                 disabled={disabled}
@@ -89,10 +76,7 @@ class CropImageFiled extends BaseField {
                             >
                                 {this.getContent()}
                             </Upload>
-                        </ImgCrop>
-                }
-                
-               
+                        </ImgCrop>             
             </Form.Item>
         )
     }

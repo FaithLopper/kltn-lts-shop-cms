@@ -143,6 +143,12 @@ class ProductUpdatePage extends SaveBasePage {
     }
 
     prepareCreateData = (data) => {
+        let tags =''
+        if(data.tags.length !==0){
+            data.tags.map(item =>{
+                tags= tags.concat(`#${item}`)
+            })
+        }
         let temp= data.productConfigs.map(item =>{
             return {
                 ...item,
@@ -156,6 +162,7 @@ class ProductUpdatePage extends SaveBasePage {
         })
         return {
             ...data,
+            tags,
             productConfigs:temp
         };
     }

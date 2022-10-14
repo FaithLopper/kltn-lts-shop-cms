@@ -17,7 +17,7 @@ import { sitePathConfig } from "../../constants/sitePathConfig";
 import ElementWithPermission from "../../compoments/common/elements/ElementWithPermission";
 import Utils from "../../utils";
 import { productKind } from "../../constants/masterData";
-import qs from 'query-string';
+
 const { getUserData } = actions;
 class ProductListPage extends ListBasePage {
   initialSearch() {
@@ -29,11 +29,6 @@ class ProductListPage extends ListBasePage {
     const {t} = this.props;
     this.objectName =  t("objectName");
     this.objectListName = 'product';
-    const {
-      location: { search },
-    } = this.props;
-    const { productId } = qs.parse(search);
-    this.parentId = productId;
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
       this.state={
         categoryId:[]
@@ -59,16 +54,7 @@ class ProductListPage extends ListBasePage {
         // />
         ),
       },
-      // { title:  t("table.name"), dataIndex: "name",width:'250px'},
-      { title: t("table.name"),width:'250px',render: (dataRow) => {
-        return (
-            <span className="routing" onClick={()=>{
-                this.handleRouting(dataRow.id);
-            }}>
-                {dataRow.name}
-            </span>
-        )
-    } },
+      { title:  t("table.name"), dataIndex: "name",width:'250px'},
       {
         title: t("table.price") + ' (VNĐ)',
         dataIndex: "price",
@@ -105,31 +91,6 @@ class ProductListPage extends ListBasePage {
       isChangeStatus: false,
     };
   }
-
-  handleRouting(productId) {
-    const { location: { search, pathname }, history } = this.props;
-    const queryString = qs.parse(search);
-    const result = {};
-    Object.keys(queryString).map(q => {
-        result[`parentSearch${q}`] = queryString[q];
-    })
-    history.push(`${pathname}?${qs.stringify({...result, productId})}`);
-    this.refreshPage()
-  }
-
-  getList() {
-    const { getDataList } = this.props;
-    const page = this.pagination.current ? this.pagination.current - 1 : 0;
-    let params = {
-      page,
-      size: this.pagination.pageSize,
-      search: this.search,
-      };
-      if(this.parentId){
-        params.search.productParent= this.parentId
-      }
-    getDataList({ params });
-    }
 
   getSearchFields() {
     const {t} = this.props;
@@ -174,11 +135,9 @@ class ProductListPage extends ListBasePage {
           },
           onError: this.onSaveError
       })
-  }
+}
 
-    refreshPage() {
-      window.location.reload(false);
-    }
+
   render() {
     const {
       dataList,
@@ -187,7 +146,6 @@ class ProductListPage extends ListBasePage {
     } = this.props;
     const users = dataList.data || [];
     this.pagination.total = dataList.totalElements || 0;
-    console.log(this.parentId)
     return (
       
         <PageWrapper>

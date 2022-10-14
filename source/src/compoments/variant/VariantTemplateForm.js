@@ -323,13 +323,14 @@ class VariantTemplateForm extends BasicForm {
     }
 
     render() {
-        const { formId, actions, isEditing,t} = this.props
+        const { formId, actions, isEditing,t,isSubmitting} = this.props
         const {dataList,name}= this.state
         const variantData = dataList.data || [];
         const {
             isShowModifiedModal,
             isShowModifiedLoading,
           } = this.state;
+        console.log(this.state);
         return (
             <>
             <Form
@@ -381,6 +382,7 @@ class VariantTemplateForm extends BasicForm {
                     form='form-variant-template'
                     icon={<SaveOutlined />}
                     disabled={this.formValidate()}
+                    loading={isSubmitting}
                     >
                 {t(`basicSavePage:${"saveButton"}`)}
                 </Button>

@@ -33,8 +33,13 @@ const SortableItem = sortableElement(
   }) => {
     return (
       <Row gutter={[8, 0]}>
-        <Col span={2}>
-          <IconImageFiled
+        <Col span={1}>
+          <DragHandle />
+        </Col>
+        <Col span={3}>
+          <Row justify="center">
+              <Col span={8}>
+              <IconImageFiled
             index= {value.id}
             aspect={1.5}
             fieldName="image"
@@ -45,9 +50,9 @@ const SortableItem = sortableElement(
             uploadFile={uploadFileLogo}
             // disabled={loadingSave}
           />
-        </Col>
-        <Col span={2}>
-          <DragHandle />
+              </Col>
+          </Row>
+         
         </Col>
         <Col span={12}>
           <Form.Item>
@@ -63,12 +68,13 @@ const SortableItem = sortableElement(
               min={0}
               style={{ width: "100%" }}
               parser={(value) => Utils.formatIntegerNumber(value)}
+              formatter={(value)=>  Utils.formatNumber(value)}
             />
           </Form.Item>
         </Col>
         <Col span={2}>
           <MinusCircleOutlined
-            style={{ fontSize: "19px", marginTop: "5px", marginLeft: "9px" }}
+            style={{ fontSize: "19px", marginTop: "5px", marginLeft: "6px" }}
             onClick={(e) => {
               removeVariantItem(value, value.id, id);
             }}
@@ -101,6 +107,7 @@ class VariantTemplateSortable extends Component {
       params: { fileObjects: { file }, type: UploadFileTypes.AVATAR },
       onCompleted: (result) => {
         this.props.addImageVariant(result.data.filePath,index,this.props.id)
+        this.setState({ uploading: false });
         onSuccess();
       },
       onError: (err) => {

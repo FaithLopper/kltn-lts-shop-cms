@@ -5,7 +5,7 @@ import TextField from '../common/entryForm/TextField';
 import { convertDateTimeToString, convertUtcToLocalTime } from '../../utils/datetimeHelper';
 import CropImageFiled from '../common/entryForm/CropImageFiled';
 import Utils from "../../utils";
-import { KeyOutlined, CopyOutlined ,MinusCircleOutlined,PlusOutlined} from '@ant-design/icons';
+import { KeyOutlined, CopyOutlined ,MinusCircleOutlined,PlusOutlined,SaveOutlined} from '@ant-design/icons';
 import { commonStatus, productKind, variantKinds, variantTemplateConfig } from '../../constants/masterData';
 import {
     AppConstants,
@@ -25,6 +25,7 @@ import VariantListForm from '../variant/VariantListForm';
 import VariantTemplateSortable from './VariantTemplateSortable';
 import arrayMove from "array-move";
 import VariantTemplateListForm from '../variant/VariantTemplateListForm';
+import TagField from '../common/entryForm/TagField';
 class ProductUpdateForm extends BasicForm {
 
     constructor(props) {
@@ -453,7 +454,7 @@ class ProductUpdateForm extends BasicForm {
                     <FieldSet title='Danh sách thuộc tính'>
                         <Row gutter={[12, 0]}>
                                 <VariantTemplateSortable changeVariant={this.changeVariant} addImageVariant={this.addImageVariant}  uploadFile={this.props.uploadFile} onSortEnd={this.onSortEnd} removeVariantItem={this.removeVariantItem}  data={item.variantIds} id={item.index}/>
-                                <Col span={20}>
+                                <Col span={22}>
                                 <Button type="dashed" onClick={()=>{this.addVariantItem(item.index,_index)}} block icon={<PlusOutlined />}  >
                                     Thêm thuộc tính
                                 </Button>
@@ -548,6 +549,14 @@ class ProductUpdateForm extends BasicForm {
 						/>
                         </Col>
                         </Row>
+                        <Row gutter={[16,0]}>
+                            <Col span={12}>
+                                {/* <TextField fieldName="tags" label={t("form.label.tags")} 
+                                // disabled={loadingSave}
+                                /> */}
+                                <TagField fieldName="tags" label={t("form.label.tags")} allowClear={true}/>
+                            </Col>
+                        </Row>
                         <Row gutter={[16, 0]}>
                         <Col span={24}>
                         <TextField
@@ -559,7 +568,6 @@ class ProductUpdateForm extends BasicForm {
                         height: 100
                     }}/>
                         </Col>
-                        
                         </Row>
                         <Row gutter={[16, 0]}>
                         <Col span={12}>

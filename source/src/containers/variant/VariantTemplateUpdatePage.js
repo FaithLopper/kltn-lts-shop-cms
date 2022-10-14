@@ -174,6 +174,7 @@ class VariantTemplateUpdatePage extends SaveBasePage {
                     uploadFile={uploadFile}
                     t={t}
                     getList={this.props.getDataList}
+                    isSubmitting={this.state.isSubmitting}
                     />
             </LoadingWrapper>
         )

@@ -159,6 +159,7 @@ class VariantUpdatePage extends SaveBasePage {
                     handleRemoveImage={this.handleRemoveImageField}
                     handleUploadImage={this.handleUploadImageField}
                     uploadFile={uploadFile}
+                    
                     t={t}
                     />
             </LoadingWrapper>

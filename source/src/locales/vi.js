@@ -862,7 +862,8 @@ export default {
                 'status':'Tình trạng',
                 'kind':'Loại sản phẩm',
                 'categoryId':'Danh mục sản phẩm',
-                'isSoldOut':'Đã bán hết'
+                'isSoldOut':'Đã bán hết',
+                'tags':'Thẻ',
             },
             validationMessage: {
                 phoneLengthRequire: 'Hãy nhập số',

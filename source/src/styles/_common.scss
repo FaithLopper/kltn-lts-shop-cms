@@ -68,8 +68,9 @@ body {
 
 /* CSS for form */
 .img-uploaded {
-    // width: 86px;
-    height: 86px;
+    width: 34px;
+    margin-left: -5px;
+    // height: 86px;
 }
 
 .avatar-contain {
@@ -565,7 +566,7 @@ h2{
 }
 
 .variant-delete-icon{
-    padding-left: 3px !important;
+    padding-left: 6px !important;
     padding-right: 15px !important;
     padding-bottom: 61px;
     display: flex;
