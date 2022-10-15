@@ -16,6 +16,7 @@ import { withTranslation } from "react-i18next";
 import { UserTypes } from '../../constants';
 import VariantUpdateForm from '../../compoments/variant/VariantUpdateForm';
 import ProductUpdateForm from '../../compoments/product/ProductUpdateForm';
+import qs from "query-string";
 class ProductUpdatePage extends SaveBasePage {
 
     constructor(props) {
@@ -24,6 +25,11 @@ class ProductUpdatePage extends SaveBasePage {
         this.objectName =  t("objectName");
         this.getListUrl = sitePathConfig.product.path;
         this.actionFooter= false
+        const {
+            location: { search },
+          } = this.props;
+          const { parentProduct } = qs.parse(search);
+        this.parentProduct= parentProduct
         this.breadcrumbs = [
             {
                 name:  t("breadcrumbs.parentPage"),
@@ -74,9 +80,26 @@ class ProductUpdatePage extends SaveBasePage {
             this.setState({ objectNotFound: true });
             return
         }
+        let tags= []
+        if(productData.tags){
+            let currentIndex= 1
+            let objectArray= productData.tags.match(new RegExp("#", "g")) || []
+            Object.keys(objectArray).map((item,index) =>{
+                console.log(productData.tags.length);
+                if(index !== objectArray.length -1){
+                    tags.push(productData.tags.slice(currentIndex,productData.tags.indexOf("#",currentIndex)-1))
+                    currentIndex= productData.tags.indexOf("#",currentIndex)+1
+                }
+                else{
+                    tags.push(productData.tags.slice(currentIndex))
+                }
+            })
+        }
         const dataConfig= {
             ...productData,
             categoryId:productData.productCategoryId,
+            tags,
+            // tags:productData.tags ? 
             variantConfigs:productData.productConfigs? productData.productConfigs.map(item =>{
                 return {
                     ...item,
@@ -143,12 +166,6 @@ class ProductUpdatePage extends SaveBasePage {
     }
 
     prepareCreateData = (data) => {
-        let tags =''
-        if(data.tags.length !==0){
-            data.tags.map(item =>{
-                tags= tags.concat(`#${item}`)
-            })
-        }
         let temp= data.productConfigs.map(item =>{
             return {
                 ...item,
@@ -160,9 +177,14 @@ class ProductUpdatePage extends SaveBasePage {
                 }),
             }
         })
+        let tempData= data
+        if(data.tags===""){
+            delete tempData.tags
+        }
         return {
-            ...data,
-            tags,
+            ...tempData,
+            kind:this.parentProduct? 1:tempData.kind,
+            productParentId:this.parentProduct ?parseInt(this.parentProduct) :null,
             productConfigs:temp
         };
     }
@@ -223,6 +245,7 @@ class ProductUpdatePage extends SaveBasePage {
                     getList={this.props.getDataList}
                     getListTemplate={this.props.getDataListVariantTemplate}
                     getTemplate={this.props.getTemplate}
+                    parentProduct= {this.parentProduct}
                     t={t}
                     />
             </LoadingWrapper>

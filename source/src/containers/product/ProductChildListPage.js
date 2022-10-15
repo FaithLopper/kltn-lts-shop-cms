@@ -17,9 +17,9 @@ import { sitePathConfig } from "../../constants/sitePathConfig";
 import ElementWithPermission from "../../compoments/common/elements/ElementWithPermission";
 import Utils from "../../utils";
 import { productKind } from "../../constants/masterData";
-
+import qs from "query-string";
 const { getUserData } = actions;
-class ProductListPage extends ListBasePage {
+class ProductChildListPage extends ListBasePage {
   initialSearch() {
     return { name: "", value: ""};
   }
@@ -30,6 +30,11 @@ class ProductListPage extends ListBasePage {
     this.objectName =  t("objectName");
     this.objectListName = 'product';
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
+    const {
+      location: { search },
+    } = this.props;
+    const { parentProduct } = qs.parse(search);
+    this.parentProduct= parentProduct
       this.state={
         categoryId:[]
       }
@@ -137,6 +142,20 @@ class ProductListPage extends ListBasePage {
       })
 }
 
+getList() {
+  const { getDataList } = this.props;
+  const page = this.pagination.current ? this.pagination.current - 1 : 0;
+  const params = {
+    page,
+    size: this.pagination.pageSize,
+    search: {parentProduct:this.parentProduct},
+  };
+  getDataList({ params });
+}
+
+getCreateLink() {
+  return `/${this.objectListName}/create?parentProduct=${this.parentProduct}`
+}
 
   render() {
     const {
@@ -187,4 +206,4 @@ const mapDispatchToProps = (dispatch) => ({
   // uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['productListPage','listBasePage'])(ProductListPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['productListPage','listBasePage'])(ProductChildListPage));

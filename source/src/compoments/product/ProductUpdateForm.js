@@ -114,9 +114,21 @@ class ProductUpdateForm extends BasicForm {
     handleSubmit(formValues) {
         const { onSubmit } = this.props
         const {templateConfigData,id}= this.state
+        let tags =''
+        if(formValues.tags){
+            if(formValues.tags.length !==0){
+                console.log(formValues.tags)
+                formValues.tags.map((item, index) =>{
+                    tags= tags.concat(`#${item}`)
+                    if(formValues.tags.length > 1 && index !== formValues.tags.length -1)
+                        tags= tags.concat(' ')
+                })
+            }
+        }
         onSubmit({
            ...formValues,
            id:id,
+           tags:tags,
            productConfigs:templateConfigData,
         })
     }
@@ -472,7 +484,7 @@ class ProductUpdateForm extends BasicForm {
     }
 
     render() {
-        const { formId, dataDetail, actions, isEditing,t ,categoryId} = this.props
+        const { formId, dataDetail, actions, isEditing,t ,categoryId,parentProduct} = this.props
         const {
             uploading,
 			image,
@@ -523,8 +535,10 @@ class ProductUpdateForm extends BasicForm {
                         <DropdownField
                         fieldName="kind"
                         label={t("form.label.kind")}
-                        required
+                        required={parentProduct ? false :true}
                         options={productKind}
+                        defaultValue={parentProduct? 1 :null}
+                        disabled={parentProduct ? true :false}
                         />
                         </Col>
                             </Row>
@@ -575,7 +589,6 @@ class ProductUpdateForm extends BasicForm {
                         fieldName="status"
                         label={t("form.label.status")}
                         required
-                        defaultValue={STATUS_ACTIVE}
                         options={commonStatus}
                         />
                         </Col>

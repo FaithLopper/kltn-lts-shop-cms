@@ -32,6 +32,7 @@ const SortableItem = sortableElement(
     changeVariant,
   }) => {
     return (
+      <div className="variant-sortable">
       <Row gutter={[8, 0]}>
         <Col span={1}>
           <DragHandle />
@@ -49,7 +50,7 @@ const SortableItem = sortableElement(
             onChange={handleChangeLogo}
             uploadFile={uploadFileLogo}
             // disabled={loadingSave}
-          />
+            />
               </Col>
           </Row>
          
@@ -78,9 +79,10 @@ const SortableItem = sortableElement(
             onClick={(e) => {
               removeVariantItem(value, value.id, id);
             }}
-          />
+            />
         </Col>
       </Row>
+            </div>
     );
   }
 );

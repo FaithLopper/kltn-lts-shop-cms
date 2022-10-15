@@ -68,9 +68,7 @@ body {
 
 /* CSS for form */
 .img-uploaded {
-    width: 34px;
-    margin-left: -5px;
-    // height: 86px;
+    height: 86px;
 }
 
 .avatar-contain {
@@ -587,6 +585,11 @@ h2{
             color: rgb(140, 140, 140);
         }
     }
+    .img-uploaded {
+        width: 34px;
+        height: fit-content;
+        margin-left: -5px;
+    }
 }
 
 .customer-fieldset-variant-template{
@@ -621,3 +624,4 @@ h2{
         height: 60px;
     }
 }
+

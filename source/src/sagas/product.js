@@ -20,8 +20,8 @@ function* getProductList({ payload: {params} }){
     {
         if (params.search.name)
             searchParams.name = params.search.name;
-        if(params.search.productParent)
-            searchParams.productParent = params.search.productParent;
+        if(params.search.parentProduct)
+            searchParams.parentProduct = params.search.parentProduct;
     }
 
     try {

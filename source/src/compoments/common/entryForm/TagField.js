@@ -3,11 +3,11 @@ import React from 'react';
 import BaseField from './BaseField';
 const { Option } = Select;
 const children = [
-    {key:0,value:'áo'},
-    {key:1,value:'quần'},
-    {key:2,value:'áo thun'},
-    {key:3,value:'áo phông'},
-    {key:4,value:'áo sơ mi'},
+    {key:0,value:'ao'},
+    {key:1,value:'quan'},
+    {key:2,value:'aothun'},
+    {key:3,value:'aophong'},
+    {key:4,value:'aosomi'},
 ];
 
 const handleChange = (value) => {

@@ -32,8 +32,6 @@ class ProductListPage extends ListBasePage {
     const {
       location: { search },
     } = this.props;
-    const { productId } = qs.parse(search);
-    this.parentId = productId;
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
       this.state={
         categoryId:[]
@@ -106,30 +104,15 @@ class ProductListPage extends ListBasePage {
     };
   }
 
-  handleRouting(productId) {
+  handleRouting(parentProduct) {
     const { location: { search, pathname }, history } = this.props;
     const queryString = qs.parse(search);
     const result = {};
     Object.keys(queryString).map(q => {
         result[`parentSearch${q}`] = queryString[q];
     })
-    history.push(`${pathname}?${qs.stringify({...result, productId})}`);
-    this.refreshPage()
+    history.push(`${pathname}-child?${qs.stringify({...result, parentProduct})}`);
   }
-
-  getList() {
-    const { getDataList } = this.props;
-    const page = this.pagination.current ? this.pagination.current - 1 : 0;
-    let params = {
-      page,
-      size: this.pagination.pageSize,
-      search: this.search,
-      };
-      if(this.parentId){
-        params.search.productParent= this.parentId
-      }
-    getDataList({ params });
-    }
 
   getSearchFields() {
     const {t} = this.props;
@@ -175,10 +158,6 @@ class ProductListPage extends ListBasePage {
           onError: this.onSaveError
       })
   }
-
-    refreshPage() {
-      window.location.reload(false);
-    }
   render() {
     const {
       dataList,
@@ -187,7 +166,6 @@ class ProductListPage extends ListBasePage {
     } = this.props;
     const users = dataList.data || [];
     this.pagination.total = dataList.totalElements || 0;
-    console.log(this.parentId)
     return (
       
         <PageWrapper>
