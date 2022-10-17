@@ -177,7 +177,7 @@ class VariantTemplateForm extends BasicForm {
                         </Row>
                         </div>
                     </Col>
-                    <Col span={14}>
+                    <Col span={15}>
                     <FieldSet title='Danh sách thuộc tính'>
                         <Row gutter={[12, 0]}>
                                 <Col span={24}>
@@ -185,9 +185,14 @@ class VariantTemplateForm extends BasicForm {
                                     <>
                                     {item.variantIds.map((data,index) => {
                                         return <Row gutter={8}>
-                                            <Col span={22}> 
+                                            <Col span={16}> 
+                                            <Form.Item>
+                                                    <Input value={data.name} disabled/>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col span={6}> 
                                                 <Form.Item>
-                                                    <Input value={data.name}/>
+                                                    <Input value={data.price} disabled/>
                                                 </Form.Item>
                                             </Col>
                                             <Col span={2}> 
@@ -207,7 +212,7 @@ class VariantTemplateForm extends BasicForm {
                         </Row>
                     </FieldSet>
                     </Col>
-                    <Col span={2} type="flex" align="middle" className='variant-delete-icon'>
+                    <Col span={1} type="flex" align="middle" className='variant-delete-icon'>
                         <MinusCircleOutlined style={{'fontSize':"19px","color":"red"}} onClick={()=>this.removeVariant(item.index)}/>
                     </Col>
                 </Row>
@@ -323,13 +328,14 @@ class VariantTemplateForm extends BasicForm {
     }
 
     render() {
-        const { formId, actions, isEditing,t} = this.props
+        const { formId, actions, isEditing,t,isSubmitting} = this.props
         const {dataList,name}= this.state
         const variantData = dataList.data || [];
         const {
             isShowModifiedModal,
             isShowModifiedLoading,
           } = this.state;
+        console.log(this.state);
         return (
             <>
             <Form
@@ -355,17 +361,8 @@ class VariantTemplateForm extends BasicForm {
                         </Col>
                         </Row>
                         <FieldSet className="customer-fieldset-variant-template" title='Cấu hình thuộc tính' >
-                            {/* <Row gutter={[16, 0]}>
-                            <Col span={10}>
-                            <TextField fieldName="name" label={t("form.label.name")} required 
-                            // disabled={loadingSave}
-                                />
-                            </Col>
-                            </Row> */}
                             <Col span={24}>
-
                             {this.renderTemplateConfig()}
-
                             <Button type="dashed" className='add-variant' onClick={()=>{this.addConfigItem()}} block icon={<PlusOutlined />}  >
                             Thêm nhóm thuộc tính 
                             </Button>
@@ -390,6 +387,7 @@ class VariantTemplateForm extends BasicForm {
                     form='form-variant-template'
                     icon={<SaveOutlined />}
                     disabled={this.formValidate()}
+                    loading={isSubmitting}
                     >
                 {t(`basicSavePage:${"saveButton"}`)}
                 </Button>

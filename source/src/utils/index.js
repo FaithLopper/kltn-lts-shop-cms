@@ -94,9 +94,10 @@ const Utils = {
             const groupSeparator = setting.groupSeparator || ',';
             const decimalSeparator = setting.decimalSeparator || '.';
             const currentcy = setting.currencySymbol || '';
-            const currencySymbolPosition = setting.currencySymbolPosition;
+            const currencySymbolPosition = setting.currencySymbolPosition || CurrentcyPositions.BACK;
+            const moneyRatio = setting.moneyRatio || 1;
             if(value.toString().indexOf(decimalSeparator) === -1) {
-                value = value / setting.moneyRatio;
+                value = value / moneyRatio;
                 value = value.toFixed(Number(setting.decimal) || 0);
                 const decimalIndex = value.toString().lastIndexOf(".");
                 if(decimalIndex > -1) {

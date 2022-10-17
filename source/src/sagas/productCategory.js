@@ -14,6 +14,7 @@ const {
   UPDATE_PRODUCT_CATEGORY,
   DELETE_PRODUCT_CATEGORY,
   CREATE_PRODUCT_CATEGORY,
+  GET_PRODUCT_CATEGORY_COMBOBOX
 } = actionTypes;
 
 function* getProductCategoryList({ payload: { params } }) {
@@ -79,6 +80,16 @@ function* createProductCategory({ payload: { params, onCompleted, onError } }) {
   }
 }
 
+function* getProductCategoryCombobox({ payload: { params, onCompleted, onError } }) {
+  try {
+    const apiParams = apiConfig.productCategory.getList;
+    const result = yield call(sendRequest, apiParams, params);
+    handleApiResponse(result, onCompleted, onError);
+  } catch (error) {
+    onError(error);
+  }
+}
+
 function* updateProductCategory({ payload: { params, onCompleted, onError } }) {
   try {
     const apiParams = apiConfig.productCategory.update;
@@ -114,6 +125,7 @@ const sagas = [
   takeLatest(GET_PRODUCT_CATEGORY_BY_ID, getProductCategoryById),
   takeLatest(UPDATE_PRODUCT_CATEGORY, updateProductCategory),
   takeLatest(CREATE_PRODUCT_CATEGORY, createProductCategory),
+  takeLatest(GET_PRODUCT_CATEGORY_COMBOBOX, getProductCategoryCombobox),
   takeLatest(
     defineActionLoading(DELETE_PRODUCT_CATEGORY),
     deleteProductCategory

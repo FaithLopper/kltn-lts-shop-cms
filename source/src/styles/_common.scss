@@ -68,7 +68,6 @@ body {
 
 /* CSS for form */
 .img-uploaded {
-    // width: 86px;
     height: 86px;
 }
 
@@ -565,7 +564,7 @@ h2{
 }
 
 .variant-delete-icon{
-    padding-left: 6px;
+    padding-left: 6px !important;
     padding-right: 15px !important;
     padding-bottom: 61px;
     display: flex;
@@ -586,6 +585,11 @@ h2{
             color: rgb(140, 140, 140);
         }
     }
+    .img-uploaded {
+        width: 34px;
+        height: fit-content;
+        margin-left: -5px;
+    }
 }
 
 .customer-fieldset-variant-template{
@@ -602,3 +606,22 @@ h2{
         color:black;
     }
 }
+
+.product-wrapper{
+    .ant-upload-select-picture-card{
+        width: 150px;
+    }
+    .variant-image{
+        .ant-upload-select-picture-card{
+            width: 150px;
+        }
+    }
+}
+
+.product-image{
+    .ant-avatar {
+        width: 95px;
+        height: 60px;
+    }
+}
+

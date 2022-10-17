@@ -13,6 +13,7 @@ import {actions as productCategoryActions, actionTypes as productCategoryTypes} 
 import {actions as storeActions, actionTypes as storeTypes} from './store';
 import {actions as variantActions, actionTypes as variantTypes} from './variant';
 import {actions as variantTemplateActions, actionTypes as variantTemplateTypes} from './variantTemplate';
+import {actions as productActions, actionTypes as productTypes} from './product';
 
 export const actions = {
     ...appCommonActions,
@@ -30,6 +31,7 @@ export const actions = {
     ...storeActions,
     ...variantActions,
     ...variantTemplateActions,
+    ...productActions,
 }
 
 export const types = {
@@ -48,4 +50,5 @@ export const types = {
     ...storeTypes,
     ...variantTypes,
     ...variantTemplateTypes,
+    ...productTypes,
 }
