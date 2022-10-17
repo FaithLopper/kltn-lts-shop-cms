@@ -537,7 +537,7 @@ class ProductUpdateForm extends BasicForm {
                         label={t("form.label.kind")}
                         required={parentProduct ? false :true}
                         options={productKind}
-                        defaultValue={parentProduct? 1 :null}
+                        defaultValue={parentProduct? 2 :null}
                         disabled={parentProduct ? true :false}
                         />
                         </Col>

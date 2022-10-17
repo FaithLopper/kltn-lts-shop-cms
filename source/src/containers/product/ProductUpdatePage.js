@@ -181,9 +181,10 @@ class ProductUpdatePage extends SaveBasePage {
         if(data.tags===""){
             delete tempData.tags
         }
+        console.log(this.parentProduct)
         return {
             ...tempData,
-            kind:this.parentProduct? 1:tempData.kind,
+            kind:this.parentProduct? 2:tempData.kind,
             productParentId:this.parentProduct ?parseInt(this.parentProduct) :null,
             productConfigs:temp
         };
@@ -201,8 +202,12 @@ class ProductUpdatePage extends SaveBasePage {
                 }),
             }
         })
+        let tempData= data
+        if(data.tags===""){
+            delete tempData.tags
+        }
         return {
-            ...data,
+            ...tempData,
             productConfigs:temp
         };
     }
