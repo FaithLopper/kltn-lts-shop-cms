@@ -420,7 +420,7 @@ class ProductUpdateForm extends BasicForm {
 
     renderTemplateConfig =()=>{
         const {templateConfigData}= this.state
-        const {isEditing} = this.props
+        const {isEditing, t} = this.props
         return templateConfigData.map((item,_index)=>{
             return (<>
                 <div className='variant-config-wrapper'>
@@ -454,7 +454,7 @@ class ProductUpdateForm extends BasicForm {
                         <Row gutter={[16, 0]}>
                               <Col span={24}>
                                                 <CheckBoxField
-                                                label='Bắt buộc'
+                                                optionLabel={t("form.label.required")}
                                                 onChange={e=> this.setConfigField(e.target.value,item.index,3)}
                                 fieldName={item.id ?`isRequired_${item.id}`:`isRequired_${item.index}` }
                                 />
@@ -593,10 +593,12 @@ class ProductUpdateForm extends BasicForm {
                         />
                         </Col>
                        
-                        <Col span={12}>
+                        <Col span={12}
+                        style={{paddingTop: '30px'}}
+                        >
                         <CheckBoxField
                         fieldName="isSoldOut"
-                        label={t("form.label.isSoldOut")}
+                        optionLabel={t("form.label.isSoldOut")}
                         defaultValue={false}
                         />
                         </Col>
