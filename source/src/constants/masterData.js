@@ -85,4 +85,10 @@ export const variantTemplateConfig = [
     // { value: 10, label: 'Khác' },
 ]
 
+export const productKind = [
+    { value: 1, label: 'Sản phẩm thường' },
+    { value: 2, label: 'Sản phẩm theo nhóm' },
+    // { value: 10, label: 'Khác' },
+]
+
 export const ASPECT_CATEGORY_AVATAR = 16/9

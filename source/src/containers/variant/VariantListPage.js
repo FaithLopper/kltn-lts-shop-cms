@@ -14,6 +14,7 @@ import PageWrapper from "../../compoments/common/PageWrapper";
 import { Link } from 'react-router-dom';
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import ElementWithPermission from "../../compoments/common/elements/ElementWithPermission";
+import Utils from "../../utils";
 class VariantListPage extends ListBasePage {
   initialSearch() {
     return { name: "", value: ""};
@@ -27,7 +28,15 @@ class VariantListPage extends ListBasePage {
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
     this.columns = [
       { title:  t("table.name"), dataIndex: "name"},
-      { title:  t("table.price"), align:"right",dataIndex: "price"},
+      {
+        title: t("table.price") + ' (VNĐ)',
+        dataIndex: "price",
+        align: 'right',
+        width:'100px',
+        render: (price) => (
+          <div className="force-one-line">{(Utils.formatMoney(price || 0))}</div>
+          )
+        },
       this.renderActionColumn(),
     ];
     this.actionColumns = {

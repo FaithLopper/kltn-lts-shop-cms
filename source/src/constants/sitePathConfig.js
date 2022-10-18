@@ -401,4 +401,36 @@ export const sitePathConfig = {
             apiConfig.variantTemplate.update.path,
         ],
     },
+    product: {
+        path: "/product",
+        childrenKeys:["/product/:id","/product/create"],
+        permissions: [
+            apiConfig.product.getList.path,
+            apiConfig.product.getById.path,
+            apiConfig.product.create.path,
+            apiConfig.product.update.path,
+            apiConfig.product.delete.path,
+            apiConfig.product.getProductAutoCompleted.path,
+        ],
+      },
+    productUpdate: {
+        path: "/product/:id",
+        permissions: [
+            apiConfig.product.getById.path,
+            apiConfig.product.create.path,
+            apiConfig.product.update.path,
+        ],
+    },
+    productChild: {
+        path: "/product-child",
+        childrenKeys:["/product-child/:id","/product-child/create"],
+        permissions: [
+            apiConfig.product.getList.path,
+            apiConfig.product.getById.path,
+            apiConfig.product.create.path,
+            apiConfig.product.update.path,
+            apiConfig.product.delete.path,
+            apiConfig.product.getProductAutoCompleted.path,
+        ],
+      },
 }

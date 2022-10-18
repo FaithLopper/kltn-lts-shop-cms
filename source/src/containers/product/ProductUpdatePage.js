@@ -15,19 +15,25 @@ import ObjectNotFound from '../../compoments/common/ObjectNotFound';
 import { withTranslation } from "react-i18next";
 import { UserTypes } from '../../constants';
 import VariantUpdateForm from '../../compoments/variant/VariantUpdateForm';
-import VariantTemplateForm from '../../compoments/variant/VariantTemplateForm';
-class VariantTemplateUpdatePage extends SaveBasePage {
+import ProductUpdateForm from '../../compoments/product/ProductUpdateForm';
+import qs from "query-string";
+class ProductUpdatePage extends SaveBasePage {
 
     constructor(props) {
         super(props);
         const { t } = this.props;
         this.objectName =  t("objectName");
-        this.getListUrl = sitePathConfig.variantTemplate.path;
+        this.getListUrl = sitePathConfig.product.path;
         this.actionFooter= false
+        const {
+            location: { search },
+          } = this.props;
+          const { parentProduct } = qs.parse(search);
+        this.parentProduct= parentProduct
         this.breadcrumbs = [
             {
                 name:  t("breadcrumbs.parentPage"),
-                path:`${sitePathConfig.variantTemplate.path}`
+                path:`${sitePathConfig.variant.path}`
             },
             {
                 name:  this.isEditing? `${t(`listBasePage:${"update"}`)} ${this.objectName}` :`${t(`listBasePage:${"create"}`)} ${this.objectName}`,
@@ -41,21 +47,66 @@ class VariantTemplateUpdatePage extends SaveBasePage {
         }
     }
 
+    componentWillMount(){
+        const { changeBreadcrumb,onReturn, onGetFormID,detectActionRenderType,getProductCategoryCombobox} = this.props;
+        if (this.isEditing) {
+            this.getDetail(this.dataId);
+        }
+        if(this.breadcrumbs.length > 0) {
+            changeBreadcrumb(this.breadcrumbs);
+        }
+        onReturn(this.onBack)
+        onGetFormID(this.getFormId)
+        detectActionRenderType(this.actionFooter)
+        getProductCategoryCombobox({
+            params: {},
+            onCompleted: (responseData)=>{
+                const {result,data}= responseData
+                if(result){
+                    this.setState({
+                        categoryId:data.data?.map(item =>{
+                            return {value:item.id,label:item.name}
+                        })
+                    })
+                }
+            },
+            onError: this.onSaveError
+        })
+    }
+
     getDataDetailMapping = (data) => {
-        const variantConfigData = data
-        if (!variantConfigData) {
+        const productData = data
+        if (!productData) {
             this.setState({ objectNotFound: true });
             return
         }
+        let tags= []
+        if(productData.tags){
+            let currentIndex= 1
+            let objectArray= productData.tags.match(new RegExp("#", "g")) || []
+            Object.keys(objectArray).map((item,index) =>{
+                console.log(productData.tags.length);
+                if(index !== objectArray.length -1){
+                    tags.push(productData.tags.slice(currentIndex,productData.tags.indexOf("#",currentIndex)-1))
+                    currentIndex= productData.tags.indexOf("#",currentIndex)+1
+                }
+                else{
+                    tags.push(productData.tags.slice(currentIndex))
+                }
+            })
+        }
         const dataConfig= {
-            ...variantConfigData,
-            variantConfigs:variantConfigData.variantConfigs.map(item =>{
+            ...productData,
+            categoryId:productData.productCategoryId,
+            tags,
+            // tags:productData.tags ? 
+            variantConfigs:productData.productConfigs? productData.productConfigs.map(item =>{
                 return {
                     ...item,
                     variantIds:item.variants,
                     index:item.id
                 }
-            })
+            }): []
         }
         return {
             ...dataConfig,
@@ -73,7 +124,7 @@ class VariantTemplateUpdatePage extends SaveBasePage {
         if (res?.result) {
             this.showSuccessConfirmModal({
                 onContinueEdit: () => {
-                    history.push(sitePathConfig.adminUpdate.path.replace(':id', res.id))
+                    history.push(sitePathConfig.productUpdate.path.replace(':id', res.id))
                 }
             })
         } else if (res?.result===false) {
@@ -115,26 +166,49 @@ class VariantTemplateUpdatePage extends SaveBasePage {
     }
 
     prepareCreateData = (data) => {
-        let temp= data.variantConfigs.map(item =>{
-           return { ...item,
-            variantIds: item.variantIds.map(variant=>variant.id
-            )}
+        let temp= data.productConfigs.map(item =>{
+            return {
+                ...item,
+                variants:item.variantIds.map((variant,index) =>{
+                    return {
+                        ...variant,
+                        orderSort:index
+                    }
+                }),
+            }
         })
+        let tempData= data
+        if(data.tags===""){
+            delete tempData.tags
+        }
+        console.log(this.parentProduct)
         return {
-            ...data,
-            variantConfigs:temp,
+            ...tempData,
+            kind:this.parentProduct? 2:tempData.kind,
+            productParentId:this.parentProduct ?parseInt(this.parentProduct) :null,
+            productConfigs:temp
         };
     }
 
     prepareUpdateData = (data) => {
-        let temp= data.variantConfigs.map(item =>{
-            return { ...item,
-             variantIds: item.variantIds.map(variant=>variant.id
-             )}
-         })
+        let temp= data.productConfigs.map(item =>{
+            return {
+                ...item,
+                variants:item.variantIds.map((variant,index) =>{
+                    return {
+                        ...variant,
+                        orderSort:index
+                    }
+                }),
+            }
+        })
+        let tempData= data
+        if(data.tags===""){
+            delete tempData.tags
+        }
         return {
-            ...data,
-            variantConfigs:temp,
+            ...tempData,
+            productConfigs:temp
         };
     }
 
@@ -154,14 +228,14 @@ class VariantTemplateUpdatePage extends SaveBasePage {
     }
 
     render() {
-        const { isGetDetailLoading, objectNotFound,  } = this.state
+        const { isGetDetailLoading, objectNotFound, categoryId } = this.state
         const {t,uploadFile}= this.props
         if (objectNotFound) {
             return <ObjectNotFound />
         }
         return (
             <LoadingWrapper loading={isGetDetailLoading}>
-                <VariantTemplateForm
+                <ProductUpdateForm
                     setIsChangedFormValues={this.setIsChangedFormValues}
                     formId={this.getFormId()}
                     onSubmit={this.onSave}
@@ -172,9 +246,12 @@ class VariantTemplateUpdatePage extends SaveBasePage {
                     handleRemoveImage={this.handleRemoveImageField}
                     handleUploadImage={this.handleUploadImageField}
                     uploadFile={uploadFile}
-                    t={t}
+                    categoryId={categoryId || []}
                     getList={this.props.getDataList}
-                    isSubmitting={this.state.isSubmitting}
+                    getListTemplate={this.props.getDataListVariantTemplate}
+                    getTemplate={this.props.getTemplate}
+                    parentProduct= {this.parentProduct}
+                    t={t}
                     />
             </LoadingWrapper>
         )
@@ -182,14 +259,18 @@ class VariantTemplateUpdatePage extends SaveBasePage {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getDataById: (payload) => dispatch(actions.getVariantTemplateById(payload)),
-  createData: (payload) => dispatch(actions.createVariantTemplate(payload)),
-  updateData: (payload) => dispatch(actions.updateVariantTemplate(payload)),
+  getDataById: (payload) => dispatch(actions.getProductById(payload)),
+  getTemplate: (payload) => dispatch(actions.getVariantTemplateById(payload)),
+  createData: (payload) => dispatch(actions.createProduct(payload)),
+  updateData: (payload) => dispatch(actions.updateProduct(payload)),
+  uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
+  getProductCategoryCombobox:(payload)=> dispatch(actions.getProductCategoryCombobox(payload)),
   getDataList: (payload) => dispatch(actions.getVariantListModal(payload)),
+  getDataListVariantTemplate: (payload) => dispatch(actions.getVariantTemplateListModal(payload)),
 })
 
 const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['variantTemplateUpdatePage','listBasePage'])(VariantTemplateUpdatePage));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['productUpdatePage','listBasePage'])(ProductUpdatePage));

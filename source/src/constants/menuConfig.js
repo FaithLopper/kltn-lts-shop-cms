@@ -113,16 +113,20 @@ const navMenuConfig = [
         icon: <SkinOutlined />,
         children: [
             {
+                label: 'categoryProductManagement',
+                ...sitePathConfig.categoryProduct,
+            },
+            {
+                label: 'Product',
+                ...sitePathConfig.product,
+            },
+            {
             label: 'Variant',
                 ...sitePathConfig.variant,
             },
             {
                 label: 'Variant Template',
                 ...sitePathConfig.variantTemplate,
-            },
-            {
-                label: 'categoryProductManagement',
-                ...sitePathConfig.categoryProduct,
             },
         ]
     },

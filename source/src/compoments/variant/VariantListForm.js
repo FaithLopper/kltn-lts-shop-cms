@@ -21,7 +21,6 @@ class VariantListForm extends BasicForm {
   renderActionColumn() {
     const {selectedVariantArray}= this.props
     const avaiableArray= selectedVariantArray.map(item =>item.id)
-    console.log(avaiableArray)
     return {
         title:  'Hành động',
         width: '100px',
