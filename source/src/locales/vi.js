@@ -818,7 +818,9 @@ export default {
             label: {
                 'name':'Tên bộ thuộc tính',
                 'price':'Giá cả',
-                'required': 'required'
+                'Fuired': 'required',
+                'required': 'Bắt buộc',
+                
             },
             validationMessage: {
                 phoneLengthRequire: 'Hãy nhập số',
@@ -862,11 +864,13 @@ export default {
                 'price':'Giá cả',
                 'description':'Mô tả',
                 'image':'Hình ảnh',
-                'status':'Tình trạng',
+                'status':'Trạng thái',
                 'kind':'Loại sản phẩm',
                 'categoryId':'Danh mục sản phẩm',
+                'itemStatus':'Tình trạng',
                 'isSoldOut':'Đã bán hết',
                 'tags':'Thẻ',
+                'required':'Bắt buộc',
             },
             validationMessage: {
                 phoneLengthRequire: 'Hãy nhập số',
