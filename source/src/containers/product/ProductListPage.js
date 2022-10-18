@@ -43,18 +43,12 @@ class ProductListPage extends ListBasePage {
         align: 'center',
         width: '100px',
         render: (image) => (
-          <div className="product-image">
             <Avatar
               shape="square"
               size="large"
               icon={<UserOutlined />}
               src={image ? `${AppConstants.contentRootUrl}${image}` : null}
             />
-          </div>
-        //   <image
-        //   // width={200}
-        //   src={image ? `${AppConstants.contentRootUrl}${image}` : "error"}
-        // />
         ),
       },
       // { title:  t("table.name"), dataIndex: "name",width:'250px'},
