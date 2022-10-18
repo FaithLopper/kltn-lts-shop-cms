@@ -164,15 +164,12 @@ class VariantTemplateForm extends BasicForm {
                         <Row gutter={[16, 0]} style={{marginTop: 7}}>
                               <Col width={30}>
                                                 <CheckBoxField
-                    
+                                                optionLabel={t("form.label.required")}
                                                 width={30}
                                                 onChange={e=> this.setConfigField(e.target.value,item.index,3)}
                                 fieldName={item.id ?`isRequired_${item.id}`:`isRequired_${item.index}` }
                                 />
                                
-                            </Col>
-                              <Col >
-                              <label>{t("form.label.required")}</label>
                             </Col>
                         </Row>
                         </div>
