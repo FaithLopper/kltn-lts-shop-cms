@@ -148,7 +148,7 @@ getList() {
   const params = {
     page,
     size: this.pagination.pageSize,
-    search: {parentProduct:this.parentProduct},
+    search: {parentProduct:this.parentProduct,...this.search},
   };
   getDataList({ params });
 }

@@ -23,17 +23,17 @@ class ProductUpdatePage extends SaveBasePage {
         super(props);
         const { t } = this.props;
         this.objectName =  t("objectName");
-        this.getListUrl = sitePathConfig.product.path;
         this.actionFooter= false
         const {
             location: { search },
-          } = this.props;
-          const { parentProduct } = qs.parse(search);
+        } = this.props;
+        const { parentProduct } = qs.parse(search);
         this.parentProduct= parentProduct
+        this.getListUrl = this.parentProduct ?`${sitePathConfig.productChild.path}?parentProduct=${this.parentProduct}` : sitePathConfig.product.path;
         this.breadcrumbs = [
             {
                 name:  t("breadcrumbs.parentPage"),
-                path:`${sitePathConfig.variant.path}`
+                path:`${sitePathConfig.product.path}`
             },
             {
                 name:  this.isEditing? `${t(`listBasePage:${"update"}`)} ${this.objectName}` :`${t(`listBasePage:${"create"}`)} ${this.objectName}`,
