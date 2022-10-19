@@ -23,7 +23,7 @@ import FieldSet from '../common/elements/FieldSet';
 import BasicModal from '../common/modal/BasicModal';
 import VariantListForm from '../variant/VariantListForm';
 import VariantTemplateSortable from './VariantTemplateSortable';
-import arrayMove from "array-move";
+import {arrayMoveImmutable} from "array-move";
 import VariantTemplateListForm from '../variant/VariantTemplateListForm';
 import TagField from '../common/entryForm/TagField';
 class ProductUpdateForm extends BasicForm {
@@ -346,9 +346,9 @@ class ProductUpdateForm extends BasicForm {
 
     onSortEnd = ({oldIndex, newIndex,data,id}) => {
             const {templateConfigData}= this.state
-            let dataSorted=arrayMove(data, oldIndex, newIndex)
+            let dataSorted=arrayMoveImmutable(data, oldIndex, newIndex)
             this.setState({
-                data: arrayMove(data, oldIndex, newIndex),
+                data: arrayMoveImmutable(data, oldIndex, newIndex),
             templateConfigData:templateConfigData.map((item,index) =>{
                 if(item.index=== id){
                     return {

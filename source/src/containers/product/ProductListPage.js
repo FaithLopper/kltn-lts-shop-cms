@@ -53,13 +53,15 @@ class ProductListPage extends ListBasePage {
       },
       // { title:  t("table.name"), dataIndex: "name",width:'250px'},
       { title: t("table.name"),width:'250px',render: (dataRow) => {
-        return (
-            <span className="routing" onClick={()=>{
-                this.handleRouting(dataRow.id);
-            }}>
-                {dataRow.name}
-            </span>
-        )
+        if(dataRow.kind === 2)
+          return (
+              <span className="routing" onClick={()=>{
+                  this.handleRouting(dataRow.id);
+              }}>
+                  {dataRow.name}
+              </span>
+          )
+        return <span>{dataRow.name}</span>
     } },
       {
         title: t("table.price") + ' (VNĐ)',

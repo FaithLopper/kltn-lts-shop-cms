@@ -182,14 +182,10 @@ class ProductUpdatePage extends SaveBasePage {
         if(data.tags===""){
             delete tempData.tags
         }
-        if(data.kind=== 2){
-            if(data.price){
-                tempData.price=null
-            }
-        }
         return {
             ...tempData,
             kind:this.parentProduct? 2:tempData.kind,
+            price:this.parentProduct && tempData.kind === 2? tempData.price: tempData.kind === 2 ? tempData.price=0 : tempData.price ,
             productParentId:this.parentProduct ?parseInt(this.parentProduct) :null,
             productConfigs:data.kind === 1? temp:null,
         };
