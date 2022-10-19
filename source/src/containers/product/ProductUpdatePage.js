@@ -30,6 +30,7 @@ class ProductUpdatePage extends SaveBasePage {
         const { parentProduct } = qs.parse(search);
         this.parentProduct= parentProduct
         this.getListUrl = this.parentProduct ?`${sitePathConfig.productChild.path}?parentProduct=${this.parentProduct}` : sitePathConfig.product.path;
+        console.log(this.getListUrl,this.parentProduct)
         this.breadcrumbs = [
             {
                 name:  t("breadcrumbs.parentPage"),
@@ -181,12 +182,12 @@ class ProductUpdatePage extends SaveBasePage {
         if(data.tags===""){
             delete tempData.tags
         }
-        console.log(this.parentProduct)
         return {
             ...tempData,
             kind:this.parentProduct? 2:tempData.kind,
+            price:this.parentProduct && tempData.kind === 2? tempData.price: tempData.kind === 2 ? tempData.price=0 : tempData.price ,
             productParentId:this.parentProduct ?parseInt(this.parentProduct) :null,
-            productConfigs:temp
+            productConfigs:data.kind === 1? temp:null,
         };
     }
 
@@ -195,6 +196,7 @@ class ProductUpdatePage extends SaveBasePage {
             return {
                 ...item,
                 variants:item.variantIds.map((variant,index) =>{
+                    // console.log(variant);
                     return {
                         ...variant,
                         orderSort:index

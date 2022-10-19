@@ -33,55 +33,57 @@ const SortableItem = sortableElement(
   }) => {
     return (
       <div className="variant-sortable">
-      <Row gutter={[8, 0]}>
-        <Col span={1}>
-          <DragHandle />
-        </Col>
-        <Col span={3}>
-          <Row justify="center">
-              <Col span={8}>
-              <IconImageFiled
-            index= {value.id}
-            aspect={1.5}
-            fieldName="image"
-            loading={uploading}
-            // label={t("form.label.image")}
-            imageUrl={value.image}
-            onChange={handleChangeLogo}
-            uploadFile={uploadFileLogo}
-            // disabled={loadingSave}
-            />
-              </Col>
-          </Row>
-         
-        </Col>
-        <Col span={12}>
-          <Form.Item>
-            <Input value={value.name} onChange={e => changeVariant(e.target.value,id,value.id,1)}/>
-          </Form.Item>
-        </Col>
-        <Col span={6}>
-          <Form.Item>
-            <InputNumber
-              max={Infinity}
-              value={value.price}
-              onChange={e => changeVariant(e,id,value.id,2)}
-              min={0}
-              style={{ width: "100%" }}
-              parser={(value) => Utils.formatIntegerNumber(value)}
-              formatter={(value)=>  Utils.formatNumber(value)}
-            />
-          </Form.Item>
-        </Col>
-        <Col span={2}>
-          <MinusCircleOutlined
-            style={{ fontSize: "19px", marginTop: "5px", marginLeft: "6px" }}
-            onClick={(e) => {
-              removeVariantItem(value, value.id, id);
-            }}
-            />
-        </Col>
-      </Row>
+        {
+         value.id? <Row gutter={[8, 0]}>
+         <Col span={1}>
+           <DragHandle />
+         </Col>
+         <Col span={3}>
+           <Row justify="center">
+               <Col span={8}>
+               <IconImageFiled
+             index= {value.id}
+             fieldName="image"
+             loading={uploading}
+             // label={t("form.label.image")}
+             imageUrl={value.image}
+             onChange={handleChangeLogo}
+             uploadFile={uploadFileLogo}
+             // disabled={loadingSave}
+             />
+               </Col>
+           </Row>
+          
+         </Col>
+         <Col span={12}>
+           <Form.Item>
+             <Input value={value.name} onChange={e => changeVariant(e.target.value,id,value.id,1)}/>
+           </Form.Item>
+         </Col>
+         <Col span={6}>
+           <Form.Item>
+             <InputNumber
+               max={Infinity}
+               value={value.price}
+               onChange={e => changeVariant(e,id,value.id,2)}
+               min={0}
+               style={{ width: "100%" }}
+               parser={(value) => Utils.formatIntegerNumber(value)}
+               formatter={(value)=>  Utils.formatNumber(value)}
+             />
+           </Form.Item>
+         </Col>
+         <Col span={2}>
+           <MinusCircleOutlined
+             style={{ fontSize: "19px", marginTop: "5px", marginLeft: "6px" }}
+             onClick={(e) => {
+               removeVariantItem(value, value.id, id);
+             }}
+             />
+         </Col>
+       </Row> :<></>
+        }
+     
             </div>
     );
   }
@@ -102,7 +104,7 @@ class VariantTemplateSortable extends Component {
   }
 
   uploadFileLogo = (file, onSuccess,index) => {
-    const { uploadFile } = this.props;
+    const { uploadFile ,onValuesChange} = this.props;
     const { imageArray } = this.state;
     this.setState({ uploading: true });
     uploadFile({
@@ -111,6 +113,7 @@ class VariantTemplateSortable extends Component {
         this.props.addImageVariant(result.data.filePath,index,this.props.id)
         this.setState({ uploading: false });
         onSuccess();
+        onValuesChange()
       },
       onError: (err) => {
         if (err && err.message) {
@@ -143,10 +146,10 @@ class VariantTemplateSortable extends Component {
       onSortEnd,
       handleChangeLogo,
       uploadFileLogo,
-      changeVariant
+      changeVariant,
+      onValuesChange,
     } = this.props;
     const { uploading, } = this.state;
-    console.log(data);
     return (
       <SortableContainer onSortEnd={this.handleSort} useDragHandle>
         {data.map((value, index) => (
