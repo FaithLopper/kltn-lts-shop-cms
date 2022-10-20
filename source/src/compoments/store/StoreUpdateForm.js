@@ -321,8 +321,6 @@ class StoreUpdateForm extends BasicForm {
                         <MapGoogle
                             isMarkerShown={this.state.isMarkerShown}
                             onMarkerClick={this.handleMarkerClick}
-                            latitude={dataDetail?.latitude}
-                            longitude={dataDetail?.longitude}
                             setter={(name, value) => this.setFieldValue(name, value)}
                             getter={(name) => this.getFieldValue(name)}
                             t={t}

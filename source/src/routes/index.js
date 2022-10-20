@@ -52,6 +52,8 @@ import CategoryProductSubUpdate from '../containers/categoryProduct/CategoryProd
 import ProductListPage from '../containers/product/ProductListPage';
 import ProductUpdatePage from '../containers/product/ProductUpdatePage';
 import ProductChildListPage from '../containers/product/ProductChildListPage';
+import TagsListPage from '../containers/tags/TagsListPage';
+import TagsUpdate from '../containers/tags/TagsUpdate';
 const { getUserData } = actions;
 const userData = getUserData();
 
@@ -95,6 +97,8 @@ const RootRoute = () => {
         product,
         productUpdate,
         productChild,
+        tags,
+        tagsUpdate,
     } = sitePathConfig;
 
     const getUserHomeNavigation =()=>{
@@ -169,6 +173,8 @@ const RootRoute = () => {
                 <PrivateRoute exact path={product.path} component={ProductListPage}/>
                 <PrivateRoute exact path={productChild.path} component={ProductChildListPage}/>
                 <PrivateRoute exact path={productUpdate.path} component={ProductUpdatePage}/>
+                <PrivateRoute exact path={tags.path} component={TagsListPage}/>
+                <PrivateRoute exact path={tagsUpdate.path} component={TagsUpdate}/>
                 {/* Error Page */}
                 <PrivateRoute exact path={forbidden.path} component={Forbidden}/>
                 {/* <Route exact path="/error" component={ErrorServer} /> */}

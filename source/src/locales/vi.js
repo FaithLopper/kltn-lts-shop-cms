@@ -882,4 +882,25 @@ export default {
             // updateProfileSuccess: 'Your profile have been updated!'
         },
     },
+    tagsListPage: {
+        breadcrumbs: {
+            currentPage: 'Quản lý Tag',
+            parentPage: 'Quản lý Tag',
+        },
+        objectName: 'Tag',
+        searchPlaceHolder: {
+            name: 'Tên Tag',
+        },
+        table: {
+            name: 'Tên Tag',
+            color:'Màu sắc',
+        },
+        form: {
+            label: {
+            tag: 'Tên Tag',
+            color:'Màu sắc',
+            },
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
 }
