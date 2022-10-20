@@ -65,6 +65,11 @@ class ProductUpdateForm extends BasicForm {
                 templateConfigData:nextProps.dataDetail.variantConfigs,
                 id:nextProps.dataDetail.id
             })
+            if(nextProps.dataDetail.kind === 2){
+                this.setState({
+                    chooseKind:2
+                })
+            }
             const {variantConfigs} = nextProps.dataDetail
             variantConfigs.map(item =>{
                 this.setFieldValue(`name_${item.id}`,item.name)

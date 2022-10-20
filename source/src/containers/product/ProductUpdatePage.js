@@ -30,7 +30,6 @@ class ProductUpdatePage extends SaveBasePage {
         const { parentProduct } = qs.parse(search);
         this.parentProduct= parentProduct
         this.getListUrl = this.parentProduct ?`${sitePathConfig.productChild.path}?parentProduct=${this.parentProduct}` : sitePathConfig.product.path;
-        console.log(this.getListUrl,this.parentProduct)
         this.breadcrumbs = [
             {
                 name:  t("breadcrumbs.parentPage"),
@@ -65,10 +64,11 @@ class ProductUpdatePage extends SaveBasePage {
                 const {result,data}= responseData
                 if(result){
                     this.setState({
-                        categoryId:data.data?.map(item =>{
+                        categoryId:data?.map(item =>{
                             return {value:item.id,label:item.name}
                         })
                     })
+                    console.log(data)
                 }
             },
             onError: this.onSaveError
@@ -235,6 +235,7 @@ class ProductUpdatePage extends SaveBasePage {
         if (objectNotFound) {
             return <ObjectNotFound />
         }
+        console.log(this.state.categoryId);
         return (
             <LoadingWrapper loading={isGetDetailLoading}>
                 <ProductUpdateForm
