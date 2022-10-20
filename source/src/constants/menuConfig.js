@@ -128,6 +128,10 @@ const navMenuConfig = [
                 label: 'Variant Template',
                 ...sitePathConfig.variantTemplate,
             },
+            {
+                label: 'Tags',
+                ...sitePathConfig.tags,
+            },
         ]
     },
 ]

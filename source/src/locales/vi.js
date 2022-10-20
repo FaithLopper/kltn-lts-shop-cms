@@ -33,6 +33,7 @@ export default {
         'Variant':'Thuộc tính',
         'Variant Template':'Nhóm thuộc tính',
         'Product':'Sản phẩm',
+        'Tags': 'Quản lý Tags'
     },
     appHeader: {
         profile: 'Hồ sơ',
@@ -881,5 +882,26 @@ export default {
             // updateProfileFail: 'Your profile failed. Please try again!',
             // updateProfileSuccess: 'Your profile have been updated!'
         },
+    },
+    tagsListPage: {
+        breadcrumbs: {
+            currentPage: 'Quản lý Tag',
+            parentPage: 'Quản lý Tag',
+        },
+        objectName: 'Tag',
+        searchPlaceHolder: {
+            name: 'Tên Tag',
+        },
+        table: {
+            name: 'Tên Tag',
+            color:'Màu sắc',
+        },
+        form: {
+            label: {
+            tag: 'Tên Tag',
+            color:'Màu sắc',
+            },
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
     },
 }
