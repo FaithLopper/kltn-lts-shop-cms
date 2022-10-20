@@ -28,6 +28,7 @@ import CategoryProductListPage from "../containers/categoryProduct/CategoryProdu
 import CategoryProductUpdate from "../containers/categoryProduct/CategoryProductUpdate";
 import CategoryProductSubListPage from "../containers/categoryProduct/CategoryProductSubListPage";
 import CategoryProductSubUpdate from "../containers/categoryProduct/CategoryProductSubUpdate";
+import TagsListPage from "../containers/tags/TagsListPage";
 
 export const sitePathConfig = {
     login: {
@@ -433,4 +434,25 @@ export const sitePathConfig = {
             apiConfig.product.getProductAutoCompleted.path,
         ],
       },
+    tags: {
+        path:'/tags',
+        component:TagsListPage,
+        childrenKeys: ['/tags/create','/tags/:id'],
+        permissions:[
+            apiConfig.tags.getList.path,
+            apiConfig.tags.getById.path,
+            apiConfig.tags.create.path,
+            apiConfig.tags.update.path,
+            apiConfig.tags.delete.path,
+            ]
+    },
+    tagsUpdate: {
+        path:'/tags/:id',
+        component:TagsListPage,
+        permissions:[
+            apiConfig.tags.getById.path,
+            apiConfig.tags.create.path,
+            apiConfig.tags.update.path,
+            ]
+    },
 }

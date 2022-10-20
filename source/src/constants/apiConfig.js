@@ -502,5 +502,37 @@ const apiConfig = {
             headers: baseHeader
         }
     },
+    tags: {
+        getList: {
+            path: '/v1/tag/list',
+            method: 'GET',
+            headers: baseHeader
+        },
+        create: {
+            path: '/v1/tag/create',
+            method: 'POST',
+            headers: baseHeader
+        },
+        getById: {
+            path: '/v1/tag/get',
+            method: 'GET',
+            headers: baseHeader
+        },
+        update: {
+            path: '/v1/tag/update',
+            method: 'PUT',
+            headers: baseHeader
+        },
+        delete: {
+            path: '/v1/tag/delete',
+            method: 'DELETE',
+            headers: baseHeader
+        },
+        tagsAutoComplete: {
+            path: '/v1/tag/auto-complete',
+            method: 'GET',
+            headers: baseHeader
+        },
+    },
 }
 export default apiConfig;
