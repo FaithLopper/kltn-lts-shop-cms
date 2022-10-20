@@ -23,7 +23,7 @@ import FieldSet from '../common/elements/FieldSet';
 import BasicModal from '../common/modal/BasicModal';
 import VariantListForm from '../variant/VariantListForm';
 import VariantTemplateSortable from './VariantTemplateSortable';
-import arrayMove from "array-move";
+import {arrayMoveImmutable} from "array-move";
 import VariantTemplateListForm from '../variant/VariantTemplateListForm';
 import TagField from '../common/entryForm/TagField';
 class ProductUpdateForm extends BasicForm {
@@ -43,6 +43,7 @@ class ProductUpdateForm extends BasicForm {
             id:null,
             formChanged:false,
             isTemplate:false,
+            chooseKind:productKind[0].value,
         }
         this.configIndex=0
         this.selectedVariant=null
@@ -64,6 +65,11 @@ class ProductUpdateForm extends BasicForm {
                 templateConfigData:nextProps.dataDetail.variantConfigs,
                 id:nextProps.dataDetail.id
             })
+            if(nextProps.dataDetail.kind === 2){
+                this.setState({
+                    chooseKind:2
+                })
+            }
             const {variantConfigs} = nextProps.dataDetail
             variantConfigs.map(item =>{
                 this.setFieldValue(`name_${item.id}`,item.name)
@@ -117,7 +123,6 @@ class ProductUpdateForm extends BasicForm {
         let tags =''
         if(formValues.tags){
             if(formValues.tags.length !==0){
-                console.log(formValues.tags)
                 formValues.tags.map((item, index) =>{
                     tags= tags.concat(`#${item}`)
                     if(formValues.tags.length > 1 && index !== formValues.tags.length -1)
@@ -215,6 +220,7 @@ class ProductUpdateForm extends BasicForm {
             this.setState({
             templateConfigData:templateConfigData.filter(itemArray => itemArray.index !== index)
     })
+    this.onValuesChange();
         }
 
     removeVariantItem =(data,key,parenIndex)=>{
@@ -233,6 +239,7 @@ class ProductUpdateForm extends BasicForm {
             this.setState({
                 templateConfigData:temp
             })
+            this.onValuesChange();
         }
 
 
@@ -268,7 +275,7 @@ class ProductUpdateForm extends BasicForm {
                             ...data.variantConfigs.map(item =>{
                                 return {
                                     ...item,
-                                    index:item.id,
+                                    index:this.autoGenerateUniqueId(),
                                     variantIds:item.variants
                                 }
                             })
@@ -293,9 +300,9 @@ class ProductUpdateForm extends BasicForm {
         const{templateConfigData}= this.state
         if(templateConfigData.length !==0){
             templateConfigData.map(item =>{
-                this.setFieldValue(`name_${item.id}`,item.name)
-                this.setFieldValue(`choiceKind_${item.id}`,item.choiceKind)
-                this.setFieldValue(`isRequired_${item.id}`,item.isRequired)
+                this.setFieldValue(`name_${item.index}`,item.name)
+                this.setFieldValue(`choiceKind_${item.index}`,item.choiceKind)
+                this.setFieldValue(`isRequired_${item.index}`,item.isRequired)
             })
         }
     }
@@ -317,6 +324,7 @@ class ProductUpdateForm extends BasicForm {
 
     setConfigField(text, index,kind){
         const {templateConfigData} = this.state
+        this.onValuesChange();
         this.setState({
             templateConfigData:templateConfigData.map((item,key)=>{
                 if(item.index === index){
@@ -343,14 +351,11 @@ class ProductUpdateForm extends BasicForm {
 
     onSortEnd = ({oldIndex, newIndex,data,id}) => {
             const {templateConfigData}= this.state
-            let dataSorted=arrayMove(data, oldIndex, newIndex)
-            console.log(data,dataSorted)
-            console.log(templateConfigData);
-            console.log(id);
+            let dataSorted=arrayMoveImmutable(data, oldIndex, newIndex)
             this.setState({
-            data: arrayMove(data, oldIndex, newIndex),
+                data: arrayMoveImmutable(data, oldIndex, newIndex),
             templateConfigData:templateConfigData.map((item,index) =>{
-                if(item.index===  id){
+                if(item.index=== id){
                     return {
                         ...item,
                         variantIds:dataSorted
@@ -360,6 +365,7 @@ class ProductUpdateForm extends BasicForm {
             }
             )
         });
+        this.onValuesChange();
       };
 
       addImageVariant(path,index,id){
@@ -388,7 +394,6 @@ class ProductUpdateForm extends BasicForm {
 
       changeVariant(text,id, index, type){
             const {templateConfigData}= this.state
-            console.log(text,id, index, type);
             let temp= templateConfigData.map(item =>{
                 if(item.index === id){
                     return {
@@ -415,8 +420,13 @@ class ProductUpdateForm extends BasicForm {
             this.setState({
                 templateConfigData:temp
             })
+            this.onValuesChange();
             // console.log(templateConfigData)
       }
+
+    autoGenerateUniqueId(){
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
 
     renderTemplateConfig =()=>{
         const {templateConfigData}= this.state
@@ -433,7 +443,7 @@ class ProductUpdateForm extends BasicForm {
                                         required: true,
                                         message: 'Nhập tên cấu hình thuộc tính!',
                                     },
-                                    ]} name={item.id ? `name_${item.id}` :`name_${item.index}`}>
+                                    ]} name={`name_${item.index}`}>
                                 <Input placeholder='Tên' onChange={e=> this.setConfigField(e.target.value,item.index,1)}/>
                                </Form.Item>
                             </Col>
@@ -445,7 +455,7 @@ class ProductUpdateForm extends BasicForm {
                                         required: true,
                                         message: 'Chọn loại nhóm thuộc tính!',
                                     },
-                                    ]} name={ item.id ?`choiceKind_${item.id}`:`choiceKind_${item.index}`}>
+                                    ]} name={`choiceKind_${item.index}`}>
                                 <Select placeholder='Loại' options={variantTemplateConfig} onSelect={e=> this.setConfigField(e,item.index,2)}/>
                                </Form.Item>
                             </Col>
@@ -456,7 +466,7 @@ class ProductUpdateForm extends BasicForm {
                                                 <CheckBoxField
                                                 optionLabel={t("form.label.required")}
                                                 onChange={e=> this.setConfigField(e.target.value,item.index,3)}
-                                fieldName={item.id ?`isRequired_${item.id}`:`isRequired_${item.index}` }
+                                fieldName={`isRequired_${item.index}` }
                                 />
                             </Col>
                         </Row>
@@ -465,7 +475,7 @@ class ProductUpdateForm extends BasicForm {
                     <Col span={15}>
                     <FieldSet title='Danh sách thuộc tính'>
                         <Row gutter={[12, 0]}>
-                                <VariantTemplateSortable changeVariant={this.changeVariant} addImageVariant={this.addImageVariant}  uploadFile={this.props.uploadFile} onSortEnd={this.onSortEnd} removeVariantItem={this.removeVariantItem}  data={item.variantIds} id={item.index}/>
+                                <VariantTemplateSortable onValuesChange={this.onValuesChange} changeVariant={this.changeVariant} addImageVariant={this.addImageVariant}  uploadFile={this.props.uploadFile} onSortEnd={this.onSortEnd} removeVariantItem={this.removeVariantItem}  data={item.variantIds} id={item.index}/>
                                 <Col span={22}>
                                 <Button type="dashed" onClick={()=>{this.addVariantItem(item.index,_index)}} block icon={<PlusOutlined />}  >
                                     Thêm thuộc tính
@@ -493,10 +503,12 @@ class ProductUpdateForm extends BasicForm {
             dataList,
             dataListTemplate,
             isTemplate,
-            templateConfigData
+            templateConfigData,
+            chooseKind
         } = this.state
         const variantData = dataList.data || [];
         const variantTemplateData = dataListTemplate.data || [];
+        // console.log(templateConfigData);
         return (
             <>
             <Form
@@ -513,8 +525,7 @@ class ProductUpdateForm extends BasicForm {
 
                      <Row gutter={[16, 0]} >
                         <Col span={12}>
-                            <CropImageFiled
-                            aspect={1.5}   
+                            <CropImageFiled 
                             fieldName="image"  
                             loading={uploading}
                             label={t("form.label.image")}
@@ -539,6 +550,7 @@ class ProductUpdateForm extends BasicForm {
                         options={productKind}
                         defaultValue={parentProduct? 2 :null}
                         disabled={parentProduct ? true :false}
+                        onChange={(e)=>{this.setState({chooseKind:e})}}
                         />
                         </Col>
                             </Row>
@@ -552,7 +564,7 @@ class ProductUpdateForm extends BasicForm {
                         />
                         </Col>
                         <Col span={12}>
-                        <NumericField
+                            {chooseKind===1 ? <NumericField
 							fieldName="price"
                             required
 							label={t("form.label.price") + " (VNĐ)"}
@@ -560,7 +572,8 @@ class ProductUpdateForm extends BasicForm {
 							max={Infinity}
 							width="100%"
 							parser={(value) => Utils.formatIntegerNumber(value)}
-						/>
+						/> :<></>}
+                       
                         </Col>
                         </Row>
                         <Row gutter={[16,0]}>
@@ -603,7 +616,7 @@ class ProductUpdateForm extends BasicForm {
                         />
                         </Col>
                         </Row>
-                        <FieldSet className="customer-fieldset-variant-template" title='Cấu hình thuộc tính' >
+                        {chooseKind === 1 ?  <FieldSet className="customer-fieldset-variant-template" title='Cấu hình thuộc tính' >
                             <Col span={24}>
                             {this.renderTemplateConfig()}
 
@@ -624,7 +637,8 @@ class ProductUpdateForm extends BasicForm {
                             <Col span={24}>
                            
                             </Col>
-                        </FieldSet>
+                        </FieldSet> :<></>}
+                       
                         </div>
                 </Card>
                 <div className="footer-card-form">

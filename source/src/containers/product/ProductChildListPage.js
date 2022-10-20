@@ -45,14 +45,12 @@ class ProductChildListPage extends ListBasePage {
         align: 'center',
         width: '100px',
         render: (image) => (
-          <div className="product-image">
             <Avatar
               shape="square"
               size="large"
               icon={<UserOutlined />}
               src={image ? `${AppConstants.contentRootUrl}${image}` : null}
             />
-          </div>
         //   <image
         //   // width={200}
         //   src={image ? `${AppConstants.contentRootUrl}${image}` : "error"}
@@ -97,6 +95,87 @@ class ProductChildListPage extends ListBasePage {
     };
   }
 
+  renderActionColumn() {
+    const { t } = this.props;
+    const isRender= this.checkRenderActionColumn()
+    if(isRender)
+    return {
+        title: t ? t('listBasePage:titleActionCol') : 'Action',
+        width: '100px',
+        align: 'center',
+        render: (dataRow) => {
+            const actionColumns = [];
+            if (this.actionColumns.isEdit) {
+                const detailLink = this.getDetailLink(dataRow);
+                
+                let to = {
+                    state: { prevPath: this.props.location.pathname }
+                }
+                if (typeof detailLink === 'object') {
+                    to = {
+                        ...to,
+                        ...detailLink,
+                    }
+                } else {
+                    to.pathname = detailLink;
+                }
+                actionColumns.push(this.renderEditButton((
+                    <Link to={to}>
+                        <Button type="link" className="no-padding">
+                            <EditOutlined color="red" />
+                        </Button>
+                    </Link>
+                )))
+            }
+            if(this.actionColumns.isChangeStatus) {
+                actionColumns.push(
+                    <Button type="link" onClick={(e) => {
+                        e.stopPropagation()
+                        this.showChangeStatusConfirm(dataRow)
+                    }} className="no-padding">
+                        {
+                            dataRow.status === STATUS_ACTIVE
+                            ?
+                            <LockOutlined/>
+                            :
+                            <CheckOutlined/>
+                        }
+                    </Button>
+                )
+            }
+            if(this.actionColumns.isDelete) {
+                actionColumns.push(
+                    this.renderDeleteButton((
+                        <Button type="link" onClick={(e) => {
+                            e.stopPropagation()
+                            this.showDeleteConfirm(dataRow.id)
+                        }} className="no-padding">
+                            { this.actionColumns.isDelete.icon || <DeleteOutlined/> }
+                        </Button>
+                    ))
+                )
+            }
+            const actionColumnsWithDivider = [];
+            actionColumns.forEach((action, index) => {
+                actionColumnsWithDivider.push(action);
+                if(index !== (actionColumns.length -1))
+                {
+                    actionColumnsWithDivider.push(<Divider type="vertical" />);
+                }
+            })
+            return (
+                <span>
+                    {
+                        actionColumnsWithDivider.map((action, index) => <span key={index}>{action}</span>)
+                    }
+                </span>
+            )
+        }
+    }
+    else
+        return {}  
+}
+
   getSearchFields() {
     const {t} = this.props;
     return [
@@ -114,7 +193,7 @@ class ProductChildListPage extends ListBasePage {
   }
 
   getDetailLink(dataRow) {
-    return sitePathConfig.productUpdate.path.replace(':id', dataRow.id);
+    return sitePathConfig.productUpdate.path.replace(':id', `${dataRow.id}?parentProduct=${this.parentProduct}`);
   }
 
   componentWillMount() {
@@ -132,7 +211,7 @@ class ProductChildListPage extends ListBasePage {
               const {result,data}= responseData
               if(result){
                   this.setState({
-                      categoryId:data.data?.map(item =>{
+                      categoryId:data?.map(item =>{
                           return {value:item.id,label:item.name}
                       })
                   })
@@ -148,7 +227,7 @@ getList() {
   const params = {
     page,
     size: this.pagination.pageSize,
-    search: {parentProduct:this.parentProduct},
+    search: {parentProduct:this.parentProduct,...this.search},
   };
   getDataList({ params });
 }

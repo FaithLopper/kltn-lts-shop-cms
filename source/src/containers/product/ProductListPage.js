@@ -33,7 +33,7 @@ class ProductListPage extends ListBasePage {
       location: { search },
     } = this.props;
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
-      this.state={
+    this.state={
         categoryId:[]
       }
     this.columns = [
@@ -43,29 +43,25 @@ class ProductListPage extends ListBasePage {
         align: 'center',
         width: '100px',
         render: (image) => (
-          <div className="product-image">
             <Avatar
               shape="square"
               size="large"
               icon={<UserOutlined />}
               src={image ? `${AppConstants.contentRootUrl}${image}` : null}
             />
-          </div>
-        //   <image
-        //   // width={200}
-        //   src={image ? `${AppConstants.contentRootUrl}${image}` : "error"}
-        // />
         ),
       },
       // { title:  t("table.name"), dataIndex: "name",width:'250px'},
       { title: t("table.name"),width:'250px',render: (dataRow) => {
-        return (
-            <span className="routing" onClick={()=>{
-                this.handleRouting(dataRow.id);
-            }}>
-                {dataRow.name}
-            </span>
-        )
+        if(dataRow.kind === 2)
+          return (
+              <span className="routing" onClick={()=>{
+                  this.handleRouting(dataRow.id);
+              }}>
+                  {dataRow.name}
+              </span>
+          )
+        return <span>{dataRow.name}</span>
     } },
       {
         title: t("table.price") + ' (VNĐ)',
@@ -149,7 +145,7 @@ class ProductListPage extends ListBasePage {
               const {result,data}= responseData
               if(result){
                   this.setState({
-                      categoryId:data.data?.map(item =>{
+                      categoryId:data?.map(item =>{
                           return {value:item.id,label:item.name}
                       })
                   })

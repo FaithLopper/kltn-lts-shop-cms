@@ -56,7 +56,6 @@ class CropImageFiled extends BaseField {
             index
         } = this.props;
         const aspectValue = aspect || 1;
-        console.log(showUploadList)
         return (
             <Form.Item
                 label={label}

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Avatar, Button } from "antd";
-import { UserOutlined, PlusOutlined } from "@ant-design/icons";
+import { UserOutlined, PlusOutlined,MenuOutlined } from "@ant-design/icons";
 import qs from "query-string";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -12,6 +12,18 @@ import { actions } from "../../actions";
 import { FieldTypes } from "../../constants/formConfig";
 import { AppConstants } from "../../constants";
 import { commonStatus } from "../../constants/masterData";
+import DrapDropTable from "../../compoments/common/table/DragDropTable";
+import { SortableHandle } from "react-sortable-hoc";
+
+const DragHandle = SortableHandle(() => (
+  <MenuOutlined
+    style={{
+      cursor: "grab",
+      color: "#999",
+    }}
+  />
+));
+
 
 class CategoryProductListPage extends ListBasePage {
   initialSearch() {
@@ -26,6 +38,13 @@ class CategoryProductListPage extends ListBasePage {
     this.objectListName = "category-product";
     this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
     this.columns = [
+      {
+        title: 'Sort',
+        dataIndex: 'sort',
+        width: 30,
+        className: 'drag-visible',
+        render: () => <DragHandle />,
+      },
       {
         title: "#",
         dataIndex: "icon",
@@ -116,9 +135,15 @@ class CategoryProductListPage extends ListBasePage {
     return sitePathConfig.categoryProductUpdate.path.replace(":id", dataRow.id);
   }
 
+  mapDataToTable(dataSource){
+    let tempData= dataSource.map(item => ({...item, index :item.orderSort,key:item.id}))
+    // console.log(tempData);
+    return tempData
+  }
+
   render() {
     const { dataList, loading, t } = this.props;
-    const categoryData = dataList.data || [];
+    const categoryData = dataList.data ? this.mapDataToTable(dataList.data) :[];
     this.pagination.total = dataList.totalElements || 0;
     return (
       <div>
@@ -133,11 +158,11 @@ class CategoryProductListPage extends ListBasePage {
             </Link>
           )}
         </div>
-        <BaseTable
+        <DrapDropTable
           loading={loading}
           columns={this.columns}
           rowKey={(record) => record.id}
-          dataSource={categoryData}
+          data={categoryData}
           pagination={this.pagination}
           onChange={this.handleTableChange}
         />

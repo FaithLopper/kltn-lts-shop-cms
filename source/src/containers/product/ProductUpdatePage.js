@@ -23,17 +23,17 @@ class ProductUpdatePage extends SaveBasePage {
         super(props);
         const { t } = this.props;
         this.objectName =  t("objectName");
-        this.getListUrl = sitePathConfig.product.path;
         this.actionFooter= false
         const {
             location: { search },
-          } = this.props;
-          const { parentProduct } = qs.parse(search);
+        } = this.props;
+        const { parentProduct } = qs.parse(search);
         this.parentProduct= parentProduct
+        this.getListUrl = this.parentProduct ?`${sitePathConfig.productChild.path}?parentProduct=${this.parentProduct}` : sitePathConfig.product.path;
         this.breadcrumbs = [
             {
                 name:  t("breadcrumbs.parentPage"),
-                path:`${sitePathConfig.variant.path}`
+                path:`${sitePathConfig.product.path}`
             },
             {
                 name:  this.isEditing? `${t(`listBasePage:${"update"}`)} ${this.objectName}` :`${t(`listBasePage:${"create"}`)} ${this.objectName}`,
@@ -64,10 +64,11 @@ class ProductUpdatePage extends SaveBasePage {
                 const {result,data}= responseData
                 if(result){
                     this.setState({
-                        categoryId:data.data?.map(item =>{
+                        categoryId:data?.map(item =>{
                             return {value:item.id,label:item.name}
                         })
                     })
+                    console.log(data)
                 }
             },
             onError: this.onSaveError
@@ -181,12 +182,12 @@ class ProductUpdatePage extends SaveBasePage {
         if(data.tags===""){
             delete tempData.tags
         }
-        console.log(this.parentProduct)
         return {
             ...tempData,
             kind:this.parentProduct? 2:tempData.kind,
+            price:this.parentProduct && tempData.kind === 2? tempData.price: tempData.kind === 2 ? tempData.price=0 : tempData.price ,
             productParentId:this.parentProduct ?parseInt(this.parentProduct) :null,
-            productConfigs:temp
+            productConfigs:data.kind === 1? temp:null,
         };
     }
 
@@ -195,6 +196,7 @@ class ProductUpdatePage extends SaveBasePage {
             return {
                 ...item,
                 variants:item.variantIds.map((variant,index) =>{
+                    // console.log(variant);
                     return {
                         ...variant,
                         orderSort:index
@@ -233,6 +235,7 @@ class ProductUpdatePage extends SaveBasePage {
         if (objectNotFound) {
             return <ObjectNotFound />
         }
+        console.log(this.state.categoryId);
         return (
             <LoadingWrapper loading={isGetDetailLoading}>
                 <ProductUpdateForm
