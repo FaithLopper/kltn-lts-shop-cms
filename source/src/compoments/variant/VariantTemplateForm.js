@@ -332,7 +332,6 @@ class VariantTemplateForm extends BasicForm {
             isShowModifiedModal,
             isShowModifiedLoading,
           } = this.state;
-        console.log(this.state);
         return (
             <>
             <Form

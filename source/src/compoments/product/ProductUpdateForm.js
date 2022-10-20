@@ -66,9 +66,10 @@ class ProductUpdateForm extends BasicForm {
                 id:nextProps.dataDetail.id
             })
             if(nextProps.dataDetail.kind === 2){
-                this.setState({
-                    chooseKind:2
-                })
+                // this.setState({
+                //     chooseKind:2
+                // })
+                console.log(nextProps.dataDetail)
             }
             const {variantConfigs} = nextProps.dataDetail
             variantConfigs.map(item =>{
@@ -549,7 +550,7 @@ class ProductUpdateForm extends BasicForm {
                         required={parentProduct ? false :true}
                         options={productKind}
                         defaultValue={parentProduct? 2 :null}
-                        disabled={parentProduct ? true :false}
+                        disabled={isEditing ? true : parentProduct? true :false}
                         onChange={(e)=>{this.setState({chooseKind:e})}}
                         />
                         </Col>
