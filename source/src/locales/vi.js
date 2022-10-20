@@ -33,6 +33,7 @@ export default {
         'Variant':'Thuộc tính',
         'Variant Template':'Nhóm thuộc tính',
         'Product':'Sản phẩm',
+        'Tags': 'Quản lý Tags'
     },
     appHeader: {
         profile: 'Hồ sơ',

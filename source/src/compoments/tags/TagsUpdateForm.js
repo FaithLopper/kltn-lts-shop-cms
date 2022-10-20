@@ -1,23 +1,15 @@
 import React from "react";
-import { Form, Col, Row, Card, message, Button } from "antd";
+import { Form, Col, Row, Card } from "antd";
 import BasicForm from "../common/entryForm/BasicForm";
 import TextField from "../common/entryForm/TextField";
-import CropImageFiled from "../common/entryForm/CropImageFiled";
 import Utils from "../../utils";
-import { commonStatus } from "../../constants/masterData";
-import { AppConstants, UploadFileTypes, STATUS_ACTIVE } from "../../constants";
-import { showErrorMessage } from "../../services/notifyService";
-import DropdownField from "../common/entryForm/DropdownField";
+import { AppConstants } from "../../constants";
 import ColorPicker from "../common/colorPicker/ColorPicker";
 
 class TagsUpdateForm extends BasicForm {
   constructor(props) {
     super(props);
-    this.state = {
-      logo: "",
-      uploading: false,
-      isUpdateLogo: false,
-    };
+    this.state = {};
 
     this.acceptFileTypes = ".png, .jpg, .jpeg, .webp";
   }
@@ -50,27 +42,6 @@ class TagsUpdateForm extends BasicForm {
     });
   }
 
-  uploadFileLogo = (file, onSuccess) => {
-    const { uploadFile } = this.props;
-    this.setState({ uploading: true });
-    uploadFile({
-      params: { fileObjects: { file }, type: UploadFileTypes.AVATAR },
-      onCompleted: (result) => {
-        // this.otherData.logoPath = result.data.filePath;
-        this.setFieldValue("avatar", result.data.filePath);
-        this.setState({ uploading: false });
-        this.onValuesChange();
-        onSuccess();
-      },
-      onError: (err) => {
-        if (err && err.message) {
-          showErrorMessage(err.message);
-          this.setState({ uploading: false });
-        }
-      },
-    });
-  };
-
   getInitialFormValues = () => {
     const { isEditing, dataDetail } = this.props;
     if (!isEditing) {
@@ -79,18 +50,8 @@ class TagsUpdateForm extends BasicForm {
     return dataDetail;
   };
 
-  handleChangeLogo = (info) => {
-    if (info.file.status === "done") {
-      Utils.getBase64(info.file.originFileObj, (logo) =>
-        this.setState({ logo: logo, isUpdateLogo: true })
-      );
-    }
-  };
-
   render() {
-    const { formId, actions, isEditing, t } = this.props;
-    const { uploading, logo } = this.state;
-
+    const { formId, actions, t } = this.props;
     return (
       <Form
         id={formId}

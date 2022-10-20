@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { SketchPicker, SketchPickerProps } from "react-color";
+import React, { useEffect, useState } from "react";
+import { SketchPicker } from "react-color";
 import { Button } from "antd";
 import { BgColorsOutlined } from "@ant-design/icons";
 import Utils from "../../../utils";
