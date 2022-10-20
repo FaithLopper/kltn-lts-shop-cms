@@ -33,7 +33,7 @@ class ProductListPage extends ListBasePage {
       location: { search },
     } = this.props;
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
-      this.state={
+    this.state={
         categoryId:[]
       }
     this.columns = [
@@ -145,7 +145,7 @@ class ProductListPage extends ListBasePage {
               const {result,data}= responseData
               if(result){
                   this.setState({
-                      categoryId:data.data?.map(item =>{
+                      categoryId:data?.map(item =>{
                           return {value:item.id,label:item.name}
                       })
                   })

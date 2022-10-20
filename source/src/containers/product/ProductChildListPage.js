@@ -211,7 +211,7 @@ class ProductChildListPage extends ListBasePage {
               const {result,data}= responseData
               if(result){
                   this.setState({
-                      categoryId:data.data?.map(item =>{
+                      categoryId:data?.map(item =>{
                           return {value:item.id,label:item.name}
                       })
                   })
