@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest } from "redux-saga/effects";
 
 import { sendRequest } from "../services/apiService";
 import { actionTypes, reduxUtil } from "../actions/productCategory";
@@ -14,7 +14,8 @@ const {
   UPDATE_PRODUCT_CATEGORY,
   DELETE_PRODUCT_CATEGORY,
   CREATE_PRODUCT_CATEGORY,
-  GET_PRODUCT_CATEGORY_COMBOBOX
+  GET_PRODUCT_CATEGORY_COMBOBOX,
+  SORT_PRODUCT_CATEGORY
 } = actionTypes;
 
 function* getProductCategoryList({ payload: { params } }) {
@@ -100,6 +101,20 @@ function* updateProductCategory({ payload: { params, onCompleted, onError } }) {
   }
 }
 
+function* sortProductCategory({ payload: { params, onCompleted, onError } }) {
+  console.log("catched")
+  try {
+    const apiParams = apiConfig.productCategory.update;
+    // const result = yield call(sendRequest, apiParams, params);
+    yield all([...params].map(param => call(sendRequest, apiParams, param)))
+    // console.log(result);
+    // handleApiResponse(result, onCompleted, onError);
+  } catch (error) {
+    console.log(error);
+    // onError(error);
+  }
+}
+
 function* deleteProductCategory({ payload: { params, onCompleted, onError } }) {
   try {
     const apiParams = {
@@ -124,6 +139,7 @@ const sagas = [
   ),
   takeLatest(GET_PRODUCT_CATEGORY_BY_ID, getProductCategoryById),
   takeLatest(UPDATE_PRODUCT_CATEGORY, updateProductCategory),
+  takeLatest(SORT_PRODUCT_CATEGORY, sortProductCategory),
   takeLatest(CREATE_PRODUCT_CATEGORY, createProductCategory),
   takeLatest(GET_PRODUCT_CATEGORY_COMBOBOX, getProductCategoryCombobox),
   takeLatest(

@@ -48,7 +48,7 @@ class ProductUpdatePage extends SaveBasePage {
     }
 
     componentWillMount(){
-        const { changeBreadcrumb,onReturn, onGetFormID,detectActionRenderType,getProductCategoryCombobox} = this.props;
+        const { changeBreadcrumb,onReturn,getTagDropDown, onGetFormID,detectActionRenderType,getProductCategoryCombobox} = this.props;
         if (this.isEditing) {
             this.getDetail(this.dataId);
         }
@@ -72,6 +72,22 @@ class ProductUpdatePage extends SaveBasePage {
             },
             onError: this.onSaveError
         })
+
+        getTagDropDown({
+            params: {},
+            onCompleted: (responseData)=>{
+                const {result,data}= responseData
+                if(result){
+                    this.setState({
+                        tags:data?.data?.map(item =>{
+                            return {value:item.tag,label:item.tag}
+                        })
+                    })
+                    // console.log(this.state, data);
+                }
+            },
+            onError: this.onSaveError
+        })
     }
 
     getDataDetailMapping = (data) => {
@@ -82,14 +98,18 @@ class ProductUpdatePage extends SaveBasePage {
         }
         let tags= []
         if(productData.tags){
-            let currentIndex= 1
-            let objectArray= productData.tags.match(new RegExp("#", "g")) || []
+            let currentIndex= 0
+            let objectArray= productData.tags.match(new RegExp(" ", "g")) || []
+            if(objectArray.length === 0)
+                tags.push(productData.tags)
             Object.keys(objectArray).map((item,index) =>{
                 if(index !== objectArray.length -1){
-                    tags.push(productData.tags.slice(currentIndex,productData.tags.indexOf("#",currentIndex)-1))
-                    currentIndex= productData.tags.indexOf("#",currentIndex)+1
+                    tags.push(productData.tags.slice(currentIndex,productData.tags.indexOf(" ",currentIndex)-1))
+                    currentIndex= productData.tags.indexOf(" ",currentIndex)+1
                 }
                 else{
+                    tags.push(productData.tags.slice(currentIndex,productData.tags.indexOf(" ",currentIndex)))
+                    currentIndex= productData.tags.indexOf(" ",currentIndex)+1
                     tags.push(productData.tags.slice(currentIndex))
                 }
             })
@@ -193,7 +213,7 @@ class ProductUpdatePage extends SaveBasePage {
     }
 
     prepareUpdateData = (data) => {
-        console.log(data)
+        // console.log(data)
         let temp= data.productConfigs.map(item =>{
             return {
                 ...item,
@@ -232,7 +252,7 @@ class ProductUpdatePage extends SaveBasePage {
     }
 
     render() {
-        const { isGetDetailLoading, objectNotFound, categoryId } = this.state
+        const { isGetDetailLoading, objectNotFound, categoryId,tags } = this.state
         const {t,uploadFile}= this.props
         if (objectNotFound) {
             return <ObjectNotFound />
@@ -256,6 +276,7 @@ class ProductUpdatePage extends SaveBasePage {
                     getTemplate={this.props.getTemplate}
                     parentProduct= {this.parentProduct}
                     t={t}
+                    tagOption={tags || []}
                     />
             </LoadingWrapper>
         )
@@ -269,6 +290,7 @@ const mapDispatchToProps = dispatch => ({
   updateData: (payload) => dispatch(actions.updateProduct(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
   getProductCategoryCombobox:(payload)=> dispatch(actions.getProductCategoryCombobox(payload)),
+  getTagDropDown:(payload)=> dispatch(actions.getTagsDropDown(payload)),
   getDataList: (payload) => dispatch(actions.getVariantListModal(payload)),
   getDataListVariantTemplate: (payload) => dispatch(actions.getVariantTemplateListModal(payload)),
 })
