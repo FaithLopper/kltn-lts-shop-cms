@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Form, Input, Row, Col } from "antd";
+import { Form, Input, Row, Col, InputNumber } from "antd";
 import { withTranslation } from "react-i18next";
 
 import BaseField from "./BaseField";
@@ -62,11 +62,12 @@ class CordinateInputField extends BaseField {
               help={help}
               rules={[...this.getRules(), ...this.getTextFieldRules()]}
             >
-              <Input
+              <InputNumber
                 onChange={onChange}
                 style={style}
                 size={size}
-                placeholder={this.getPlaceHolder()}
+                formatter={value => parseFloat(value).toFixed(6)}
+                placeholder={this.getPlaceHolder()?.lat}
                 disabled={disabled}
                 type={type}
                 onBlur={onBlur}
@@ -94,11 +95,12 @@ class CordinateInputField extends BaseField {
               help={help}
               rules={[...this.getRules(), ...this.getTextFieldRules()]}
             >
-              <Input
+              <InputNumber
                 onChange={onChange}
                 style={style}
                 size={size}
-                placeholder={this.getPlaceHolder()}
+                formatter={value => parseFloat(value).toFixed(6)}
+                placeholder={this.getPlaceHolder()?.lng}
                 disabled={disabled}
                 type={type}
                 onBlur={onBlur}
