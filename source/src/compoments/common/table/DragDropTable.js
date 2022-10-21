@@ -59,13 +59,13 @@ const data = [
 const SortableItem = SortableElement((props) => <tr {...props} />);
 const SortableBody = SortableContainer((props) => <tbody {...props} />);
 const DragDropTable = (props) => {
-    const {loading,rowKey,columns,data,onChange}= props
+    const {loading,rowKey,columns,data,onChange,sortEnd}= props
   const [dataSource, setDataSource] = useState(data);
   const onSortEnd = ({ oldIndex, newIndex }) => {
     if (oldIndex !== newIndex) {
       const newData = arrayMoveImmutable(dataSource.slice(), oldIndex, newIndex)
       setDataSource(newData);
-      console.log(dataSource);
+      sortEnd(oldIndex, newIndex,newData)
     }
   };
   useEffect(()=>{   if(data !== dataSource)setDataSource(data) },[data])
@@ -89,7 +89,7 @@ const DragDropTable = (props) => {
       pagination={false}
       dataSource={dataSource}
       columns={columns}
-    
+      loading={loading}
       rowKey="index"
       components={{
         body: {

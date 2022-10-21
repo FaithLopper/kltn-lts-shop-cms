@@ -15,6 +15,7 @@ const {
   DELETE_TAGS,
   CREATE_TAGS,
   GET_TAGS_AUTOCOMPLETE,
+  GET_TAGS_DROPDOWN
 } = actionTypes;
 
 function* getTagsList({ payload: { params } }) {
@@ -71,6 +72,16 @@ function* createTags({ payload: { params, onCompleted, onError } }) {
   }
 }
 
+function* getTagDropDown({ payload: { params, onCompleted, onError } }) {
+  try {
+    const apiParams = apiConfig.tags.getList;
+    const result = yield call(sendRequest, apiParams, params);
+    handleApiResponse(result, onCompleted, onError);
+  } catch (error) {
+    onError(error);
+  }
+}
+
 function* updateTags({ payload: { params, onCompleted, onError } }) {
   try {
     const apiParams = apiConfig.tags.update;
@@ -119,6 +130,7 @@ const sagas = [
   takeLatest(defineActionLoading(GET_TAGS_LIST), getTagsList),
   takeLatest(GET_TAGS_BY_ID, getTagsById),
   takeLatest(UPDATE_TAGS, updateTags),
+  takeLatest(GET_TAGS_DROPDOWN, getTagDropDown),
   takeLatest(CREATE_TAGS, createTags),
   takeLatest(defineActionLoading(DELETE_TAGS), deleteTags),
   takeEvery(defineActionLoading(GET_TAGS_AUTOCOMPLETE), getTagsAutoComplete),
