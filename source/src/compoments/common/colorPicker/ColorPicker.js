@@ -13,7 +13,6 @@ const ColorPicker = (props) => {
 
   const setNewColor = (color) => {
     onValueChange();
-    console.log(color.hex);
     setHexColor(color.hex); // set state color
     setter("color", color.hex.substring(1)); // set form ref
   };

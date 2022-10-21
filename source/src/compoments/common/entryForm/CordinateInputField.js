@@ -2,7 +2,6 @@ import React from "react";
 
 import { Form, Input, Row, Col, InputNumber } from "antd";
 import { withTranslation } from "react-i18next";
-
 import BaseField from "./BaseField";
 const { TextArea } = Input;
 
@@ -35,6 +34,7 @@ class CordinateInputField extends BaseField {
 
     return rules;
   }
+
   render() {
     const {
       type,
@@ -50,7 +50,9 @@ class CordinateInputField extends BaseField {
       style,
       className,
       onChange,
+      precision,
     } = this.props;
+
     return (
       <Form.Item label={label}>
         <Row>
@@ -66,7 +68,7 @@ class CordinateInputField extends BaseField {
                 onChange={onChange}
                 style={style}
                 size={size}
-                formatter={value => parseFloat(value).toFixed(6)}
+                precision={precision}
                 placeholder={this.getPlaceHolder()?.lat}
                 disabled={disabled}
                 type={type}
@@ -99,7 +101,7 @@ class CordinateInputField extends BaseField {
                 onChange={onChange}
                 style={style}
                 size={size}
-                formatter={value => parseFloat(value).toFixed(6)}
+                precision={precision}
                 placeholder={this.getPlaceHolder()?.lng}
                 disabled={disabled}
                 type={type}

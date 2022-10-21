@@ -315,6 +315,7 @@ class StoreUpdateForm extends BasicForm {
                                     <EnvironmentOutlined />
                                     </Button>
                                 }
+                                precision={6}
                             />
                         </Col>
                         </Row>
