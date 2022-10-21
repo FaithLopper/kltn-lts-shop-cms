@@ -10,6 +10,7 @@ export const actionTypes = {
     GET_PRODUCT_CATEGORY_COMBOBOX: defineAction('GET_PRODUCT_CATEGORY_COMBOBOX'),
     GET_PRODUCT_CATEGORY_BY_ID: defineAction('GET_PRODUCT_CATEGORY_BY_ID'),
     UPDATE_PRODUCT_CATEGORY: defineAction('UPDATE_PRODUCT_CATEGORY'),
+    SORT_PRODUCT_CATEGORY: defineAction('SORT_PRODUCT_CATEGORY'),
     DELETE_PRODUCT_CATEGORY: defineAction('DELETE_PRODUCT_CATEGORY'),
 }
 
@@ -19,5 +20,6 @@ export const actions = {
     getProductCategoryCombobox: createAction(actionTypes.GET_PRODUCT_CATEGORY_COMBOBOX),
     getProductCategoryById: createAction(actionTypes.GET_PRODUCT_CATEGORY_BY_ID),
     updateProductCategory: createAction(actionTypes.UPDATE_PRODUCT_CATEGORY),
+    sortProductCategory: createAction(actionTypes.SORT_PRODUCT_CATEGORY),
     deleteProductCategory: createActionWithLoading(actionTypes.DELETE_PRODUCT_CATEGORY)
 }

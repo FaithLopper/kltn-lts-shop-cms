@@ -48,7 +48,7 @@ class ProductUpdatePage extends SaveBasePage {
     }
 
     componentWillMount(){
-        const { changeBreadcrumb,onReturn, onGetFormID,detectActionRenderType,getProductCategoryCombobox} = this.props;
+        const { changeBreadcrumb,onReturn,getTagDropDown, onGetFormID,detectActionRenderType,getProductCategoryCombobox} = this.props;
         if (this.isEditing) {
             this.getDetail(this.dataId);
         }
@@ -68,7 +68,21 @@ class ProductUpdatePage extends SaveBasePage {
                             return {value:item.id,label:item.name}
                         })
                     })
-                    console.log(data)
+                }
+            },
+            onError: this.onSaveError
+        })
+
+        getTagDropDown({
+            params: {},
+            onCompleted: (responseData)=>{
+                const {result,data}= responseData
+                if(result){
+                    this.setState({
+                        tags:data?.data?.map(item =>{
+                            return {value:item.tag,label:item.tag}
+                        })
+                    })
                 }
             },
             onError: this.onSaveError
@@ -83,15 +97,18 @@ class ProductUpdatePage extends SaveBasePage {
         }
         let tags= []
         if(productData.tags){
-            let currentIndex= 1
-            let objectArray= productData.tags.match(new RegExp("#", "g")) || []
+            let currentIndex= 0
+            let objectArray= productData.tags.match(new RegExp(" ", "g")) || []
+            if(objectArray.length === 0)
+                tags.push(productData.tags)
             Object.keys(objectArray).map((item,index) =>{
-                console.log(productData.tags.length);
                 if(index !== objectArray.length -1){
-                    tags.push(productData.tags.slice(currentIndex,productData.tags.indexOf("#",currentIndex)-1))
-                    currentIndex= productData.tags.indexOf("#",currentIndex)+1
+                    tags.push(productData.tags.slice(currentIndex,productData.tags.indexOf(" ",currentIndex)-1))
+                    currentIndex= productData.tags.indexOf(" ",currentIndex)+1
                 }
                 else{
+                    tags.push(productData.tags.slice(currentIndex,productData.tags.indexOf(" ",currentIndex)))
+                    currentIndex= productData.tags.indexOf(" ",currentIndex)+1
                     tags.push(productData.tags.slice(currentIndex))
                 }
             })
@@ -182,12 +199,15 @@ class ProductUpdatePage extends SaveBasePage {
         if(data.tags===""){
             delete tempData.tags
         }
+        if(tempData.kind === undefined){
+            tempData.kind= 2
+        }
         return {
             ...tempData,
             kind:this.parentProduct? 2:tempData.kind,
             price:this.parentProduct && tempData.kind === 2? tempData.price: tempData.kind === 2 ? tempData.price=0 : tempData.price ,
             productParentId:this.parentProduct ?parseInt(this.parentProduct) :null,
-            productConfigs:data.kind === 1? temp:null,
+            productConfigs:tempData.kind === 1 || tempData.kind === 2 && this.parentProduct ? temp : null,
         };
     }
 
@@ -196,7 +216,6 @@ class ProductUpdatePage extends SaveBasePage {
             return {
                 ...item,
                 variants:item.variantIds.map((variant,index) =>{
-                    // console.log(variant);
                     return {
                         ...variant,
                         orderSort:index
@@ -230,12 +249,11 @@ class ProductUpdatePage extends SaveBasePage {
     }
 
     render() {
-        const { isGetDetailLoading, objectNotFound, categoryId } = this.state
+        const { isGetDetailLoading, objectNotFound, categoryId,tags } = this.state
         const {t,uploadFile}= this.props
         if (objectNotFound) {
             return <ObjectNotFound />
         }
-        console.log(this.state.categoryId);
         return (
             <LoadingWrapper loading={isGetDetailLoading}>
                 <ProductUpdateForm
@@ -255,6 +273,7 @@ class ProductUpdatePage extends SaveBasePage {
                     getTemplate={this.props.getTemplate}
                     parentProduct= {this.parentProduct}
                     t={t}
+                    tagOption={tags || []}
                     />
             </LoadingWrapper>
         )
@@ -268,6 +287,7 @@ const mapDispatchToProps = dispatch => ({
   updateData: (payload) => dispatch(actions.updateProduct(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
   getProductCategoryCombobox:(payload)=> dispatch(actions.getProductCategoryCombobox(payload)),
+  getTagDropDown:(payload)=> dispatch(actions.getTagsDropDown(payload)),
   getDataList: (payload) => dispatch(actions.getVariantListModal(payload)),
   getDataListVariantTemplate: (payload) => dispatch(actions.getVariantTemplateListModal(payload)),
 })

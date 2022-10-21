@@ -84,6 +84,7 @@ class CategoryProductListPage extends ListBasePage {
       isDelete: true,
       isChangeStatus: false,
     };
+    this.sortEnd= this.sortEnd.bind(this)
   }
 
   handleRouting(parentId, parentName) {
@@ -137,13 +138,25 @@ class CategoryProductListPage extends ListBasePage {
 
   mapDataToTable(dataSource){
     let tempData= dataSource.map(item => ({...item, index :item.orderSort,key:item.id}))
-    // console.log(tempData);
     return tempData
   }
 
+  sortEnd(oldIndex,newIndex,newData){
+    const{sortData}= this.props
+        let tempArray = newData.map((item, index)=>{
+          return {...item,orderSort:index}
+        })
+        sortData({
+          params: tempArray,
+          onCompleted: this.onModifyCompleted,
+          onError: this.onModifyError
+      });
+    }
+
+
   render() {
     const { dataList, loading, t } = this.props;
-    const categoryData = dataList.data ? this.mapDataToTable(dataList.data) :[];
+    const categoryData = dataList ? this.mapDataToTable(dataList) :[];
     this.pagination.total = dataList.totalElements || 0;
     return (
       <div>
@@ -164,6 +177,7 @@ class CategoryProductListPage extends ListBasePage {
           rowKey={(record) => record.id}
           data={categoryData}
           pagination={this.pagination}
+          sortEnd={this.sortEnd}
           onChange={this.handleTableChange}
         />
       </div>
@@ -180,6 +194,7 @@ const mapDispatchToProps = (dispatch) => ({
   getDataList: (payload) => dispatch(actions.getProductCategoryList(payload)),
   getDataById: (payload) => dispatch(actions.getProductCategoryById(payload)),
   updateData: (payload) => dispatch(actions.updateProductCategory(payload)),
+  sortData: (payload) => dispatch(actions.sortProductCategory(payload)),
   deleteData: (payload) => dispatch(actions.deleteProductCategory(payload)),
   createData: (payload) => dispatch(actions.createProductCategory(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),

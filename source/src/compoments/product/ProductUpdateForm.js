@@ -66,9 +66,10 @@ class ProductUpdateForm extends BasicForm {
                 id:nextProps.dataDetail.id
             })
             if(nextProps.dataDetail.kind === 2){
-                this.setState({
-                    chooseKind:2
-                })
+                // this.setState({
+                //     chooseKind:2
+                // })
+                // console.log(nextProps.dataDetail)
             }
             const {variantConfigs} = nextProps.dataDetail
             variantConfigs.map(item =>{
@@ -124,7 +125,7 @@ class ProductUpdateForm extends BasicForm {
         if(formValues.tags){
             if(formValues.tags.length !==0){
                 formValues.tags.map((item, index) =>{
-                    tags= tags.concat(`#${item}`)
+                    tags= tags.concat(`${item}`)
                     if(formValues.tags.length > 1 && index !== formValues.tags.length -1)
                         tags= tags.concat(' ')
                 })
@@ -187,7 +188,10 @@ class ProductUpdateForm extends BasicForm {
                     // hideFullScreenLoading();
                 },
                 onError: (err) => {
-                  console.log(err)
+                    if (err && err.message) {
+                        showErrorMessage(err.message);
+                        this.setState({ uploading: false });
+                        }
                 }
             }
         )
@@ -208,7 +212,10 @@ class ProductUpdateForm extends BasicForm {
                     // hideFullScreenLoading();
                 },
                 onError: (err) => {
-                  console.log(err)
+                    if (err && err.message) {
+                        showErrorMessage(err.message);
+                        this.setState({ uploading: false });
+                        }
                 }
             }
         )
@@ -285,7 +292,10 @@ class ProductUpdateForm extends BasicForm {
                         })
                 },
                 onError: (err) => {
-                  console.log(err)
+                    if (err && err.message) {
+                        showErrorMessage(err.message);
+                        this.setState({ uploading: false });
+                        }
                 }
             }
         )
@@ -421,7 +431,6 @@ class ProductUpdateForm extends BasicForm {
                 templateConfigData:temp
             })
             this.onValuesChange();
-            // console.log(templateConfigData)
       }
 
     autoGenerateUniqueId(){
@@ -494,7 +503,7 @@ class ProductUpdateForm extends BasicForm {
     }
 
     render() {
-        const { formId, dataDetail, actions, isEditing,t ,categoryId,parentProduct} = this.props
+        const { formId, dataDetail, actions, isEditing,t,tagOption ,categoryId,parentProduct} = this.props
         const {
             uploading,
 			image,
@@ -508,7 +517,6 @@ class ProductUpdateForm extends BasicForm {
         } = this.state
         const variantData = dataList.data || [];
         const variantTemplateData = dataListTemplate.data || [];
-        // console.log(templateConfigData);
         return (
             <>
             <Form
@@ -549,7 +557,7 @@ class ProductUpdateForm extends BasicForm {
                         required={parentProduct ? false :true}
                         options={productKind}
                         defaultValue={parentProduct? 2 :null}
-                        disabled={parentProduct ? true :false}
+                        disabled={isEditing ? true : parentProduct? true :false}
                         onChange={(e)=>{this.setState({chooseKind:e})}}
                         />
                         </Col>
@@ -581,7 +589,11 @@ class ProductUpdateForm extends BasicForm {
                                 {/* <TextField fieldName="tags" label={t("form.label.tags")} 
                                 // disabled={loadingSave}
                                 /> */}
-                                <TagField fieldName="tags" label={t("form.label.tags")} allowClear={true}/>
+                                <TagField 
+                                fieldName="tags" 
+                                label={t("form.label.tags")} 
+                                allowClear={true} 
+                                options={tagOption}/>
                             </Col>
                         </Row>
                         <Row gutter={[16, 0]}>

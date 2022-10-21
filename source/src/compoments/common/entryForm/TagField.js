@@ -1,17 +1,8 @@
 import { Form, Select } from 'antd';
 import React from 'react';
 import BaseField from './BaseField';
-const { Option } = Select;
-const children = [
-    {key:0,value:'ao'},
-    {key:1,value:'quan'},
-    {key:2,value:'aothun'},
-    {key:3,value:'aophong'},
-    {key:4,value:'aosomi'},
-];
 
 const handleChange = (value) => {
-  console.log(`selected ${value}`);
 };
 class TagField extends BaseField {
     constructor(props) {
@@ -19,7 +10,7 @@ class TagField extends BaseField {
     }
 
     render(){
-        const {label,fieldName,allowClear}= this.props;
+        const {label,fieldName,allowClear,options}= this.props;
         return( 
             <Form.Item label={label}
             name={fieldName}
@@ -28,7 +19,7 @@ class TagField extends BaseField {
             // noStyle={noStyle}
         >
           <Select
-            mode="tags"
+            mode="multiple"
             allowClear={allowClear}
             placeholder={this.getPlaceHolder()}
             style={{
@@ -36,7 +27,7 @@ class TagField extends BaseField {
             }}
             onChange={handleChange}
             >
-            {children.map(item =>  <Select.Option key={item.key} value={item.value}>{item.value} </Select.Option>)}
+            {options.map(item =>  <Select.Option key={item.key} value={item.value}>{item.value} </Select.Option>)}
           </Select>
         </Form.Item>
         )
