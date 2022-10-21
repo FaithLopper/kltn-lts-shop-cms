@@ -69,7 +69,7 @@ class ProductChildListPage extends ListBasePage {
         },
         { title:  t("table.productCategoryId"), align:"center",with:"150px",dataIndex: "productCategoryId",render:(productCategoryId)=>{
             const {categoryId} = this.state
-            let text=''
+          let text=''
             if(categoryId.length !==0)
               categoryId.map(item =>{
                 if(item.value === productCategoryId)

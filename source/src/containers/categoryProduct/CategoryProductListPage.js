@@ -138,7 +138,6 @@ class CategoryProductListPage extends ListBasePage {
 
   mapDataToTable(dataSource){
     let tempData= dataSource.map(item => ({...item, index :item.orderSort,key:item.id}))
-    // console.log(tempData);
     return tempData
   }
 

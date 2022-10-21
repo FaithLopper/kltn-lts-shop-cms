@@ -102,16 +102,11 @@ function* updateProductCategory({ payload: { params, onCompleted, onError } }) {
 }
 
 function* sortProductCategory({ payload: { params, onCompleted, onError } }) {
-  console.log("catched")
   try {
     const apiParams = apiConfig.productCategory.update;
-    // const result = yield call(sendRequest, apiParams, params);
     yield all([...params].map(param => call(sendRequest, apiParams, param)))
-    // console.log(result);
-    // handleApiResponse(result, onCompleted, onError);
   } catch (error) {
-    console.log(error);
-    // onError(error);
+    onError(error);
   }
 }
 

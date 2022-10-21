@@ -253,7 +253,10 @@ class VariantTemplateForm extends BasicForm {
                     // hideFullScreenLoading();
                 },
                 onError: (err) => {
-                  console.log(err)
+                    if (err && err.message) {
+                        showErrorMessage(err.message);
+                        this.setState({ uploading: false });
+                        }
                 }
             }
         )

@@ -188,7 +188,10 @@ class ProductUpdateForm extends BasicForm {
                     // hideFullScreenLoading();
                 },
                 onError: (err) => {
-                  console.log(err)
+                    if (err && err.message) {
+                        showErrorMessage(err.message);
+                        this.setState({ uploading: false });
+                        }
                 }
             }
         )
@@ -209,7 +212,10 @@ class ProductUpdateForm extends BasicForm {
                     // hideFullScreenLoading();
                 },
                 onError: (err) => {
-                  console.log(err)
+                    if (err && err.message) {
+                        showErrorMessage(err.message);
+                        this.setState({ uploading: false });
+                        }
                 }
             }
         )
@@ -286,7 +292,10 @@ class ProductUpdateForm extends BasicForm {
                         })
                 },
                 onError: (err) => {
-                  console.log(err)
+                    if (err && err.message) {
+                        showErrorMessage(err.message);
+                        this.setState({ uploading: false });
+                        }
                 }
             }
         )
@@ -422,7 +431,6 @@ class ProductUpdateForm extends BasicForm {
                 templateConfigData:temp
             })
             this.onValuesChange();
-            // console.log(templateConfigData)
       }
 
     autoGenerateUniqueId(){
@@ -509,7 +517,6 @@ class ProductUpdateForm extends BasicForm {
         } = this.state
         const variantData = dataList.data || [];
         const variantTemplateData = dataListTemplate.data || [];
-        // console.log(tagOption);
         return (
             <>
             <Form

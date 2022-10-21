@@ -83,7 +83,6 @@ class ProductUpdatePage extends SaveBasePage {
                             return {value:item.tag,label:item.tag}
                         })
                     })
-                    // console.log(this.state, data);
                 }
             },
             onError: this.onSaveError
@@ -213,12 +212,10 @@ class ProductUpdatePage extends SaveBasePage {
     }
 
     prepareUpdateData = (data) => {
-        // console.log(data)
         let temp= data.productConfigs.map(item =>{
             return {
                 ...item,
                 variants:item.variantIds.map((variant,index) =>{
-                    // console.log(variant);
                     return {
                         ...variant,
                         orderSort:index

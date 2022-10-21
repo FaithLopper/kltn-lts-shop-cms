@@ -3,7 +3,6 @@ import React from 'react';
 import BaseField from './BaseField';
 
 const handleChange = (value) => {
-  console.log(`selected ${value}`);
 };
 class TagField extends BaseField {
     constructor(props) {
