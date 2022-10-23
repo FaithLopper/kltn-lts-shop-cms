@@ -43,7 +43,6 @@ class TagsUpdateForm extends BasicForm {
     // });
     onSubmit({
       ...formValues,
-      tag: Utils.getHashTag(formValues.tag),
     });
   }
 
@@ -90,7 +89,7 @@ class TagsUpdateForm extends BasicForm {
             <Row gutter={[16, 0]}>
               <Col span={12}>
                 <Row style={{marginBottom: "8px"}}>
-                  <label>{t("form.label.color")}</label>
+                  <label style={{color:"rgba(0, 0, 0, 0.85)"}}>{t("form.label.color")}</label>
                 </Row>
                 <Row>
                   <ColorPicker

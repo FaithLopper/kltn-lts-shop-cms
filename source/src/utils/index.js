@@ -240,7 +240,11 @@ const Utils = {
     let newStr = str.replace(/[^a-zA-Z0-9]/g, "");
     return newStr;
   },
-
+  
+  tagRegex : {
+    pattern: new RegExp(/^[\p{L}\p{N}]+$/gu),
+    message: "chứa ký tự đặt biệt",
+  }
 };
 
 export default Utils;

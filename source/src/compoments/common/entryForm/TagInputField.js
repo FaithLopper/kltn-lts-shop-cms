@@ -2,7 +2,7 @@ import React from "react";
 
 import { Form, Input } from "antd";
 import { withTranslation } from "react-i18next";
-
+import Utils from "../../../utils";
 import BaseField from "./BaseField";
 const { TextArea } = Input;
 
@@ -59,10 +59,7 @@ class TagInputField extends BaseField {
         rules={[
           ...this.getRules(),
           ...this.getTextFieldRules(),
-          {
-            pattern: new RegExp('^[a-zA-Z]+$'),
-            message: "chứa ký tự đặt biệt",
-          },
+          {...Utils.tagRegex}
         ]}
       >
         {type === "textarea" ? (
