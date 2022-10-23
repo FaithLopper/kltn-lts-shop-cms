@@ -8,7 +8,7 @@ import UploadImageField from '../common/entryForm/UploadImageField';
 import { convertDateTimeToString, convertLocalTimeToUtc, convertUtcToLocalTime } from '../../utils/datetimeHelper';
 import CropImageFiled from '../common/entryForm/CropImageFiled';
 import Utils from "../../utils";
-import {  GoogleOutlined } from '@ant-design/icons';
+import {  EnvironmentOutlined } from '@ant-design/icons';
 import { commonSex, commonStatus } from '../../constants/masterData';
 import {
     AppConstants,
@@ -297,16 +297,26 @@ class StoreUpdateForm extends BasicForm {
                         </Row>
                         <Row gutter={[16, 0]}>
                         <Col span={24}>
-                        <CordinateInputField
-                            type='number'
-                            style={{
-                                textAlign: 'center',
+                            <CordinateInputField
+                                type="number"
+                                style={{
+                                    paddingLeft: "10%",
+                                    width: 120,
                                 }}
-                            label={t('form.label.MapCordinateTitle')} 
-                            latFieldName="latitude" lngFieldName="longitude"
-                            suffix={
-                                <Button width={1} onClick={this.onShowModal}><GoogleOutlined /></Button>
-                            } />
+                                label={t("form.label.MapCordinateTitle")}
+                                placeholder={{
+                                    lat: t("form.placeholder.lat"),
+                                    lng: t("form.placeholder.lng"),
+                                }}
+                                latFieldName="latitude"
+                                lngFieldName="longitude"
+                                suffix={
+                                    <Button width={1} onClick={this.onShowModal}>
+                                    <EnvironmentOutlined />
+                                    </Button>
+                                }
+                                precision={6}
+                            />
                         </Col>
                         </Row>
                         <BasicModal

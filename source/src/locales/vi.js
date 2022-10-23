@@ -742,6 +742,10 @@ export default {
                 "MapCordinateTitle": 'Tọa độ',
                 "cordinate": "Kinh độ, vĩ độ",
             },
+            placeholder: {
+                lat: "Vĩ độ",
+                lng: "Kinh độ",
+            },
             validationMessage: {
                 phoneLengthRequire: 'Hãy nhập số',
                 comparePassword: 'Mật khẩu bạn nhập không khớp!',

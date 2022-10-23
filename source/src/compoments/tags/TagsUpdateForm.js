@@ -5,6 +5,7 @@ import TextField from "../common/entryForm/TextField";
 import Utils from "../../utils";
 import { AppConstants } from "../../constants";
 import ColorPicker from "../common/colorPicker/ColorPicker";
+import TagInputField from "../common/entryForm/TagInputField";
 
 class TagsUpdateForm extends BasicForm {
   constructor(props) {
@@ -36,9 +37,13 @@ class TagsUpdateForm extends BasicForm {
 
   handleSubmit(formValues) {
     const { onSubmit } = this.props;
+    // onSubmit({
+    //   tag: Utils.getHashTag(Utils.removeAllSpecial(formValues.tag)),
+    //   color: formValues.color,
+    // });
     onSubmit({
-      tag: Utils.getHashTag(Utils.removeAllSpecial(formValues.tag)),
-      color: formValues.color,
+      ...formValues,
+      tag: Utils.getHashTag(formValues.tag),
     });
   }
 
@@ -66,7 +71,7 @@ class TagsUpdateForm extends BasicForm {
           <div style={{ padding: "20px 6px" }}>
             <Row gutter={[16, 0]}>
               <Col span={12}>
-                <TextField
+                <TagInputField
                   fieldName="tag"
                   label={t("form.label.tag")}
                   required
@@ -84,11 +89,16 @@ class TagsUpdateForm extends BasicForm {
             </Row>
             <Row gutter={[16, 0]}>
               <Col span={12}>
-                <ColorPicker
-                  setter={(name, value) => this.setFieldValue(name, value)}
-                  getter={(name) => this.getFieldValue(name)}
-                  onValueChange={() => this.onValuesChange()}
-                />
+                <Row style={{marginBottom: "8px"}}>
+                  <label>{t("form.label.color")}</label>
+                </Row>
+                <Row>
+                  <ColorPicker
+                    setter={(name, value) => this.setFieldValue(name, value)}
+                    getter={(name) => this.getFieldValue(name)}
+                    onValueChange={() => this.onValuesChange()}
+                  />
+                </Row>
               </Col>
             </Row>
           </div>

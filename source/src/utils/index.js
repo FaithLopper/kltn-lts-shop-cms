@@ -240,6 +240,7 @@ const Utils = {
     let newStr = str.replace(/[^a-zA-Z0-9]/g, "");
     return newStr;
   },
+
 };
 
 export default Utils;
