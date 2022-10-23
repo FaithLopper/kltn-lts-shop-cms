@@ -63,8 +63,9 @@ class ProductUpdateForm extends BasicForm {
             this.formRef.current.setFieldsValue(nextProps.dataDetail)
             this.setState({
                 templateConfigData:nextProps.dataDetail.variantConfigs,
-                id:nextProps.dataDetail.id
+                id:nextProps.dataDetail.id,
             })
+            this.parentProductId= nextProps.dataDetail.parentProductId
             if(nextProps.dataDetail.kind === 2){
                 // this.setState({
                 //     chooseKind:2
@@ -120,7 +121,7 @@ class ProductUpdateForm extends BasicForm {
 
     handleSubmit(formValues) {
         const { onSubmit } = this.props
-        const {templateConfigData,id}= this.state
+        const {templateConfigData,id,parentProductId}= this.state
         let tags =''
         if(formValues.tags){
             if(formValues.tags.length !==0){
@@ -556,7 +557,7 @@ class ProductUpdateForm extends BasicForm {
                         label={t("form.label.kind")}
                         required={parentProduct ? false :true}
                         options={productKind}
-                        defaultValue={parentProduct? 2 :null}
+                        defaultValue={parentProduct? 1 :null}
                         disabled={isEditing ? true : parentProduct? true :false}
                         onChange={(e)=>{this.setState({chooseKind:e})}}
                         />

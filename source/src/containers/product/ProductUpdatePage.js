@@ -89,7 +89,7 @@ class ProductUpdatePage extends SaveBasePage {
         })
     }
 
-    getDataDetailMapping = (data) => {
+    getDataDetailMapping = ( data) => {
         const productData = data
         if (!productData) {
             this.setState({ objectNotFound: true });
@@ -113,6 +113,7 @@ class ProductUpdatePage extends SaveBasePage {
                 }
             })
         }
+        this.parentProductId= productData.parentProductId
         const dataConfig= {
             ...productData,
             categoryId:productData.productCategoryId,
@@ -204,10 +205,10 @@ class ProductUpdatePage extends SaveBasePage {
         }
         return {
             ...tempData,
-            kind:this.parentProduct? 2:tempData.kind,
-            price:this.parentProduct && tempData.kind === 2? tempData.price: tempData.kind === 2 ? tempData.price=0 : tempData.price ,
-            productParentId:this.parentProduct ?parseInt(this.parentProduct) :null,
-            productConfigs:tempData.kind === 1 || tempData.kind === 2 && this.parentProduct ? temp : null,
+            kind:this.parentProduct? 1:tempData.kind,
+            price:tempData.kind === 1 || this.parentProduct ? tempData.price : 0,
+            parentProductId:this.parentProduct ?parseInt(this.parentProduct) :null,
+            productConfigs:tempData.kind === 1 || tempData.kind === 1 && this.parentProduct ? temp : null,
         };
     }
 
@@ -229,6 +230,7 @@ class ProductUpdatePage extends SaveBasePage {
         }
         return {
             ...tempData,
+            parentProductId:this.parentProductId,
             productConfigs:temp
         };
     }
