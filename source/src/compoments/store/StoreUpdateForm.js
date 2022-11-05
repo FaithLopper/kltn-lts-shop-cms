@@ -300,7 +300,7 @@ class StoreUpdateForm extends BasicForm {
                             <CordinateInputField
                                 type="number"
                                 style={{
-                                    paddingLeft: "10%",
+                                    paddingLeft: "16%",
                                     width: 120,
                                 }}
                                 label={t("form.label.MapCordinateTitle")}
