@@ -504,7 +504,7 @@ class ProductUpdateForm extends BasicForm {
     }
 
     render() {
-        const { formId, dataDetail, actions, isEditing,t,tagOption ,categoryId,parentProduct} = this.props
+        const { formId, dataDetail, actions, isEditing,t,tagOption ,categoryId,parentProduct,onProductCategoryParentChange,categoryChildId} = this.props
         const {
             uploading,
 			image,
@@ -564,14 +564,35 @@ class ProductUpdateForm extends BasicForm {
                         </Col>
                             </Row>
                         <Row gutter={[16, 0]}>
+                            <Col span={12}>
+                            <Form.Item  label={t("form.label.categoryId")}>
+                        <Row gutter={[16, 0]}>
                         <Col span={12}>
                         <DropdownField
                         fieldName="categoryId"
-                        label={t("form.label.categoryId")}
+                        // label={t("form.label.categoryId")}
                         required
                         options={categoryId}
+                        placeholder="Danh mục cha"
+                        onChange={(e)=>{
+                            this.setFieldValue("categoryChildId","")
+                            onProductCategoryParentChange(e)}}
                         />
                         </Col>
+                        <Col span={12}>
+                        <DropdownField
+                        fieldName="categoryChildId"
+                        // label={t("form.label.categoryId")}
+                        required
+                        options={categoryChildId}
+                        placeholder="Danh mục con"
+                        />
+                        </Col>
+               
+                        </Row>
+                        </Form.Item>
+                            </Col>
+                            
                         <Col span={12}>
                             {chooseKind===1 ? <NumericField
 							fieldName="price"
