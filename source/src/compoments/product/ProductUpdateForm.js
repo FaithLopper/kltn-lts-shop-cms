@@ -583,7 +583,6 @@ class ProductUpdateForm extends BasicForm {
                         <DropdownField
                         fieldName="categoryChildId"
                         // label={t("form.label.categoryId")}
-                        required
                         options={categoryChildId}
                         placeholder="Danh mục con"
                         />

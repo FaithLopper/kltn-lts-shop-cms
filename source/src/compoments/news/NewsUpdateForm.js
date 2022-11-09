@@ -145,7 +145,7 @@ class NewsUpdateForm extends BasicForm {
         initialValues={this.getInitialFormValues()}
         layout="vertical"
         onValuesChange={this.onValuesChange}
-        style={{ width: "600px" }}
+        style={{ width: "800px" }}
       >
         <Card title="THÔNG TIN CƠ BẢN" bordered={false}>
           <Row gutter={16}>
@@ -163,7 +163,7 @@ class NewsUpdateForm extends BasicForm {
             </Col>
             <Col span={12}>
               <CropImageFiled
-                aspect={16 / 9}
+                aspect={3 / 2}
                 fieldName="banner"
                 loading={uploadingBanner}
                 label={t("form.label.banner")}
