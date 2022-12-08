@@ -242,7 +242,7 @@ class VariantTemplateForm extends BasicForm {
         const { getList, showFullScreenLoading, hideFullScreenLoading } = this.props;
         getList(
             {
-                params:{},
+                params:{size:1000},
                 onCompleted: ({data}) => {
                     this.setState({
                         dataList:  this.getDataDetailMapping(data)
