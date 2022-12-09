@@ -134,6 +134,16 @@ const navMenuConfig = [
             },
         ]
     },
+    {
+        label: 'Order',
+        icon: <SkinOutlined />,
+        children: [
+            {
+                label: 'orderManagement',
+                ...sitePathConfig.order,
+            },
+        ]
+    },
 ]
 
 const employeeNavMenuConfig = [

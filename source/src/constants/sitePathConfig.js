@@ -29,6 +29,8 @@ import CategoryProductUpdate from "../containers/categoryProduct/CategoryProduct
 import CategoryProductSubListPage from "../containers/categoryProduct/CategoryProductSubListPage";
 import CategoryProductSubUpdate from "../containers/categoryProduct/CategoryProductSubUpdate";
 import TagsListPage from "../containers/tags/TagsListPage";
+import OrderListPage from "../containers/order/OrderListPage";
+import OrderUpdate from "../containers/order/OrderUpdate";
 
 export const sitePathConfig = {
     login: {
@@ -444,7 +446,7 @@ export const sitePathConfig = {
             apiConfig.tags.create.path,
             apiConfig.tags.update.path,
             apiConfig.tags.delete.path,
-            ]
+        ]
     },
     tagsUpdate: {
         path:'/tags/:id',
@@ -453,6 +455,27 @@ export const sitePathConfig = {
             apiConfig.tags.getById.path,
             apiConfig.tags.create.path,
             apiConfig.tags.update.path,
-            ]
+        ]
+    },
+    order: {
+        path:'/order',
+        component: OrderListPage,
+        childrenKeys: ['/order/create','/order/:id'],
+        permissions:[
+            apiConfig.order.getList.path,
+            apiConfig.order.getById.path,
+            apiConfig.order.create.path,
+            apiConfig.order.update.path,
+            apiConfig.order.delete.path,
+        ]
+    },
+    orderUpdate: {
+        path:'/order/:id',
+        component: OrderUpdate,
+        permissions:[
+            apiConfig.order.getById.path,
+            apiConfig.order.create.path,
+            apiConfig.order.update.path,
+        ]
     },
 }

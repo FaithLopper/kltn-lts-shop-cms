@@ -1,0 +1,160 @@
+import React from "react";
+import { connect } from "react-redux";
+import { Avatar, Button } from "antd";
+import { UserOutlined, PlusOutlined } from "@ant-design/icons";
+import qs from "query-string";
+import { withTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import ListBasePage from "../ListBasePage";
+import BaseTable from "../../compoments/common/table/BaseTable";
+import { sitePathConfig } from "../../constants/sitePathConfig";
+import { actions } from "../../actions";
+import { FieldTypes } from "../../constants/formConfig";
+import { AppConstants } from "../../constants";
+import Utils from "../../utils";
+import { commonStatus, categoryKinds } from "../../constants/masterData";
+
+class OrderListPage extends ListBasePage {
+  initialSearch() {
+    return { name: "", status: null };
+  }
+
+  constructor(props) {
+    super(props);
+    const { t } = props;
+    const { formatMoney } = Utils;
+    this.objectName = t("objectName");
+    this.objectListName = "order";
+    this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
+    this.columns = [
+      {
+        title: t("table.id"),
+        render: (dataRow) => {
+          return dataRow.id;
+        },
+      },
+      {
+        title: t("table.createdBy"),
+        render: (dataRow) => {
+          return dataRow.createdBy;
+        },
+      },
+      {
+        title: t("table.subTotal"),
+        render: (dataRow) => {
+          return formatMoney(dataRow.subTotal);
+        },
+      },
+      {
+        title: t("table.province"),
+        render: (dataRow) => {
+          return dataRow.province;
+        },
+      },
+      {
+        title: t("table.createdDate"),
+        render: (dataRow) => {
+          return dataRow.createdDate;
+        },
+      },
+      this.renderStatusColumn(),
+      this.renderActionColumn(),
+    ];
+    this.actionColumns = {
+      isEdit: true,
+      isDelete: true,
+      isChangeStatus: false,
+    };
+  }
+
+  //   prepareCreateData(data) {
+  //     return {
+  //       ...data,
+  //       categoryKind: CATEGORY_KIND_NEWS,
+  //     };
+  //   }
+
+  getList() {
+    const { getDataList } = this.props;
+    const page = this.pagination.current ? this.pagination.current - 1 : 0;
+    const params = {
+      page,
+      size: this.pagination.pageSize,
+      search: this.search,
+    };
+    getDataList({ params });
+  }
+
+  getSearchFields() {
+    const { t } = this.props;
+    return [
+      //   {
+      //     key: "name",
+      //     seachPlaceholder: t("searchPlaceHolder.name"),
+      //     initialValue: this.search.name,
+      //   },
+      {
+        key: "status",
+        seachPlaceholder: t("searchPlaceHolder.status"),
+        fieldType: FieldTypes.SELECT,
+        options: commonStatus,
+        initialValue: this.search.status,
+      },
+    ];
+  }
+
+  getDetailLink(dataRow) {
+    return sitePathConfig.orderUpdate.path.replace(":id", dataRow.id);
+  }
+
+  render() {
+    const { dataList, loading, t } = this.props;
+    const orderData = dataList.data || [];
+
+    this.pagination.total = dataList.totalElements || 0;
+    return (
+      <div>
+        {this.renderSearchForm()}
+        <div className="action-bar">
+          {this.renderCreateNewButton(
+            <Link to={this.getCreateLink()}>
+              <Button type="primary">
+                <PlusOutlined />{" "}
+                {t("createNewButton", { var: t("objectName") })}
+              </Button>
+            </Link>
+          )}
+        </div>
+        <BaseTable
+          loading={loading}
+          columns={this.columns}
+          rowKey={(record) => record.id}
+          dataSource={orderData}
+          pagination={this.pagination}
+          onChange={this.handleTableChange}
+        />
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  loading: state.order.tbOrderLoading,
+  dataList: state.order.orderData || {},
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getDataList: (payload) => dispatch(actions.getOrderList(payload)),
+  //   getDataById: (payload) => dispatch(actions.getCategoryById(payload)),
+  //   updateData: (payload) => dispatch(actions.updateCategory(payload)),
+  //   createData: (payload) => dispatch(actions.createCategory(payload)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  withTranslation(["orderListPage", "listBasePage", "constants", "basicModal"])(
+    OrderListPage
+  )
+);

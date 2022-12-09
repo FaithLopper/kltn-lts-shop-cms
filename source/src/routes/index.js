@@ -15,8 +15,6 @@ import UserAdminListPage from '../containers/users/UserAdminListPage';
 import NotFound from '../compoments/common/NotFound';
 import Forbidden from '../containers/Forbidden';
 import GroupPermissionListPage from '../containers/groupPermission/GroupPermissionListPage';
-import CategoryListPage from '../containers/category/CategoryListPage';
-import CategoryListPageChild from '../containers/category/CategoryListPageChild';
 import NewsListPage from '../containers/adminNews/NewsListPage';
 import UserAminUpdate from '../containers/users/UserAminUpdate';
 import ProvinceListPage from '../containers/province/ProvinceListPage';
@@ -54,6 +52,9 @@ import ProductUpdatePage from '../containers/product/ProductUpdatePage';
 import ProductChildListPage from '../containers/product/ProductChildListPage';
 import TagsListPage from '../containers/tags/TagsListPage';
 import TagsUpdate from '../containers/tags/TagsUpdate';
+import OrderListPage from '../containers/order/OrderListPage';
+import OrderUpdate from '../containers/order/OrderUpdate';
+
 const { getUserData } = actions;
 const userData = getUserData();
 
@@ -99,6 +100,8 @@ const RootRoute = () => {
         productChild,
         tags,
         tagsUpdate,
+        order,
+        orderUpdate,
     } = sitePathConfig;
 
     const getUserHomeNavigation =()=>{
@@ -175,6 +178,8 @@ const RootRoute = () => {
                 <PrivateRoute exact path={productUpdate.path} component={ProductUpdatePage}/>
                 <PrivateRoute exact path={tags.path} component={TagsListPage}/>
                 <PrivateRoute exact path={tagsUpdate.path} component={TagsUpdate}/>
+                <PrivateRoute exact path={order.path} component={OrderListPage}/>
+                <PrivateRoute exact path={orderUpdate.path} component={OrderUpdate}/>
                 {/* Error Page */}
                 <PrivateRoute exact path={forbidden.path} component={Forbidden}/>
                 {/* <Route exact path="/error" component={ErrorServer} /> */}

@@ -33,7 +33,9 @@ export default {
         'Variant':'Thuộc tính',
         'Variant Template':'Nhóm thuộc tính',
         'Product':'Sản phẩm',
-        'Tags': 'Quản lý Tags'
+        'Tags': 'Quản lý Tags',
+        'Order': 'Đơn đặt hàng',
+        'orderManagement': 'Quản lý đơn hàng'
     },
     appHeader: {
         profile: 'Hồ sơ',
@@ -904,6 +906,47 @@ export default {
             label: {
             tag: 'Tên Tag',
             color:'Màu sắc',
+            },
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    orderListPage: {
+        breadcrumbs: {
+            currentPage: 'Quản lý đơn hàng',
+            parentPage: 'Quản lý đơn hàng',
+        },
+        objectName: 'Đơn hàng',
+        searchPlaceHolder: {
+            status: 'Trạng thái đơn hàng',
+        },
+        table: {
+            id: 'Mã đơn',
+            createdBy:'Tên người đặt',
+            subTotal:'Tổng đơn',
+            province:'Địa chỉ tỉnh',
+            createdDate:'Ngày đặt',
+            productName:'Tên sản phẩm',
+            quantity:'Số lượng',
+            price:'Tổng giá',
+            discount:'Giảm giá',
+            variants:'Thuộc tính',
+        },
+        form: {
+            label: {
+            status: "Trạng thái đơn",
+            createdBy: 'Tên người đặt',
+            createdDate:'Ngày đặt',
+            modifiedBy:'Người chỉnh sửa',
+            modifiedDate:'Ngày chỉnh sửa',
+            receiverFullName:'Tên người nhận',
+            phone:'Số ĐT',
+            paymentMethod:'Phương thức thanh toán',
+            subTotal:'Tổng Đơn',
+            shippingCharge:'Phí Ship',
+            province:'Tỉnh',
+            district:'Quận',
+            ward:'Huyện',
+            addressDetails:'Địa chỉ cụ thể',
             },
         },
         createNewButton: 'Tạo {{ var, lowercase }} mới',
