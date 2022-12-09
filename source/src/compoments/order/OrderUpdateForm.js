@@ -50,7 +50,7 @@ class OrderUpdateForm extends BasicForm {
           const variants = [...dataRow.extraVariant];
           return variants.map((eachVar) => {
             return (
-              <>
+              <div key={eachVar.id}>
                 <span
                   style={{
                     color: "#444444",
@@ -62,17 +62,15 @@ class OrderUpdateForm extends BasicForm {
                 <ul style={{ paddingLeft: "30px" }}>
                   {eachVar.variants?.map((e) => {
                     return (
-                      <li>
+                      <li key={e.id}>
                         <span>{e.name}</span>
                         <br />
-                        <span>
-                          Giá: {formatMoney(e.price)}
-                        </span>
+                        <span>Giá: {formatMoney(e.price)}</span>
                       </li>
                     );
                   })}
                 </ul>
-              </>
+              </div>
             );
           });
         },
