@@ -120,7 +120,7 @@ class RichTextField extends BaseField {
             label,
             disabled,
             fieldName,
-            required,
+            // required,
         } = this.props;
         return (
             <Form.Item

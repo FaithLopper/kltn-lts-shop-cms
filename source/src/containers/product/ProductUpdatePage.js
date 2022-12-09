@@ -1,23 +1,11 @@
 import React from "react";
-// import ECatalogueLevel1Form from '../../components/eCatalogue/ECatalogueLevel1Form';
-import AdminLevel1Form from "../../compoments/user/AdminLevel1Form";
 import SaveBasePage from "../SaveBasePage";
 import LoadingWrapper from "../../compoments/common/elements/LoadingWrapper";
 import { connect } from "react-redux";
-// import { eCatalogueActions } from '../../redux/actions';
 import { actions } from "../../actions";
-import { convertUtcToLocalTime } from "../../utils/datetimeHelper";
-import {
-  showErrorMessage,
-  showSucsessMessage,
-} from "../../services/notifyService";
-// import { siteConfig } from "../../constants/siteConfig";
 import { sitePathConfig } from "../../constants/sitePathConfig";
-// import ObjectNotFound from "../../components/common/ObjectNotFound";
 import ObjectNotFound from "../../compoments/common/ObjectNotFound";
 import { withTranslation } from "react-i18next";
-import { UserTypes } from "../../constants";
-import VariantUpdateForm from "../../compoments/variant/VariantUpdateForm";
 import ProductUpdateForm from "../../compoments/product/ProductUpdateForm";
 import qs from "query-string";
 class ProductUpdatePage extends SaveBasePage {
@@ -153,6 +141,7 @@ class ProductUpdatePage extends SaveBasePage {
           currentIndex = productData.tags.indexOf(" ", currentIndex) + 1;
           tags.push(productData.tags.slice(currentIndex));
         }
+        return 0;
       });
     }
     this.parentProductId = productData.parentProductId;

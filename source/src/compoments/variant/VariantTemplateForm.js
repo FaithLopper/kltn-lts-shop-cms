@@ -1,27 +1,12 @@
 import React from 'react';
-import { Form, Col, Row, Card, Button, message, Input, Select, Checkbox } from 'antd';
+import { Form, Col, Row, Card, Button, Input, Select } from 'antd';
 import BasicForm from '../common/entryForm/BasicForm';
-import TextField from '../common/entryForm/TextField';
-import { convertDateTimeToString, convertUtcToLocalTime } from '../../utils/datetimeHelper';
-import CropImageFiled from '../common/entryForm/CropImageFiled';
-import Utils from "../../utils";
-import { KeyOutlined, CopyOutlined ,PlusOutlined,MinusCircleOutlined} from '@ant-design/icons';
-import { commonStatus, variantKinds, variantTemplateConfig } from '../../constants/masterData';
-import {
-    AppConstants,
-    UploadFileTypes,
-    STATUS_ACTIVE,
-  } from "../../constants";
-  import { showErrorMessage, showWarningMessage } from "../../services/notifyService";
-import PasswordGeneratorField from '../common/entryForm/PasswordGeneratorField';
-import DropdownField from '../common/entryForm/DropdownField';
-import NumericField from '../common/entryForm/NumericField';
-import RichTextField from '../common/entryForm/RichTextField';
+import { PlusOutlined, MinusCircleOutlined} from '@ant-design/icons';
+import { variantTemplateConfig } from '../../constants/masterData';
+import { showErrorMessage, showWarningMessage } from "../../services/notifyService";
 import CheckBoxField from '../common/entryForm/CheckBoxField';
-import Title from 'antd/lib/typography/Title';
 import BasicModal from '../common/modal/BasicModal';
 import VariantListForm from './VariantListForm';
-import { connect } from 'react-redux';
 import {SaveOutlined} from '@ant-design/icons';
 import FieldSet from '../common/elements/FieldSet'
 class VariantTemplateForm extends BasicForm {
@@ -59,6 +44,7 @@ class VariantTemplateForm extends BasicForm {
                 this.setFieldValue(`name_${item.id}`,item.name)
                 this.setFieldValue(`choiceKind_${item.id}`,item.choiceKind)
                 this.setFieldValue(`isRequired_${item.id}`,item.isRequired)
+                return 0;
             })
         }
     }
@@ -72,10 +58,11 @@ class VariantTemplateForm extends BasicForm {
         const { onSubmit } = this.props;
         const {templateConfigData,name,id}= this.state
         let pass=true
-        templateConfigData.map(item =>{
+        templateConfigData.map(item => {
             if(item.variantIds.length === 0 || item.variantIds.length === undefined){
                 pass =false
             }
+            return 0;
         })
         if(pass)
         onSubmit({
@@ -129,7 +116,7 @@ class VariantTemplateForm extends BasicForm {
 
     renderTemplateConfig =()=>{
         const {templateConfigData}= this.state
-        const {isEditing, t} = this.props
+        const { t } = this.props
         return templateConfigData.map((item,_index)=>{
             return (<>
                 <div className='variant-config-wrapper'>
@@ -239,7 +226,7 @@ class VariantTemplateForm extends BasicForm {
     }
 
     addVariantItem =(index,_index)=>{
-        const { getList, showFullScreenLoading, hideFullScreenLoading } = this.props;
+        const { getList } = this.props;
         getList(
             {
                 params:{size:1000},
@@ -328,8 +315,8 @@ class VariantTemplateForm extends BasicForm {
     }
 
     render() {
-        const { formId, actions, isEditing,t,isSubmitting} = this.props
-        const {dataList,name}= this.state
+        const {t,isSubmitting} = this.props
+        const {dataList}= this.state
         const variantData = dataList.data || [];
         const {
             isShowModifiedModal,

@@ -32,7 +32,6 @@ export default {
         'Product':'Sản phẩm',
         'Variant':'Thuộc tính',
         'Variant Template':'Nhóm thuộc tính',
-        'Product':'Sản phẩm',
         'Tags': 'Quản lý Tags',
         'Order': 'Đơn đặt hàng',
         'orderManagement': 'Quản lý đơn hàng'
@@ -54,7 +53,6 @@ export default {
         OtherSex: 'Khác',
         Forbidden: 'Bị cấm',
         Pending: 'Đang chờ',
-        Active: 'Hoạt động',
         Pause: 'Tạm dừng',
         Done: 'Hoàn thành',
         Cancel: 'Đã hủy',
@@ -237,12 +235,10 @@ export default {
         objectName: 'quản trị viên',
         form: {
             label: {
-                newPassword:'Tạo mật khẩu mới',
                 password:'Mật khẩu',
                 avatar: 'Ảnh đại diện',
                 username: 'Tài khoản',
                 fullName: 'Họ và tên',
-                password: 'Mật khẩu',
                 confirmPassword: 'Xác nhận mật khẩu',
                 newPassword: 'Mật khẩu mới',
                 confirmNewPassword: 'Xác nhận mật khẩu mới',
@@ -537,12 +533,10 @@ export default {
         objectName: 'khách hàng',
         form: {
             label: {
-                newPassword:'Tạo mật khẩu mới',
                 password:'Mật khẩu',
                 avatar: 'Ảnh đại diện',
                 username: 'Tài khoản',
                 fullName: 'Họ và tên',
-                password: 'Mật khẩu',
                 confirmPassword: 'Xác nhận mật khẩu',
                 newPassword: 'Mật khẩu mới',
                 confirmNewPassword: 'Xác nhận mật khẩu mới',

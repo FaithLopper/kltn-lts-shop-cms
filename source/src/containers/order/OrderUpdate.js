@@ -1,18 +1,12 @@
 import React from "react";
-import CategoryUpdateForm from "../../compoments/category/CategoryUpdateForm";
 import SaveBasePage from "../SaveBasePage";
 import LoadingWrapper from "../../compoments/common/elements/LoadingWrapper";
 import { connect } from "react-redux";
-// import { eCatalogueActions } from '../../redux/actions';
 import { actions } from "../../actions";
-// import { siteConfig } from "../../constants/siteConfig";
 import { sitePathConfig } from "../../constants/sitePathConfig";
-// import ObjectNotFound from "../../components/common/ObjectNotFound";
 import ObjectNotFound from "../../compoments/common/ObjectNotFound";
 import { withTranslation } from "react-i18next";
-import { categoryKinds } from "../../constants/masterData";
 import OrderUpdateForm from "../../compoments/order/OrderUpdateForm";
-import BaseTable from "../../compoments/common/table/BaseTable";
 
 class OrderUpdate extends SaveBasePage {
   constructor(props) {

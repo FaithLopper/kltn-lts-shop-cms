@@ -179,7 +179,7 @@ const Utils = {
   },
   rgba2hex(orig) {
     let a,
-      isPercent,
+      // isPercent,
       rgb = orig
         .replace(/\s/g, "")
         .match(/^rgba?\((\d+),(\d+),(\d+),?([^,\s)]+)?/i),

@@ -1,49 +1,48 @@
 import React from 'react';
-import { PageHeader, Tabs, Badge } from 'antd';
-import { Link } from 'react-router-dom';
+// import { Tabs, Badge } from 'antd';
 
 import LoadingWrapper from './elements/LoadingWrapper';
 
-const { TabPane } = Tabs;
+// const { TabPane } = Tabs;
 
 const PageWrapper = ({
-  title,
-  routes,
-  tabs,
-  activeTab,
-  onChangeTab,
+  // title,
+  // routes,
+  // tabs,
+  // activeTab,
+  // onChangeTab,
   children,
   loading = false,
-  tabsBadge
+  // tabsBadge
 }) => {
 
-  const renderTabs = () => {
-    if (tabs?.length) {
-      return (
-        <Tabs activeKey={activeTab} onChange={onChangeTab}>
-          {
-            tabs.map(tabItem => {
-              const badge = tabsBadge?.[tabItem.key];
+  // const renderTabs = () => {
+  //   if (tabs?.length) {
+  //     return (
+  //       <Tabs activeKey={activeTab} onChange={onChangeTab}>
+  //         {
+  //           tabs.map(tabItem => {
+  //             const badge = tabsBadge?.[tabItem.key];
 
-              return (
-                <TabPane
-                  tab={badge ? (
-                    <Badge color="#1890ff" offset={[10, 5]} count={badge}>
-                      {tabItem.tab}
-                    </Badge>
-                  ) : tabItem.tab}
-                  key={tabItem.key}
-                >
-                  {/* {tabItem.cpm ? tabItem.cpm() : null} */}
-                </TabPane>
-              );
-            })
-          }
-        </Tabs>
-      );
-    }
-    return null;
-  }
+  //             return (
+  //               <TabPane
+  //                 tab={badge ? (
+  //                   <Badge color="#1890ff" offset={[10, 5]} count={badge}>
+  //                     {tabItem.tab}
+  //                   </Badge>
+  //                 ) : tabItem.tab}
+  //                 key={tabItem.key}
+  //               >
+  //                 {/* {tabItem.cpm ? tabItem.cpm() : null} */}
+  //               </TabPane>
+  //             );
+  //           })
+  //         }
+  //       </Tabs>
+  //     );
+  //   }
+  //   return null;
+  // }
   return (
     <div className="page-wrapper">
       <LoadingWrapper loading={loading} className="full-screen-loading">

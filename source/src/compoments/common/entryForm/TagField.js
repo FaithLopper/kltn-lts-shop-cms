@@ -5,9 +5,9 @@ import BaseField from './BaseField';
 const handleChange = (value) => {
 };
 class TagField extends BaseField {
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     render(){
         const {label,fieldName,allowClear,options}= this.props;

@@ -1,5 +1,4 @@
 import React from 'react';
-import AdminLevel1Form from '../../compoments/user/AdminLevel1Form';
 import SaveBasePage from "../SaveBasePage";
 import LoadingWrapper from '../../compoments/common/elements/LoadingWrapper';
 import { connect } from 'react-redux';

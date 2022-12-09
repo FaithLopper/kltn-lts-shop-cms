@@ -1,14 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import ListBasePage from "../ListBasePage";
 import { connect } from "react-redux";
 import { actions } from "../../actions/province";
 import BaseTable from "../../compoments/common/table/BaseTable";
 import { withTranslation } from "react-i18next";
-import { Button, Avatar } from "antd";
-import { PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import BasicModal from "../../compoments/common/modal/BasicModal";
 import ProvinceForm from "../../compoments/province/ProvinceForm";
-import { FieldTypes } from "../../constants/formConfig";
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import qs from "query-string";
 import { ProvinceKinds } from "../../constants";
@@ -59,6 +58,7 @@ class DistrictListPage extends ListBasePage {
     const result = {};
     Object.keys(queryString).map(q => {
         result[`parentSearch${q}`] = queryString[q];
+        return 0;
     })
     history.push(`${pathname}-commune?${qs.stringify({...result, districtId, districtName})}`);
 }
@@ -113,8 +113,6 @@ class DistrictListPage extends ListBasePage {
     const {
       isShowModifiedModal,
       isShowModifiedLoading,
-      isShowPreviewModal,
-      isShowPreviewLoading,
     } = this.state;
     this.dataDetail.parentName=this.parentName
     this.dataDetail.parentId=this.parentId

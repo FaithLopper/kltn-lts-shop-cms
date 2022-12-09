@@ -1,11 +1,8 @@
-import React, { Component } from "react";
-import { DEFAULT_TABLE_ITEM_SIZE, STATUS_ACTIVE } from "../../constants";
+import React from "react";
+import { DEFAULT_TABLE_ITEM_SIZE } from "../../constants";
 import BasicForm from "../common/entryForm/BasicForm";
-import TextField from "../common/entryForm/TextField";
-import { Form, Col, Row, Button } from "antd";
+import { Button } from "antd";
 import BaseTable from "../common/table/BaseTable";
-import { connect } from "react-redux";
-import { withTranslation } from "react-i18next";
 class VariantTemplateListForm extends BasicForm {
   constructor(props) {
     super(props);

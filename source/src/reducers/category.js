@@ -36,12 +36,12 @@ const reducer = createReducer(
       state,
       { categoryAutoComplete, kind }
     ) => {
-      if (kind == 1) {
+      if (kind === 1) {
         return {
           ...state,
           categoryAutoCompleteNews: categoryAutoComplete,
         };
-      } else if (kind == 2) {
+      } else if (kind === 2) {
         return {
           ...state,
           categoryAutoCompleteJob: categoryAutoComplete,

@@ -1,14 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import ListBasePage from "../ListBasePage";
 import { connect } from "react-redux";
 import { actions } from "../../actions/province";
 import BaseTable from "../../compoments/common/table/BaseTable";
 import { withTranslation } from "react-i18next";
-import { Button, Avatar } from "antd";
-import { PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import BasicModal from "../../compoments/common/modal/BasicModal";
 import ProvinceForm from "../../compoments/province/ProvinceForm";
-import { FieldTypes } from "../../constants/formConfig";
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import qs from "query-string";
 import { ProvinceKinds } from "../../constants";
@@ -23,18 +22,24 @@ class CommuneListPage extends ListBasePage {
     const {
       location: { search },
     } = this.props;
-    const { districtId, districtName,parentSearchprovinceId,parentSearchprovinceName } = qs.parse(search);
+    const { districtId, districtName, parentSearchprovinceName } =
+      qs.parse(search);
     this.breadcrumbs = [
       {
         name: t("breadcrumbs.parentPage"),
         path: `${sitePathConfig.province.path}`,
       },
-      { name: `${parentSearchprovinceName}`, path: `${sitePathConfig.province.childrenKeys[0]}${this.handleRoutingParent()}` },
+      {
+        name: `${parentSearchprovinceName}`,
+        path: `${
+          sitePathConfig.province.childrenKeys[0]
+        }${this.handleRoutingParent()}`,
+      },
       { name: `${districtName}`, path: `` },
     ];
     this.parentId = districtId;
     this.parentName = districtName;
-    this.parentSearchprovinceName=parentSearchprovinceName
+    this.parentSearchprovinceName = parentSearchprovinceName;
     this.objectName = t("objectName");
     this.columns = [
       { title: t("table.provinceName"), dataIndex: "name" },
@@ -48,17 +53,21 @@ class CommuneListPage extends ListBasePage {
     this.props.getProvinceAutoComple({});
   }
   handleRoutingParent() {
-    const { location: { search } } = this.props;
+    const {
+      location: { search },
+    } = this.props;
     const queryString = qs.parse(search);
     const result = {};
-    const prName = 'parentSearch';
-    Object.keys(queryString).map(q => {
-        if(q.startsWith(prName))
-            result[q.substring(prName.length, q.length)] = queryString[q];
-    })
+    const prName = "parentSearch";
+    Object.keys(queryString).map((q) => {
+      if (q.startsWith(prName))
+        result[q.substring(prName.length, q.length)] = queryString[q];
+        
+      return 0;
+    });
     const qsMark = Object.keys(result).length > 0 ? "?" : "";
     return qsMark + qs.stringify(result);
-}
+  }
   getSearchFields() {
     const { t } = this.props;
     return [
@@ -73,14 +82,14 @@ class CommuneListPage extends ListBasePage {
   prepareCreateData(data) {
     return {
       ...data,
-      kind:ProvinceKinds.commune.level
+      kind: ProvinceKinds.commune.level,
     };
   }
   prepareUpdateData(data) {
     return {
       id: data.id,
-      kind:ProvinceKinds.commune.level,
-      status:1,
+      kind: ProvinceKinds.commune.level,
+      status: 1,
       ...data,
     };
   }
@@ -108,15 +117,10 @@ class CommuneListPage extends ListBasePage {
     const provinces = dataList.data || [];
 
     this.pagination.total = dataList.totalElements || 0;
-    const {
-      isShowModifiedModal,
-      isShowModifiedLoading,
-      isShowPreviewModal,
-      isShowPreviewLoading,
-    } = this.state;
-    this.dataDetail.parentName=this.parentName
-    this.dataDetail.parentId=this.parentId
-    this.dataDetail.parentSearchprovinceName=this.parentSearchprovinceName
+    const { isShowModifiedModal, isShowModifiedLoading } = this.state;
+    this.dataDetail.parentName = this.parentName;
+    this.dataDetail.parentId = this.parentId;
+    this.dataDetail.parentSearchprovinceName = this.parentSearchprovinceName;
     return (
       <div>
         {this.renderSearchForm()}
@@ -150,7 +154,15 @@ class CommuneListPage extends ListBasePage {
         >
           <ProvinceForm
             visible={isShowModifiedModal}
-            dataDetail={this.isEditing ? this.dataDetail : {parentSearchprovinceName:this.parentSearchprovinceName,parentName:this.dataDetail.parentName,parentId:this.dataDetail.parentId}}
+            dataDetail={
+              this.isEditing
+                ? this.dataDetail
+                : {
+                    parentSearchprovinceName: this.parentSearchprovinceName,
+                    parentName: this.dataDetail.parentName,
+                    parentId: this.dataDetail.parentId,
+                  }
+            }
             isEditing={this.isEditing}
             objectName={this.objectName}
             loading={isShowModifiedLoading}

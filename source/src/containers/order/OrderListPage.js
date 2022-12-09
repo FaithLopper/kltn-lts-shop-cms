@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Avatar, Button } from "antd";
-import { UserOutlined, PlusOutlined } from "@ant-design/icons";
-import qs from "query-string";
+import { Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import ListBasePage from "../ListBasePage";
@@ -10,9 +9,8 @@ import BaseTable from "../../compoments/common/table/BaseTable";
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import { actions } from "../../actions";
 import { FieldTypes } from "../../constants/formConfig";
-import { AppConstants } from "../../constants";
 import Utils from "../../utils";
-import { commonStatus, categoryKinds } from "../../constants/masterData";
+import { commonStatus } from "../../constants/masterData";
 
 class OrderListPage extends ListBasePage {
   initialSearch() {

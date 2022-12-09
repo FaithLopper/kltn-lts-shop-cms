@@ -6,7 +6,6 @@ import { actions } from "../../actions";
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import ObjectNotFound from "../../compoments/common/ObjectNotFound";
 import { withTranslation } from "react-i18next";
-import NewsUpdateForm from "../../compoments/news/NewsUpdateForm";
 import EmployeeUpdateForm from "../../compoments/employee/EmployeeUpdateForm";
 import { UserTypes } from "../../constants";
 import { categoryKinds } from "../../constants/masterData";

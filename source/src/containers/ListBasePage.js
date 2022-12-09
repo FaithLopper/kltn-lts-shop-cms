@@ -8,8 +8,6 @@ import {
     PictureOutlined,
     CheckOutlined } from '@ant-design/icons';
 import qs from 'query-string';
-import { withTranslation } from "react-i18next";
-
 import SearchForm from '../compoments/common/entryForm/SearchForm';
 import StatusTag from '../compoments/common/elements/StatusTag';
 import { Link } from 'react-router-dom';

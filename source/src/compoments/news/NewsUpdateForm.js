@@ -1,11 +1,11 @@
 import React from "react";
-import { Form, Col, Row, Card, message } from "antd";
+import { Form, Col, Row, Card } from "antd";
 import BasicForm from "../common/entryForm/BasicForm";
 import TextField from "../common/entryForm/TextField";
 import CropImageFiled from "../common/entryForm/CropImageFiled";
 import Utils from "../../utils";
 import { commonStatus } from "../../constants/masterData";
-import { AppConstants, UploadFileTypes, STATUS_ACTIVE } from "../../constants";
+import { AppConstants, UploadFileTypes } from "../../constants";
 import { showErrorMessage } from "../../services/notifyService";
 import DropdownField from "../common/entryForm/DropdownField";
 import CheckBoxField from "../common/entryForm/CheckBoxField";
@@ -60,7 +60,7 @@ class NewsUpdateForm extends BasicForm {
   handleSubmit(formValues) {
     const { onSubmit } = this.props;
     let newPinTop = 0;
-    if (formValues.pinTop == true) {
+    if (formValues.pinTop === true) {
       newPinTop = 1;
     }
     onSubmit({

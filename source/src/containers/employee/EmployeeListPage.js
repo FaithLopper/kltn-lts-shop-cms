@@ -1,28 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Avatar, Divider } from "antd";
+import { Button, Avatar } from "antd";
 import {
   PlusOutlined,
-  FileTextOutlined,
-  PushpinFilled,
   UserOutlined,
-  EyeOutlined,
-  EditOutlined,
-  LockOutlined,
-  CheckOutlined,
-  DeleteOutlined,
 } from "@ant-design/icons";
 
 import ListBasePage from "../ListBasePage";
 import BaseTable from "../../compoments/common/table/BaseTable";
-import BasicModal from "../../compoments/common/modal/BasicModal";
 import { FieldTypes } from "../../constants/formConfig";
 import { commonStatus } from "../../constants/masterData";
-import { convertUtcToLocalTime } from "../../utils/datetimeHelper";
 import { actions } from "../../actions";
 import { AppConstants, DEFAULT_TABLE_ITEM_SIZE } from "../../constants";
 import { withTranslation } from "react-i18next";
-import { STATUS_ACTIVE } from "../../constants";
 import { showErrorMessage } from "../../services/notifyService";
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import ElementWithPermission from "../../compoments/common/elements/ElementWithPermission";

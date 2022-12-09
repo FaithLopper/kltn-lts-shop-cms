@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Avatar, Tag, Button } from "antd";
+import { Avatar, Button } from "antd";
 import { UserOutlined, PlusOutlined } from "@ant-design/icons";
 import qs from "query-string";
 import { withTranslation } from "react-i18next";
@@ -68,6 +68,7 @@ class CategoryJobsListPage extends ListBasePage {
     const result = {};
     Object.keys(queryString).map((q) => {
       result[`parentSearch${q}`] = queryString[q];
+      return 0;
     });
     history.push(
       `${pathname}-child?${qs.stringify({ ...result, parentId, parentName })}`

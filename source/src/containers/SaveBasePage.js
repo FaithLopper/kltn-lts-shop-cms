@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Col, Modal, Row } from 'antd';
-import i18next from 'i18next';
 import {
     CloseCircleFilled,
     CheckCircleFilled,
@@ -9,8 +8,7 @@ import {
     StopOutlined
 } from '@ant-design/icons';
 import { showErrorMessage } from '../services/notifyService';
-import Utils from '../utils';
-const {changeCase} =Utils
+
 const { confirm } = Modal;
 class SaveBasePage extends Component {
 

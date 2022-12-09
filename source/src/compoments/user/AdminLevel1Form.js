@@ -2,9 +2,6 @@ import React from 'react';
 import { Form, Col, Row, Card, Button, message } from 'antd';
 import BasicForm from '../common/entryForm/BasicForm';
 import TextField from '../common/entryForm/TextField';
-import DatePickerField from '../common/entryForm/DatePickerField';
-import UploadImageField from '../common/entryForm/UploadImageField';
-import { convertDateTimeToString, convertUtcToLocalTime } from '../../utils/datetimeHelper';
 import CropImageFiled from '../common/entryForm/CropImageFiled';
 import Utils from "../../utils";
 import { KeyOutlined, CopyOutlined } from '@ant-design/icons';
@@ -99,7 +96,7 @@ class AdminLevel1Form extends BasicForm {
     };
 
     render() {
-        const { formId, dataDetail, actions, isEditing,t , groupPermission } = this.props
+        const { formId, actions, isEditing,t , groupPermission } = this.props
         const {
             uploading,
 			logo,
