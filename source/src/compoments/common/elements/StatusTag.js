@@ -3,9 +3,12 @@ import { Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import Utils from '../../../utils';
+import { ORDER_STATUS } from '../../../constants';
 
-const StatusTag = ({status}) => {
-    const statusItem = Utils.getCommonStatusItem(status);
+const StatusTag = ({status, type}) => {
+    let statusItem = {}
+    if (type === ORDER_STATUS) statusItem = Utils.getOrderStatusItem(status);
+    else statusItem = Utils.getCommonStatusItem(status);
     const { t } = useTranslation('constants');
         if(statusItem)
             return (

@@ -63,10 +63,21 @@ export const DATE_FORMAT_VALUE = 'DD/MM/YYYY';
 export const TIME_FORMAT_DISPLAY = 'HH:mm';
 
 // Common status
+export const COMMON_STATUS = 0;
 export const STATUS_PENDING = 0;
 export const STATUS_ACTIVE = 1;
 export const STATUS_LOCK = -1;
 export const STATUS_DELETE = -2;
+
+// Order status
+export const ORDER_STATUS = 1;
+export const ORDER_STATUS_NEW = 1;
+export const ORDER_STATUS_CHECKOUT = 2;
+export const ORDER_STATUS_PAID = 3;
+export const ORDER_STATUS_FAILED = 4;
+export const ORDER_STATUS_DELIVERED = 5;
+export const ORDER_STATUS_RETURNED = 6;
+export const ORDER_STATUS_COMPLETED= 7;
 
 export {
     AppConstants,

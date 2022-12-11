@@ -10,7 +10,9 @@ import { sitePathConfig } from "../../constants/sitePathConfig";
 import { actions } from "../../actions";
 import { FieldTypes } from "../../constants/formConfig";
 import Utils from "../../utils";
-import { commonStatus } from "../../constants/masterData";
+import { orderStatus } from "../../constants/masterData";
+import StatusTag from "../../compoments/common/elements/StatusTag";
+import { ORDER_STATUS } from "../../constants";
 
 class OrderListPage extends ListBasePage {
   initialSearch() {
@@ -65,6 +67,15 @@ class OrderListPage extends ListBasePage {
     };
   }
 
+  renderStatusColumn() {
+    const { t } = this.props;
+    return {
+      title: t ? t("listBasePage:titleStatusCol") : "Status",
+      dataIndex: "status",
+      width: "100px",
+      render: (status) => <StatusTag status={status} type={ORDER_STATUS} />,
+    };
+  }
   //   prepareCreateData(data) {
   //     return {
   //       ...data,
@@ -95,7 +106,7 @@ class OrderListPage extends ListBasePage {
         key: "status",
         seachPlaceholder: t("searchPlaceHolder.status"),
         fieldType: FieldTypes.SELECT,
-        options: commonStatus,
+        options: orderStatus,
         initialValue: this.search.status,
       },
     ];

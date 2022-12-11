@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Col, Row, Card } from "antd";
 import BasicForm from "../common/entryForm/BasicForm";
 import Utils from "../../utils";
-import { commonStatus } from "../../constants/masterData";
+import { orderStatus } from "../../constants/masterData";
 import DropdownField from "../common/entryForm/DropdownField";
 import TextField from "../common/entryForm/TextField";
 import BaseTable from "../common/table/BaseTable";
@@ -116,8 +116,9 @@ class OrderUpdateForm extends BasicForm {
   };
 
   render() {
-    const { formId, actions, isEditing, t } = this.props;
+    const { formId, actions, isEditing, dataDetail, t } = this.props;
     const { formatMoney } = Utils;
+    console.log(dataDetail)
 
     return (
       <Form
@@ -142,7 +143,7 @@ class OrderUpdateForm extends BasicForm {
                       fieldName="status"
                       label={t("form.label.status")}
                       required
-                      options={commonStatus}
+                      options={orderStatus}
                     />
                   ) : null}
                 </Col>
@@ -199,8 +200,10 @@ class OrderUpdateForm extends BasicForm {
                   <Row gutter={5}>
                     <Col span={12}>
                       <TextField
-                        fieldName="paymentMethod"
+                      defaultValue={dataDetail.paymentMethod = 3 ? "COD" : "Online"}
+                        // fieldName="paymentMethod"
                         label={t("form.label.paymentMethod")}
+                        disabled
                       />
                     </Col>
                     <Col span={12}>

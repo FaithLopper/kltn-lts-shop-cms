@@ -1,4 +1,4 @@
-import { commonStatus, commonKinds } from "../constants/masterData";
+import { commonStatus, commonKinds, orderStatus } from "../constants/masterData";
 import { STATUS_DELETE, CurrentcyPositions } from "../constants";
 import { showErrorMessage } from "../services/notifyService";
 import { actions } from "../actions";
@@ -35,6 +35,13 @@ const Utils = {
       { value: STATUS_DELETE, label: "Xóa", color: "red" },
       { value: true, label: "Mặc định", color: "green" },
       { value: false, label: "Thường", color: "warning" },
+    ];
+    const statusItem = allStatus.find((item) => item.value === status);
+    return statusItem;
+  },
+  getOrderStatusItem(status) {
+    const allStatus = [
+      ...orderStatus
     ];
     const statusItem = allStatus.find((item) => item.value === status);
     return statusItem;
