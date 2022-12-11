@@ -1,23 +1,18 @@
 import React from 'react';
-import { Form, Col, Row, Card, Button, message, Input, Select } from 'antd';
+import { Form, Col, Row, Card, Button, Input, Select } from 'antd';
 import BasicForm from '../common/entryForm/BasicForm';
 import TextField from '../common/entryForm/TextField';
-import { convertDateTimeToString, convertUtcToLocalTime } from '../../utils/datetimeHelper';
 import CropImageFiled from '../common/entryForm/CropImageFiled';
 import Utils from "../../utils";
-import { KeyOutlined, CopyOutlined ,MinusCircleOutlined,PlusOutlined,SaveOutlined} from '@ant-design/icons';
-import { commonStatus, productKind, variantKinds, variantTemplateConfig } from '../../constants/masterData';
+import { MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
+import { commonStatus, productKind, variantTemplateConfig } from '../../constants/masterData';
 import {
     AppConstants,
     UploadFileTypes,
-    STATUS_ACTIVE,
   } from "../../constants";
-  import { showErrorMessage, showWarningMessage } from "../../services/notifyService";
-import PasswordGeneratorField from '../common/entryForm/PasswordGeneratorField';
+  import { showErrorMessage } from "../../services/notifyService";
 import DropdownField from '../common/entryForm/DropdownField';
 import NumericField from '../common/entryForm/NumericField';
-import RichTextField from '../common/entryForm/RichTextField';
-import TextArea from 'antd/lib/input/TextArea';
 import CheckBoxField from '../common/entryForm/CheckBoxField';
 import FieldSet from '../common/elements/FieldSet';
 import BasicModal from '../common/modal/BasicModal';
@@ -73,10 +68,11 @@ class ProductUpdateForm extends BasicForm {
                 // console.log(nextProps.dataDetail)
             }
             const {variantConfigs} = nextProps.dataDetail
-            variantConfigs.map(item =>{
+            variantConfigs.map(item => {
                 this.setFieldValue(`name_${item.id}`,item.name)
                 this.setFieldValue(`choiceKind_${item.id}`,item.choiceKind)
                 this.setFieldValue(`isRequired_${item.id}`,item.isRequired)
+                return 0;
             })
         }
         if(nextProps.dataDetail.image !== this.state.image && this.state.isUpdateLogo === false && nextProps.dataDetail.image!==undefined){
@@ -121,7 +117,7 @@ class ProductUpdateForm extends BasicForm {
 
     handleSubmit(formValues) {
         const { onSubmit } = this.props
-        const {templateConfigData,id,parentProductId}= this.state
+        const {templateConfigData,id}= this.state
         let tags =''
         if(formValues.tags){
             if(formValues.tags.length !==0){
@@ -129,6 +125,8 @@ class ProductUpdateForm extends BasicForm {
                     tags= tags.concat(`${item}`)
                     if(formValues.tags.length > 1 && index !== formValues.tags.length -1)
                         tags= tags.concat(' ')
+                    
+                    return 0;
                 })
             }
         }
@@ -172,7 +170,7 @@ class ProductUpdateForm extends BasicForm {
     }
 
     addVariantItem =(index,_index)=>{
-        const { getList, showFullScreenLoading, hideFullScreenLoading } = this.props;
+        const { getList } = this.props;
         getList(
             {
                 params:{},
@@ -200,7 +198,7 @@ class ProductUpdateForm extends BasicForm {
     }
 
     addVariantTemplateItem =()=>{
-        const { getListTemplate, showFullScreenLoading, hideFullScreenLoading } = this.props;
+        const { getListTemplate } = this.props;
         getListTemplate(
             {
                 params:{},
@@ -310,10 +308,11 @@ class ProductUpdateForm extends BasicForm {
     componentDidUpdate(){
         const{templateConfigData}= this.state
         if(templateConfigData.length !==0){
-            templateConfigData.map(item =>{
+            templateConfigData.map(item => {
                 this.setFieldValue(`name_${item.index}`,item.name)
                 this.setFieldValue(`choiceKind_${item.index}`,item.choiceKind)
                 this.setFieldValue(`isRequired_${item.index}`,item.isRequired)
+                return 0;
             })
         }
     }
@@ -440,7 +439,7 @@ class ProductUpdateForm extends BasicForm {
 
     renderTemplateConfig =()=>{
         const {templateConfigData}= this.state
-        const {isEditing, t} = this.props
+        const { t } = this.props
         return templateConfigData.map((item,_index)=>{
             return (<>
                 <div className='variant-config-wrapper'>
@@ -504,7 +503,7 @@ class ProductUpdateForm extends BasicForm {
     }
 
     render() {
-        const { formId, dataDetail, actions, isEditing,t,tagOption ,categoryId,parentProduct,onProductCategoryParentChange,categoryChildId} = this.props
+        const { formId, actions, isEditing,t,tagOption ,categoryId,parentProduct,onProductCategoryParentChange,categoryChildId} = this.props
         const {
             uploading,
 			image,
@@ -513,7 +512,6 @@ class ProductUpdateForm extends BasicForm {
             dataList,
             dataListTemplate,
             isTemplate,
-            templateConfigData,
             chooseKind
         } = this.state
         const variantData = dataList.data || [];

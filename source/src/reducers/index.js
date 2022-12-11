@@ -16,6 +16,7 @@ import variant from './variant';
 import variantTemplate from './variantTemplate';
 import product from './product';
 import tags from './tags';
+import order from './order';
 
 const rootReducer = combineReducers({
     appCommon: appCommon.reducer,
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
     variantTemplate: variantTemplate.reducer,
     product: product.reducer,
     tags: tags.reducer,
+    order: order.reducer,
 });
 
 export default rootReducer;

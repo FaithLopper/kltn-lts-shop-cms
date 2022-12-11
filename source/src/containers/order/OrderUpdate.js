@@ -1,5 +1,4 @@
 import React from "react";
-import CategoryUpdateForm from "../../compoments/category/CategoryUpdateForm";
 import SaveBasePage from "../SaveBasePage";
 import LoadingWrapper from "../../compoments/common/elements/LoadingWrapper";
 import { connect } from "react-redux";
@@ -7,18 +6,19 @@ import { actions } from "../../actions";
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import ObjectNotFound from "../../compoments/common/ObjectNotFound";
 import { withTranslation } from "react-i18next";
-import { categoryKinds } from "../../constants/masterData";
-class CategoryDepartmentsUpdate extends SaveBasePage {
+import OrderUpdateForm from "../../compoments/order/OrderUpdateForm";
+
+class OrderUpdate extends SaveBasePage {
   constructor(props) {
     super(props);
     const { t } = this.props;
-    this.objectName = `${t("objectName")} ${t("kind.departments")}`;
-    this.getListUrl = sitePathConfig.categoryDepartments.path;
+    this.objectName = `${t("objectName")}`;
+    this.getListUrl = sitePathConfig.order.path;
     this.actionFooter = false;
     this.breadcrumbs = [
       {
-        name: `${t("breadcrumbs.parentPage")} ${t("kind.departments")}`,
-        path: `${sitePathConfig.categoryDepartments.path}`,
+        name: `${t("breadcrumbs.parentPage")}`,
+        path: `${sitePathConfig.order.path}`,
       },
       {
         name: this.isEditing
@@ -38,15 +38,14 @@ class CategoryDepartmentsUpdate extends SaveBasePage {
   }
 
   getDataDetailMapping = (data) => {
-    const categoryDepartmentsData = data;
+    const orderData = data;
 
-    if (!categoryDepartmentsData) {
+    if (!orderData) {
       this.setState({ objectNotFound: true });
       return;
     }
-
     return {
-      ...categoryDepartmentsData,
+      ...orderData,
     };
   };
 
@@ -61,9 +60,7 @@ class CategoryDepartmentsUpdate extends SaveBasePage {
     if (res?.result) {
       this.showSuccessConfirmModal({
         onContinueEdit: () => {
-          history.push(
-            sitePathConfig.categoryDepartmentsUpdate.path.replace(":id", res.id)
-          );
+          history.push(sitePathConfig.orderUpdate.path.replace(":id", res.id));
         },
       });
     } else if (res?.result === false) {
@@ -91,21 +88,20 @@ class CategoryDepartmentsUpdate extends SaveBasePage {
 
   onBack = () => {
     if (this.state.isChanged) {
-        const {t}= this.props
-        this.showWarningConfirmModal({
-            title: t("basicSavePage:onBack"),
-            onOk: () => {
-                this.props.history.push(this.getListUrl)
-            }
-        });
+      const { t } = this.props;
+      this.showWarningConfirmModal({
+        title: t("basicSavePage:onBack"),
+        onOk: () => {
+          this.props.history.push(this.getListUrl);
+        },
+      });
     } else {
-        this.props.history.push(this.getListUrl)
+      this.props.history.push(this.getListUrl);
     }
-}
+  };
 
   prepareCreateData = (data) => {
     return {
-      categoryKind: categoryKinds.CATEGORY_KIND_DEPARTMENTS,
       status: 1,
       ...data,
     };
@@ -114,8 +110,6 @@ class CategoryDepartmentsUpdate extends SaveBasePage {
   prepareUpdateData = (data) => {
     return {
       ...data,
-      categoryImage: data.categoryImage,
-      id: this.dataDetail.id,
     };
   };
 
@@ -141,7 +135,7 @@ class CategoryDepartmentsUpdate extends SaveBasePage {
 
     return (
       <LoadingWrapper loading={isGetDetailLoading}>
-        <CategoryUpdateForm
+        <OrderUpdateForm
           setIsChangedFormValues={this.setIsChangedFormValues}
           formId={this.getFormId()}
           onSubmit={this.onSave}
@@ -160,10 +154,9 @@ class CategoryDepartmentsUpdate extends SaveBasePage {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getDataById: (payload) => dispatch(actions.getCategoryById(payload)),
-  createData: (payload) => dispatch(actions.createCategory(payload)),
-  updateData: (payload) => dispatch(actions.updateCategory(payload)),
-  deleteData: (payload) => dispatch(actions.deleteCategory(payload)),
+  getDataById: (payload) => dispatch(actions.getOrderById(payload)),
+  //   createData: (payload) => dispatch(actions.createCategory(payload)),
+  updateData: (payload) => dispatch(actions.updateStatusOrder(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
 });
 
@@ -172,4 +165,4 @@ const mapStateToProps = (state) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withTranslation(["categoryListPage", "listBasePage"])(CategoryDepartmentsUpdate));
+)(withTranslation(["orderListPage", "listBasePage"])(OrderUpdate));

@@ -534,5 +534,33 @@ const apiConfig = {
             headers: baseHeader
         },
     },
+    order: {
+        getList: {
+            path: '/v1/order/list',
+            method: 'GET',
+            headers: baseHeader
+        },
+        create: {
+        },
+        getById: {
+            path: '/v1/order/get',
+            method: 'GET',
+            headers: baseHeader
+        },
+        update: {
+            path: '/v1/order/change-status',
+            method: 'PUT',
+            headers: baseHeader
+        },
+        delete: {
+        },
+        tagsAutoComplete: {
+        },
+        getHistory: {
+            path: '/v1/order/get-history',
+            method: 'GET',
+            headers: baseHeader
+        },
+    },
 }
 export default apiConfig;

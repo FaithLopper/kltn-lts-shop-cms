@@ -1,16 +1,16 @@
-import { MenuOutlined } from '@ant-design/icons';
-import { Table } from 'antd';
-import { arrayMoveImmutable } from 'array-move';
-import React, { useEffect, useState } from 'react';
-import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
-const DragHandle = SortableHandle(() => (
-  <MenuOutlined
-    style={{
-      cursor: 'grab',
-      color: '#999',
-    }}
-  />
-));
+import { Table } from "antd";
+import { arrayMoveImmutable } from "array-move";
+import React, { useEffect, useState } from "react";
+import { SortableContainer, SortableElement } from "react-sortable-hoc";
+
+// const DragHandle = SortableHandle(() => (
+//   <MenuOutlined
+//     style={{
+//       cursor: 'grab',
+//       color: '#999',
+//     }}
+//   />
+// ));
 // const columns = [
 //   {
 //     title: 'Sort',
@@ -33,42 +33,49 @@ const DragHandle = SortableHandle(() => (
 //     dataIndex: 'address',
 //   },
 // ];
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    index: 0,
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    index: 1,
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    index: 2,
-  },
-];
+// const data = [
+//   {
+//     key: '1',
+//     name: 'John Brown',
+//     age: 32,
+//     address: 'New York No. 1 Lake Park',
+//     index: 0,
+//   },
+//   {
+//     key: '2',
+//     name: 'Jim Green',
+//     age: 42,
+//     address: 'London No. 1 Lake Park',
+//     index: 1,
+//   },
+//   {
+//     key: '3',
+//     name: 'Joe Black',
+//     age: 32,
+//     address: 'Sidney No. 1 Lake Park',
+//     index: 2,
+//   },
+// ];
 const SortableItem = SortableElement((props) => <tr {...props} />);
 const SortableBody = SortableContainer((props) => <tbody {...props} />);
 const DragDropTable = (props) => {
-    const {loading,rowKey,columns,data,onChange,sortEnd}= props
+  const { loading, columns, data, sortEnd } = props;
   const [dataSource, setDataSource] = useState(data);
   const onSortEnd = ({ oldIndex, newIndex }) => {
     if (oldIndex !== newIndex) {
-      const newData = arrayMoveImmutable(dataSource.slice(), oldIndex, newIndex)
+      const newData = arrayMoveImmutable(
+        dataSource.slice(),
+        oldIndex,
+        newIndex
+      );
       setDataSource(newData);
-      sortEnd(oldIndex, newIndex,newData)
+      sortEnd(oldIndex, newIndex, newData);
     }
   };
-  useEffect(()=>{   if(data !== dataSource)setDataSource(data) },[data])
+  useEffect(() => {
+    if (data !== dataSource) setDataSource(data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
   const DraggableContainer = (props) => (
     <SortableBody
       useDragHandle
@@ -80,7 +87,9 @@ const DragDropTable = (props) => {
   );
   const DraggableBodyRow = ({ className, style, ...restProps }) => {
     // function findIndex base on Table rowKey props and should always be a right array index
-    const index = dataSource.findIndex((x) => x.index === restProps['data-row-key']);
+    const index = dataSource.findIndex(
+      (x) => x.index === restProps["data-row-key"]
+    );
     return <SortableItem index={index} {...restProps} />;
   };
 

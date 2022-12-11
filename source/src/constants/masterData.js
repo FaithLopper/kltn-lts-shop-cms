@@ -3,6 +3,13 @@ import {
     STATUS_LOCK,
     STATUS_PENDING,
     GroupPermissonTypes,
+    ORDER_STATUS_NEW,
+    ORDER_STATUS_CHECKOUT,
+    ORDER_STATUS_PAID,
+    ORDER_STATUS_FAILED,
+    ORDER_STATUS_DELIVERED,
+    ORDER_STATUS_RETURNED,
+    ORDER_STATUS_COMPLETED
 } from './';
 
 export const groupPermissionTypes = [
@@ -14,6 +21,16 @@ export const commonStatus = [
     { value: STATUS_ACTIVE, label: 'Kích hoạt', color: 'green' },
     { value: STATUS_PENDING, label: 'Đang chờ', color: 'warning' },
     { value: STATUS_LOCK, label: 'Đang khóa', color: 'red' },
+]
+
+export const orderStatus = [
+    { value: ORDER_STATUS_NEW, label: 'Mới', color: 'warning' },
+    { value: ORDER_STATUS_CHECKOUT, label: 'Đang xử lý', color: 'processing' },
+    { value: ORDER_STATUS_PAID, label: 'Đã thanh toán', color: 'success' },
+    { value: ORDER_STATUS_FAILED, label: 'Bị hủy', color: 'default' },
+    { value: ORDER_STATUS_DELIVERED, label: 'Đang vận chuyển', color: 'processing' },
+    { value: ORDER_STATUS_RETURNED, label: 'Trả về', color: 'gray' },
+    { value: ORDER_STATUS_COMPLETED, label: 'Hoàn thành', color: 'springgreen' },
 ]
 
 export const categoryType = [

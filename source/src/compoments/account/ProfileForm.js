@@ -2,9 +2,8 @@ import React from "react";
 import { Form, Button, Card, Col, Row } from "antd";
 import BasicForm from "../common/entryForm/BasicForm";
 import TextField from "../common/entryForm/TextField";
-import { SaveOutlined,StopOutlined} from "@ant-design/icons"
+import { SaveOutlined} from "@ant-design/icons"
 import CropImageFiled from "../common/entryForm/CropImageFiled";
-import { FormItemLayoutConf } from "../../constants/formConfig";
 import { showErrorMessage } from "../../services/notifyService";
 import Utils from "../../utils";
 import { AppConstants, UploadFileTypes, UserTypes } from "../../constants";

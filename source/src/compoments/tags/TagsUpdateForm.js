@@ -2,7 +2,6 @@ import React from "react";
 import { Form, Col, Row, Card } from "antd";
 import BasicForm from "../common/entryForm/BasicForm";
 import TextField from "../common/entryForm/TextField";
-import Utils from "../../utils";
 import { AppConstants } from "../../constants";
 import ColorPicker from "../common/colorPicker/ColorPicker";
 import TagInputField from "../common/entryForm/TagInputField";

@@ -9,7 +9,7 @@ import BaseTable from "../../compoments/common/table/BaseTable";
 
 import { actions } from "../../actions";
 import { convertUtcToTimezone } from "../../utils/datetimeHelper";
-import { AppConstants, UserTypes, GroupPermissonTypes, STATUS_ACTIVE } from "../../constants";
+import { AppConstants} from "../../constants";
 import PageWrapper from "../../compoments/common/PageWrapper";
 import { Link } from 'react-router-dom';
 import { sitePathConfig } from "../../constants/sitePathConfig";
@@ -92,10 +92,8 @@ class UserAdminListPage extends ListBasePage {
     const {
       dataList,
       loading,
-      uploadFile,
       t,
     } = this.props;
-    const { isShowModifiedModal, isShowModifiedLoading } = this.state;
     const users = dataList.data || [];
     this.pagination.total = dataList.totalElements || 0;
     return (

@@ -1,19 +1,14 @@
 import { actionTypes, reduxUtil } from "../actions/province";
-import { ProvinceKinds, UserTypes } from "../constants";
+import { ProvinceKinds } from "../constants";
 import apiConfig from "../constants/apiConfig";
 import { call, put, takeEvery, takeLatest,all } from "redux-saga/effects";
 import { sendRequest } from "../services/apiService";
 import { handleApiResponse } from "../utils/apiHelper";
-import { locationKind } from "../constants/masterData";
 const { defineActionSuccess, defineActionFailed, defineActionLoading } =
   reduxUtil;
 const {
   GET_PROVINCE_LIST,
-  GET_PROVINCE_BY_ID,
-  CREATE_PROVINCE,
-  UPDATE_PROVINCE,
   DELETE_PROVINCE,
-  GET_PROVINCE_AUTOCOMPLETE,
 } = actionTypes;
 
 function* getProvinceList({ payload: { params } }) {

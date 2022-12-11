@@ -14,7 +14,6 @@ import qs from "query-string";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import ListBasePage from "../ListBasePage";
-import BaseTable from "../../compoments/common/table/BaseTable";
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import { actions } from "../../actions";
 import { FieldTypes } from "../../constants/formConfig";
@@ -242,7 +241,7 @@ class CategoryProductSubListPage extends ListBasePage {
   }
 
   render() {
-    const { dataList, loading, t, uploadFile } = this.props;
+    const { dataList, loading, t } = this.props;
     const categoryData = Object.keys(dataList).length !==0 ? this.mapDataToTable(dataList) :[];
     this.pagination.total = dataList.totalElements || 0;
     this.dataDetail.parentName = this.parentName;

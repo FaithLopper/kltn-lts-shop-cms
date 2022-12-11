@@ -1,16 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Avatar, Button } from "antd";
-import { UserOutlined, PlusOutlined } from "@ant-design/icons";
-import qs from "query-string";
+import { Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import ListBasePage from "../ListBasePage";
 import BaseTable from "../../compoments/common/table/BaseTable";
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import { actions } from "../../actions";
-import { AppConstants } from "../../constants";
-
 class TagsListPage extends ListBasePage {
   initialSearch() {
     return { name: "", status: null };

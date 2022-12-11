@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Spin } from 'antd';
 import { Link } from 'react-router-dom';
-import { employeeNavMenuConfig, navMenuConfig } from '../../../constants/menuConfig';
+import { navMenuConfig } from '../../../constants/menuConfig';
 import logoUrl from '../../../assets/images/logo.jpg';
 import { AppConstants, UserTypes } from '../../../constants'
 import { withTranslation } from 'react-i18next';
@@ -19,6 +19,7 @@ const findNavMenuActive = (navMenu, pathname) => {
                     if(navChild.childrenKeys){
                         navChild.childrenKeys.map(item=>{
                             updatePath= `${pathname.slice(0,pathname.indexOf('/',1))}/:id`
+                            return 0;
                         })
                     }
                     return navChild.path === pathname 

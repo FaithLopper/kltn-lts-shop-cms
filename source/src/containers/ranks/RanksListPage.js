@@ -66,6 +66,7 @@ class RanksListPage extends ListBasePage {
     const result = {};
     Object.keys(queryString).map((q) => {
       result[`parentSearch${q}`] = queryString[q];
+      return 0;
     });
     history.push(
       `${pathname}-child?${qs.stringify({ ...result, parentId, parentName })}`
