@@ -8,6 +8,7 @@ import TextField from "../common/entryForm/TextField";
 import BaseTable from "../common/table/BaseTable";
 import { withTranslation } from "react-i18next";
 import NumericField from "../common/entryForm/NumericField";
+import { convertUtcToTimezone } from "../../utils/datetimeHelper";
 
 class OrderUpdateForm extends BasicForm {
   constructor(props) {
@@ -118,7 +119,7 @@ class OrderUpdateForm extends BasicForm {
   render() {
     const { formId, actions, isEditing, dataDetail, t } = this.props;
     const { formatMoney } = Utils;
-    console.log(dataDetail)
+    console.log(dataDetail);
 
     return (
       <Form
@@ -157,7 +158,8 @@ class OrderUpdateForm extends BasicForm {
                 </Col>
                 <Col span={12}>
                   <TextField
-                    fieldName="createdDate"
+                    defaultValue={dataDetail.createdDate}
+                    // fieldName="createdDate"
                     label={t("form.label.createdDate")}
                   />
                 </Col>
@@ -200,7 +202,9 @@ class OrderUpdateForm extends BasicForm {
                   <Row gutter={5}>
                     <Col span={12}>
                       <TextField
-                      defaultValue={dataDetail.paymentMethod = 3 ? "COD" : "Online"}
+                        defaultValue={
+                          (dataDetail.paymentMethod = 3 ? "COD" : "Online")
+                        }
                         // fieldName="paymentMethod"
                         label={t("form.label.paymentMethod")}
                         disabled
@@ -228,19 +232,19 @@ class OrderUpdateForm extends BasicForm {
                   <Row gutter={5}>
                     <Col span={8}>
                       <TextField
-                        fieldName="province"
+                        fieldName={["province", "name"]}
                         label={t("form.label.province")}
                       />
                     </Col>
                     <Col span={8}>
                       <TextField
-                        fieldName="district"
+                        fieldName={["district", "name"]}
                         label={t("form.label.district")}
                       />
                     </Col>
                     <Col span={8}>
                       <TextField
-                        fieldName="ward"
+                        fieldName={["ward", "name"]}
                         label={t("form.label.ward")}
                       />
                     </Col>

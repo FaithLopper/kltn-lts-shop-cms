@@ -26,9 +26,9 @@ function* getOrderList({ payload: { params } }) {
 //     if (params.search.id) {
 //       searchParams.id = params.search.id;
 //     }
-//     if (params.search.status) {
-//       searchParams.status = params.search.status;
-//     }
+    if (params.search.status) {
+      searchParams.orderStatus = params.search.status;
+    }
 //   }
   try {
     const result = yield call(sendRequest, apiParams, searchParams);
