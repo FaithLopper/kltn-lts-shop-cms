@@ -912,6 +912,7 @@ export default {
         objectName: 'Đơn hàng',
         searchPlaceHolder: {
             status: 'Trạng thái đơn hàng',
+            id: 'Mã đơn hàng',
         },
         table: {
             id: 'Mã đơn',

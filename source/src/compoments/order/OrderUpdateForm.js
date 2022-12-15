@@ -8,6 +8,7 @@ import TextField from "../common/entryForm/TextField";
 import BaseTable from "../common/table/BaseTable";
 import { withTranslation } from "react-i18next";
 import NumericField from "../common/entryForm/NumericField";
+import { convertUtcToTimezone } from "../../utils/datetimeHelper";
 
 class OrderUpdateForm extends BasicForm {
   constructor(props) {
@@ -81,7 +82,13 @@ class OrderUpdateForm extends BasicForm {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.dataDetail !== this.props.dataDetail) {
-      this.formRef.current.setFieldsValue(nextProps.dataDetail);
+      const { getPaymentMethod } = Utils;
+      this.formRef.current.setFieldsValue({
+        ...nextProps.dataDetail,
+        createdDate: convertUtcToTimezone(nextProps.dataDetail.createdDate),
+        modifiedDate: convertUtcToTimezone(nextProps.dataDetail.modifiedDate),
+        paymentMethod: getPaymentMethod(nextProps.dataDetail.paymentMethod),
+      });
     }
   }
 
@@ -116,9 +123,8 @@ class OrderUpdateForm extends BasicForm {
   };
 
   render() {
-    const { formId, actions, isEditing, dataDetail, t } = this.props;
+    const { formId, actions, isEditing, t } = this.props;
     const { formatMoney } = Utils;
-    console.log(dataDetail)
 
     return (
       <Form
@@ -200,8 +206,7 @@ class OrderUpdateForm extends BasicForm {
                   <Row gutter={5}>
                     <Col span={12}>
                       <TextField
-                      defaultValue={dataDetail.paymentMethod = 3 ? "COD" : "Online"}
-                        // fieldName="paymentMethod"
+                        fieldName="paymentMethod"
                         label={t("form.label.paymentMethod")}
                         disabled
                       />
@@ -228,19 +233,19 @@ class OrderUpdateForm extends BasicForm {
                   <Row gutter={5}>
                     <Col span={8}>
                       <TextField
-                        fieldName="province"
+                        fieldName={["province", "name"]}
                         label={t("form.label.province")}
                       />
                     </Col>
                     <Col span={8}>
                       <TextField
-                        fieldName="district"
+                        fieldName={["district", "name"]}
                         label={t("form.label.district")}
                       />
                     </Col>
                     <Col span={8}>
                       <TextField
-                        fieldName="ward"
+                        fieldName={["ward", "name"]}
                         label={t("form.label.ward")}
                       />
                     </Col>

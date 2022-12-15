@@ -13,6 +13,7 @@ import Utils from "../../utils";
 import { orderStatus } from "../../constants/masterData";
 import StatusTag from "../../compoments/common/elements/StatusTag";
 import { ORDER_STATUS } from "../../constants";
+import { convertUtcToTimezone } from "../../utils/datetimeHelper";
 
 class OrderListPage extends ListBasePage {
   initialSearch() {
@@ -48,13 +49,13 @@ class OrderListPage extends ListBasePage {
       {
         title: t("table.province"),
         render: (dataRow) => {
-          return dataRow.province;
+          return dataRow.province.name;
         },
       },
       {
         title: t("table.createdDate"),
         render: (dataRow) => {
-          return dataRow.createdDate;
+          return convertUtcToTimezone(dataRow.createdDate);
         },
       },
       this.renderStatusColumn(),
@@ -97,11 +98,11 @@ class OrderListPage extends ListBasePage {
   getSearchFields() {
     const { t } = this.props;
     return [
-      //   {
-      //     key: "name",
-      //     seachPlaceholder: t("searchPlaceHolder.name"),
-      //     initialValue: this.search.name,
-      //   },
+        {
+          key: "id",
+          seachPlaceholder: t("searchPlaceHolder.id"),
+          initialValue: this.search.id,
+        },
       {
         key: "status",
         seachPlaceholder: t("searchPlaceHolder.status"),
