@@ -1,4 +1,4 @@
-import { commonStatus, commonKinds, orderStatus } from "../constants/masterData";
+import { commonStatus, commonKinds, orderStatus, paymentMethods } from "../constants/masterData";
 import { STATUS_DELETE, CurrentcyPositions } from "../constants";
 import { showErrorMessage } from "../services/notifyService";
 import { actions } from "../actions";
@@ -251,6 +251,11 @@ const Utils = {
   tagRegex : {
     pattern: new RegExp(/^[\p{L}\p{N}]+$/gu),
     message: "chứa ký tự đặt biệt",
+  },
+
+  getPaymentMethod(methodId) {
+    const method = paymentMethods.find(method => method.value === methodId)
+    return method ? method.label : "thanh toán thường"
   }
 };
 

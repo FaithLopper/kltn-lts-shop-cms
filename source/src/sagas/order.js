@@ -8,11 +8,7 @@ import { handleApiResponse } from "../utils/apiHelper";
 const { defineActionLoading, defineActionSuccess, defineActionFailed } =
   reduxUtil;
 
-const {
-  GET_ORDER_LIST,
-  GET_ORDER_BY_ID,
-  UPDATE_STATUS_ORDER,
-} = actionTypes;
+const { GET_ORDER_LIST, GET_ORDER_BY_ID, UPDATE_STATUS_ORDER } = actionTypes;
 
 function* getOrderList({ payload: { params } }) {
   const apiParams = apiConfig.order.getList;
@@ -22,14 +18,14 @@ function* getOrderList({ payload: { params } }) {
     searchParams.kind = params.kind;
   }
 
-//   if (params.search) {
-//     if (params.search.id) {
-//       searchParams.id = params.search.id;
-//     }
+  if (params.search) {
+    if (params.search.id) {
+      searchParams.id = params.search.id;
+    }
     if (params.search.status) {
       searchParams.orderStatus = params.search.status;
     }
-//   }
+  }
   try {
     const result = yield call(sendRequest, apiParams, searchParams);
     yield put({

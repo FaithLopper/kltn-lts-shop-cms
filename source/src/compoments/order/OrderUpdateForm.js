@@ -82,7 +82,13 @@ class OrderUpdateForm extends BasicForm {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.dataDetail !== this.props.dataDetail) {
-      this.formRef.current.setFieldsValue(nextProps.dataDetail);
+      const { getPaymentMethod } = Utils;
+      this.formRef.current.setFieldsValue({
+        ...nextProps.dataDetail,
+        createdDate: convertUtcToTimezone(nextProps.dataDetail.createdDate),
+        modifiedDate: convertUtcToTimezone(nextProps.dataDetail.modifiedDate),
+        paymentMethod: getPaymentMethod(nextProps.dataDetail.paymentMethod),
+      });
     }
   }
 
@@ -117,9 +123,8 @@ class OrderUpdateForm extends BasicForm {
   };
 
   render() {
-    const { formId, actions, isEditing, dataDetail, t } = this.props;
+    const { formId, actions, isEditing, t } = this.props;
     const { formatMoney } = Utils;
-    console.log(dataDetail);
 
     return (
       <Form
@@ -158,8 +163,7 @@ class OrderUpdateForm extends BasicForm {
                 </Col>
                 <Col span={12}>
                   <TextField
-                    defaultValue={dataDetail.createdDate}
-                    // fieldName="createdDate"
+                    fieldName="createdDate"
                     label={t("form.label.createdDate")}
                   />
                 </Col>
@@ -202,10 +206,7 @@ class OrderUpdateForm extends BasicForm {
                   <Row gutter={5}>
                     <Col span={12}>
                       <TextField
-                        defaultValue={
-                          (dataDetail.paymentMethod = 3 ? "COD" : "Online")
-                        }
-                        // fieldName="paymentMethod"
+                        fieldName="paymentMethod"
                         label={t("form.label.paymentMethod")}
                         disabled
                       />

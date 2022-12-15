@@ -49,7 +49,7 @@ class OrderListPage extends ListBasePage {
       {
         title: t("table.province"),
         render: (dataRow) => {
-          return dataRow.province;
+          return dataRow.province.name;
         },
       },
       {
@@ -98,11 +98,11 @@ class OrderListPage extends ListBasePage {
   getSearchFields() {
     const { t } = this.props;
     return [
-      //   {
-      //     key: "name",
-      //     seachPlaceholder: t("searchPlaceHolder.name"),
-      //     initialValue: this.search.name,
-      //   },
+        {
+          key: "id",
+          seachPlaceholder: t("searchPlaceHolder.id"),
+          initialValue: this.search.id,
+        },
       {
         key: "status",
         seachPlaceholder: t("searchPlaceHolder.status"),

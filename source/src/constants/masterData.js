@@ -108,4 +108,9 @@ export const productKind = [
     // { value: 10, label: 'Khác' },
 ]
 
+export const paymentMethods = [
+    { value: 3, label: 'COD' },
+    { value: 2, label: 'ONLINE' },
+]
+
 export const ASPECT_CATEGORY_AVATAR = 16/9
