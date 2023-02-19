@@ -121,6 +121,7 @@ class RichTextField extends BaseField {
             disabled,
             fieldName,
             required,
+            height,
         } = this.props;
         return (
             <Form.Item
@@ -130,10 +131,12 @@ class RichTextField extends BaseField {
             initialValue=""
             >
                 <ReactQuill
+                    height
                     ref={(el) => this.quillRef = el}
                     formats={formats}
                     modules={this.modules}
                     readOnly={disabled}
+                    
                 />
 
             </Form.Item>

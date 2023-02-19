@@ -22,7 +22,7 @@ class ProvinceListPage extends ListBasePage {
     this.objectName = t("objectName");
     
     this.columns = [
-      { title: t("table.provinceName"),render: (dataRow) => {
+      { title: t("table.provinceName"),width:"600px",render: (dataRow) => {
         return (
             <span className="routing" onClick={()=>{
                 this.handleRouting(dataRow.id, dataRow.name);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import "./App.less"
 import { I18nextProvider } from 'react-i18next';
 
 import RootRoute from './routes/index';

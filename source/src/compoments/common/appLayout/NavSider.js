@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Layout, Menu, Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import { employeeNavMenuConfig, navMenuConfig } from '../../../constants/menuConfig';
-import logoUrl from '../../../assets/images/logo.jpg';
+import logoUrl from '../../../assets/images/LTS-black.png';
 import { AppConstants, UserTypes } from '../../../constants'
 import { withTranslation } from 'react-i18next';
 
@@ -107,7 +107,8 @@ class NavSider extends Component {
         const menuActive = findNavMenuActive(availableMenu, currentPathname);
         const menuItemActive = findNavMenuItemActive(availableMenu, currentPathname);
         return (
-            <Sider
+            <div className="nav-sider">
+  <Sider
                 style={{
                     // overflow: 'auto',
                     // height: '100vh',
@@ -196,6 +197,8 @@ class NavSider extends Component {
                     )}     
                 </Menu>
             </Sider>
+            </div>
+          
         )
     }
 }
