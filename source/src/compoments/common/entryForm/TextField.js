@@ -49,6 +49,7 @@ class TextField extends BaseField {
             style,
             className,
             onChange,
+            defaultValue,
         } = this.props;
         return (
             <Form.Item
@@ -65,9 +66,9 @@ class TextField extends BaseField {
                 {
                     type === 'textarea'
                     ?
-                    <TextArea onChange={onChange} style={style} placeholder={this.getPlaceHolder()} disabled={disabled} onBlur={onBlur}/>
+                    <TextArea defaultValue={defaultValue} onChange={onChange} style={style} placeholder={this.getPlaceHolder()} disabled={disabled} onBlur={onBlur}/>
                     :
-                    <Input onChange={onChange} style={style} size={size} placeholder={this.getPlaceHolder()} disabled={disabled} type={type} onBlur={onBlur}/>
+                    <Input defaultValue={defaultValue} onChange={onChange} style={style} size={size} placeholder={this.getPlaceHolder()} disabled={disabled} type={type} onBlur={onBlur}/>
                 } 
             </Form.Item>
         )

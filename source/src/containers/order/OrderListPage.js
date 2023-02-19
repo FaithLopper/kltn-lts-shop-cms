@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Avatar, Button } from "antd";
-import { UserOutlined, PlusOutlined } from "@ant-design/icons";
-import qs from "query-string";
+import { Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import ListBasePage from "../ListBasePage";
@@ -10,12 +9,13 @@ import BaseTable from "../../compoments/common/table/BaseTable";
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import { actions } from "../../actions";
 import { FieldTypes } from "../../constants/formConfig";
-import { AppConstants } from "../../constants";
-import { commonStatus, categoryKinds } from "../../constants/masterData";
+import Utils from "../../utils";
+import { orderStatus } from "../../constants/masterData";
+import StatusTag from "../../compoments/common/elements/StatusTag";
+import { ORDER_STATUS } from "../../constants";
+import { convertUtcToTimezone } from "../../utils/datetimeHelper";
 
-const { CATEGORY_KIND_NEWS } = categoryKinds;
-
-class CategoryNewsListPage extends ListBasePage {
+class OrderListPage extends ListBasePage {
   initialSearch() {
     return { name: "", status: null };
   }
@@ -23,30 +23,39 @@ class CategoryNewsListPage extends ListBasePage {
   constructor(props) {
     super(props);
     const { t } = props;
+    const { formatMoney } = Utils;
     this.objectName = t("objectName");
-    this.objectListName = "category-news";
+    this.objectListName = "order";
     this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
     this.columns = [
       {
-        title: "#",
-        dataIndex: "categoryImage",
-        align: "center",
-        width: 100,
-        render: (avatarPath) => (
-          <Avatar
-            className="table-avatar"
-            size="large"
-            icon={<UserOutlined />}
-            src={
-              avatarPath ? `${AppConstants.contentRootUrl}${avatarPath}` : null
-            }
-          />
-        ),
+        title: t("table.id"),
+        render: (dataRow) => {
+          return dataRow.id;
+        },
       },
       {
-        title: t("table.name"),
+        title: t("table.createdBy"),
         render: (dataRow) => {
-          return dataRow.categoryName;
+          return dataRow.createdBy;
+        },
+      },
+      {
+        title: t("table.subTotal"),
+        render: (dataRow) => {
+          return formatMoney(dataRow.subTotal);
+        },
+      },
+      {
+        title: t("table.province"),
+        render: (dataRow) => {
+          return dataRow.province.name;
+        },
+      },
+      {
+        title: t("table.createdDate"),
+        render: (dataRow) => {
+          return convertUtcToTimezone(dataRow.createdDate);
         },
       },
       this.renderStatusColumn(),
@@ -59,28 +68,21 @@ class CategoryNewsListPage extends ListBasePage {
     };
   }
 
-  handleRouting(parentId, parentName) {
-    const {
-      location: { search, pathname },
-      history,
-    } = this.props;
-    const queryString = qs.parse(search);
-    const result = {};
-    Object.keys(queryString).map((q) => {
-      result[`parentSearch${q}`] = queryString[q];
-      return 0;
-    });
-    history.push(
-      `${pathname}-child?${qs.stringify({ ...result, parentId, parentName })}`
-    );
-  }
-
-  prepareCreateData(data) {
+  renderStatusColumn() {
+    const { t } = this.props;
     return {
-      ...data,
-      categoryKind: CATEGORY_KIND_NEWS,
+      title: t ? t("listBasePage:titleStatusCol") : "Status",
+      dataIndex: "status",
+      width: "100px",
+      render: (status) => <StatusTag status={status} type={ORDER_STATUS} />,
     };
   }
+  //   prepareCreateData(data) {
+  //     return {
+  //       ...data,
+  //       categoryKind: CATEGORY_KIND_NEWS,
+  //     };
+  //   }
 
   getList() {
     const { getDataList } = this.props;
@@ -89,7 +91,6 @@ class CategoryNewsListPage extends ListBasePage {
       page,
       size: this.pagination.pageSize,
       search: this.search,
-      kind: CATEGORY_KIND_NEWS,
     };
     getDataList({ params });
   }
@@ -97,28 +98,29 @@ class CategoryNewsListPage extends ListBasePage {
   getSearchFields() {
     const { t } = this.props;
     return [
-      {
-        key: "name",
-        seachPlaceholder: t("searchPlaceHolder.name"),
-        initialValue: this.search.name,
-      },
+        {
+          key: "id",
+          seachPlaceholder: t("searchPlaceHolder.id"),
+          initialValue: this.search.id,
+        },
       {
         key: "status",
         seachPlaceholder: t("searchPlaceHolder.status"),
         fieldType: FieldTypes.SELECT,
-        options: commonStatus,
+        options: orderStatus,
         initialValue: this.search.status,
       },
     ];
   }
 
   getDetailLink(dataRow) {
-    return sitePathConfig.categoryNewsUpdate.path.replace(":id", dataRow.id);
+    return sitePathConfig.orderUpdate.path.replace(":id", dataRow.id);
   }
 
   render() {
     const { dataList, loading, t } = this.props;
-    const categoryData = dataList.data || [];
+    const orderData = dataList.data || [];
+
     this.pagination.total = dataList.totalElements || 0;
     return (
       <div>
@@ -137,7 +139,7 @@ class CategoryNewsListPage extends ListBasePage {
           loading={loading}
           columns={this.columns}
           rowKey={(record) => record.id}
-          dataSource={categoryData}
+          dataSource={orderData}
           pagination={this.pagination}
           onChange={this.handleTableChange}
         />
@@ -147,27 +149,22 @@ class CategoryNewsListPage extends ListBasePage {
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.category.tbCategoryLoading,
-  dataList: state.category.categoryData || {},
+  loading: state.order.tbOrderLoading,
+  dataList: state.order.orderData || {},
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getDataList: (payload) => dispatch(actions.getCategoryList(payload)),
-  getDataById: (payload) => dispatch(actions.getCategoryById(payload)),
-  updateData: (payload) => dispatch(actions.updateCategory(payload)),
-  deleteData: (payload) => dispatch(actions.deleteCategory(payload)),
-  createData: (payload) => dispatch(actions.createCategory(payload)),
-  uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
+  getDataList: (payload) => dispatch(actions.getOrderList(payload)),
+  //   getDataById: (payload) => dispatch(actions.getCategoryById(payload)),
+  //   updateData: (payload) => dispatch(actions.updateCategory(payload)),
+  //   createData: (payload) => dispatch(actions.createCategory(payload)),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(
-  withTranslation([
-    "categoryListPage",
-    "listBasePage",
-    "constants",
-    "basicModal",
-  ])(CategoryNewsListPage)
+  withTranslation(["orderListPage", "listBasePage", "constants", "basicModal"])(
+    OrderListPage
+  )
 );

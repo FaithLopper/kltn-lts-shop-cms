@@ -3,8 +3,6 @@ import React from "react";
 import { Form, Input, Row, Col, InputNumber } from "antd";
 import { withTranslation } from "react-i18next";
 import BaseField from "./BaseField";
-const { TextArea } = Input;
-
 class CordinateInputField extends BaseField {
   getMaxLengthMsg() {
     const { maxLength, maxLengthMsg, t } = this.props;

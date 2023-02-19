@@ -3,19 +3,10 @@ import CategoryUpdateForm from "../../compoments/category/CategoryUpdateForm";
 import SaveBasePage from "../SaveBasePage";
 import LoadingWrapper from "../../compoments/common/elements/LoadingWrapper";
 import { connect } from "react-redux";
-// import { eCatalogueActions } from '../../redux/actions';
 import { actions } from "../../actions";
-import { convertUtcToLocalTime } from "../../utils/datetimeHelper";
-import {
-  showErrorMessage,
-  showSucsessMessage,
-} from "../../services/notifyService";
-// import { siteConfig } from "../../constants/siteConfig";
 import { sitePathConfig } from "../../constants/sitePathConfig";
-// import ObjectNotFound from "../../components/common/ObjectNotFound";
 import ObjectNotFound from "../../compoments/common/ObjectNotFound";
 import { withTranslation } from "react-i18next";
-import { UserTypes } from "../../constants";
 import { categoryKinds } from "../../constants/masterData";
 class CategoryJobsUpdate extends SaveBasePage {
   constructor(props) {

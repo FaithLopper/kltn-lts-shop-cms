@@ -1,16 +1,12 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
 import {
   sortableContainer,
   sortableElement,
   sortableHandle,
 } from "react-sortable-hoc";
-import arrayMove from "array-move";
 import { MenuOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import { Col, Form, Input, InputNumber, Row } from "antd";
-import CropImageFiled from "../common/entryForm/CropImageFiled";
 import IconImageFiled from "./IconImageFiled";
-import NumericField from "../common/entryForm/NumericField";
 import Utils from "../../utils";
 import { UploadFileTypes } from "../../constants";
 import { showErrorMessage } from "../../services/notifyService";
@@ -45,11 +41,9 @@ const SortableItem = sortableElement(
              index= {value.id}
              fieldName="image"
              loading={uploading}
-             // label={t("form.label.image")}
              imageUrl={value.image}
              onChange={handleChangeLogo}
              uploadFile={uploadFileLogo}
-             // disabled={loadingSave}
              />
                </Col>
            </Row>
@@ -105,7 +99,6 @@ class VariantTemplateSortable extends Component {
 
   uploadFileLogo = (file, onSuccess,index) => {
     const { uploadFile ,onValuesChange} = this.props;
-    const { imageArray } = this.state;
     this.setState({ uploading: true });
     uploadFile({
       params: { fileObjects: { file }, type: UploadFileTypes.AVATAR },
@@ -143,11 +136,7 @@ class VariantTemplateSortable extends Component {
       uploadFile,
       removeVariantItem,
       id,
-      onSortEnd,
-      handleChangeLogo,
-      uploadFileLogo,
       changeVariant,
-      onValuesChange,
     } = this.props;
     const { uploading, } = this.state;
     return (

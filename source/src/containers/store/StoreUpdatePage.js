@@ -1,5 +1,4 @@
 import React from 'react';
-import AdminLevel1Form from '../../compoments/user/AdminLevel1Form';
 import SaveBasePage from "../SaveBasePage";
 import LoadingWrapper from '../../compoments/common/elements/LoadingWrapper';
 import { connect } from 'react-redux';
@@ -7,9 +6,6 @@ import { actions } from "../../actions";
 import { sitePathConfig } from '../../constants/sitePathConfig';
 import ObjectNotFound from '../../compoments/common/ObjectNotFound';
 import { withTranslation } from "react-i18next";
-import { ProvinceKinds, UserTypes } from '../../constants';
-import CustomerForm from '../../compoments/customer/CustomerForm';
-import AddressForm from '../../compoments/customer/AddressForm';
 import StoreUpdateForm from '../../compoments/store/StoreUpdateForm';
 class StoreUpdatePage extends SaveBasePage {
 

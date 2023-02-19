@@ -3,7 +3,7 @@ import React from 'react';
 import { Form, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 
-import { PlusOutlined, LoadingOutlined,UploadOutlined, PaperClipOutlined } from '@ant-design/icons';
+import { LoadingOutlined, UploadOutlined } from '@ant-design/icons';
 
 import BaseField from '../common/entryForm/BaseField';
 
@@ -23,7 +23,7 @@ class CropImageFiled extends BaseField {
     }
 
     getContent() {
-        const { showUploadList, fileList, maxFile, imageUrl, loading } = this.props;
+        const { showUploadList, fileList, maxFile, imageUrl } = this.props;
         if(imageUrl) {
             return <img className="img-uploaded" src={`${AppConstants.contentRootUrl}${imageUrl}`} alt="field-upload" />;
         }
@@ -36,7 +36,7 @@ class CropImageFiled extends BaseField {
     }
 
     renderUploadButton() {
-        const { loading, showUploadList, style, t } = this.props;
+        const { loading } = this.props;
         return (<>
           {loading ? <LoadingOutlined /> : <UploadOutlined style={{"fontSize":"22px","cursor":"pointer"}}/>}  
         </>
@@ -45,15 +45,12 @@ class CropImageFiled extends BaseField {
     render() {
         const {
             label,
-            fileList,
             disabled,
             fieldName,
             accept,
             onChange,
             beforeUpload,
-            showUploadList,
             aspect,
-            index
         } = this.props;
         const aspectValue = aspect || 1;
         return (

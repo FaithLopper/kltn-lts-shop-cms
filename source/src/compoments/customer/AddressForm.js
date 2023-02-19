@@ -1,25 +1,13 @@
 import React from 'react';
-import { Form, Col, Row, Card, Button, message } from 'antd';
+import { Form, Col, Row, Card, message } from 'antd';
 import BasicForm from '../common/entryForm/BasicForm';
 import TextField from '../common/entryForm/TextField';
-import RadioField from '../common/entryForm/RadioField';
-import DatePickerField from '../common/entryForm/DatePickerField';
-import UploadImageField from '../common/entryForm/UploadImageField';
-import { convertDateTimeToString, convertLocalTimeToUtc, convertUtcToLocalTime } from '../../utils/datetimeHelper';
-import CropImageFiled from '../common/entryForm/CropImageFiled';
 import Utils from "../../utils";
-import { KeyOutlined, CopyOutlined } from '@ant-design/icons';
-import { commonSex, commonStatus } from '../../constants/masterData';
 import {
     AppConstants,
-    UploadFileTypes,
     STATUS_ACTIVE,
     ProvinceKinds,
   } from "../../constants";
-  import { showErrorMessage } from "../../services/notifyService";
-import PasswordGeneratorField from '../common/entryForm/PasswordGeneratorField';
-import DropdownField from '../common/entryForm/DropdownField';
-import CheckBoxField from '../common/entryForm/CheckBoxField';
 class AddressForm extends BasicForm {
 
     constructor(props) {
@@ -104,7 +92,6 @@ class AddressForm extends BasicForm {
     handleChangeLocation =(id,kind)=>{
         const {getLocation}= this.props
         if(kind === ProvinceKinds.province.level){
-            const { getDataList } = this.props;
             // const page = this.pagination.current ? this.pagination.current - 1 : 0;
             const params = {
               page:0,
@@ -117,7 +104,6 @@ class AddressForm extends BasicForm {
             // getLocation({page:0, size: 64,kind:ProvinceKinds.district.level,parentId:id})
         }
         if(kind === ProvinceKinds.district.level){
-            const { getDataList } = this.props;
             // const page = this.pagination.current ? this.pagination.current - 1 : 0;
             const params = {
               page:0,
@@ -140,12 +126,7 @@ class AddressForm extends BasicForm {
     }
 
     render() {
-        const { formId, dataDetail, actions, isEditing,t } = this.props
-        const {
-            uploading,
-			logo,
-            curPassword
-        } = this.state
+        const { formId, t } = this.props
         return (
             <Form
                 id={formId}

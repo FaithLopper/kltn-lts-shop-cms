@@ -32,8 +32,9 @@ export default {
         'Product':'Sản phẩm',
         'Variant':'Thuộc tính',
         'Variant Template':'Nhóm thuộc tính',
-        'Product':'Sản phẩm',
-        'Tags': 'Quản lý Tags'
+        'Tags': 'Quản lý Tags',
+        'Order': 'Đơn đặt hàng',
+        'orderManagement': 'Quản lý đơn hàng'
     },
     appHeader: {
         profile: 'Hồ sơ',
@@ -52,7 +53,6 @@ export default {
         OtherSex: 'Khác',
         Forbidden: 'Bị cấm',
         Pending: 'Đang chờ',
-        Active: 'Hoạt động',
         Pause: 'Tạm dừng',
         Done: 'Hoàn thành',
         Cancel: 'Đã hủy',
@@ -235,12 +235,10 @@ export default {
         objectName: 'quản trị viên',
         form: {
             label: {
-                newPassword:'Tạo mật khẩu mới',
                 password:'Mật khẩu',
                 avatar: 'Ảnh đại diện',
                 username: 'Tài khoản',
                 fullName: 'Họ và tên',
-                password: 'Mật khẩu',
                 confirmPassword: 'Xác nhận mật khẩu',
                 newPassword: 'Mật khẩu mới',
                 confirmNewPassword: 'Xác nhận mật khẩu mới',
@@ -535,12 +533,10 @@ export default {
         objectName: 'khách hàng',
         form: {
             label: {
-                newPassword:'Tạo mật khẩu mới',
                 password:'Mật khẩu',
                 avatar: 'Ảnh đại diện',
                 username: 'Tài khoản',
                 fullName: 'Họ và tên',
-                password: 'Mật khẩu',
                 confirmPassword: 'Xác nhận mật khẩu',
                 newPassword: 'Mật khẩu mới',
                 confirmNewPassword: 'Xác nhận mật khẩu mới',
@@ -904,6 +900,48 @@ export default {
             label: {
             tag: 'Tên Tag',
             color:'Màu sắc',
+            },
+        },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    orderListPage: {
+        breadcrumbs: {
+            currentPage: 'Quản lý đơn hàng',
+            parentPage: 'Quản lý đơn hàng',
+        },
+        objectName: 'Đơn hàng',
+        searchPlaceHolder: {
+            status: 'Trạng thái đơn hàng',
+            id: 'Mã đơn hàng',
+        },
+        table: {
+            id: 'Mã đơn',
+            createdBy:'Tên người đặt',
+            subTotal:'Tổng đơn',
+            province:'Địa chỉ tỉnh',
+            createdDate:'Ngày đặt',
+            productName:'Tên sản phẩm',
+            quantity:'Số lượng',
+            price:'Tổng giá',
+            discount:'Giảm giá',
+            variants:'Thuộc tính',
+        },
+        form: {
+            label: {
+            status: "Trạng thái đơn",
+            createdBy: 'Tên người đặt',
+            createdDate:'Ngày đặt',
+            modifiedBy:'Người chỉnh sửa',
+            modifiedDate:'Ngày chỉnh sửa',
+            receiverFullName:'Tên người nhận',
+            phone:'Số ĐT',
+            paymentMethod:'Phương thức thanh toán',
+            subTotal:'Tổng Đơn',
+            shippingCharge:'Phí Ship',
+            province:'Tỉnh',
+            district:'Quận',
+            ward:'Huyện',
+            addressDetails:'Địa chỉ cụ thể',
             },
         },
         createNewButton: 'Tạo {{ var, lowercase }} mới',

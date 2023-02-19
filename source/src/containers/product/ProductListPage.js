@@ -1,22 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Avatar, Divider } from "antd";
-import { Image } from 'antd'
-import { PlusOutlined, UserOutlined,MessageOutlined,EditOutlined,LockOutlined,DeleteOutlined,CheckOutlined,HomeOutlined } from "@ant-design/icons";
+import { Button, Avatar } from "antd";
+import { PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { withTranslation } from "react-i18next";
 
 import ListBasePage from "../ListBasePage";
 import BaseTable from "../../compoments/common/table/BaseTable";
 
 import { actions } from "../../actions";
-import { convertUtcToTimezone } from "../../utils/datetimeHelper";
-import { AppConstants, UserTypes, GroupPermissonTypes, STATUS_ACTIVE } from "../../constants";
+import { AppConstants } from "../../constants";
 import PageWrapper from "../../compoments/common/PageWrapper";
 import { Link } from 'react-router-dom';
 import { sitePathConfig } from "../../constants/sitePathConfig";
-import ElementWithPermission from "../../compoments/common/elements/ElementWithPermission";
 import Utils from "../../utils";
-import { productKind } from "../../constants/masterData";
 import qs from 'query-string';
 const { getUserData } = actions;
 class ProductListPage extends ListBasePage {
@@ -29,9 +25,9 @@ class ProductListPage extends ListBasePage {
     const {t} = this.props;
     this.objectName =  t("objectName");
     this.objectListName = 'product';
-    const {
-      location: { search },
-    } = this.props;
+    // const {
+    //   location: { search },
+    // } = this.props;
     this.breadcrumbs = [{name: t('breadcrumbs.currentPage')}];
     this.state={
         categoryId:[]
@@ -79,6 +75,8 @@ class ProductListPage extends ListBasePage {
               categoryId.map(item =>{
                 if(item.value === productCategoryId)
                   text= item.label
+                
+                return 0;
               })
             return <span>{text}</span>
         }},
@@ -106,6 +104,7 @@ class ProductListPage extends ListBasePage {
     const result = {};
     Object.keys(queryString).map(q => {
         result[`parentSearch${q}`] = queryString[q];
+        return 0;
     })
     history.push(`${pathname}-child?${qs.stringify({...result, parentProduct})}`);
   }

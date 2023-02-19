@@ -11,7 +11,6 @@ const {
     GET_VARIANT_TEMPLATE_LIST,
     GET_VARIANT_TEMPLATE_AUTOCOMPLETE,
     DELETE_VARIANT_TEMPLATE,
-    GET_VARIANT_TEMPLATE_LIST_MODAL
 } = actionTypes;
 
 function* getVariantTemplateList({ payload: {params} }){

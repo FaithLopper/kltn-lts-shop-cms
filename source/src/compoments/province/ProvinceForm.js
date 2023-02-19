@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { STATUS_ACTIVE } from "../../constants";
 import BasicForm from "../common/entryForm/BasicForm";
 import TextField from "../common/entryForm/TextField";
@@ -31,7 +31,7 @@ class ProvinceForm extends BasicForm {
   }
 
   render() {
-    const { formId, dataDetail, loadingSave, isEditing, t, isProductCategory } = this.props;
+    const { formId, dataDetail, loadingSave, t} = this.props;
     return (
       <Form
         id={formId}

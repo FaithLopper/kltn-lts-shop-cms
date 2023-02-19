@@ -1,22 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button, Avatar, Divider } from "antd";
-import { Image } from 'antd'
-import { PlusOutlined, UserOutlined,MessageOutlined,EditOutlined,LockOutlined,DeleteOutlined,CheckOutlined,HomeOutlined } from "@ant-design/icons";
+import { PlusOutlined, UserOutlined,EditOutlined,LockOutlined,DeleteOutlined,CheckOutlined } from "@ant-design/icons";
 import { withTranslation } from "react-i18next";
 
 import ListBasePage from "../ListBasePage";
 import BaseTable from "../../compoments/common/table/BaseTable";
 
 import { actions } from "../../actions";
-import { convertUtcToTimezone } from "../../utils/datetimeHelper";
-import { AppConstants, UserTypes, GroupPermissonTypes, STATUS_ACTIVE } from "../../constants";
+import { AppConstants, STATUS_ACTIVE } from "../../constants";
 import PageWrapper from "../../compoments/common/PageWrapper";
 import { Link } from 'react-router-dom';
 import { sitePathConfig } from "../../constants/sitePathConfig";
-import ElementWithPermission from "../../compoments/common/elements/ElementWithPermission";
 import Utils from "../../utils";
-import { productKind } from "../../constants/masterData";
 import qs from "query-string";
 const { getUserData } = actions;
 class ProductChildListPage extends ListBasePage {
@@ -71,9 +67,11 @@ class ProductChildListPage extends ListBasePage {
             const {categoryId} = this.state
           let text=''
             if(categoryId.length !==0)
-              categoryId.map(item =>{
+              categoryId.map(item => {
                 if(item.value === productCategoryId)
                   text= item.label
+          
+                return 0;
               })
             return <span>{text}</span>
         }},

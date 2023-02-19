@@ -1,12 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Avatar, Button } from "antd";
-import { UserOutlined, PlusOutlined,MenuOutlined } from "@ant-design/icons";
+import { UserOutlined, PlusOutlined, MenuOutlined } from "@ant-design/icons";
 import qs from "query-string";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import ListBasePage from "../ListBasePage";
-import BaseTable from "../../compoments/common/table/BaseTable";
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import { actions } from "../../actions";
 import { FieldTypes } from "../../constants/formConfig";
@@ -24,7 +23,6 @@ const DragHandle = SortableHandle(() => (
   />
 ));
 
-
 class CategoryProductListPage extends ListBasePage {
   initialSearch() {
     return { name: "", status: null };
@@ -33,16 +31,16 @@ class CategoryProductListPage extends ListBasePage {
   constructor(props) {
     super(props);
     const { t } = props;
-    
+
     this.objectName = t("objectName");
     this.objectListName = "category-product";
     this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
     this.columns = [
       {
-        title: 'Sort',
-        dataIndex: 'sort',
+        title: "Sort",
+        dataIndex: "sort",
         width: 30,
-        className: 'drag-visible',
+        className: "drag-visible",
         render: () => <DragHandle />,
       },
       {
@@ -84,7 +82,7 @@ class CategoryProductListPage extends ListBasePage {
       isDelete: true,
       isChangeStatus: false,
     };
-    this.sortEnd= this.sortEnd.bind(this)
+    this.sortEnd = this.sortEnd.bind(this);
   }
 
   handleRouting(parentId, parentName) {
@@ -96,6 +94,7 @@ class CategoryProductListPage extends ListBasePage {
     const result = {};
     Object.keys(queryString).map((q) => {
       result[`parentSearch${q}`] = queryString[q];
+      return 0;
     });
     history.push(
       `${pathname}-sub?${qs.stringify({ ...result, parentId, parentName })}`
@@ -136,27 +135,31 @@ class CategoryProductListPage extends ListBasePage {
     return sitePathConfig.categoryProductUpdate.path.replace(":id", dataRow.id);
   }
 
-  mapDataToTable(dataSource){
-    let tempData= dataSource.map(item => ({...item, index :item.orderSort,key:item.id}))
-    return tempData
+  mapDataToTable(dataSource) {
+    let tempData = dataSource.map((item) => ({
+      ...item,
+      index: item.orderSort,
+      key: item.id,
+    }));
+    return tempData;
   }
 
-  sortEnd(oldIndex,newIndex,newData){
-    const{sortData}= this.props
-        let tempArray = newData.map((item, index)=>{
-          return {...item,orderSort:index}
-        })
-        sortData({
-          params: tempArray,
-          onCompleted: this.onModifyCompleted,
-          onError: this.onModifyError
-      });
-    }
-
+  sortEnd(oldIndex, newIndex, newData) {
+    const { sortData } = this.props;
+    let tempArray = newData.map((item, index) => {
+      return { ...item, orderSort: index };
+    });
+    sortData({
+      params: tempArray,
+      onCompleted: this.onModifyCompleted,
+      onError: this.onModifyError,
+    });
+  }
 
   render() {
     const { dataList, loading, t } = this.props;
-    const categoryData =  Object.keys(dataList).length !==0  ? this.mapDataToTable(dataList) :[];
+    const categoryData =
+      Object.keys(dataList).length !== 0 ? this.mapDataToTable(dataList) : [];
     this.pagination.total = dataList.totalElements || 0;
     return (
       <div>

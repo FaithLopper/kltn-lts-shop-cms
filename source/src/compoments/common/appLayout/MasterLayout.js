@@ -127,7 +127,7 @@ class MasterLayout extends Component {
     renderActionFooter(){
         const {      
             t,
-            location: { pathname },
+            // location: { pathname },
         } = this.props;
         return ( <Footer className="app-footer" style={{ position: "sticky", bottom: "0",display:this.isSaveBasePage()? 'block':'none'}}>
         <Row justify='space-between'>

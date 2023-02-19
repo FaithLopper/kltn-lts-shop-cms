@@ -1,20 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Avatar } from "antd";
-import { PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import { withTranslation } from "react-i18next";
 
 import ListBasePage from "../ListBasePage";
 import BaseTable from "../../compoments/common/table/BaseTable";
 
 import { actions } from "../../actions";
-import { convertUtcToTimezone } from "../../utils/datetimeHelper";
-import { AppConstants, UserTypes, GroupPermissonTypes, STATUS_ACTIVE } from "../../constants";
 import PageWrapper from "../../compoments/common/PageWrapper";
 import { Link } from 'react-router-dom';
 import { sitePathConfig } from "../../constants/sitePathConfig";
-import { FieldTypes } from "../../constants/formConfig";
-import { commonStatus } from "../../constants/masterData";
 class StoreListPage extends ListBasePage {
   initialSearch() {
     return { name: "", addressDetails: ""};
@@ -65,7 +61,6 @@ class StoreListPage extends ListBasePage {
     const {
       dataList,
       loading,
-      uploadFile,
       t,
     } = this.props;
     const users = dataList.data || [];

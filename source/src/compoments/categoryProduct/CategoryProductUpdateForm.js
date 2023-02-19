@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Col, Row, Card, message } from "antd";
+import { Form, Col, Row, Card } from "antd";
 import BasicForm from "../common/entryForm/BasicForm";
 import TextField from "../common/entryForm/TextField";
 import CropImageFiled from "../common/entryForm/CropImageFiled";

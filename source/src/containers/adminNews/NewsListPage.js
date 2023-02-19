@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Button, Avatar, Divider } from "antd";
 import {
   PlusOutlined,
-  FileTextOutlined,
   PushpinFilled,
   UserOutlined,
   EyeOutlined,
@@ -14,7 +13,6 @@ import {
 } from "@ant-design/icons";
 
 import ListBasePage from "../ListBasePage";
-import NewsForm from "../../compoments/news/NewsForm";
 import BaseTable from "../../compoments/common/table/BaseTable";
 import BasicModal from "../../compoments/common/modal/BasicModal";
 import { FieldTypes } from "../../constants/formConfig";
@@ -306,7 +304,7 @@ class NewsListPage extends ListBasePage {
   }
 
   render() {
-    const { dataList, loading, categoryAutoCompleteNews, uploadFile, t } =
+    const { dataList, loading, categoryAutoCompleteNews, t } =
       this.props;
     const {
       isShowPreviewModal,
