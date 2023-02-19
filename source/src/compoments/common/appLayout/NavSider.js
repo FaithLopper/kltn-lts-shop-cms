@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Spin } from 'antd';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
-import { employeeNavMenuConfig, navMenuConfig } from '../../../constants/menuConfig';
-import logoUrl from '../../../assets/images/LTS-black.png';
-=======
 import { navMenuConfig } from '../../../constants/menuConfig';
-import logoUrl from '../../../assets/images/logo.jpg';
->>>>>>> phat-dev
+import logoUrl from '../../../assets/images/LTS-black.png';
 import { AppConstants, UserTypes } from '../../../constants'
 import { withTranslation } from 'react-i18next';
 
@@ -114,7 +109,7 @@ class NavSider extends Component {
         const menuItemActive = findNavMenuItemActive(availableMenu, currentPathname);
         return (
             <div className="nav-sider">
-  <Sider
+                <Sider
                 style={{
                     // overflow: 'auto',
                     // height: '100vh',
