@@ -110,6 +110,7 @@ class StoreUpdateForm extends BasicForm {
   }
 
   handleChangeLocation = (id, kind) => {
+    
     const { getLocation } = this.props;
     if (kind === ProvinceKinds.province.level) {
       const params = {
@@ -119,7 +120,9 @@ class StoreUpdateForm extends BasicForm {
         parentId: id,
       };
       if (id !== this.provinceId) {
+        console.log("id1",id)
         if (params.parentId !== undefined) {
+          console.log("id2",id)
           getLocation({
             params,
             onCompleted: this.onGetLocationComplete,
@@ -161,7 +164,10 @@ class StoreUpdateForm extends BasicForm {
 
   onGetLocationComplete(responseData) {
     if (responseData?.result) {
-      const data = responseData.data?.data;
+      let data = [];
+      if(responseData.data?.data) {
+        data = JSON.parse(JSON.stringify(responseData.data?.data))
+      }
       const options = data.map((item) => {
         return { value: item.id, label: item.name };
       });
@@ -258,9 +264,9 @@ class StoreUpdateForm extends BasicForm {
                 required
                 allowClear
                 options={provinceOption}
-                onClick={(e) =>
-                  this.locationOnSelect(ProvinceKinds.province.level)
-                }
+                // onClick={(e) =>
+                //   this.locationOnSelect(ProvinceKinds.province.level)
+                // }
                 onChange={(value) =>
                   this.handleChangeLocation(value, ProvinceKinds.province.level)
                 }
