@@ -113,6 +113,7 @@ class RanksUpdateForm extends BasicForm {
                   fieldName="name"
                   label={t("form.label.name")}
                   required
+                  maxLength={32}
                   // disabled={loadingSave}
                 />
                 <TextField
@@ -120,6 +121,7 @@ class RanksUpdateForm extends BasicForm {
                   label={t("form.label.target")}
                   required
                   type="number"
+                  maxLength={16}
                   // disabled={loadingSave}
                 />
               </Col>

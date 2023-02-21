@@ -157,12 +157,14 @@ class OrderUpdateForm extends BasicForm {
               <Row gutter={8}>
                 <Col span={12}>
                   <TextField
+                    disabled
                     fieldName="createdBy"
                     label={t("form.label.createdBy")}
                   />
                 </Col>
                 <Col span={12}>
                   <TextField
+                    disabled
                     fieldName="createdDate"
                     label={t("form.label.createdDate")}
                   />
@@ -171,12 +173,14 @@ class OrderUpdateForm extends BasicForm {
               <Row gutter={8}>
                 <Col span={12}>
                   <TextField
+                    disabled
                     fieldName="modifiedBy"
                     label={t("form.label.modifiedBy")}
                   />
                 </Col>
                 <Col span={12}>
                   <TextField
+                    disabled
                     fieldName="modifiedDate"
                     label={t("form.label.modifiedDate")}
                   />
@@ -192,12 +196,14 @@ class OrderUpdateForm extends BasicForm {
                   <Row gutter={5}>
                     <Col span={12}>
                       <TextField
+                        disabled
                         fieldName="receiverFullName"
                         label={t("form.label.receiverFullName")}
                       />
                     </Col>
                     <Col span={12}>
                       <TextField
+                        disabled
                         fieldName="phone"
                         label={t("form.label.phone")}
                       />
@@ -213,6 +219,7 @@ class OrderUpdateForm extends BasicForm {
                     </Col>
                     <Col span={12}>
                       <NumericField
+                        disabled
                         fieldName="subTotal"
                         label={t("form.label.subTotal")}
                         formatter={formatMoney}
@@ -223,6 +230,7 @@ class OrderUpdateForm extends BasicForm {
                   <Row gutter={5}>
                     <Col span={12}>
                       <NumericField
+                        disabled
                         fieldName="shippingCharge"
                         label={t("form.label.shippingCharge")}
                         formatter={formatMoney}
@@ -233,24 +241,28 @@ class OrderUpdateForm extends BasicForm {
                   <Row gutter={5}>
                     <Col span={8}>
                       <TextField
+                        disabled
                         fieldName={["province", "name"]}
                         label={t("form.label.province")}
                       />
                     </Col>
                     <Col span={8}>
                       <TextField
+                        disabled
                         fieldName={["district", "name"]}
                         label={t("form.label.district")}
                       />
                     </Col>
                     <Col span={8}>
                       <TextField
+                        disabled
                         fieldName={["ward", "name"]}
                         label={t("form.label.ward")}
                       />
                     </Col>
                   </Row>
                   <TextField
+                    disabled
                     type="textarea"
                     fieldName="addressDetails"
                     label={t("form.label.addressDetails")}

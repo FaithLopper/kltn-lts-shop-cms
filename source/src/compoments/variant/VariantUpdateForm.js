@@ -66,6 +66,7 @@ class VariantUpdateForm extends BasicForm {
                 fieldName="name"
                 label={t("form.label.name")}
                 required
+                maxLength={64}
                 // disabled={loadingSave}
               />
             </Col>

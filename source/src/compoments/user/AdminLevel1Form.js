@@ -149,7 +149,7 @@ class AdminLevel1Form extends BasicForm {
                             />
                         </Col>
                         <Col span={12}>
-                            <TextField fieldName="fullName" label={t("form.label.fullName")} required 
+                            <TextField fieldName="fullName" label={t("form.label.fullName")} maxLength={32} required 
                             // disabled={loadingSave}
                             />
                         </Col>
@@ -192,14 +192,15 @@ class AdminLevel1Form extends BasicForm {
                             fieldName="phone"
                             label={t("form.label.phone")}
                             required
-                            minLength={10}
+                            minLength={9}
+                            maxLength={11}
                             // disabled={loadingSave}
                             />
                         </Col>
                         </Row>
                         <Row gutter={[16, 0]}>
                         <Col span={12}>
-                            <TextField fieldName="email" label="E-mail" type="email" 
+                            <TextField fieldName="email" label="E-mail" type="email" maxLength={64}
                             // disabled={loadingSave}
                             />
                         </Col>

@@ -105,6 +105,7 @@ class CategoryForm extends BasicForm {
                     fieldName="categoryName"
                     label={t("form.label.categoryName")}
                     required
+                    maxLength={32}
                     disabled={loadingSave}
                     />
                 </Col>
@@ -114,6 +115,7 @@ class CategoryForm extends BasicForm {
                     fieldName="categoryDescription"
                     label={t("form.label.categoryDescription")}
                     required
+                    maxLength={255}
                     style={{
                         height: 100
                     }}

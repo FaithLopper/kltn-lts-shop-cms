@@ -60,7 +60,7 @@ class GroupPermissionForm extends BasicForm {
                     </Col>
                     
                     <Col span={12}>
-                        <TextField style={{height: '150px'}} fieldName="description" label={t('form.label.description')} type="textarea" required disabled={loadingSave}/>
+                        <TextField style={{height: '150px'}} fieldName="description" label={t('form.label.description')} type="textarea" required disabled={loadingSave} maxLength={255}/>
                     </Col>
                 </Row>
 

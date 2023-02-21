@@ -545,7 +545,7 @@ class ProductUpdateForm extends BasicForm {
                         </Row>
                         <Row gutter={[16, 0]}>
                         <Col span={12}>
-                            <TextField fieldName="name" label={t("form.label.name")} required 
+                            <TextField fieldName="name" label={t("form.label.name")} required maxLength={128}
                             // disabled={loadingSave}
                             />
                         </Col>
@@ -618,6 +618,7 @@ class ProductUpdateForm extends BasicForm {
                         <Row gutter={[16, 0]}>
                         <Col span={24}>
                         <TextField
+                        maxLength={255}
                     type="textarea"
                     fieldName="description"
                     label={t("form.label.description")}

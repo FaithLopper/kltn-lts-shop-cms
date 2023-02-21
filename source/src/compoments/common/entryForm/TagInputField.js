@@ -20,6 +20,7 @@ class TagInputField extends BaseField {
   getTextFieldRules() {
     const { maxLength, minLength, type, invalidEmailMsg, t } = this.props;
     const rules = [];
+    console.log(maxLength)
     if (maxLength) {
       rules.push({ max: maxLength, message: this.getMaxLengthMsg() });
     }
@@ -59,7 +60,7 @@ class TagInputField extends BaseField {
         rules={[
           ...this.getRules(),
           ...this.getTextFieldRules(),
-          {...Utils.tagRegex}
+          {...Utils.tagRegex},
         ]}
       >
         {type === "textarea" ? (

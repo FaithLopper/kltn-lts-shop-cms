@@ -208,6 +208,7 @@ class EmployeeUpdateForm extends BasicForm {
                 fieldName="fullName"
                 label={t("form.label.fullName")}
                 required
+                maxLength={32}
               />
             </Col>
             <Col span={12}>
@@ -227,6 +228,7 @@ class EmployeeUpdateForm extends BasicForm {
                 fieldName="email"
                 label={t("form.label.email")}
                 required
+                maxLength={64}
               />
             </Col>
             <Col span={12}>
@@ -234,6 +236,7 @@ class EmployeeUpdateForm extends BasicForm {
                 fieldName="phone"
                 label={t("form.label.phone")}
                 required
+                maxLength={11}
               />
             </Col>
           </Row>

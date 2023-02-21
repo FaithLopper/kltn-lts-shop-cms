@@ -98,6 +98,7 @@ class CategoryProductSubForm extends BasicForm {
                 fieldName="name"
                 label={t("form.label.name")}
                 required
+                maxLength={64}
                 // disabled={loadingSave}
               />
               <TextField
@@ -139,6 +140,7 @@ class CategoryProductSubForm extends BasicForm {
             style={{
               height: 180,
             }}
+            maxLength={255}
           />
         </div>
       </Form>

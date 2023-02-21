@@ -65,6 +65,7 @@ class ProvinceForm extends BasicForm {
               fieldName="name"
               label={t("form.label.currentName")}
               required
+              maxLength={32}
               disabled={loadingSave}
             />
           </Col>

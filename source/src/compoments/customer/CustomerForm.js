@@ -173,6 +173,7 @@ class CustomerForm extends BasicForm {
                 fieldName="fullName"
                 label={t("form.label.fullName")}
                 required
+                maxLength={32}
                 // disabled={loadingSave}
               />
             </Col>
@@ -230,6 +231,7 @@ class CustomerForm extends BasicForm {
                 label={t("form.label.phone")}
                 required
                 minLength={10}
+                maxLength={11}
                 // disabled={loadingSave}
               />
             </Col>
@@ -259,6 +261,7 @@ class CustomerForm extends BasicForm {
                 fieldName="email"
                 label="E-mail"
                 type="email"
+                maxLength={64}
                 // disabled={loadingSave}
               />
             </Col>

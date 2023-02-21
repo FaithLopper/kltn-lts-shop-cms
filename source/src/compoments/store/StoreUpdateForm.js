@@ -250,6 +250,7 @@ class StoreUpdateForm extends BasicForm {
           <Row gutter={[16, 0]}>
             <Col span={24}>
               <TextField
+                maxLength={255}
                 fieldName="name"
                 label={t("form.label.name")}
                 required
@@ -303,6 +304,7 @@ class StoreUpdateForm extends BasicForm {
                 fieldName="addressDetails"
                 required
                 label={t("form.label.addressDetails")}
+                maxLength={255}
               />
             </Col>
           </Row>

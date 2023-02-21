@@ -151,6 +151,7 @@ class NewsForm extends BasicForm {
                 label={t('form.label.title')}
                 required
                 disabled={loadingSave}
+                maxLength={128}
             />
             </Col>
             <Col span={12}>
@@ -190,6 +191,7 @@ class NewsForm extends BasicForm {
                     style={{height: "122px"}}
                     disabled={loadingSave}
                     required
+                    maxLength={255}
                 />
             </Col>
         </Row>

@@ -154,6 +154,7 @@ class ProfileForm extends BasicForm {
                 fieldName="fullName"
                 label={t("form.label.fullName")}
                 required
+                maxLength={32}
                 requiredMsg={t("form.validationMessage.fullNameRequire")}
                 disabled={userData.kind !== UserTypes.ADMIN}
               />

@@ -5,7 +5,6 @@ import TextField from "../common/entryForm/TextField";
 import { AppConstants } from "../../constants";
 import ColorPicker from "../common/colorPicker/ColorPicker";
 import TagInputField from "../common/entryForm/TagInputField";
-
 class TagsUpdateForm extends BasicForm {
   constructor(props) {
     super(props);
@@ -72,6 +71,7 @@ class TagsUpdateForm extends BasicForm {
                 <TagInputField
                   fieldName="tag"
                   label={t("form.label.tag")}
+                  maxLength={255}
                   required
                   // disabled={loadingSave}
                 />
