@@ -187,7 +187,8 @@ class MasterLayout extends Component {
                         />
                         <Content className="app-content">
                         <Breadcrumb className="app-breadcrumb" separator=">">
-                        <h2>{breadcrumbs ? breadcrumbs[breadcrumbs.length-1]?.name:""}</h2>
+                        <h2 className='breadcrumb__header'>{breadcrumbs ? breadcrumbs[breadcrumbs.length-1]?.name:""}</h2>
+                                <div className="breadcrumb__content">
                                 <Breadcrumb.Item>
                                     <Link to="/">{t('breadcrumbs.home')}</Link>
                                 </Breadcrumb.Item>
@@ -208,6 +209,8 @@ class MasterLayout extends Component {
                                     :
                                     null
                                 }
+                                </div>
+                                
                             </Breadcrumb>
                             <div className={`content-wrapper ${contentClass} ${this.isSaveBasePage() ? 'save-base-page':'' }`} id='body-content-wrapper'>
                                 {React.cloneElement(children, {

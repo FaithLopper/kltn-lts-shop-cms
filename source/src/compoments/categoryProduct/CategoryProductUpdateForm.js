@@ -23,7 +23,7 @@ class CategoryProductUpdateForm extends BasicForm {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.dataDetail !== this.props.dataDetail) {
-      this.formRef.current.setFieldsValue(nextProps.dataDetail);
+      this.formRef.current.setFieldValue(nextProps.dataDetail);
     }
     if (
       nextProps.dataDetail.icon !== this.state.logo &&

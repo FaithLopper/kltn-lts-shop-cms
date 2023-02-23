@@ -217,12 +217,12 @@ class NewsListPage extends ListBasePage {
         const actionColumnsWithDivider = [];
         actionColumns.forEach((action, index) => {
           actionColumnsWithDivider.push(action);
-          if (index !== actionColumns.length - 1) {
-            actionColumnsWithDivider.push(<Divider type="vertical" />);
-          }
+          // if (index !== actionColumns.length - 1) {
+          //   actionColumnsWithDivider.push(<Divider type="vertical" />);
+          // }
         });
         return (
-          <span>
+          <span className="action__wrapper">
             {actionColumnsWithDivider.map((action, index) => (
               <span key={index}>{action}</span>
             ))}

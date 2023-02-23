@@ -41,8 +41,8 @@ class CustomerListPage extends ListBasePage {
           />
         ),
       },
-      { title:  t("table.username"), dataIndex: ["account", "username"]},
-      { title:  t("table.fullName"), dataIndex: ["account", "fullName"]},
+      { title:  t("table.username"),        width: '150px', dataIndex: ["account", "username"]},
+      { title:  t("table.fullName"), width: '250px', dataIndex: ["account", "fullName"]},
       { title:  t("table.phone"),  dataIndex: ["account", "phone"]},
       { title: "E-mail",  dataIndex: ["account", "email"]},
       this.renderStatusColumn(),
@@ -105,8 +105,7 @@ class CustomerListPage extends ListBasePage {
     if(isRender)
     return {
         title: t ? t('listBasePage:titleActionCol') : 'Action',
-        width: '100px',
-        align: 'center',
+        align: 'center', 
         render: (dataRow) => {
             const actionColumns = [];
             
@@ -172,13 +171,13 @@ class CustomerListPage extends ListBasePage {
             const actionColumnsWithDivider = [];
             actionColumns.forEach((action, index) => {
                 actionColumnsWithDivider.push(action);
-                if(index !== (actionColumns.length -1))
-                {
-                    actionColumnsWithDivider.push(<Divider type="vertical" />);
-                }
+                // if(index !== (actionColumns.length -1))
+                // {
+                //     actionColumnsWithDivider.push(<Divider type="vertical" />);
+                // }
             })
             return (
-                <span>
+                <span className="action__wrapper">
                     {
                         actionColumnsWithDivider.map((action, index) => <span key={index}>{action}</span>)
                     }
