@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Avatar, Button } from "antd";
-import { UserOutlined, PlusOutlined, MenuOutlined } from "@ant-design/icons";
+import { UserOutlined, PlusOutlined } from "@ant-design/icons";
 import qs from "query-string";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -11,18 +11,7 @@ import { actions } from "../../actions";
 import { FieldTypes } from "../../constants/formConfig";
 import { AppConstants } from "../../constants";
 import { commonStatus } from "../../constants/masterData";
-import DrapDropTable from "../../compoments/common/table/DragDropTable";
-import { SortableHandle } from "react-sortable-hoc";
-
-const DragHandle = SortableHandle(() => (
-  <MenuOutlined
-    style={{
-      cursor: "grab",
-      color: "#999",
-    }}
-  />
-));
-
+import SortableBaseTable from "../../compoments/common/table/SortableBaseTable";
 class CategoryProductListPage extends ListBasePage {
   initialSearch() {
     return { name: "", status: null };
@@ -36,13 +25,6 @@ class CategoryProductListPage extends ListBasePage {
     this.objectListName = "category-product";
     this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
     this.columns = [
-      {
-        title: "Sort",
-        dataIndex: "sort",
-        width: 30,
-        className: "drag-visible",
-        render: () => <DragHandle />,
-      },
       {
         title: "#",
         dataIndex: "icon",
@@ -82,7 +64,6 @@ class CategoryProductListPage extends ListBasePage {
       isDelete: true,
       isChangeStatus: false,
     };
-    this.sortEnd = this.sortEnd.bind(this);
   }
 
   handleRouting(parentId, parentName) {
@@ -144,23 +125,12 @@ class CategoryProductListPage extends ListBasePage {
     return tempData;
   }
 
-  sortEnd(oldIndex, newIndex, newData) {
-    const { sortData } = this.props;
-    let tempArray = newData.map((item, index) => {
-      return { ...item, orderSort: index };
-    });
-    sortData({
-      params: tempArray,
-      onCompleted: this.onModifyCompleted,
-      onError: this.onModifyError,
-    });
-  }
-
   render() {
-    const { dataList, loading, t } = this.props;
+    const { dataList, loading, t, changeOrderData } = this.props;
     const categoryData =
       Object.keys(dataList).length !== 0 ? this.mapDataToTable(dataList) : [];
     this.pagination.total = dataList.totalElements || 0;
+
     return (
       <div>
         {this.renderSearchForm()}
@@ -174,14 +144,14 @@ class CategoryProductListPage extends ListBasePage {
             </Link>
           )}
         </div>
-        <DrapDropTable
+        <SortableBaseTable
           loading={loading}
           columns={this.columns}
           rowKey={(record) => record.id}
           data={categoryData}
           pagination={this.pagination}
-          sortEnd={this.sortEnd}
           onChange={this.handleTableChange}
+          changeOrderData={changeOrderData}
         />
       </div>
     );
@@ -197,7 +167,8 @@ const mapDispatchToProps = (dispatch) => ({
   getDataList: (payload) => dispatch(actions.getProductCategoryList(payload)),
   getDataById: (payload) => dispatch(actions.getProductCategoryById(payload)),
   updateData: (payload) => dispatch(actions.updateProductCategory(payload)),
-  sortData: (payload) => dispatch(actions.sortProductCategory(payload)),
+  changeOrderData: (payload) =>
+    dispatch(actions.changeOrderProductCategory(payload)),
   deleteData: (payload) => dispatch(actions.deleteProductCategory(payload)),
   createData: (payload) => dispatch(actions.createProductCategory(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),

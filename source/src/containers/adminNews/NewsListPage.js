@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Avatar, Divider } from "antd";
+import { Button, Avatar } from "antd";
 import {
   PlusOutlined,
   PushpinFilled,

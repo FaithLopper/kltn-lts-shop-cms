@@ -23,7 +23,7 @@ class CategoryProductUpdateForm extends BasicForm {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.dataDetail !== this.props.dataDetail) {
-      this.formRef.current.setFieldValue(nextProps.dataDetail);
+      this.formRef.current.setFieldsValue(nextProps.dataDetail);
     }
     if (
       nextProps.dataDetail.icon !== this.state.logo &&
@@ -119,7 +119,6 @@ class CategoryProductUpdateForm extends BasicForm {
                   fieldName="name"
                   label={t("form.label.name")}
                   required
-                  maxLength={64}
                   // disabled={loadingSave}
                 />
                 {isEditing && (
@@ -140,7 +139,6 @@ class CategoryProductUpdateForm extends BasicForm {
               style={{
                 height: 180,
               }}
-              maxLength={255}
             />
           </div>
         </Card>

@@ -1,14 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Avatar, Divider, Button } from "antd";
+import { Avatar, Button } from "antd";
 import {
   UserOutlined,
   PlusOutlined,
-  EditOutlined,
-  LockOutlined,
-  CheckOutlined,
-  DeleteOutlined,
-  MenuOutlined
 } from "@ant-design/icons";
 import qs from "query-string";
 import { withTranslation } from "react-i18next";
@@ -17,21 +12,9 @@ import ListBasePage from "../ListBasePage";
 import { sitePathConfig } from "../../constants/sitePathConfig";
 import { actions } from "../../actions";
 import { FieldTypes } from "../../constants/formConfig";
-import { AppConstants, STATUS_ACTIVE } from "../../constants";
+import { AppConstants } from "../../constants";
 import { commonStatus } from "../../constants/masterData";
-import { SortableHandle } from "react-sortable-hoc";
-import DrapDropTable from "../../compoments/common/table/DragDropTable";
-
-const DragHandle = SortableHandle(() => (
-  <MenuOutlined
-    style={{
-      cursor: "grab",
-      color: "#999",
-    }}
-  />
-));
-
-
+import SortableBaseTable from "../../compoments/common/table/SortableBaseTable";
 class CategoryProductSubListPage extends ListBasePage {
   initialSearch() {
     return { name: "", status: null };
@@ -46,7 +29,6 @@ class CategoryProductSubListPage extends ListBasePage {
     } = this.props;
 
     const { parentId, parentName } = qs.parse(search);
-    this.sortEnd= this.sortEnd.bind(this)
     this.parentId = parentId;
     this.parentName = parentName;
 
@@ -60,13 +42,6 @@ class CategoryProductSubListPage extends ListBasePage {
       { name: `${parentName}`, path: `` },
     ];
     this.columns = [
-      {
-        title: 'Sort',
-        dataIndex: 'sort',
-        width: 30,
-        className: 'drag-visible',
-        render: () => <DragHandle />,
-      },
       {
         title: "#",
         dataIndex: "icon",
@@ -141,23 +116,16 @@ class CategoryProductSubListPage extends ListBasePage {
     );
   }
 
-  mapDataToTable(dataSource){
-    let tempData=dataSource?  dataSource.map(item => ({...item, index :item.orderSort,key:item.id})):[]
-    return tempData
+  mapDataToTable(dataSource) {
+    let tempData = dataSource
+      ? dataSource.map((item) => ({
+          ...item,
+          index: item.orderSort,
+          key: item.id,
+        }))
+      : [];
+    return tempData;
   }
-
-  sortEnd(oldIndex,newIndex,newData){
-    const{sortData}= this.props
-        let tempArray = newData.map((item, index)=>{
-          return {...item,orderSort:index}
-        })
-        sortData({
-          params: tempArray,
-          onCompleted: this.onModifyCompleted,
-          onError: this.onModifyError
-      });
-    }
-
   getCreateLink() {
     return `/${this.objectListName}/create?${qs.stringify({
       parentId: this.parentId,
@@ -165,84 +133,10 @@ class CategoryProductSubListPage extends ListBasePage {
     })}`;
   }
 
-  renderActionColumn() {
-    const { t } = this.props;
-    const isRender = this.checkRenderActionColumn();
-    if (isRender)
-      return {
-        title: t ? t("listBasePage:titleActionCol") : "Action",
-        width: "100px",
-        align: "center",
-        render: (dataRow) => {
-          const actionColumns = [];
-          if (this.actionColumns.isEdit) {
-            const detailLink = this.getDetailLink(dataRow);
-            actionColumns.push(
-              this.renderEditButton(
-                <Link to={detailLink}>
-                  <Button type="link" className="no-padding">
-                    <EditOutlined color="red" />
-                  </Button>
-                </Link>
-              )
-            );
-          }
-          if (this.actionColumns.isChangeStatus) {
-            actionColumns.push(
-              <Button
-                type="link"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  this.showChangeStatusConfirm(dataRow);
-                }}
-                className="no-padding"
-              >
-                {dataRow.status === STATUS_ACTIVE ? (
-                  <LockOutlined />
-                ) : (
-                  <CheckOutlined />
-                )}
-              </Button>
-            );
-          }
-          if (this.actionColumns.isDelete) {
-            actionColumns.push(
-              this.renderDeleteButton(
-                <Button
-                  type="link"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    this.showDeleteConfirm(dataRow.id);
-                  }}
-                  className="no-padding"
-                >
-                  {this.actionColumns.isDelete.icon || <DeleteOutlined />}
-                </Button>
-              )
-            );
-          }
-          const actionColumnsWithDivider = [];
-          actionColumns.forEach((action, index) => {
-            actionColumnsWithDivider.push(action);
-            if (index !== actionColumns.length - 1) {
-              actionColumnsWithDivider.push(<Divider type="vertical" />);
-            }
-          });
-          return (
-            <span>
-              {actionColumnsWithDivider.map((action, index) => (
-                <span key={index}>{action}</span>
-              ))}
-            </span>
-          );
-        },
-      };
-    else return {};
-  }
-
   render() {
-    const { dataList, loading, t } = this.props;
-    const categoryData = Object.keys(dataList).length !==0 ? this.mapDataToTable(dataList) :[];
+    const { dataList, loading, t, changeOrderData } = this.props;
+    const categoryData =
+      Object.keys(dataList).length !== 0 ? this.mapDataToTable(dataList) : [];
     this.pagination.total = dataList.totalElements || 0;
     this.dataDetail.parentName = this.parentName;
     this.dataDetail.parentId = this.parentId;
@@ -259,14 +153,14 @@ class CategoryProductSubListPage extends ListBasePage {
             </Link>
           )}
         </div>
-        <DrapDropTable
+        <SortableBaseTable
           loading={loading}
           columns={this.columns}
           rowKey={(record) => record.id}
           data={categoryData}
           pagination={this.pagination}
-          sortEnd={this.sortEnd}
           onChange={this.handleTableChange}
+          changeOrderData={changeOrderData}
         />
       </div>
     );
@@ -285,7 +179,8 @@ const mapDispatchToProps = (dispatch) => ({
   deleteData: (payload) => dispatch(actions.deleteProductCategory(payload)),
   createData: (payload) => dispatch(actions.createProductCategory(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
-  sortData: (payload) => dispatch(actions.sortProductCategory(payload)),
+  changeOrderData: (payload) =>
+    dispatch(actions.changeOrderProductCategory(payload)),
 });
 
 export default connect(

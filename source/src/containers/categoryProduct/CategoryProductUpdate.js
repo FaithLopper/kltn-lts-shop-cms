@@ -109,7 +109,7 @@ class CategoryProductUpdate extends SaveBasePage {
   prepareCreateData = (data) => {
     return {
       ...data,
-      orderSort: 1
+      orderSort: 1,
     };
   };
 
@@ -173,4 +173,8 @@ const mapStateToProps = (state) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withTranslation(["categoryProductListPage", "listBasePage"])(CategoryProductUpdate));
+)(
+  withTranslation(["categoryProductListPage", "listBasePage"])(
+    CategoryProductUpdate
+  )
+);

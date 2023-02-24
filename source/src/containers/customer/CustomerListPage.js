@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Avatar, Divider } from "antd";
+import { Button, Avatar } from "antd";
 import { PlusOutlined, UserOutlined,EditOutlined,LockOutlined,DeleteOutlined,CheckOutlined,HomeOutlined } from "@ant-design/icons";
 import { withTranslation } from "react-i18next";
 

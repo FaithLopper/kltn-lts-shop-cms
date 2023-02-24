@@ -15,7 +15,7 @@ const {
   DELETE_PRODUCT_CATEGORY,
   CREATE_PRODUCT_CATEGORY,
   GET_PRODUCT_CATEGORY_COMBOBOX,
-  SORT_PRODUCT_CATEGORY
+  CHANGE_ORDER_PRODUCT_CATEGORY,
 } = actionTypes;
 
 function* getProductCategoryList({ payload: { params } }) {
@@ -81,7 +81,9 @@ function* createProductCategory({ payload: { params, onCompleted, onError } }) {
   }
 }
 
-function* getProductCategoryCombobox({ payload: { params, onCompleted, onError } }) {
+function* getProductCategoryCombobox({
+  payload: { params, onCompleted, onError },
+}) {
   try {
     const apiParams = apiConfig.productCategory.getList;
     const result = yield call(sendRequest, apiParams, params);
@@ -101,10 +103,16 @@ function* updateProductCategory({ payload: { params, onCompleted, onError } }) {
   }
 }
 
-function* sortProductCategory({ payload: { params, onCompleted, onError } }) {
+function* changeOrderProductCategory({
+  payload: { params, onCompleted, onError },
+}) {
   try {
-    const apiParams = apiConfig.productCategory.update;
-    yield all([...params].map(param => call(sendRequest, apiParams, param)))
+    const apiParams = apiConfig.productCategory.productCategoryChangeOrder;
+    yield all(
+      [...params].map((param) => {
+        return call(sendRequest, apiParams, param);
+      })
+    );
   } catch (error) {
     onError(error);
   }
@@ -134,7 +142,7 @@ const sagas = [
   ),
   takeLatest(GET_PRODUCT_CATEGORY_BY_ID, getProductCategoryById),
   takeLatest(UPDATE_PRODUCT_CATEGORY, updateProductCategory),
-  takeLatest(SORT_PRODUCT_CATEGORY, sortProductCategory),
+  takeLatest(CHANGE_ORDER_PRODUCT_CATEGORY, changeOrderProductCategory),
   takeLatest(CREATE_PRODUCT_CATEGORY, createProductCategory),
   takeLatest(GET_PRODUCT_CATEGORY_COMBOBOX, getProductCategoryCombobox),
   takeLatest(

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import { Modal, Divider, Button } from 'antd';
+import { Modal, Button } from 'antd';
 import {
     EditOutlined,
     DeleteOutlined,

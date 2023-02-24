@@ -162,6 +162,8 @@ class CategoryProductSubUpdate extends SaveBasePage {
     const { isGetDetailLoading, objectNotFound } = this.state;
     const { t, uploadFile } = this.props;
 
+    console.log(this.parentId);
+
     if (objectNotFound) {
       return <ObjectNotFound />;
     }

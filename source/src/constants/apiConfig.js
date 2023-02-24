@@ -368,9 +368,14 @@ const apiConfig = {
             method:"DELETE",
             headers:baseHeader
         },
-        productCategoryAutoComplete:{
+        productCategoryAutoComplete: {
             path:"/v1/product-category/auto-complete",
             method:"GET",
+            headers:baseHeader
+        },
+        productCategoryChangeOrder: {
+            path:"/v1/product-category/change-order",
+            method:"PUT",
             headers:baseHeader
         }
       },
