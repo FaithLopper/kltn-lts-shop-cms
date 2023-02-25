@@ -28,27 +28,9 @@ class OrderUpdateForm extends BasicForm {
         },
       },
       {
-        title: t("table.quantity"),
-        render: (dataRow) => {
-          return dataRow.quantity;
-        },
-      },
-      {
-        title: t("table.price"),
-        render: (dataRow) => {
-          return formatMoney(dataRow.price);
-        },
-      },
-      {
-        title: t("table.discount"),
-        render: (dataRow) => {
-          return formatMoney(dataRow.discount);
-        },
-      },
-      {
         title: t("table.variants"),
         render: (dataRow) => {
-          const variants = [...dataRow.extraVariant];
+          const variants = JSON.parse(JSON.stringify(dataRow.extraVariant));
           return variants.map((eachVar) => {
             return (
               <div key={eachVar.id}>
@@ -65,7 +47,7 @@ class OrderUpdateForm extends BasicForm {
                     return (
                       <li key={e.id}>
                         <span>{e.name}</span>
-                        <br />
+                      
                         <span>Giá: {formatMoney(e.price)}</span>
                       </li>
                     );
@@ -74,6 +56,24 @@ class OrderUpdateForm extends BasicForm {
               </div>
             );
           });
+        },
+      },
+      {
+        title: t("table.quantity"),
+        render: (dataRow) => {
+          return dataRow.quantity;
+        },
+      },
+      {
+        title: t("table.discount"),
+        render: (dataRow) => {
+          return formatMoney(dataRow.discount);
+        },
+      },
+      {
+        title: t("table.price"),
+        render: (dataRow) => {
+          return formatMoney(dataRow.price);
         },
       },
     ];

@@ -33,7 +33,7 @@ class TagsListPage extends ListBasePage {
             <h1
               style={{
                 backgroundColor: `#${dataRow.color}`,
-                color: "white",
+                color: "black",
                 width: 100,
                 textAlign: "center",
               }}

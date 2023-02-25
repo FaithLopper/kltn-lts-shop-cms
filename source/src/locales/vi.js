@@ -844,7 +844,7 @@ export default {
         table: {
             name: 'Tên sản phẩm',
             price:'Giá',
-            productCategoryId:'Danh mục',
+            productCategoryName:'Danh mục',
             kind:'Loại sản phẩm',
         },
         message: {
@@ -924,7 +924,7 @@ export default {
             quantity:'Số lượng',
             price:'Tổng giá',
             discount:'Giảm giá',
-            variants:'Thuộc tính',
+            variants:'Phân loại',
         },
         form: {
             label: {
