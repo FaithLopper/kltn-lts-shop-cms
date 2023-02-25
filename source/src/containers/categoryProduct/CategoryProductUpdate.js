@@ -109,14 +109,14 @@ class CategoryProductUpdate extends SaveBasePage {
   prepareCreateData = (data) => {
     return {
       ...data,
-      orderSort: 1,
+      // orderSort: 1,
     };
   };
 
   prepareUpdateData = (data) => {
     return {
       ...data,
-      orderSort: 1,
+      // orderSort: 1,
       id: this.dataDetail.id,
     };
   };

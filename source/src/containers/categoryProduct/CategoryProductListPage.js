@@ -24,6 +24,7 @@ class CategoryProductListPage extends ListBasePage {
     this.objectName = t("objectName");
     this.objectListName = "category-product";
     this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
+    this.pagination = { pageSize: 200 };
     this.columns = [
       {
         title: "#",

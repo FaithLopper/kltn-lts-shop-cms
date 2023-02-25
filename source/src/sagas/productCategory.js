@@ -107,12 +107,9 @@ function* changeOrderProductCategory({
   payload: { params, onCompleted, onError },
 }) {
   try {
-    const apiParams = apiConfig.productCategory.update;
-    yield all(
-      [...params].map((param) => {
-        return call(sendRequest, apiParams, param);
-      })
-    );
+    const apiParams = apiConfig.productCategory.productCategoryChangeOrder;
+    const result = yield call(sendRequest, apiParams, params);
+    // handleApiResponse(result, onCompleted, onError);
   } catch (error) {
     onError(error);
   }

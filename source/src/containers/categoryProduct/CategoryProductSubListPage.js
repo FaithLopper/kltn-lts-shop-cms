@@ -31,7 +31,7 @@ class CategoryProductSubListPage extends ListBasePage {
     const { parentId, parentName } = qs.parse(search);
     this.parentId = parentId;
     this.parentName = parentName;
-
+    this.pagination = { pageSize: 200 };
     this.objectName = t("objectName");
     this.objectListName = "category-product-sub";
     this.breadcrumbs = [
@@ -161,6 +161,7 @@ class CategoryProductSubListPage extends ListBasePage {
           pagination={this.pagination}
           onChange={this.handleTableChange}
           changeOrderData={changeOrderData}
+          parentId={this.parentId}
         />
       </div>
     );

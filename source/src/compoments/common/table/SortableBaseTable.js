@@ -52,24 +52,17 @@ function SortableBaseTable(props) {
 
   const onSortEnd = ({ oldIndex, newIndex }) => {
     let tempDataSource = [...dataSource];
-
     if (oldIndex !== newIndex) {
       let movingItem = tempDataSource[oldIndex];
       tempDataSource.splice(oldIndex, 1);
       tempDataSource = merge(tempDataSource, [movingItem], newIndex);
-      console.log(tempDataSource)
-      const params = [
-        {
-          ...dataSource[oldIndex],
-          orderSort: newIndex,
-        },
-        {
-          ...dataSource[newIndex],
-          orderSort: oldIndex,
-        },
-      ];
 
-      // changeOrderData({ params });
+      changeOrderData({
+        params: {
+          id: tempDataSource[newIndex]?.id,
+          newOrder: newIndex,
+        },
+      });
       setDataSource(tempDataSource);
     }
   };

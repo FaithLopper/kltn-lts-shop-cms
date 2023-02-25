@@ -47,7 +47,7 @@ class OrderUpdateForm extends BasicForm {
                     return (
                       <li key={e.id}>
                         <span>{e.name}</span>
-                      
+
                         <span>Giá: {formatMoney(e.price)}</span>
                       </li>
                     );
@@ -137,7 +137,7 @@ class OrderUpdateForm extends BasicForm {
       >
         <div style={{ display: "flex" }}>
           <Card
-            style={{ width: "600px" }}
+            style={{ minWidth: "600px" }}
             title="THÔNG TIN ĐƠN HÀNG"
             bordered={false}
           >
@@ -188,95 +188,99 @@ class OrderUpdateForm extends BasicForm {
               </Row>
               <Row>
                 <Card
-                  style={{ width: "600px", height: "650px" }}
-                  headStyle={{ backgroundColor: "#dddddd" }}
-                  title="THÔNG TIN VẬN CHUYỂN"
-                  bordered
+                  style={{ width: "800px", padding: "0px" }}
+                  title="SẢN PHẨM"
+                  bordered={false}
                 >
-                  <Row gutter={5}>
-                    <Col span={12}>
-                      <TextField
-                        disabled
-                        fieldName="receiverFullName"
-                        label={t("form.label.receiverFullName")}
-                      />
-                    </Col>
-                    <Col span={12}>
-                      <TextField
-                        disabled
-                        fieldName="phone"
-                        label={t("form.label.phone")}
-                      />
-                    </Col>
-                  </Row>
-                  <Row gutter={5}>
-                    <Col span={12}>
-                      <TextField
-                        fieldName="paymentMethod"
-                        label={t("form.label.paymentMethod")}
-                        disabled
-                      />
-                    </Col>
-                    <Col span={12}>
-                      <NumericField
-                        disabled
-                        fieldName="subTotal"
-                        label={t("form.label.subTotal")}
-                        formatter={formatMoney}
-                        width="100%"
-                      />
-                    </Col>
-                  </Row>
-                  <Row gutter={5}>
-                    <Col span={12}>
-                      <NumericField
-                        disabled
-                        fieldName="shippingCharge"
-                        label={t("form.label.shippingCharge")}
-                        formatter={formatMoney}
-                        width="100%"
-                      />
-                    </Col>
-                  </Row>
-                  <Row gutter={5}>
-                    <Col span={8}>
-                      <TextField
-                        disabled
-                        fieldName={["province", "name"]}
-                        label={t("form.label.province")}
-                      />
-                    </Col>
-                    <Col span={8}>
-                      <TextField
-                        disabled
-                        fieldName={["district", "name"]}
-                        label={t("form.label.district")}
-                      />
-                    </Col>
-                    <Col span={8}>
-                      <TextField
-                        disabled
-                        fieldName={["ward", "name"]}
-                        label={t("form.label.ward")}
-                      />
-                    </Col>
-                  </Row>
-                  <TextField
-                    disabled
-                    type="textarea"
-                    fieldName="addressDetails"
-                    label={t("form.label.addressDetails")}
+                  <BaseTable
+                    columns={this.columns}
+                    rowKey={(record) => record.id}
+                    dataSource={this.getOrderItems()}
+                    bordered
                   />
                 </Card>
               </Row>
             </div>
           </Card>
-          <Card style={{ width: "700px" }} title="SẢN PHẨM" bordered={false}>
-            <BaseTable
-              columns={this.columns}
-              rowKey={(record) => record.id}
-              dataSource={this.getOrderItems()}
-              bordered
+          <Card
+            style={{ minWidth: "700px" }}
+            headStyle={{ backgroundColor: "#dddddd" }}
+            title="THÔNG TIN VẬN CHUYỂN"
+            bordered
+          >
+            <Row gutter={5}>
+              <Col span={12}>
+                <TextField
+                  disabled
+                  fieldName="receiverFullName"
+                  label={t("form.label.receiverFullName")}
+                />
+              </Col>
+              <Col span={12}>
+                <TextField
+                  disabled
+                  fieldName="phone"
+                  label={t("form.label.phone")}
+                />
+              </Col>
+            </Row>
+            <Row gutter={5}>
+              <Col span={12}>
+                <TextField
+                  fieldName="paymentMethod"
+                  label={t("form.label.paymentMethod")}
+                  disabled
+                />
+              </Col>
+              <Col span={12}>
+                <NumericField
+                  disabled
+                  fieldName="subTotal"
+                  label={t("form.label.subTotal")}
+                  formatter={formatMoney}
+                  width="100%"
+                />
+              </Col>
+            </Row>
+            <Row gutter={5}>
+              <Col span={12}>
+                <NumericField
+                  disabled
+                  fieldName="shippingCharge"
+                  label={t("form.label.shippingCharge")}
+                  formatter={formatMoney}
+                  width="100%"
+                />
+              </Col>
+            </Row>
+            <Row gutter={5}>
+              <Col span={8}>
+                <TextField
+                  disabled
+                  fieldName={["province", "name"]}
+                  label={t("form.label.province")}
+                />
+              </Col>
+              <Col span={8}>
+                <TextField
+                  disabled
+                  fieldName={["district", "name"]}
+                  label={t("form.label.district")}
+                />
+              </Col>
+              <Col span={8}>
+                <TextField
+                  disabled
+                  fieldName={["ward", "name"]}
+                  label={t("form.label.ward")}
+                />
+              </Col>
+            </Row>
+            <TextField
+              disabled
+              type="textarea"
+              fieldName="addressDetails"
+              label={t("form.label.addressDetails")}
             />
           </Card>
         </div>

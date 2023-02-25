@@ -132,7 +132,7 @@ class CategoryProductSubUpdate extends SaveBasePage {
     return {
       ...data,
       parentId: this.parentId,
-      orderSort: 1,
+      // orderSort: 1,
       isChild: true,
     };
   };
@@ -141,7 +141,7 @@ class CategoryProductSubUpdate extends SaveBasePage {
     return {
       ...data,
       id: this.dataDetail.id,
-      orderSort: 1,
+      // orderSort: 1,
     };
   };
 
