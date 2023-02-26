@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 
 import { sendRequest } from "../services/apiService";
 import { actionTypes, reduxUtil } from "../actions/productCategory";
@@ -108,7 +108,7 @@ function* changeOrderProductCategory({
 }) {
   try {
     const apiParams = apiConfig.productCategory.productCategoryChangeOrder;
-    const result = yield call(sendRequest, apiParams, params);
+    yield call(sendRequest, apiParams, params);
     // handleApiResponse(result, onCompleted, onError);
   } catch (error) {
     onError(error);

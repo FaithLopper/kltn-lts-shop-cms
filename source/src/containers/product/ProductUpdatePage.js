@@ -8,6 +8,7 @@ import ObjectNotFound from "../../compoments/common/ObjectNotFound";
 import { withTranslation } from "react-i18next";
 import ProductUpdateForm from "../../compoments/product/ProductUpdateForm";
 import qs from "query-string";
+import { showErrorMessage } from "../../services/notifyService";
 class ProductUpdatePage extends SaveBasePage {
   constructor(props) {
     super(props);
@@ -19,6 +20,7 @@ class ProductUpdatePage extends SaveBasePage {
     } = this.props;
     const { parentProduct } = qs.parse(search);
     this.parentProduct = parentProduct;
+    this.parentCategory = {};
     this.getListUrl = this.parentProduct
       ? `${sitePathConfig.productChild.path}?parentProduct=${this.parentProduct}`
       : sitePathConfig.product.path;
@@ -33,7 +35,9 @@ class ProductUpdatePage extends SaveBasePage {
           : `${t(`listBasePage:${"create"}`)} ${this.objectName}`,
       },
     ];
-    this.onProductCategoryParentChange= this.onProductCategoryParentChange.bind(this)
+    this.onProductCategoryParentChange =
+      this.onProductCategoryParentChange.bind(this);
+    this.onGetProductCategoryById = this.onGetProductCategoryById.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -94,7 +98,7 @@ class ProductUpdatePage extends SaveBasePage {
   }
 
   onProductCategoryParentChange(id) {
-    const {getProductCategoryCombobox}= this.props
+    const { getProductCategoryCombobox } = this.props;
     getProductCategoryCombobox({
       params: { parentId: id },
       onCompleted: (responseData) => {
@@ -111,8 +115,31 @@ class ProductUpdatePage extends SaveBasePage {
     });
   }
 
+  getDetail = (id) => {
+    const { getDataById } = this.props;
+    const params = { id };
+    this.isEditing = true;
+    this.setState({ isGetDetailLoading: true });
+    getDataById({
+      params,
+      onCompleted: (responseData) => {
+        const { result, data } = responseData;
+        if (result) {
+          // cho 1 cau if o day de check categorgy null thi call onGetDetailCompleted 
+          this.onGetProductCategoryById(data);
+        }
+      },
+      onError: (err) => {
+        if (err && err.message) showErrorMessage(err.message);
+        else
+          showErrorMessage(`Get ${this.objectName} failed. Please try again!`);
+        this.setState({ isGetDetailLoading: false });
+      },
+    });
+  };
+
   getDataDetailMapping = (data) => {
-    const productData = data;
+    const productData = JSON.parse(JSON.stringify(data));
     if (!productData) {
       this.setState({ objectNotFound: true });
       return;
@@ -145,10 +172,9 @@ class ProductUpdatePage extends SaveBasePage {
       });
     }
     this.parentProductId = productData.parentProductId;
-    console.log(this.state.categoryId,this.state.categoryChildId)
     const dataConfig = {
       ...productData,
-      categoryId: productData.productCategoryId,
+      categoryChildId: productData.productCategoryId,
       tags,
       // tags:productData.tags ?
       variantConfigs: productData.productConfigs
@@ -166,8 +192,28 @@ class ProductUpdatePage extends SaveBasePage {
     };
   };
 
+  onGetProductCategoryById(productData) {
+    const { getProductCategoryById } = this.props;
+    getProductCategoryById({
+      params: { id: productData.productCategoryId },
+      onCompleted: (responseData) => {
+        const { result, data } = responseData;
+        if (result) {
+          const returnData = {
+            ...productData,
+            categoryId: data.parentId,
+          };
+          this.onProductCategoryParentChange(data.parentId);
+          this.onGetDetailCompleted({ data: returnData });
+        }
+      },
+      onError: this.onSaveError,
+    });
+  }
+
   onGetDetailCompleted = ({ data }) => {
-    this.dataDetail = this.getDataDetailMapping(data);
+    const tempDataDetail = this.getDataDetailMapping(data);
+    this.dataDetail = { ...tempDataDetail };
     this.setState({ isGetDetailLoading: false });
   };
 
@@ -240,7 +286,9 @@ class ProductUpdatePage extends SaveBasePage {
     }
     return {
       ...tempData,
-      categoryId: tempData.categoryChildId ? tempData.categoryChildId:tempData.categoryId,
+      categoryId: tempData.categoryChildId
+        ? tempData.categoryChildId
+        : tempData.categoryId,
       kind: this.parentProduct ? 1 : tempData.kind,
       price: tempData.kind === 1 || this.parentProduct ? tempData.price : 0,
       parentProductId: this.parentProduct ? parseInt(this.parentProduct) : null,
@@ -269,7 +317,9 @@ class ProductUpdatePage extends SaveBasePage {
     }
     return {
       ...tempData,
-      categoryId: tempData.categoryChildId ? tempData.categoryChildId:tempData.categoryId,
+      categoryId: tempData.categoryChildId
+        ? tempData.categoryChildId
+        : tempData.categoryId,
       parentProductId: this.parentProductId,
       productConfigs: temp,
     };
@@ -289,7 +339,13 @@ class ProductUpdatePage extends SaveBasePage {
   };
 
   render() {
-    const { isGetDetailLoading, objectNotFound, categoryId, tags,categoryChildId } = this.state;
+    const {
+      isGetDetailLoading,
+      objectNotFound,
+      categoryId,
+      tags,
+      categoryChildId,
+    } = this.state;
     const { t, uploadFile } = this.props;
     if (objectNotFound) {
       return <ObjectNotFound />;
@@ -334,6 +390,8 @@ const mapDispatchToProps = (dispatch) => ({
   getDataList: (payload) => dispatch(actions.getVariantListModal(payload)),
   getDataListVariantTemplate: (payload) =>
     dispatch(actions.getVariantTemplateListModal(payload)),
+  getProductCategoryById: (payload) =>
+    dispatch(actions.getProductCategoryById(payload)),
 });
 
 const mapStateToProps = (state) => ({});
