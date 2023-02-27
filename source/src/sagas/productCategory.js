@@ -108,8 +108,8 @@ function* changeOrderProductCategory({
 }) {
   try {
     const apiParams = apiConfig.productCategory.productCategoryChangeOrder;
-    yield call(sendRequest, apiParams, params);
-    // handleApiResponse(result, onCompleted, onError);
+    const result = yield call(sendRequest, apiParams, params);
+    handleApiResponse(result, onCompleted, onError);
   } catch (error) {
     onError(error);
   }

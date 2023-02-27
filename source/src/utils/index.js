@@ -1,4 +1,9 @@
-import { commonStatus, commonKinds, orderStatus, paymentMethods } from "../constants/masterData";
+import {
+  commonStatus,
+  commonKinds,
+  orderStatus,
+  paymentMethods,
+} from "../constants/masterData";
 import { STATUS_DELETE, CurrentcyPositions } from "../constants";
 import { showErrorMessage } from "../services/notifyService";
 import { actions } from "../actions";
@@ -40,9 +45,7 @@ const Utils = {
     return statusItem;
   },
   getOrderStatusItem(status) {
-    const allStatus = [
-      ...orderStatus
-    ];
+    const allStatus = [...orderStatus];
     const statusItem = allStatus.find((item) => item.value === status);
     return statusItem;
   },
@@ -247,16 +250,31 @@ const Utils = {
     let newStr = str.replace(/[^a-zA-Z0-9]/g, "");
     return newStr;
   },
-  
-  tagRegex : {
+
+  tagRegex: {
     pattern: new RegExp(/^[\p{L}\p{N}]+$/gu),
     message: "chứa ký tự đặt biệt",
   },
 
   getPaymentMethod(methodId) {
-    const method = paymentMethods.find(method => method.value === methodId)
-    return method ? method.label : "thanh toán thường"
-  }
+    const method = paymentMethods.find((method) => method.value === methodId);
+    return method ? method.label : "thanh toán thường";
+  },
+
+  moveAnElementInArray(array, oldIndex, newIndex = 0) {
+    let changedArray = [...array];
+    if (oldIndex !== newIndex) {
+      let movingItem = changedArray[oldIndex];
+      changedArray.splice(oldIndex, 1);
+      let aa = [...changedArray];
+      changedArray = [
+        ...changedArray.slice(0, newIndex),
+        ...[movingItem],
+        ...aa.slice(newIndex, aa.length),
+      ];
+    }
+    return [...changedArray];
+  },
 };
 
 export default Utils;

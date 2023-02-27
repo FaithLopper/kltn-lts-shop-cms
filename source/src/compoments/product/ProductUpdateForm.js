@@ -19,9 +19,9 @@ import FieldSet from "../common/elements/FieldSet";
 import BasicModal from "../common/modal/BasicModal";
 import VariantListForm from "../variant/VariantListForm";
 import VariantTemplateSortable from "./VariantTemplateSortable";
-import { arrayMoveImmutable } from "array-move";
 import VariantTemplateListForm from "../variant/VariantTemplateListForm";
 import TagField from "../common/entryForm/TagField";
+const { moveAnElementInArray, getBase64, formatIntegerNumber } = Utils;
 class ProductUpdateForm extends BasicForm {
   constructor(props) {
     super(props);
@@ -109,7 +109,7 @@ class ProductUpdateForm extends BasicForm {
 
   handleChangeLogo = (info) => {
     if (info.file.status === "done") {
-      Utils.getBase64(info.file.originFileObj, (logo) => {
+      getBase64(info.file.originFileObj, (logo) => {
         this.setState({ image: logo, isUpdateLogo: true });
       });
     }
@@ -354,20 +354,24 @@ class ProductUpdateForm extends BasicForm {
 
   onSortEnd = ({ oldIndex, newIndex, data, id }) => {
     const { templateConfigData } = this.state;
-    let dataSorted = arrayMoveImmutable(data, oldIndex, newIndex);
+    let dataSorted = moveAnElementInArray(data, oldIndex, newIndex);
+    console.log("beforestate", templateConfigData)
     this.setState({
-      data: arrayMoveImmutable(data, oldIndex, newIndex),
+      data: [...dataSorted],
       templateConfigData: templateConfigData.map((item, index) => {
         if (item.index === id) {
+          console.log(dataSorted);
           return {
             ...item,
-            variantIds: dataSorted,
+            variants: [...dataSorted],
+            variantIds: [...dataSorted],
           };
         }
         return item;
       }),
     });
     this.onValuesChange();
+    console.log("after", this.state.templateConfigData)
   };
 
   addImageVariant(path, index, id) {
@@ -654,7 +658,7 @@ class ProductUpdateForm extends BasicForm {
                       min={0}
                       max={Infinity}
                       width="100%"
-                      parser={(value) => Utils.formatIntegerNumber(value)}
+                      parser={(value) => formatIntegerNumber(value)}
                     />
                   ) : (
                     <></>

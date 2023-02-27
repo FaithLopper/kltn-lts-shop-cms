@@ -6,6 +6,8 @@ import {
 } from "react-sortable-hoc";
 import { MenuOutlined } from "@ant-design/icons";
 import BaseTable from "./BaseTable";
+import Utils from "../../../utils";
+const { moveAnElementInArray } = Utils;
 
 const DragHandle = sortableHandle(({ active }) => (
   <MenuOutlined style={{ cursor: "grab", color: active ? "blue" : "#999" }} />
@@ -45,25 +47,20 @@ function SortableBaseTable(props) {
     setDataSource(data);
   }, [data]);
 
-  const merge = (a, b, i = 0) => {
-    let aa = [...a];
-    return [...a.slice(0, i), ...b, ...aa.slice(i, aa.length)];
-  };
-
   const onSortEnd = ({ oldIndex, newIndex }) => {
-    let tempDataSource = [...dataSource];
+    let newdataSource = [...dataSource];
     if (oldIndex !== newIndex) {
-      let movingItem = tempDataSource[oldIndex];
-      tempDataSource.splice(oldIndex, 1);
-      tempDataSource = merge(tempDataSource, [movingItem], newIndex);
-
+      newdataSource = moveAnElementInArray(newdataSource, oldIndex, newIndex);
+      setDataSource(newdataSource);
       changeOrderData({
         params: {
-          id: tempDataSource[newIndex]?.id,
+          id: newdataSource[newIndex]?.id,
           newOrder: newIndex,
         },
+        onCompleted: () => {
+          return 0;
+        },
       });
-      setDataSource(tempDataSource);
     }
   };
 
