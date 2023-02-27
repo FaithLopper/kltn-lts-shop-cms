@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Col, Row, Card } from "antd";
+import { Form, Col, Row, Card, Divider } from "antd";
 import BasicForm from "../common/entryForm/BasicForm";
 import Utils from "../../utils";
 import { orderStatus } from "../../constants/masterData";
@@ -34,25 +34,24 @@ class OrderUpdateForm extends BasicForm {
           return variants.map((eachVar) => {
             return (
               <div key={eachVar.id}>
-                <span
+                <Divider
+                  orientation="left"
                   style={{
-                    color: "#444444",
-                    fontWeight: 500,
+                    textTransform: "capitalize",
+                    fontSize: "0.85rem",
                   }}
                 >
                   {eachVar.name}
-                </span>
-                <ul style={{ paddingLeft: "30px" }}>
-                  {eachVar.variants?.map((e) => {
-                    return (
-                      <li key={e.id}>
-                        <span>{e.name}</span>
-
-                        <span>Giá: {formatMoney(e.price)}</span>
-                      </li>
-                    );
-                  })}
-                </ul>
+                </Divider>
+                {eachVar.variants?.map((e) => {
+                  return (
+                    <div key={e.id} style={{ textAlign: "center" }}>
+                      <span>{e.name}</span>
+                      <Divider type="vertical" />
+                      <span>{formatMoney(e.price)}</span>
+                    </div>
+                  );
+                })}
               </div>
             );
           });
@@ -188,7 +187,7 @@ class OrderUpdateForm extends BasicForm {
               </Row>
               <Row>
                 <Card
-                  style={{ width: "800px", padding: "0px" }}
+                  style={{ width: "700px", padding: "0px" }}
                   title="SẢN PHẨM"
                   bordered={false}
                 >
@@ -198,6 +197,28 @@ class OrderUpdateForm extends BasicForm {
                     dataSource={this.getOrderItems()}
                     bordered
                   />
+                  <Row gutter={5} style={{ marginTop: "15px" }}>
+                    <Col
+                      span={18}
+                      style={{
+                        fontSize: "18px",
+                        textAlign: "end",
+                        paddingRight: "20px",
+                        paddingTop: "7px",
+                      }}
+                    >
+                      {t("form.label.subTotal")}:
+                    </Col>
+                    <Col span={6} style={{ textAlign: "end" }}>
+                      <NumericField
+                        width="100%"
+                        fieldName="subTotal"
+                        formatter={formatMoney}
+                        style={{ fontSize: 10 }}
+                        size="large"
+                      />
+                    </Col>
+                  </Row>
                 </Card>
               </Row>
             </div>
@@ -232,17 +253,6 @@ class OrderUpdateForm extends BasicForm {
                   disabled
                 />
               </Col>
-              <Col span={12}>
-                <NumericField
-                  disabled
-                  fieldName="subTotal"
-                  label={t("form.label.subTotal")}
-                  formatter={formatMoney}
-                  width="100%"
-                />
-              </Col>
-            </Row>
-            <Row gutter={5}>
               <Col span={12}>
                 <NumericField
                   disabled

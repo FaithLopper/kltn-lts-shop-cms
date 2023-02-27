@@ -30,6 +30,7 @@ class NumericField extends BaseField {
             parser,
             className,
             defaultValue,
+            size,
         } = this.props;
 
         return (
@@ -50,6 +51,7 @@ class NumericField extends BaseField {
                     onChange={onChange}
                     onBlur={onBlur}
                     defaultValue={defaultValue}
+                    size={size}
                 />
                 
             </Form.Item>
