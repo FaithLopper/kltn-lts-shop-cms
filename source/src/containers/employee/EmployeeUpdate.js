@@ -45,7 +45,7 @@ class EmployeeUpdate extends SaveBasePage {
   }
 
   getDataDetailMapping = (data) => {
-    const employeeData = data;
+    const employeeData = { ...data };
 
     if (!employeeData) {
       this.setState({ objectNotFound: true });
@@ -54,6 +54,8 @@ class EmployeeUpdate extends SaveBasePage {
 
     return {
       ...employeeData,
+      departmentId: employeeData.department.id,
+      jobId: employeeData.job.id,
     };
   };
 

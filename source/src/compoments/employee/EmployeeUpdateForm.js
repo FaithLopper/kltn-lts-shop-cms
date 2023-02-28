@@ -81,7 +81,7 @@ class EmployeeUpdateForm extends BasicForm {
     if (!isEditing) {
       return {};
     }
-    return dataDetail;
+    return { ...dataDetail };
   };
 
   handleChangeLogo = (info) => {

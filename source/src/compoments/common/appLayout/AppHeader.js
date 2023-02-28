@@ -47,6 +47,7 @@ class AppHeader extends Component {
                                 <DownOutlined/>
                             </span>}
                         className="overlay-panel-submenu"
+                        key='app-header'
                         >
                         <Menu.Item key="/profile">
                             <Link to="/profile">

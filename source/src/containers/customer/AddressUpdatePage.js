@@ -8,11 +8,15 @@ import ObjectNotFound from '../../compoments/common/ObjectNotFound';
 import { withTranslation } from "react-i18next";
 import { ProvinceKinds } from '../../constants';
 import AddressForm from '../../compoments/customer/AddressForm';
+import qs from "query-string";
 class AddressUpdatePage extends SaveBasePage {
 
     constructor(props) {
         super(props);
-        const { t } = this.props;
+        const { t, location } = this.props;
+        const {search} = location;
+        const { customerId } = qs.parse(search);
+        this.customerId = customerId;
         this.objectName =  t("objectName");
         this.getListUrl = sitePathConfig.address.path;
         this.actionFooter= false
@@ -23,7 +27,7 @@ class AddressUpdatePage extends SaveBasePage {
             },
             {
                 name:  t("breadcrumbs.parentPage1"),
-                path:`${sitePathConfig.address.path}`
+                path:`${sitePathConfig.address.path}?customerId=${this.customerId}`
             },
             {
                 name:  this.isEditing? `${t(`listBasePage:${"update"}`)} ${this.objectName}` :`${t(`listBasePage:${"create"}`)} ${this.objectName}`,
@@ -39,7 +43,6 @@ class AddressUpdatePage extends SaveBasePage {
 
     getDataDetailMapping = (data) => {
         const adminUserData = data
-
         if (!adminUserData) {
             this.setState({ objectNotFound: true });
             return
@@ -144,6 +147,7 @@ class AddressUpdatePage extends SaveBasePage {
     }
 
     render() {
+
         const { isGetDetailLoading, objectNotFound,  } = this.state
         const {t,uploadFile,getLocation,provinceList}= this.props
         if(provinceList.length!==0){

@@ -9,6 +9,8 @@ import BaseField from './BaseField';
 
 import { withTranslation } from 'react-i18next';
 
+import Utils from '../../../utils';
+const { imageExists } = Utils;
 class CropImageFiled extends BaseField {
     
     constructor(props) {
@@ -23,8 +25,10 @@ class CropImageFiled extends BaseField {
 
     getContent() {
         const { showUploadList, fileList, maxFile, imageUrl, loading } = this.props;
-        if(imageUrl && !loading) {
+
+        if(imageUrl && !loading && imageExists(imageUrl)) {
             return <img className="img-uploaded" src={imageUrl} alt="field-upload" />;
+            
         }
         else if(showUploadList && fileList && fileList.length === maxFile) {
             return null;

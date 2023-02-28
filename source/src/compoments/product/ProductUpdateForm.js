@@ -354,8 +354,17 @@ class ProductUpdateForm extends BasicForm {
 
   onSortEnd = ({ oldIndex, newIndex, data, id }) => {
     const { templateConfigData } = this.state;
-    let dataSorted = moveAnElementInArray(data, oldIndex, newIndex);
-    console.log("beforestate", templateConfigData)
+    let tepdata = moveAnElementInArray(data, oldIndex, newIndex);
+    let dataSorted = [];
+
+    tepdata.forEach((e, i) => {
+      let value = {
+        ...e,
+        orderSort: i,
+      };
+      dataSorted.push(value);
+    });
+
     this.setState({
       data: [...dataSorted],
       templateConfigData: templateConfigData.map((item, index) => {
@@ -371,7 +380,6 @@ class ProductUpdateForm extends BasicForm {
       }),
     });
     this.onValuesChange();
-    console.log("after", this.state.templateConfigData)
   };
 
   addImageVariant(path, index, id) {

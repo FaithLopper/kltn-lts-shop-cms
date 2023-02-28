@@ -13,7 +13,7 @@ import CropImageFiled from "../common/entryForm/CropImageFiled";
 import Utils from "../../utils";
 import { KeyOutlined, CopyOutlined } from "@ant-design/icons";
 import { commonSex, commonStatus } from "../../constants/masterData";
-import { UploadFileTypes, STATUS_ACTIVE } from "../../constants";
+import { UploadFileTypes, STATUS_ACTIVE, AppConstants } from "../../constants";
 import { showErrorMessage } from "../../services/notifyService";
 import PasswordGeneratorField from "../common/entryForm/PasswordGeneratorField";
 import DropdownField from "../common/entryForm/DropdownField";
@@ -47,6 +47,9 @@ class CustomerForm extends BasicForm {
         group: dataDetail.account.group,
       };
       this.formRef.current.setFieldsValue(data);
+      this.setState({
+        logo: `${AppConstants.contentRootUrl}${data.avatar}`,
+      });
     }
   }
 
@@ -61,7 +64,6 @@ class CustomerForm extends BasicForm {
       convertDateTimeToString(formValues.birthday, "DD/MM/YYYY"),
       "DD/MM/YYYY"
     );
-
     onSubmit({
       ...formValues,
       birthday: birthday,
@@ -115,8 +117,7 @@ class CustomerForm extends BasicForm {
   };
 
   render() {
-    const { formId, actions, isEditing, t, groupPermission } =
-      this.props;
+    const { formId, actions, isEditing, t, groupPermission } = this.props;
     const { uploading, logo, curPassword } = this.state;
     return (
       <Form
@@ -146,17 +147,20 @@ class CustomerForm extends BasicForm {
               />
             </Col>
           </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <DropdownField
-                fieldName={["group", "id"]}
-                label={t("form.label.groupPermission")}
-                required
-                options={groupPermission}
-                disabled={isEditing}
-              />
-            </Col>
-          </Row>
+          {!isEditing && (
+            <Row gutter={16}>
+              <Col span={12}>
+                <DropdownField
+                  fieldName={["group", "id"]}
+                  label={t("form.label.groupPermission")}
+                  required
+                  options={groupPermission}
+                  disabled={isEditing}
+                />
+              </Col>
+            </Row>
+          )}
+
           <Row gutter={[16, 0]}>
             <Col span={12}>
               <TextField
@@ -243,6 +247,7 @@ class CustomerForm extends BasicForm {
                 label={t("form.label.birthday")}
                 format="DD/MM/YYYY"
                 width="100%"
+                required
                 placeholder={t("form.label.birthday")}
               />
             </Col>
