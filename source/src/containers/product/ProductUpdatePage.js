@@ -125,8 +125,8 @@ class ProductUpdatePage extends SaveBasePage {
       onCompleted: (responseData) => {
         const { result, data } = responseData;
         if (result) {
-          // cho 1 cau if o day de check categorgy null thi call onGetDetailCompleted 
-          this.onGetProductCategoryById(data);
+          if (data?.parentProductId) this.onGetDetailCompleted({ data }); //check coi loai san pham gi
+          else this.onGetProductCategoryById(data);
         }
       },
       onError: (err) => {
@@ -194,6 +194,7 @@ class ProductUpdatePage extends SaveBasePage {
 
   onGetProductCategoryById(productData) {
     const { getProductCategoryById } = this.props;
+
     getProductCategoryById({
       params: { id: productData.productCategoryId },
       onCompleted: (responseData) => {

@@ -857,6 +857,7 @@ export default {
         breadcrumbs: {
             // currentPage: '{{ var }} quản trị viên',
             parentPage:'Sản phẩm',
+            subProduct: 'thuộc nhóm'
         },
         objectName: 'sản phẩm',
         form: {
@@ -867,7 +868,8 @@ export default {
                 'image':'Hình ảnh',
                 'status':'Trạng thái',
                 'kind':'Loại sản phẩm',
-                'categoryId':'Danh mục sản phẩm',
+                'categoryId':'Nhóm danh mục',
+                'categoryChildId':'Danh mục',
                 'itemStatus':'Tình trạng',
                 'isSoldOut':'Đã bán hết',
                 'tags':'Thẻ',

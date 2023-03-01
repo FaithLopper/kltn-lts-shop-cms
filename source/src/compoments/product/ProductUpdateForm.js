@@ -560,6 +560,7 @@ class ProductUpdateForm extends BasicForm {
       parentProduct,
       onProductCategoryParentChange,
       categoryChildId,
+      dataDetail,
     } = this.props;
     const {
       uploading,
@@ -628,34 +629,38 @@ class ProductUpdateForm extends BasicForm {
                 </Col>
               </Row>
               <Row gutter={[16, 0]}>
-                <Col span={12}>
-                  <Form.Item label={t("form.label.categoryId")}>
-                    <Row gutter={[16, 0]}>
-                      <Col span={12}>
-                        <DropdownField
-                          fieldName="categoryId"
-                          // label={t("form.label.categoryId")}
-                          required
-                          options={categoryId}
-                          placeholder="Loại danh mục"
-                          onChange={(e) => {
-                            this.setFieldValue("categoryChildId", "");
-                            onProductCategoryParentChange(e);
-                          }}
-                        />
-                      </Col>
-                      <Col span={12}>
-                        <DropdownField
-                          fieldName="categoryChildId"
-                          // label={t("form.label.categoryId")}
-                          options={categoryChildId}
-                          placeholder="Danh mục"
-                          required
-                        />
-                      </Col>
-                    </Row>
-                  </Form.Item>
-                </Col>
+                {!dataDetail?.parentProductId && !parentProduct && (
+                  <Col span={12}>
+                    <Form.Item>
+                      <Row gutter={[16, 0]}>
+                        <Col span={12}>
+                          <DropdownField
+                            fieldName="categoryId"
+                            label={t("form.label.categoryId")}
+                            required
+                            options={categoryId}
+                            placeholder="Loại danh mục"
+                            onChange={(e) => {
+                              this.setFieldValue("categoryChildId", "");
+                              onProductCategoryParentChange(e);
+                            }}
+                          />
+                        </Col>
+                        {this.getFieldValue("categoryId") !== undefined && (
+                          <Col span={12}>
+                            <DropdownField
+                              fieldName="categoryChildId"
+                              label={t("form.label.categoryChildId")}
+                              options={categoryChildId}
+                              placeholder="Danh mục"
+                              required
+                            />
+                          </Col>
+                        )}
+                      </Row>
+                    </Form.Item>
+                  </Col>
+                )}
 
                 <Col span={12}>
                   {chooseKind === 1 ? (

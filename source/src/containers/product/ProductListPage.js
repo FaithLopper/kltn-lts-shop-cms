@@ -49,7 +49,8 @@ class ProductListPage extends ListBasePage {
       },
       {
         title: t("table.name"),
-        width: "250px",
+        width: "300px",
+        align: "center",
         render: (dataRow) => {
           if (dataRow.kind === 2)
             return (
@@ -69,7 +70,7 @@ class ProductListPage extends ListBasePage {
         title: t("table.price") + " (VNĐ)",
         dataIndex: "price",
         align: "right",
-        width: "100px",
+        width: "200px",
         render: (price) => (
           <div className="force-one-line">{Utils.formatMoney(price || 0)}</div>
         ),
@@ -77,6 +78,7 @@ class ProductListPage extends ListBasePage {
       {
         title: t("table.productCategoryName"),
         align: "center",
+        width: "400px",
         dataIndex: "productCategoryName",
       },
       this.renderStatusColumn(),
