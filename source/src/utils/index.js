@@ -282,7 +282,7 @@ const Utils = {
     http.open("HEAD", image_url, false);
     http.send();
 
-    return http.status !== 404;
+    return http.status === 200;
   },
 };
 

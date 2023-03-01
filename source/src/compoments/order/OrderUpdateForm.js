@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Col, Row, Card, Divider } from "antd";
+import { Form, Col, Row, Card, Divider, Avatar } from "antd";
 import BasicForm from "../common/entryForm/BasicForm";
 import Utils from "../../utils";
 import { orderStatus } from "../../constants/masterData";
@@ -9,6 +9,23 @@ import BaseTable from "../common/table/BaseTable";
 import { withTranslation } from "react-i18next";
 import NumericField from "../common/entryForm/NumericField";
 import { convertUtcToTimezone } from "../../utils/datetimeHelper";
+import { AppConstants } from "../../constants";
+import { GiftOutlined } from "@ant-design/icons";
+
+const headerStyle = {
+  backgroundColor: "black",
+  color: "white",
+  fontSize: "16px",
+};
+
+const tableFontSize = "15px";
+
+const customTableTitle = (
+  title,
+  style = { fontSize: "15.5px", textAlign: "center" }
+) => {
+  return <div style={style}>{title}</div>;
+};
 
 class OrderUpdateForm extends BasicForm {
   constructor(props) {
@@ -22,18 +39,35 @@ class OrderUpdateForm extends BasicForm {
     };
     this.columns = [
       {
-        title: t("table.productName"),
+        title: <div> Hình ảnh </div>,
+
+        align: "center",
+        dataIndex: "avatar",
+        render: (avatar) => (
+          <Avatar
+            className="customer-avatar"
+            size="large"
+            icon={<GiftOutlined />}
+            src={avatar ? `${AppConstants.contentRootUrl}${avatar}` : null}
+          />
+        ),
+      },
+      {
+        title: customTableTitle(t("table.productName")),
+        align: "center",
         render: (dataRow) => {
-          return dataRow.productName;
+          return (
+            <div style={{ fontSize: tableFontSize }}>{dataRow.productName}</div>
+          );
         },
       },
       {
-        title: t("table.variants"),
+        title: customTableTitle(t("table.variants")),
         render: (dataRow) => {
           const variants = JSON.parse(JSON.stringify(dataRow.extraVariant));
           return variants.map((eachVar) => {
             return (
-              <div key={eachVar.id}>
+              <div key={eachVar.id} style={{ fontSize: tableFontSize }}>
                 <Divider
                   orientation="left"
                   style={{
@@ -45,10 +79,14 @@ class OrderUpdateForm extends BasicForm {
                 </Divider>
                 {eachVar.variants?.map((e) => {
                   return (
-                    <div key={e.id} style={{ textAlign: "center" }}>
+                    <div key={e.id} style={{ paddingLeft: 20 }}>
                       <span>{e.name}</span>
-                      <Divider type="vertical" />
-                      <span>{formatMoney(e.price)}</span>
+                      {e.price !== 0 && (
+                        <>
+                          <Divider type="vertical" />
+                          <span>{formatMoney(e.price)}</span>
+                        </>
+                      )}
                     </div>
                   );
                 })}
@@ -58,21 +96,34 @@ class OrderUpdateForm extends BasicForm {
         },
       },
       {
-        title: t("table.quantity"),
+        title: customTableTitle(t("table.quantity")),
+        align: "center",
         render: (dataRow) => {
-          return dataRow.quantity;
+          return (
+            <div style={{ fontSize: tableFontSize }}>{dataRow.quantity}</div>
+          );
         },
       },
       {
-        title: t("table.discount"),
+        title: customTableTitle(t("table.discount")),
+        align: "center",
         render: (dataRow) => {
-          return formatMoney(dataRow.discount);
+          return (
+            <div style={{ fontSize: tableFontSize }}>
+              {formatMoney(dataRow.discount)}
+            </div>
+          );
         },
       },
       {
-        title: t("table.price"),
+        title: customTableTitle(t("table.price")),
+        align: "center",
         render: (dataRow) => {
-          return formatMoney(dataRow.price);
+          return (
+            <div style={{ fontSize: tableFontSize }}>
+              {formatMoney(dataRow.price)}
+            </div>
+          );
         },
       },
     ];
@@ -134,165 +185,174 @@ class OrderUpdateForm extends BasicForm {
         layout="vertical"
         onValuesChange={this.onValuesChange}
       >
-        <div style={{ display: "flex" }}>
-          <Card
-            style={{ minWidth: "600px" }}
-            title="THÔNG TIN ĐƠN HÀNG"
-            bordered={false}
-          >
-            <div style={{ padding: "20px 6px" }}>
-              <Row gutter={8}>
-                <Col span={12}>
-                  {isEditing ? (
-                    <DropdownField
-                      fieldName="status"
-                      label={t("form.label.status")}
-                      required
-                      options={orderStatus}
-                    />
-                  ) : null}
-                </Col>
-              </Row>
-              <Row gutter={8}>
-                <Col span={12}>
-                  <TextField
-                    disabled
-                    fieldName="createdBy"
-                    label={t("form.label.createdBy")}
-                  />
-                </Col>
-                <Col span={12}>
-                  <TextField
-                    disabled
-                    fieldName="createdDate"
-                    label={t("form.label.createdDate")}
-                  />
-                </Col>
-              </Row>
-              <Row gutter={8}>
-                <Col span={12}>
-                  <TextField
-                    disabled
-                    fieldName="modifiedBy"
-                    label={t("form.label.modifiedBy")}
-                  />
-                </Col>
-                <Col span={12}>
-                  <TextField
-                    disabled
-                    fieldName="modifiedDate"
-                    label={t("form.label.modifiedDate")}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Card
-                  style={{ width: "700px", padding: "0px" }}
-                  title="SẢN PHẨM"
-                  bordered={false}
-                >
-                  <BaseTable
-                    columns={this.columns}
-                    rowKey={(record) => record.id}
-                    dataSource={this.getOrderItems()}
-                    bordered
-                  />
-                  <Row gutter={5} style={{ marginTop: "15px" }}>
-                    <Col
-                      span={18}
-                      style={{
-                        fontSize: "18px",
-                        textAlign: "end",
-                        paddingRight: "20px",
-                        paddingTop: "7px",
-                      }}
-                    >
-                      {t("form.label.subTotal")}:
-                    </Col>
-                    <Col span={6} style={{ textAlign: "end" }}>
-                      <NumericField
-                        width="100%"
-                        fieldName="subTotal"
-                        formatter={formatMoney}
-                        style={{ fontSize: 10 }}
-                        size="large"
+        <div style={{ minWidth: "1450px" }}>
+          <Row style={{ maxHeight: "500px" }}>
+            <Col span={12}>
+              <Card
+                title="THÔNG TIN ĐƠN HÀNG"
+                bordered
+                style={{ maxHeight: "500px" }}
+                headStyle={headerStyle}
+              >
+                <Row gutter={8}>
+                  <Col span={12}>
+                    {isEditing ? (
+                      <DropdownField
+                        fieldName="status"
+                        label={t("form.label.status")}
+                        required
+                        options={orderStatus}
                       />
-                    </Col>
-                  </Row>
-                </Card>
+                    ) : null}
+                  </Col>
+                </Row>
+                <Row gutter={8}>
+                  <Col span={12}>
+                    <TextField
+                      disabled
+                      fieldName="createdBy"
+                      label={t("form.label.createdBy")}
+                    />
+                  </Col>
+                  <Col span={12}>
+                    <TextField
+                      disabled
+                      fieldName="createdDate"
+                      label={t("form.label.createdDate")}
+                    />
+                  </Col>
+                </Row>
+                <Row gutter={8}>
+                  <Col span={12}>
+                    <TextField
+                      disabled
+                      fieldName="modifiedBy"
+                      label={t("form.label.modifiedBy")}
+                    />
+                  </Col>
+                  <Col span={12}>
+                    <TextField
+                      disabled
+                      fieldName="modifiedDate"
+                      label={t("form.label.modifiedDate")}
+                    />
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card
+                style={{ maxHeight: "500px" }}
+                title="THÔNG TIN VẬN CHUYỂN"
+                bordered
+                headStyle={headerStyle}
+              >
+                <Row gutter={5}>
+                  <Col span={12}>
+                    <TextField
+                      disabled
+                      fieldName="receiverFullName"
+                      label={t("form.label.receiverFullName")}
+                    />
+                  </Col>
+                  <Col span={12}>
+                    <TextField
+                      disabled
+                      fieldName="phone"
+                      label={t("form.label.phone")}
+                    />
+                  </Col>
+                </Row>
+                <Row gutter={5}>
+                  <Col span={12}>
+                    <TextField
+                      fieldName="paymentMethod"
+                      label={t("form.label.paymentMethod")}
+                      disabled
+                    />
+                  </Col>
+                  <Col span={12}>
+                    <NumericField
+                      disabled
+                      fieldName="shippingCharge"
+                      label={t("form.label.shippingCharge")}
+                      formatter={formatMoney}
+                      width="100%"
+                    />
+                  </Col>
+                </Row>
+                <Row gutter={5}>
+                  <Col span={8}>
+                    <TextField
+                      disabled
+                      fieldName={["province", "name"]}
+                      label={t("form.label.province")}
+                    />
+                  </Col>
+                  <Col span={8}>
+                    <TextField
+                      disabled
+                      fieldName={["district", "name"]}
+                      label={t("form.label.district")}
+                    />
+                  </Col>
+                  <Col span={8}>
+                    <TextField
+                      disabled
+                      fieldName={["ward", "name"]}
+                      label={t("form.label.ward")}
+                    />
+                  </Col>
+                </Row>
+                <TextField
+                  disabled
+                  type="textarea"
+                  fieldName="addressDetails"
+                  label={t("form.label.addressDetails")}
+                />
+              </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Card
+              style={{ width: "100%", padding: "0px" }}
+              title="SẢN PHẨM"
+              bordered={false}
+              headStyle={headerStyle}
+            >
+              <BaseTable
+                columns={this.columns}
+                rowKey={(record) => record.id}
+                dataSource={this.getOrderItems()}
+                bordered
+              />
+              <Row gutter={5} style={{ marginTop: "15px" }}>
+                <Col
+                  span={18}
+                  style={{
+                    fontSize: "18px",
+                    textAlign: "end",
+                    paddingRight: "20px",
+                    paddingTop: "7px",
+                    fontWeight: 700,
+                    textDecoration: "underline",
+                  }}
+                >
+                  {t("form.label.subTotal")}:
+                </Col>
+                <Col span={6} style={{ textAlign: "end" }}>
+                  <NumericField
+                    width="100%"
+                    fieldName="subTotal"
+                    formatter={formatMoney}
+                    style={{ fontSize: 12 }}
+                    size="large"
+                    addonBefore
+                  />
+                </Col>
               </Row>
-            </div>
-          </Card>
-          <Card
-            style={{ minWidth: "700px" }}
-            headStyle={{ backgroundColor: "#dddddd" }}
-            title="THÔNG TIN VẬN CHUYỂN"
-            bordered
-          >
-            <Row gutter={5}>
-              <Col span={12}>
-                <TextField
-                  disabled
-                  fieldName="receiverFullName"
-                  label={t("form.label.receiverFullName")}
-                />
-              </Col>
-              <Col span={12}>
-                <TextField
-                  disabled
-                  fieldName="phone"
-                  label={t("form.label.phone")}
-                />
-              </Col>
-            </Row>
-            <Row gutter={5}>
-              <Col span={12}>
-                <TextField
-                  fieldName="paymentMethod"
-                  label={t("form.label.paymentMethod")}
-                  disabled
-                />
-              </Col>
-              <Col span={12}>
-                <NumericField
-                  disabled
-                  fieldName="shippingCharge"
-                  label={t("form.label.shippingCharge")}
-                  formatter={formatMoney}
-                  width="100%"
-                />
-              </Col>
-            </Row>
-            <Row gutter={5}>
-              <Col span={8}>
-                <TextField
-                  disabled
-                  fieldName={["province", "name"]}
-                  label={t("form.label.province")}
-                />
-              </Col>
-              <Col span={8}>
-                <TextField
-                  disabled
-                  fieldName={["district", "name"]}
-                  label={t("form.label.district")}
-                />
-              </Col>
-              <Col span={8}>
-                <TextField
-                  disabled
-                  fieldName={["ward", "name"]}
-                  label={t("form.label.ward")}
-                />
-              </Col>
-            </Row>
-            <TextField
-              disabled
-              type="textarea"
-              fieldName="addressDetails"
-              label={t("form.label.addressDetails")}
-            />
-          </Card>
+            </Card>
+          </Row>
         </div>
         <div className="footer-card-form">
           <Row gutter={16} justify="end">

@@ -63,7 +63,7 @@ class ProductChildListPage extends ListBasePage {
           <div className="force-one-line">{(Utils.formatMoney(price || 0))}</div>
           )
         },
-        { title:  t("table.productCategoryId"), align:"center",with:"150px",dataIndex: "productCategoryId",render:(productCategoryId)=>{
+        { title:  t("table.productCategoryName"), align:"center",with:"150px",dataIndex: "productCategoryName",render:(productCategoryId)=>{
             const {categoryId} = this.state
           let text=''
             if(categoryId.length !==0)

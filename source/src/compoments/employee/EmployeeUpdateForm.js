@@ -51,8 +51,8 @@ class EmployeeUpdateForm extends BasicForm {
   };
 
   handleSubmit(formValues) {
+    console.log(formValues)
     const { onSubmit } = this.props;
-    // console.log(formValues)
     onSubmit({ ...formValues });
   }
 
@@ -164,7 +164,7 @@ class EmployeeUpdateForm extends BasicForm {
                     ? t("form.label.newPassword")
                     : t("form.label.password")
                 }
-                required
+                required={!isEditing}
                 minLength={6}
                 disabled
                 value={this.getFieldValue("password")}

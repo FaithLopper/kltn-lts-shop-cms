@@ -59,14 +59,17 @@ class CustomerForm extends BasicForm {
   };
 
   handleSubmit(formValues) {
-    const { onSubmit } = this.props;
+    const { onSubmit, dataDetail, isEditing } = this.props;
+
     const birthday = convertLocalTimeToUtc(
       convertDateTimeToString(formValues.birthday, "DD/MM/YYYY"),
       "DD/MM/YYYY"
     );
+
     onSubmit({
       ...formValues,
       birthday: birthday,
+      group: isEditing ? dataDetail.account.group : { ...formValues.group },
     });
   }
 
@@ -192,7 +195,7 @@ class CustomerForm extends BasicForm {
                     ? t("form.label.newPassword")
                     : t("form.label.password")
                 }
-                required
+                required={!isEditing}
                 minLength={6}
                 disabled
                 value={this.getFieldValue("password")}

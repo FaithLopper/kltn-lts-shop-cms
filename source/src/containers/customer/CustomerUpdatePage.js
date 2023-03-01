@@ -103,7 +103,6 @@ class CustomerUpdatePage extends SaveBasePage {
     prepareCreateData = (data) => {
         return {
             status: 1,
-            groupId: data.group.id, //role customer
             ...data,
         };
     }

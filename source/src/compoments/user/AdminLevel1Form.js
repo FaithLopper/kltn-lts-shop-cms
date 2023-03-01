@@ -168,7 +168,7 @@ class AdminLevel1Form extends BasicForm {
                     : t("form.label.password")
                 }
                 minLength={6}
-                required={isEditing}
+                required={!isEditing}
                 disabled
                 value={this.getFieldValue("password")}
                 suffix={

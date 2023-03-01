@@ -922,7 +922,7 @@ export default {
             createdDate:'Ngày đặt',
             productName:'Tên sản phẩm',
             quantity:'Số lượng',
-            price:'Tổng giá',
+            price:'Tổng tiền',
             discount:'Giảm giá',
             variants:'Phân loại',
         },
