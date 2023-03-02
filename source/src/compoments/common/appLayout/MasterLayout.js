@@ -12,7 +12,7 @@ import Utils from '../../../utils';
 import { withTranslation } from 'react-i18next';
 
 const { getUserData } = actions;
-
+const { generateString } = Utils;
 const { Content, Footer } = Layout;
 
 class MasterLayout extends Component {
@@ -195,8 +195,8 @@ class MasterLayout extends Component {
                                 {
                                     breadcrumbs
                                     ?
-                                    breadcrumbs.map(breadcrumb => 
-                                        <Breadcrumb.Item key={breadcrumb.name}>
+                                    breadcrumbs.map((breadcrumb, index) => 
+                                        <Breadcrumb.Item key={index + breadcrumb.name + generateString(5)}>
                                             {
                                                 breadcrumb.path
                                                 ?

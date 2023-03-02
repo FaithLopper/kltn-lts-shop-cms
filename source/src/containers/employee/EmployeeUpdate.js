@@ -113,7 +113,6 @@ class EmployeeUpdate extends SaveBasePage {
   };
 
   prepareCreateData = (data) => {
-    console.log(data)
     return {
       ...data,
       groupId: data.group.id, //role employee

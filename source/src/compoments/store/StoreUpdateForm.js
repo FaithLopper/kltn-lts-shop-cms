@@ -120,9 +120,7 @@ class StoreUpdateForm extends BasicForm {
         parentId: id,
       };
       if (id !== this.provinceId) {
-        console.log("id1",id)
         if (params.parentId !== undefined) {
-          console.log("id2",id)
           getLocation({
             params,
             onCompleted: this.onGetLocationComplete,

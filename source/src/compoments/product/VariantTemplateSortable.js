@@ -10,10 +10,11 @@ import IconImageFiled from "./IconImageFiled";
 import Utils from "../../utils";
 import { UploadFileTypes } from "../../constants";
 import { showErrorMessage } from "../../services/notifyService";
+const { generateString } = Utils;
 
 const DragHandle = sortableHandle(() => (
   <MenuOutlined
-    style={{ cursor: "pointer", fontSize: "19px", "margin-top": "5px" }}
+    style={{ cursor: "pointer", fontSize: "19px", marginTop: "5px" }}
   />
 ));
 
@@ -146,7 +147,7 @@ class VariantTemplateSortable extends Component {
             uploadFile={uploadFile}
             removeVariantItem={removeVariantItem}
             id={id}
-            key={`item-${value}`}
+            key={`item-${value}` + generateString(5)}
             index={index}
             changeVariant={changeVariant}
             value={value}

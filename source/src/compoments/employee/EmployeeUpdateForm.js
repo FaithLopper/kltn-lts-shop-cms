@@ -29,8 +29,8 @@ class EmployeeUpdateForm extends BasicForm {
     if (nextProps.dataDetail !== this.props.dataDetail) {
       this.formRef.current.setFieldsValue({
         ...nextProps.dataDetail.account,
-        jobId: nextProps.dataDetail.job?.id,
-        departmentId: nextProps.dataDetail.department?.id,
+        job: { ...nextProps.dataDetail.job },
+        department: { ...nextProps.dataDetail.department },
       });
     }
     if (
@@ -51,9 +51,12 @@ class EmployeeUpdateForm extends BasicForm {
   };
 
   handleSubmit(formValues) {
-    console.log(formValues)
     const { onSubmit } = this.props;
-    onSubmit({ ...formValues });
+    onSubmit({
+      ...formValues,
+      departmentId: formValues.department.id,
+      jobId: formValues.job.id,
+    });
   }
 
   uploadFileLogo = (file, onSuccess) => {
@@ -233,6 +236,7 @@ class EmployeeUpdateForm extends BasicForm {
             </Col>
             <Col span={12}>
               <TextField
+                type="number"
                 fieldName="phone"
                 label={t("form.label.phone")}
                 required
@@ -244,7 +248,7 @@ class EmployeeUpdateForm extends BasicForm {
           <Row gutter={16}>
             <Col span={12}>
               <DropdownFieldWithSearch
-                fieldName="departmentId"
+                fieldName={["department", "id"]}
                 label={t("form.label.departmentId")}
                 required
                 options={categoryOptionsDepartment}
@@ -252,7 +256,7 @@ class EmployeeUpdateForm extends BasicForm {
             </Col>
             <Col span={12}>
               <DropdownFieldWithSearch
-                fieldName="jobId"
+                fieldName={["job", "id"]}
                 label={t("form.label.jobId")}
                 required
                 options={categoryOptionsJob}

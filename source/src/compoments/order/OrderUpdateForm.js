@@ -39,14 +39,15 @@ class OrderUpdateForm extends BasicForm {
     };
     this.columns = [
       {
-        title: <div> Hình ảnh </div>,
+        title: customTableTitle(t("table.image")),
 
         align: "center",
         dataIndex: "avatar",
         render: (avatar) => (
           <Avatar
+            shape="square"
             className="customer-avatar"
-            size="large"
+            size={128}
             icon={<GiftOutlined />}
             src={avatar ? `${AppConstants.contentRootUrl}${avatar}` : null}
           />

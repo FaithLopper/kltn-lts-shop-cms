@@ -1,7 +1,8 @@
 import { Form, Select } from 'antd';
 import React from 'react';
 import BaseField from './BaseField';
-
+import Utils from '../../../utils';
+const { generateString } = Utils;
 const handleChange = (value) => {
 };
 class TagField extends BaseField {
@@ -27,7 +28,7 @@ class TagField extends BaseField {
             }}
             onChange={handleChange}
             >
-            {options.map(item =>  <Select.Option key={item.key} value={item.value}>{item.value} </Select.Option>)}
+            {options.map((item, index) =>  <Select.Option key={index + item.value + generateString(5)} value={item.value}>{item.value} </Select.Option>)}
           </Select>
         </Form.Item>
         )

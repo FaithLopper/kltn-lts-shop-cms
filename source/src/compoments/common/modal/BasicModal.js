@@ -40,7 +40,7 @@ class BasicModal extends Component {
                 destroyOnClose // rerender child component when modal close
                 style={{ top: top || 40 }}
                 width={width || 800}
-                visible={visible}
+                open={visible}
                 title={this.getTitle()}
                 onOk={onOk}
                 onCancel={onCancel}

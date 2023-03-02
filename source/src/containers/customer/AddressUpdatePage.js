@@ -13,8 +13,9 @@ class AddressUpdatePage extends SaveBasePage {
 
     constructor(props) {
         super(props);
-        const { t, location } = this.props;
-        const {search} = location;
+        const { t } = this.props;
+        const location = new URL(window.location.href);
+        const { search } = location;
         const { customerId } = qs.parse(search);
         this.customerId = customerId;
         this.objectName =  t("objectName");

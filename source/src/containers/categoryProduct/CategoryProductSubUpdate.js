@@ -14,10 +14,8 @@ class CategoryProductSubUpdate extends SaveBasePage {
     super(props);
     const { t } = this.props;
 
-    const {
-      location: { search },
-    } = this.props;
-
+    const location = new URL(window.location.href);
+    const { search } = location;
     const { parentId, parentName } = qs.parse(search);
     this.parentId = parentId;
     this.parentName = parentName;
@@ -161,8 +159,6 @@ class CategoryProductSubUpdate extends SaveBasePage {
   render() {
     const { isGetDetailLoading, objectNotFound } = this.state;
     const { t, uploadFile } = this.props;
-
-    console.log(this.parentId);
 
     if (objectNotFound) {
       return <ObjectNotFound />;

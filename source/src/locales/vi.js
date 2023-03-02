@@ -27,7 +27,7 @@ export default {
         'Employee': 'Nhân viên',
         'customerManagement': 'Quản lý khách hàng',
         'categoryProductManagement': 'Quản lý danh mục sản phẩm',
-        'CategoryProduct': 'Quản lý sản phẩm',
+        'CategoryProduct': 'Danh mục sản phẩm',
         'Store':'Quản lí chi nhánh',
         'Product':'Sản phẩm',
         'Variant':'Thuộc tính',
@@ -836,6 +836,7 @@ export default {
     productListPage: {
         breadcrumbs: {
             currentPage: 'Sản phẩm',
+            currentSubPage: 'Sản phẩm phụ',
         },
         objectName: 'sản phẩm',
         searchPlaceHolder: {
@@ -857,7 +858,7 @@ export default {
         breadcrumbs: {
             // currentPage: '{{ var }} quản trị viên',
             parentPage:'Sản phẩm',
-            subProduct: 'thuộc nhóm'
+            subProduct: 'Sản phẩm phụ'
         },
         objectName: 'sản phẩm',
         form: {
@@ -927,6 +928,7 @@ export default {
             price:'Tổng tiền',
             discount:'Giảm giá',
             variants:'Phân loại',
+            image: "Ảnh sản phẩm"
         },
         form: {
             label: {

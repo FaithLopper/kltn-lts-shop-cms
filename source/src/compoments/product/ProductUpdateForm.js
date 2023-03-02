@@ -21,7 +21,7 @@ import VariantListForm from "../variant/VariantListForm";
 import VariantTemplateSortable from "./VariantTemplateSortable";
 import VariantTemplateListForm from "../variant/VariantTemplateListForm";
 import TagField from "../common/entryForm/TagField";
-const { moveAnElementInArray, getBase64, formatIntegerNumber } = Utils;
+const { moveAnElementInArray, getBase64, formatIntegerNumber, generateString } = Utils;
 class ProductUpdateForm extends BasicForm {
   constructor(props) {
     super(props);
@@ -369,7 +369,6 @@ class ProductUpdateForm extends BasicForm {
       data: [...dataSorted],
       templateConfigData: templateConfigData.map((item, index) => {
         if (item.index === id) {
-          console.log(dataSorted);
           return {
             ...item,
             variants: [...dataSorted],
@@ -446,8 +445,7 @@ class ProductUpdateForm extends BasicForm {
     const { t } = this.props;
     return templateConfigData.map((item, _index) => {
       return (
-        <>
-          <div className="variant-config-wrapper">
+          <div key={"variant-config-wrapper" + _index  + generateString(5)} className="variant-config-wrapper">
             <Row gutter={[12, 18]}>
               <Col span={8}>
                 <Row gutter={[16, 0]}>
@@ -544,7 +542,6 @@ class ProductUpdateForm extends BasicForm {
               </Col>
             </Row>
           </div>
-        </>
       );
     });
   };

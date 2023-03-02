@@ -23,7 +23,15 @@ class ProductChildListPage extends ListBasePage {
     const { t } = this.props;
     this.objectName = t("objectName");
     this.objectListName = "product";
-    this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
+    this.breadcrumbs = [
+      {
+        name: t("breadcrumbs.currentPage"),
+        path: `${sitePathConfig.product.path}`,
+      },
+      {
+        name: t("breadcrumbs.currentSubPage"),
+      },
+    ];
     const {
       location: { search },
     } = this.props;

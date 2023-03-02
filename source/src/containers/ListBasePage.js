@@ -301,7 +301,12 @@ class ListBasePage extends Component {
 
     onDeleteCompleted() {
         const { dataList, t } = this.props;
-        if(dataList && this.pagination.current > 1 && dataList.content && dataList.content.length === 1) {
+        const currentListLength = dataList?.data.length - 1
+        // if(currentListLength === 0 && this.pagination.current > 1 && dataList.content && dataList.content.length === 1) {
+        //     this.pagination.current = this.pagination.current - 1;
+        //     this.setQueryString();
+        // }
+        if(currentListLength === 0 && this.pagination.current > 1) {
             this.pagination.current = this.pagination.current - 1;
             this.setQueryString();
         }

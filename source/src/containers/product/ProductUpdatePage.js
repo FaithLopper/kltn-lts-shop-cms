@@ -15,9 +15,8 @@ class ProductUpdatePage extends SaveBasePage {
     const { t } = this.props;
     this.objectName = t("objectName");
     this.actionFooter = false;
-    const {
-      location: { search },
-    } = this.props;
+    const location = new URL(window.location.href);
+    const { search } = location;
     const { parentProduct } = qs.parse(search);
     this.parentProduct = parentProduct;
     this.parentCategory = {};
@@ -29,6 +28,12 @@ class ProductUpdatePage extends SaveBasePage {
         name: t("breadcrumbs.parentPage"),
         path: `${sitePathConfig.product.path}`,
       },
+      this.parentProduct
+        ? {
+            name: t("breadcrumbs.subProduct"),
+            path: `${sitePathConfig.productChild.path}?parentProduct=${this.parentProduct}`,
+          }
+        : {},
       {
         name: this.isEditing
           ? `${t(`listBasePage:${"update"}`)} ${this.objectName}`
@@ -125,7 +130,8 @@ class ProductUpdatePage extends SaveBasePage {
       onCompleted: (responseData) => {
         const { result, data } = responseData;
         if (result) {
-          if (data?.parentProductId) this.onGetDetailCompleted({ data }); //check coi loai san pham gi
+          if (data?.parentProductId)
+            this.onGetDetailCompleted({ data }); //check coi loai san pham gi
           else this.onGetProductCategoryById(data);
         }
       },
@@ -214,6 +220,7 @@ class ProductUpdatePage extends SaveBasePage {
 
   onGetDetailCompleted = ({ data }) => {
     const tempDataDetail = this.getDataDetailMapping(data);
+
     this.dataDetail = { ...tempDataDetail };
     this.setState({ isGetDetailLoading: false });
   };
@@ -348,6 +355,7 @@ class ProductUpdatePage extends SaveBasePage {
       categoryChildId,
     } = this.state;
     const { t, uploadFile } = this.props;
+
     if (objectNotFound) {
       return <ObjectNotFound />;
     }
