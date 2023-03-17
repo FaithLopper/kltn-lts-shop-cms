@@ -298,7 +298,6 @@ class ProductUpdatePage extends SaveBasePage {
         ? tempData.categoryChildId
         : tempData.categoryId,
       kind: this.parentProduct ? 1 : tempData.kind,
-      price: tempData.kind === 1 || this.parentProduct ? tempData.price : 0,
       parentProductId: this.parentProduct ? parseInt(this.parentProduct) : null,
       productConfigs:
         tempData.kind === 1 || (tempData.kind === 1 && this.parentProduct)

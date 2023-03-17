@@ -1,0 +1,6 @@
+.ant-upload.ant-upload-select-picture-card {
+    max-width: fit-content;
+    width: 100%;
+    min-width: 104px;
+    padding: 0.4rem;
+}

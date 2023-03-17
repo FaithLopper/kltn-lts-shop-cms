@@ -105,6 +105,7 @@ class CategoryProductUpdateForm extends BasicForm {
         <Card title="THÔNG TIN CƠ BẢN" bordered={false}>
           <div style={{ padding: "20px 6px" }}>
             <CropImageFiled
+              aspect={3 / 2}
               fieldName="icon"
               loading={uploading}
               //   label={t("form.label.icon")}

@@ -303,15 +303,15 @@ class ListBasePage extends Component {
         const { dataList, t } = this.props;
         const currentListLength = dataList?.data.length - 1
         // if(currentListLength === 0 && this.pagination.current > 1 && dataList.content && dataList.content.length === 1) {
-        //     this.pagination.current = this.pagination.current - 1;
-        //     this.setQueryString();
-        // }
-        if(currentListLength === 0 && this.pagination.current > 1) {
-            this.pagination.current = this.pagination.current - 1;
-            this.setQueryString();
-        }
-        else {
-            this.getList();
+            //     this.pagination.current = this.pagination.current - 1;
+            //     this.setQueryString();
+            // }
+            if(currentListLength === 0 && this.pagination.current > 1) {
+                this.pagination.current = this.pagination.current - 1;
+                this.setQueryString();
+            }
+            else {
+                this.getList();
         }
         const defaultSuccessMessage = 'Successful!';
         showSucsessMessage(

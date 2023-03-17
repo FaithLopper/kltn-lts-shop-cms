@@ -10,6 +10,7 @@ import BaseField from './BaseField';
 import { withTranslation } from 'react-i18next';
 
 import Utils from '../../../utils';
+import './fixedImageFiled.css'
 const { imageExists } = Utils;
 class CropImageFiled extends BaseField {
     
@@ -86,7 +87,11 @@ class CropImageFiled extends BaseField {
                             </Upload>
                         </ImgCrop>
                     :
-                        <ImgCrop aspect={aspectValue}>
+                        <ImgCrop aspect={aspectValue} style={{
+                            height: "unset",
+                            width: "fit-content",
+                            padding: "0.4rem",
+                        }}>
                             <Upload
                                 disabled={disabled}
                                 accept={accept}

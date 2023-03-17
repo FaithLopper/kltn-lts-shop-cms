@@ -21,7 +21,7 @@ import VariantListForm from "../variant/VariantListForm";
 import VariantTemplateSortable from "./VariantTemplateSortable";
 import VariantTemplateListForm from "../variant/VariantTemplateListForm";
 import TagField from "../common/entryForm/TagField";
-const { moveAnElementInArray, getBase64, formatIntegerNumber, generateString } = Utils;
+const { moveAnElementInArray, getBase64, formatIntegerNumber } = Utils;
 class ProductUpdateForm extends BasicForm {
   constructor(props) {
     super(props);
@@ -61,11 +61,10 @@ class ProductUpdateForm extends BasicForm {
         id: nextProps.dataDetail.id,
       });
       this.parentProductId = nextProps.dataDetail.parentProductId;
-      if (nextProps.dataDetail.kind === 2) {
-        // this.setState({
-        //     chooseKind:2
-        // })
-        // console.log(nextProps.dataDetail)
+      if (nextProps.dataDetail.kind !== this.state.chooseKind) {
+        this.setState({
+          chooseKind: nextProps.dataDetail.kind,
+        });
       }
       const { variantConfigs } = nextProps.dataDetail;
       variantConfigs.map((item) => {
@@ -121,7 +120,7 @@ class ProductUpdateForm extends BasicForm {
   };
 
   handleSubmit(formValues) {
-    const { onSubmit } = this.props;
+    const { onSubmit, parentProduct } = this.props;
     const { templateConfigData, id } = this.state;
     let tags = "";
     if (formValues.tags) {
@@ -141,9 +140,11 @@ class ProductUpdateForm extends BasicForm {
     onSubmit({
       ...formValues,
       id: id,
+      kind: parentProduct ? 1 : formValues.kind,
       tags: tags,
       productConfigs: templateConfigData,
       categoryId: formValues.categoryChildId,
+      price: formValues.price || 0
     });
   }
 
@@ -378,6 +379,7 @@ class ProductUpdateForm extends BasicForm {
         return item;
       }),
     });
+
     this.onValuesChange();
   };
 
@@ -445,103 +447,106 @@ class ProductUpdateForm extends BasicForm {
     const { t } = this.props;
     return templateConfigData.map((item, _index) => {
       return (
-          <div key={"variant-config-wrapper" + _index  + generateString(5)} className="variant-config-wrapper">
-            <Row gutter={[12, 18]}>
-              <Col span={8}>
-                <Row gutter={[16, 0]}>
-                  <Col span={24}>
-                    <Form.Item
-                      rules={[
-                        {
-                          required: true,
-                          message: "Nhập tên cấu hình thuộc tính!",
-                        },
-                      ]}
-                      name={`name_${item.index}`}
-                    >
-                      <Input
-                        placeholder="Tên"
-                        onChange={(e) =>
-                          this.setConfigField(e.target.value, item.index, 1)
-                        }
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
-                <Row gutter={[16, 0]}>
-                  <Col span={24}>
-                    <Form.Item
-                      rules={[
-                        {
-                          required: true,
-                          message: "Chọn loại nhóm thuộc tính!",
-                        },
-                      ]}
-                      name={`choiceKind_${item.index}`}
-                    >
-                      <Select
-                        placeholder="Loại"
-                        options={variantTemplateConfig}
-                        onSelect={(e) => this.setConfigField(e, item.index, 2)}
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
-                <div className="row-checkbox">
-                  <Row gutter={[16, 0]}>
-                    <Col span={24}>
-                      <CheckBoxField
-                        optionLabel={t("form.label.required")}
-                        onChange={(e) =>
-                          this.setConfigField(e.target.value, item.index, 3)
-                        }
-                        fieldName={`isRequired_${item.index}`}
-                      />
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-              <Col span={15}>
-                <FieldSet title="Danh sách thuộc tính">
-                  <Row gutter={[12, 0]}>
-                    <VariantTemplateSortable
-                      onValuesChange={this.onValuesChange}
-                      changeVariant={this.changeVariant}
-                      addImageVariant={this.addImageVariant}
-                      uploadFile={this.props.uploadFile}
-                      onSortEnd={this.onSortEnd}
-                      removeVariantItem={this.removeVariantItem}
-                      data={item.variantIds}
-                      id={item.index}
+        <div
+          key={`variant-config-wrapper-${item.id}`}
+          className="variant-config-wrapper"
+        >
+          <Row gutter={[12, 18]}>
+            <Col span={8}>
+              <Row gutter={[16, 0]}>
+                <Col span={24}>
+                  <Form.Item
+                    rules={[
+                      {
+                        required: true,
+                        message: "Nhập tên cấu hình thuộc tính!",
+                      },
+                    ]}
+                    name={`name_${item.index}`}
+                  >
+                    <Input
+                      placeholder="Tên"
+                      onChange={(e) =>
+                        this.setConfigField(e.target.value, item.index, 1)
+                      }
                     />
-                    <Col span={22}>
-                      <Button
-                        type="dashed"
-                        onClick={() => {
-                          this.addVariantItem(item.index, _index);
-                        }}
-                        block
-                        icon={<PlusOutlined />}
-                      >
-                        Thêm thuộc tính
-                      </Button>
-                    </Col>
-                  </Row>
-                </FieldSet>
-              </Col>
-              <Col
-                span={1}
-                type="flex"
-                align="middle"
-                className="variant-delete-icon"
-              >
-                <MinusCircleOutlined
-                  style={{ fontSize: "19px", color: "red" }}
-                  onClick={() => this.removeVariant(item.index)}
-                />
-              </Col>
-            </Row>
-          </div>
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={[16, 0]}>
+                <Col span={24}>
+                  <Form.Item
+                    rules={[
+                      {
+                        required: true,
+                        message: "Chọn loại nhóm thuộc tính!",
+                      },
+                    ]}
+                    name={`choiceKind_${item.index}`}
+                  >
+                    <Select
+                      placeholder="Loại"
+                      options={variantTemplateConfig}
+                      onSelect={(e) => this.setConfigField(e, item.index, 2)}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <div className="row-checkbox">
+                <Row gutter={[16, 0]}>
+                  <Col span={24}>
+                    <CheckBoxField
+                      optionLabel={t("form.label.required")}
+                      onChange={(e) =>
+                        this.setConfigField(e.target.value, item.index, 3)
+                      }
+                      fieldName={`isRequired_${item.index}`}
+                    />
+                  </Col>
+                </Row>
+              </div>
+            </Col>
+            <Col span={15}>
+              <FieldSet title="Danh sách thuộc tính">
+                <Row gutter={[12, 0]}>
+                  <VariantTemplateSortable
+                    onValuesChange={this.onValuesChange}
+                    changeVariant={this.changeVariant}
+                    addImageVariant={this.addImageVariant}
+                    uploadFile={this.props.uploadFile}
+                    onSortEnd={this.onSortEnd}
+                    removeVariantItem={this.removeVariantItem}
+                    data={item.variantIds}
+                    id={item.index}
+                  />
+                  <Col span={22}>
+                    <Button
+                      type="dashed"
+                      onClick={() => {
+                        this.addVariantItem(item.index, _index);
+                      }}
+                      block
+                      icon={<PlusOutlined />}
+                    >
+                      Thêm thuộc tính
+                    </Button>
+                  </Col>
+                </Row>
+              </FieldSet>
+            </Col>
+            <Col
+              span={1}
+              type="flex"
+              align="middle"
+              className="variant-delete-icon"
+            >
+              <MinusCircleOutlined
+                style={{ fontSize: "19px", color: "red" }}
+                onClick={() => this.removeVariant(item.index)}
+              />
+            </Col>
+          </Row>
+        </div>
       );
     });
   };
@@ -720,7 +725,7 @@ class ProductUpdateForm extends BasicForm {
                   />
                 </Col>
               </Row>
-              {chooseKind === 1 ? (
+              {chooseKind === productKind[0].value ? (
                 <FieldSet
                   className="customer-fieldset-variant-template"
                   title="Cấu hình thuộc tính"

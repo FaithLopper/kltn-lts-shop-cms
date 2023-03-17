@@ -98,6 +98,7 @@ class OrderUpdateForm extends BasicForm {
       },
       {
         title: customTableTitle(t("table.quantity")),
+        paddingLeft: "20px",
         align: "center",
         render: (dataRow) => {
           return (
@@ -113,6 +114,14 @@ class OrderUpdateForm extends BasicForm {
             <div style={{ fontSize: tableFontSize }}>
               {formatMoney(dataRow.discount)}
             </div>
+          );
+        },
+      },
+      {
+        title: customTableTitle(t("table.note")),
+        render: (dataRow) => {
+          return (
+            <div style={{ fontSize: tableFontSize }}>{dataRow.note}</div>
           );
         },
       },

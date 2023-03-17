@@ -928,7 +928,8 @@ export default {
             price:'Tổng tiền',
             discount:'Giảm giá',
             variants:'Phân loại',
-            image: "Ảnh sản phẩm"
+            image: "Ảnh sản phẩm",
+            note: "Ghi chú"
         },
         form: {
             label: {

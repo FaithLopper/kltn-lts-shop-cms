@@ -46,7 +46,7 @@ function* getProductCategoryList({ payload: { params } }) {
     const result = yield call(sendRequest, apiParams, searchParams);
     yield put({
       type: defineActionSuccess(GET_PRODUCT_CATEGORY_LIST),
-      productCategoryData: result.responseData && result.responseData.data,
+      productCategoryData: result.responseData,
     });
   } catch (error) {
     yield put({ type: defineActionFailed(GET_PRODUCT_CATEGORY_LIST) });
@@ -123,6 +123,7 @@ function* deleteProductCategory({ payload: { params, onCompleted, onError } }) {
     };
     const { success, responseData } = yield call(sendRequest, apiParams);
     handleApiResponse({ success, responseData }, onCompleted, onError);
+    console.log("qua dc api handler");
 
     if (!success || !responseData.result)
       yield put({ type: defineActionFailed(DELETE_PRODUCT_CATEGORY) });

@@ -136,7 +136,7 @@ class CategoryProductSubListPage extends ListBasePage {
   render() {
     const { dataList, loading, t, changeOrderData } = this.props;
     const categoryData =
-      Object.keys(dataList).length !== 0 ? this.mapDataToTable(dataList) : [];
+      Object.keys(dataList).length !== 0 ? this.mapDataToTable(dataList?.data || []) : [];
     this.pagination.total = dataList.totalElements || 0;
     this.dataDetail.parentName = this.parentName;
     this.dataDetail.parentId = this.parentId;
