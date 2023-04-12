@@ -65,7 +65,7 @@ class OrderUpdateForm extends BasicForm {
       {
         title: customTableTitle(t("table.variants")),
         render: (dataRow) => {
-          const variants = JSON.parse(JSON.stringify(dataRow.extraVariant));
+          const variants = JSON.parse(JSON.stringify(dataRow.extraVariant  || []));
           return variants.map((eachVar) => {
             return (
               <div key={eachVar.id} style={{ fontSize: tableFontSize }}>
