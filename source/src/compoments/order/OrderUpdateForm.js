@@ -65,7 +65,9 @@ class OrderUpdateForm extends BasicForm {
       {
         title: customTableTitle(t("table.variants")),
         render: (dataRow) => {
-          const variants = JSON.parse(JSON.stringify(dataRow.extraVariant  || []));
+          const variants = JSON.parse(
+            JSON.stringify(dataRow.extraVariant || [])
+          );
           return variants.map((eachVar) => {
             return (
               <div key={eachVar.id} style={{ fontSize: tableFontSize }}>
@@ -120,9 +122,7 @@ class OrderUpdateForm extends BasicForm {
       {
         title: customTableTitle(t("table.note")),
         render: (dataRow) => {
-          return (
-            <div style={{ fontSize: tableFontSize }}>{dataRow.note}</div>
-          );
+          return <div style={{ fontSize: tableFontSize }}>{dataRow.note}</div>;
         },
       },
       {
@@ -171,7 +171,13 @@ class OrderUpdateForm extends BasicForm {
     if (!isEditing) {
       return {};
     }
-    return dataDetail;
+    return {
+      ...dataDetail,
+      createdBy:
+        dataDetail.createdBy === "anonymous"
+          ? "Khách vãng lai"
+          : dataDetail.createdBy,
+    };
   };
 
   getOrderItems = () => {

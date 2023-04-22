@@ -10,7 +10,8 @@ const sendRequest = async (options, params = {}, token) => {
     let fetchRequest;
     let infoRequest;
     let userData;
-    let fullPath = options.path.startsWith('http') ? options.path : `${AppConstants.apiRootUrl}${options.path}`;
+    let apiPath = options.master ? `${AppConstants.apiRootMasterUrl}${options.path}` : `${AppConstants.apiRootUrl}${options.path}`
+    let fullPath = options.path.startsWith('http') ? options.path : apiPath;
     // const errorPath = window.location.protocol + '//' + window.location.host + '/error';
 
     if(token) {

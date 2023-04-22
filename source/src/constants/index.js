@@ -1,5 +1,6 @@
 const AppConstants = {
     apiRootUrl: process.env.REACT_APP_API,
+    apiRootMasterUrl: process.env.REACT_APP_API_MASTER,
     contentRootUrl: `${process.env.REACT_APP_API}/v1/file/download`,
     langKey: 'vi'
 };

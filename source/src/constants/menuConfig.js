@@ -24,10 +24,10 @@ const navMenuConfig = [
         label: "Admin",
         ...sitePathConfig.admin,
       },
-      {
-        label: "Customer",
-        ...sitePathConfig.customer,
-      },
+      // {
+      //   label: "Customer",
+      //   ...sitePathConfig.customer,
+      // },
       {
         label: "Employee",
         ...sitePathConfig.employee,
@@ -143,10 +143,10 @@ const employeeNavMenuConfig = [
         label: "Admin",
         ...sitePathConfig.admin,
       },
-      {
-        label: "Customer",
-        ...sitePathConfig.customer,
-      },
+      // {
+      //   label: "Customer",
+      //   ...sitePathConfig.customer,
+      // },
     ],
   },
   {

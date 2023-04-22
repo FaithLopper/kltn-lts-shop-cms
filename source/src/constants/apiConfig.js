@@ -20,21 +20,25 @@ const apiConfig = {
         login: {
             path: '/v1/account/login',
             method: 'POST',
-            headers: baseHeader
+            master: true,
+            headers: baseHeader,
         },
         logout: {
             path: '/v1/account/logout',
             method: 'GET',
+            master: true,
             headers: baseHeader
         },
         getAdminProfile: {
             path: '/v1/account/profile',
             method: 'GET',
+            master: true,
             headers: baseHeader
         },
         updateProfileAdmin: {
             path: '/v1/account/update_profile',
             method: 'PUT',
+            master: true,
             headers: baseHeader
         }
     },
@@ -42,26 +46,31 @@ const apiConfig = {
         getAdminList: {
             path: '/v1/account/list',
             method: 'GET',
+            master: true,
             headers: baseHeader
         },
         getAdminById: {
             path: '/v1/account/get',
             method: 'GET',
+            master: true,
             headers: baseHeader
         },
         createAdmin: {
             path: '/v1/account/create_admin',
             method: 'POST',
+            master: true,
             headers: baseHeader
         },
         updateAdmin: {
             path: '/v1/account/update_admin',
             method: 'PUT',
+            master: true,
             headers: baseHeader
         },
         deleteAdmin: {
             path: '/v1/account/delete',
             method: 'DELETE',
+            master: true,
             headers: baseHeader
         },
     },
@@ -69,41 +78,49 @@ const apiConfig = {
         getList: {
             path: '/v1/group/list',
             method: 'GET',
+            master: true,
             headers: baseHeader
         },
         getPermissionList: {
             path: '/v1/permission/list',
             method: 'GET',
+            master: true,
             headers: baseHeader
         },
         getById: {
             path: '/v1/group/get',
             method: 'GET',
+            master: true,
             headers: baseHeader
         },
         create: {
             path: '/v1/group/create',
             method: 'POST',
+            master: true,
             headers: baseHeader
         },
         update: {
             path: '/v1/group/update',
             method: 'PUT',
+            master: true,
             headers: baseHeader
         },
         updateStatus: {
             path: '/v1/skills/status',
             method: 'PUT',
+            master: true,
             headers: baseHeader
         },
         delete: {
             path: '/v1/skills',
             method: 'DELETE',
+            master: true,
             headers: baseHeader
         },
         groupPermissionAutoComplete: {
             path: '/v1/group/list_combobox',
             method: 'GET',
+            master: true,
             headers: baseHeader
         },
     },
@@ -207,31 +224,37 @@ const apiConfig = {
         getList: {
             path: '/v1/customer/list',
             method: 'GET',
+            master: true,
             headers: baseHeader
         },
         getById: {
             path: '/v1/customer/get',
             method: 'GET',
+            master: true,
             headers: baseHeader
         },
         create: {
             path: '/v1/customer/create',
             method: 'POST',
+            master: true,
             headers: baseHeader
         },
         update: {
             path: '/v1/customer/update',
             method: 'PUT',
+            master: true,
             headers: baseHeader
         },
         delete: {
             path: '/v1/customer/delete',
             method: 'DELETE',
+            master: true,
             headers: baseHeader
         },
         customerAutoComplete:{
             path:"/v1/customer/auto-complete",
             method:"GET",
+            master: true,
             headers:baseHeader
         },
       
@@ -240,31 +263,37 @@ const apiConfig = {
         getList: {
             path: '/v1/customer/address/list',
             method: 'GET',
+            master: true,
             headers: baseHeader
         },
         getById: {
             path: '/v1/customer/address/get',
             method: 'GET',
+            master: true,
             headers: baseHeader
         },
         create: {
             path: '/v1/customer/address/create',
             method: 'POST',
+            master: true,
             headers: baseHeader
         },
         update: {
             path: '/v1/customer/address/update',
             method: 'PUT',
+            master: true,
             headers: baseHeader
         },
         delete: {
             path: '/v1/customer/address/delete',
             method: 'DELETE',
+            master: true,
             headers: baseHeader
         },
         setDefauldAddress:{
             path:"/v1/customer/address/default",
             method:"PUT",
+            master: true,
             headers:baseHeader
         }
     },
@@ -304,41 +333,49 @@ const apiConfig = {
         getList:{
             path:"/v1/employee/list",
             method:"GET",
+            master: true,
             headers:baseHeader
         },
         getById:{
             path:"/v1/employee/get",
             method:"GET",
+            master: true,
             headers:baseHeader
         },
         create:{
             path:"/v1/employee/create",
             method:"POST",
+            master: true,
             headers:baseHeader
         },
         update:{
             path:"/v1/employee/update",
             method:"PUT",
+            master: true,
             headers:baseHeader
         },
         delete:{
             path:"/v1/employee/delete",
             method:"DELETE",
+            master: true,
             headers:baseHeader
         },
         employeeAutoComplete:{
             path:"/v1/employee/auto-complete",
             method:"GET",
+            master: true,
             headers:baseHeader
         },
         getEmployeeProfile: {
             path:  '/v1/employee/profile',
             method: 'GET',
+            master: true,
             headers: baseHeader,
         },
         updateProfile: {
             path:  '/v1/employee/update-profile',
             method: 'PUT',
+            master: true,
             headers: baseHeader,
         },
       },

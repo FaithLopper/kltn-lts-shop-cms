@@ -37,7 +37,9 @@ class OrderListPage extends ListBasePage {
       {
         title: t("table.createdBy"),
         render: (dataRow) => {
-          return dataRow.createdBy;
+          return dataRow.createdBy === "anonymous"
+            ? "Khách vãng lai"
+            : dataRow.createdBy;
         },
       },
       {
@@ -98,11 +100,11 @@ class OrderListPage extends ListBasePage {
   getSearchFields() {
     const { t } = this.props;
     return [
-        {
-          key: "id",
-          seachPlaceholder: t("searchPlaceHolder.id"),
-          initialValue: this.search.id,
-        },
+      {
+        key: "id",
+        seachPlaceholder: t("searchPlaceHolder.id"),
+        initialValue: this.search.id,
+      },
       {
         key: "status",
         seachPlaceholder: t("searchPlaceHolder.status"),
