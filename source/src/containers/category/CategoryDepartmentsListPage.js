@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Avatar, Button } from "antd";
-import { UserOutlined, PlusOutlined } from "@ant-design/icons";
+import { PictureOutlined, PlusOutlined } from "@ant-design/icons";
 import qs from "query-string";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -36,7 +36,7 @@ class CategoryDepartmentsListPage extends ListBasePage {
           <Avatar
             className="table-avatar"
             size="large"
-            icon={<UserOutlined />}
+            icon={<PictureOutlined />}
             src={
               avatarPath ? `${AppConstants.contentRootUrl}${avatarPath}` : null
             }

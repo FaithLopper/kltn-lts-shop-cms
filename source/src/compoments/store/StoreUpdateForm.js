@@ -263,9 +263,9 @@ class StoreUpdateForm extends BasicForm {
                 required
                 allowClear
                 options={provinceOption}
-                // onClick={(e) =>
-                //   this.locationOnSelect(ProvinceKinds.province.level)
-                // }
+                onClick={(e) =>
+                  this.locationOnSelect(ProvinceKinds.province.level)
+                }
                 onChange={(value) =>
                   this.handleChangeLocation(value, ProvinceKinds.province.level)
                 }

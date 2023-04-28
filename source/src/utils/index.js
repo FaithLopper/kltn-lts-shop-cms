@@ -277,23 +277,29 @@ const Utils = {
   },
 
   imageExists(image_url) {
-    var http = new XMLHttpRequest();
-
-    http.open("HEAD", image_url, false);
-    http.send();
-
-    return http.status === 200;
+    fetch(image_url, { method: "HEAD" })
+      .then((res) => {
+        if (res.ok) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .catch(() => {
+        return false;
+      });
   },
 
   generateString(length) {
-    const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = ' ';
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = " ";
     const charactersLength = characters.length;
-    for ( let i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
-}
+  },
 };
 
 export default Utils;

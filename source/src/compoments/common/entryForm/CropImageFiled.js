@@ -27,7 +27,7 @@ class CropImageFiled extends BaseField {
     getContent() {
         const { showUploadList, fileList, maxFile, imageUrl, loading } = this.props;
 
-        if(imageUrl && !loading && imageExists(imageUrl)) {
+        if(imageUrl && !loading) {
             return <img className="img-uploaded" src={imageUrl} alt="field-upload" />;
             
         }

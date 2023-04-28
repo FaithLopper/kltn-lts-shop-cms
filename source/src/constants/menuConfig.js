@@ -76,16 +76,16 @@ const navMenuConfig = [
       },
     ],
   },
-  {
-    label: "Ranks",
-    icon: <CrownOutlined />,
-    children: [
-      {
-        label: "Ranks",
-        ...sitePathConfig.ranks,
-      },
-    ],
-  },
+  // {
+  //   label: "Ranks",
+  //   icon: <CrownOutlined />,
+  //   children: [
+  //     {
+  //       label: "Ranks",
+  //       ...sitePathConfig.ranks,
+  //     },
+  //   ],
+  // },
   {
     label: "Store",
     icon: <HomeOutlined />,

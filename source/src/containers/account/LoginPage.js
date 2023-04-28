@@ -28,6 +28,7 @@ class LoginPage extends Component {
       onCompleted: (responseData) => {
         if (responseData && responseData.token) {
           if (setUserData(responseData)) {
+            console.log(1);
             // this.props.history.push(sitePathConfig.admin.path);
             if (responseData.kind === UserTypes.ADMIN
               || responseData.kind === UserTypes.EMPLOYEE)
@@ -42,6 +43,7 @@ class LoginPage extends Component {
       },
       onError: (err) => {
         this.setState({ loading: false });
+        console.log(2);
         showErrorMessage(
           "Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại!"
         );

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button, Avatar } from "antd";
-import { PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { PlusOutlined, GiftOutlined } from "@ant-design/icons";
 import { withTranslation } from "react-i18next";
 
 import ListBasePage from "../ListBasePage";
@@ -42,7 +42,7 @@ class ProductListPage extends ListBasePage {
           <Avatar
             shape="square"
             size="large"
-            icon={<UserOutlined />}
+            icon={<GiftOutlined />}
             src={image ? `${AppConstants.contentRootUrl}${image}` : null}
           />
         ),

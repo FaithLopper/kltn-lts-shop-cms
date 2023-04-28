@@ -62,7 +62,7 @@ const RootRoute = () => {
     const {
         admin,
         login,
-        profile,
+        profile, 
         forbidden,
         groupPermission,
         adminNews,
@@ -155,12 +155,12 @@ const RootRoute = () => {
                 <PrivateRoute exact path={province.path} component={ProvinceListPage}/>
                 <PrivateRoute exact path={district.path} component={DistrictListPage}/>
                 <PrivateRoute exact path={commune.path} component={CommuneListPage}/>
-                <PrivateRoute exact path={customer.path} component={CustomerListPage}/>
-                <PrivateRoute exact path={customerUpdate.path} component={CustomerUpdatePage}/>
+                {/* <PrivateRoute exact path={customer.path} component={CustomerListPage}/> */}
+                {/* <PrivateRoute exact path={customerUpdate.path} component={CustomerUpdatePage}/> */}
                 <PrivateRoute exact path={address.path} component={AddressListPage}/>
                 <PrivateRoute exact path={addressUpdate.path} component={AddressUpdatePage}/>
-                <PrivateRoute exact path={ranks.path} component={RanksListPage}/>
-                <PrivateRoute exact path={ranksUpdate.path} component={RanksUpdate}/>
+                {/* <PrivateRoute exact path={ranks.path} component={RanksListPage}/> */}
+                {/* <PrivateRoute exact path={ranksUpdate.path} component={RanksUpdate}/> */}
                 <PrivateRoute exact path={employee.path} component={EmployeeListPage}/>
                 <PrivateRoute exact path={employeeUpdate.path} component={EmployeeUpdate}/>
                 <PrivateRoute exact path={categoryProduct.path} component={CategoryProductListPage}/>

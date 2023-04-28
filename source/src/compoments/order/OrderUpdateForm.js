@@ -18,6 +18,13 @@ const headerStyle = {
   fontSize: "16px",
 };
 
+const fixOverFlowText = {
+  whiteSpace: "nowrap",
+  maxWidth: "10rem",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+};
+
 const tableFontSize = "15px";
 
 const customTableTitle = (
@@ -78,16 +85,34 @@ class OrderUpdateForm extends BasicForm {
                     fontSize: "0.85rem",
                   }}
                 >
-                  {eachVar.name}
+                  <span style={{ ...fixOverFlowText, display: "block" }}>
+                    {eachVar.name}
+                  </span>
                 </Divider>
                 {eachVar.variants?.map((e) => {
                   return (
-                    <div key={e.id} style={{ paddingLeft: 20 }}>
-                      <span>{e.name}</span>
+                    <div key={e.id} style={{ paddingLeft: 16, maxWidth: 256 }}>
+                      <span
+                        style={{
+                          ...fixOverFlowText,
+                          display: "inline-block",
+                          maxWidth: "8rem",
+                        }}
+                      >
+                        {e.name}
+                      </span>
                       {e.price !== 0 && (
                         <>
                           <Divider type="vertical" />
-                          <span>{formatMoney(e.price)}</span>
+                          <span
+                            style={{
+                              ...fixOverFlowText,
+                              display: "inline-block",
+                              maxWidth: "8rem",
+                            }}
+                          >
+                            {formatMoney(e.price)}
+                          </span>
                         </>
                       )}
                     </div>
@@ -145,6 +170,10 @@ class OrderUpdateForm extends BasicForm {
       const { getPaymentMethod } = Utils;
       this.formRef.current.setFieldsValue({
         ...nextProps.dataDetail,
+        createdBy:
+          nextProps.dataDetail.createdBy === "anonymous"
+            ? "Khách vãng lai"
+            : nextProps.dataDetail.createdBy,
         createdDate: convertUtcToTimezone(nextProps.dataDetail.createdDate),
         modifiedDate: convertUtcToTimezone(nextProps.dataDetail.modifiedDate),
         paymentMethod: getPaymentMethod(nextProps.dataDetail.paymentMethod),
@@ -173,10 +202,6 @@ class OrderUpdateForm extends BasicForm {
     }
     return {
       ...dataDetail,
-      createdBy:
-        dataDetail.createdBy === "anonymous"
-          ? "Khách vãng lai"
-          : dataDetail.createdBy,
     };
   };
 

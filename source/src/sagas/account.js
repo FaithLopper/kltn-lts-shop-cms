@@ -55,16 +55,22 @@ function* login({ payload: { params, onCompleted, onError } }) {
            (permission) => permission.action
          );
        }
+
         // const groupedSettings = settingsData.map(e=>e.value)
         onCompleted({
           token: responseData.data.token,
           id: profileResult.responseData.data.id,
-          avatar: profileResult.responseData.data.avatar ? profileResult.responseData.data.avatar : profileResult.responseData.data.account?.avatar ? profileResult.responseData.data.account?.avatar : null,
           logo: profileResult.responseData.data.logoPath,
-          username: profileResult.responseData.data.username ? profileResult.responseData.data.username : profileResult.responseData.data.account.username,
-          fullName: profileResult.responseData.data.fullName ? profileResult.responseData.data.fullName : profileResult.responseData.data.account.fullName,
-          kind: profileResult.responseData.data.kind ? profileResult.responseData.data.kind : profileResult.responseData.data.account.kind,
-          isSuperAdmin: profileResult.responseData.data.isSuperAdmin ? profileResult.responseData.data.isSuperAdmin : profileResult.responseData.data.account?.isSuperAdmin,
+          // avatar: profileResult.responseData.data.avatar ? profileResult.responseData.data.avatar : profileResult.responseData.data.account?.avatar ? profileResult.responseData.data.account?.avatar : null,
+          // username: profileResult.responseData.data.username ? profileResult.responseData.data.username : profileResult.responseData.data.account.username,
+          // fullName: profileResult.responseData.data.fullName ? profileResult.responseData.data.fullName : profileResult.responseData.data.account.fullName,
+          // kind: profileResult.responseData.data.kind ? profileResult.responseData.data.kind : profileResult.responseData.data.account.kind,
+          // isSuperAdmin: profileResult.responseData.data.isSuperAdmin ? profileResult.responseData.data.isSuperAdmin : profileResult.responseData.data.account?.isSuperAdmin,
+          avatar: profileResult.responseData.data.avatar ? profileResult.responseData.data.avatar : null,
+          username: profileResult.responseData.data.username ? profileResult.responseData.data.username : null,
+          fullName: profileResult.responseData.data.fullName ? profileResult.responseData.data.fullName : null,
+          kind: profileResult.responseData.data.kind ? profileResult.responseData.data.kind : null,
+          isSuperAdmin: profileResult.responseData.data.isSuperAdmin ? profileResult.responseData.data.isSuperAdmin : null,
           permissions,
         });
       } else {
