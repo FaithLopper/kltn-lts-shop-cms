@@ -8,6 +8,7 @@ import { sitePathConfig } from "../../constants/sitePathConfig";
 import ObjectNotFound from "../../compoments/common/ObjectNotFound";
 import { withTranslation } from "react-i18next";
 import { categoryKinds } from "../../constants/masterData";
+import { showErrorMessage } from "../../services/notifyService";
 class CategoryNewsUpdate extends SaveBasePage {
   constructor(props) {
     super(props);
@@ -36,6 +37,23 @@ class CategoryNewsUpdate extends SaveBasePage {
       this.getDetail(nextProps.match.params.id);
     }
   }
+
+  getDetail = (id) => {
+    const { getDataById } = this.props;
+    const params = { id, kind: categoryKinds.CATEGORY_KIND_NEWS };
+    this.isEditing = true;
+    this.setState({ isGetDetailLoading: true });
+    getDataById({
+      params,
+      onCompleted: this.onGetDetailCompleted,
+      onError: (err) => {
+        if (err && err.message) showErrorMessage(err.message);
+        else
+          showErrorMessage(`Get ${this.objectName} failed. Please try again!`);
+        this.setState({ isGetDetailLoading: false });
+      },
+    });
+  };
 
   getDataDetailMapping = (data) => {
     const categoryNewsData = data;
@@ -91,21 +109,22 @@ class CategoryNewsUpdate extends SaveBasePage {
 
   onBack = () => {
     if (this.state.isChanged) {
-        const {t}= this.props
-        this.showWarningConfirmModal({
-            title: t("basicSavePage:onBack"),
-            onOk: () => {
-                this.props.history.push(this.getListUrl)
-            }
-        });
+      const { t } = this.props;
+      this.showWarningConfirmModal({
+        title: t("basicSavePage:onBack"),
+        onOk: () => {
+          this.props.history.push(this.getListUrl);
+        },
+      });
     } else {
-        this.props.history.push(this.getListUrl)
+      this.props.history.push(this.getListUrl);
     }
-}
+  };
 
   prepareCreateData = (data) => {
     return {
       categoryKind: categoryKinds.CATEGORY_KIND_NEWS,
+      kind: categoryKinds.CATEGORY_KIND_NEWS,
       status: 1,
       ...data,
     };
@@ -115,6 +134,7 @@ class CategoryNewsUpdate extends SaveBasePage {
     return {
       ...data,
       categoryImage: data.categoryImage,
+      kind: categoryKinds.CATEGORY_KIND_NEWS,
       id: this.dataDetail.id,
     };
   };

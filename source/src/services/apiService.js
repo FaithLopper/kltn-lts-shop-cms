@@ -88,7 +88,6 @@ const sendRequest = async (options, params = {}, token) => {
         // Redirect to error page
         // window.location.replace(errorPath);
     });
-    console.log(fetchRequest.status);
     if(fetchRequest.status === 401 && userData) {
         window.localStorage.removeItem(StorageKeys.userData);
         window.location.replace('/login');

@@ -75,6 +75,17 @@ class CategoryJobsListPage extends ListBasePage {
     );
   }
 
+  onDelete(id) {
+    const { deleteData } = this.props;
+    if (id) {
+      deleteData({
+        params: { id, kind: categoryKinds.CATEGORY_KIND_JOBS },
+        onCompleted: this.onDeleteCompleted,
+        onError: this.onDeleteError,
+      });
+    }
+  }
+
   prepareCreateData(data) {
     return {
       ...data,

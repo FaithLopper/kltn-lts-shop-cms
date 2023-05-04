@@ -59,6 +59,17 @@ class CategoryNewsListPage extends ListBasePage {
     };
   }
 
+  onDelete(id) {
+    const { deleteData } = this.props;
+    if (id) {
+      deleteData({
+        params: { id, kind: categoryKinds.CATEGORY_KIND_NEWS },
+        onCompleted: this.onDeleteCompleted,
+        onError: this.onDeleteError,
+      });
+    }
+  }
+
   handleRouting(parentId, parentName) {
     const {
       location: { search, pathname },

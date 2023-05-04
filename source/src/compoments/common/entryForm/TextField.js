@@ -50,6 +50,7 @@ class TextField extends BaseField {
             className,
             onChange,
             defaultValue,
+            customRules = [],
         } = this.props;
         return (
             <Form.Item
@@ -60,7 +61,8 @@ class TextField extends BaseField {
                 help={help}
                 rules={[
                     ...this.getRules(),
-                    ...this.getTextFieldRules()
+                    ...this.getTextFieldRules(),
+                    ...customRules
                 ]}
             >
                 {

@@ -107,13 +107,13 @@ const RootRoute = () => {
     const getUserHomeNavigation =()=>{
         if(userData?.kind === UserTypes.ADMIN){
             return {
-                pathname: admin.path,
+                pathname: profile.path,
                 state: { isRedirectToHomePage: true }
             }
         }
         if(userData?.kind === UserTypes.EMPLOYEE){
             return{
-                pathname: adminNews.path,
+                pathname: profile.path,
                 state: { isRedirectToHomePage: true }
             }
         }
@@ -157,8 +157,8 @@ const RootRoute = () => {
                 <PrivateRoute exact path={commune.path} component={CommuneListPage}/>
                 {/* <PrivateRoute exact path={customer.path} component={CustomerListPage}/> */}
                 {/* <PrivateRoute exact path={customerUpdate.path} component={CustomerUpdatePage}/> */}
-                <PrivateRoute exact path={address.path} component={AddressListPage}/>
-                <PrivateRoute exact path={addressUpdate.path} component={AddressUpdatePage}/>
+                {/* <PrivateRoute exact path={address.path} component={AddressListPage}/> */}
+                {/* <PrivateRoute exact path={addressUpdate.path} component={AddressUpdatePage}/> */}
                 {/* <PrivateRoute exact path={ranks.path} component={RanksListPage}/> */}
                 {/* <PrivateRoute exact path={ranksUpdate.path} component={RanksUpdate}/> */}
                 <PrivateRoute exact path={employee.path} component={EmployeeListPage}/>

@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card, Col, Row } from "antd";
 import BasicForm from "../common/entryForm/BasicForm";
 import TextField from "../common/entryForm/TextField";
-import { SaveOutlined} from "@ant-design/icons"
+import { SaveOutlined } from "@ant-design/icons";
 import CropImageFiled from "../common/entryForm/CropImageFiled";
 import { showErrorMessage } from "../../services/notifyService";
 import Utils from "../../utils";
@@ -37,6 +37,7 @@ class ProfileForm extends BasicForm {
   };
 
   validateToConfirmPassword = (rule, value) => {
+    console.log(1);
     const {
       current: { validateFields, isFieldTouched },
     } = this.formRef;
@@ -125,7 +126,11 @@ class ProfileForm extends BasicForm {
         onValuesChange={this.onValuesChange}
         style={{ width: "600px" }}
       >
-        <Card title={t(`baseField:${"accountInfo"}`)} className="card-form" bordered={false}>
+        <Card
+          title={t(`baseField:${"accountInfo"}`)}
+          className="card-form"
+          bordered={false}
+        >
           <Row gutter={[16, 0]}>
             <Col span={12}>
               <CropImageFiled
@@ -175,7 +180,8 @@ class ProfileForm extends BasicForm {
                 type="password"
                 fieldName="password"
                 label={t("form.label.newPassword")}
-                validators={[this.validateToConfirmPassword]}
+                // validators={[this.validateToConfirmPassword]}
+                minLength={6}
               />
             </Col>
           </Row>
@@ -185,7 +191,19 @@ class ProfileForm extends BasicForm {
                 type="password"
                 fieldName="confirmPassword"
                 label={t("form.label.confirmNewPassword")}
-                validators={[this.compareToPassword]}
+                // validators={[this.compareToPassword]}
+                customRules={[
+                  {
+                    validator: async () => {
+                      const password = this.getFieldValue("password");
+                      const confirmPassword =
+                        this.getFieldValue("confirmPassword");
+                      if (password !== confirmPassword) {
+                        throw new Error("Mật Khẩu không trùng khớp");
+                      }
+                    },
+                  },
+                ]}
               />
             </Col>
           </Row>
@@ -193,19 +211,19 @@ class ProfileForm extends BasicForm {
         <div className="footer-card-form">
           <Row gutter={16} justify="end">
             <Col span={10}>
-            <Row gutter={16} justify="end">
-            <Col span={10}>
-            <Button
-            loading={loading}
-            // className="profile-form-button"
-            type="primary"
-            htmlType="submit"
-            icon={<SaveOutlined />}
-          >
-              {t(`basicSavePage:${"saveButton"}`)}
-          </Button>
+              <Row gutter={16} justify="end">
+                <Col span={10}>
+                  <Button
+                    loading={loading}
+                    // className="profile-form-button"
+                    type="primary"
+                    htmlType="submit"
+                    icon={<SaveOutlined />}
+                  >
+                    {t(`basicSavePage:${"saveButton"}`)}
+                  </Button>
                 </Col>
-        </Row>
+              </Row>
             </Col>
           </Row>
         </div>

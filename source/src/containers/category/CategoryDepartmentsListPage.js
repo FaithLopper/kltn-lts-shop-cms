@@ -75,6 +75,17 @@ class CategoryDepartmentsListPage extends ListBasePage {
     );
   }
 
+  onDelete(id) {
+    const { deleteData } = this.props;
+    if (id) {
+      deleteData({
+        params: { id, kind: categoryKinds.CATEGORY_KIND_DEPARTMENTS },
+        onCompleted: this.onDeleteCompleted,
+        onError: this.onDeleteError,
+      });
+    }
+  }
+
   prepareCreateData(data) {
     return {
       ...data,
@@ -113,7 +124,10 @@ class CategoryDepartmentsListPage extends ListBasePage {
   }
 
   getDetailLink(dataRow) {
-    return sitePathConfig.categoryDepartmentsUpdate.path.replace(":id", dataRow.id);
+    return sitePathConfig.categoryDepartmentsUpdate.path.replace(
+      ":id",
+      dataRow.id
+    );
   }
 
   render() {

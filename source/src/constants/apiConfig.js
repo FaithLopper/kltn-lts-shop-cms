@@ -76,31 +76,31 @@ const apiConfig = {
     },
     groupPermission: {
         getList: {
-            path: '/v1/group/list',
+            path: '/v1/group/tenant/list',
             method: 'GET',
             master: true,
             headers: baseHeader
         },
         getPermissionList: {
-            path: '/v1/permission/list',
+            path: '/v1/permission/tenant/list',
             method: 'GET',
             master: true,
             headers: baseHeader
         },
         getById: {
-            path: '/v1/group/get',
+            path: '/v1/group/tenant/get',
             method: 'GET',
             master: true,
             headers: baseHeader
         },
         create: {
-            path: '/v1/group/create',
+            path: '/v1/group/tenant/create',
             method: 'POST',
             master: true,
             headers: baseHeader
         },
         update: {
-            path: '/v1/group/update',
+            path: '/v1/group/tenant/update',
             method: 'PUT',
             master: true,
             headers: baseHeader
@@ -118,13 +118,51 @@ const apiConfig = {
             headers: baseHeader
         },
         groupPermissionAutoComplete: {
-            path: '/v1/group/list_combobox',
+            path: '/v1/group/tenant/list_combobox',
             method: 'GET',
             master: true,
             headers: baseHeader
         },
     },
-    category: {
+    masterCategory: {
+        getList: {
+            path: '/v1/category/list',
+            method: 'GET',
+            master: true,
+            headers: baseHeader
+        },
+        create: {
+            path: '/v1/category/create',
+            method: 'POST',
+            master: true,
+            headers: baseHeader
+        },
+        getById: {
+            path: '/v1/category/get',
+            method: 'GET',
+            master: true,
+            headers: baseHeader
+        },
+        update: {
+            path: '/v1/category/update',
+            method: 'PUT',
+            master: true,
+            headers: baseHeader
+        },
+        delete: {
+            path: '/v1/category/delete',
+            method: 'DELETE',
+            master: true,
+            headers: baseHeader
+        },
+        categoryAutoComplete: {
+            path: '/v1/category/auto-complete',
+            method: 'GET',
+            master: true,
+            headers: baseHeader
+        },
+    },
+    tenantCategory: {
         getList: {
             path: '/v1/category/list',
             method: 'GET',

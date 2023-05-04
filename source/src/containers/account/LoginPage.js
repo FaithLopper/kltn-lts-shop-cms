@@ -15,8 +15,15 @@ class LoginPage extends Component {
     super(props);
     this.state = {
       loading: false,
+      userData: getUserData(),
     };
     this.onLogin = this.onLogin.bind(this);
+  }
+
+  componentWillMount() {
+    if (this.state.userData) {
+      this.redirectToAuthPage(this.state.userData);
+    }
   }
 
   onLogin(valueForm) {
@@ -28,10 +35,11 @@ class LoginPage extends Component {
       onCompleted: (responseData) => {
         if (responseData && responseData.token) {
           if (setUserData(responseData)) {
-            console.log(1);
             // this.props.history.push(sitePathConfig.admin.path);
-            if (responseData.kind === UserTypes.ADMIN
-              || responseData.kind === UserTypes.EMPLOYEE)
+            if (
+              responseData.kind === UserTypes.ADMIN ||
+              responseData.kind === UserTypes.EMPLOYEE
+            )
               this.redirectToAuthPage(getUserData());
           }
         } else {
@@ -51,14 +59,19 @@ class LoginPage extends Component {
     });
   }
 
-  redirectToAuthPage(userData){
-    if(!Object.keys(sitePathConfig).find(key => {
-      if(sitePathConfig[key].permissions && userData.permissions.indexOf(sitePathConfig[key].permissions[0]) > -1) {
-        this.props.history.push(sitePathConfig[key].path);
-        return true;
-      }
-      return false;
-    }))
+  redirectToAuthPage(userData) {
+    if (
+      !Object.keys(sitePathConfig).find((key) => {
+        if (
+          sitePathConfig[key].permissions &&
+          userData.permissions.indexOf(sitePathConfig[key].permissions[0]) > -1
+        ) {
+          this.props.history.push(sitePathConfig[key].path);
+          return true;
+        }
+        return false;
+      })
+    )
       this.props.history.push(sitePathConfig.profile.path);
   }
 

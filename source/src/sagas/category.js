@@ -4,6 +4,7 @@ import { sendRequest } from "../services/apiService";
 import { actionTypes, reduxUtil } from "../actions/category";
 import apiConfig from "../constants/apiConfig";
 import { handleApiResponse } from "../utils/apiHelper";
+import { categoryKinds } from "../constants/masterData";
 
 const { defineActionLoading, defineActionSuccess, defineActionFailed } =
   reduxUtil;
@@ -18,11 +19,13 @@ const {
 } = actionTypes;
 
 function* getCategoryList({ payload: { params } }) {
-  const apiParams = apiConfig.category.getList;
+  let apiParams = apiConfig.masterCategory.getList;
   const searchParams = { page: params.page, size: params.size };
 
   if (params.kind) {
     searchParams.kind = params.kind;
+    if (params.kind === categoryKinds.CATEGORY_KIND_NEWS)
+      apiParams = { ...apiConfig.tenantCategory.getList };
   }
 
   if (params.parentId) {
@@ -50,9 +53,15 @@ function* getCategoryList({ payload: { params } }) {
 
 function* getCategoryById({ payload: { params, onCompleted, onError } }) {
   try {
+    let api = apiConfig.masterCategory.getById;
+    if (params.kind) {
+      if (params.kind === categoryKinds.CATEGORY_KIND_NEWS)
+        api = { ...apiConfig.tenantCategory.getById };
+    }
+
     const apiParams = {
-      ...apiConfig.category.getById,
-      path: `${apiConfig.category.getById.path}/${params.id}`,
+      ...api,
+      path: `${api.path}/${params.id}`,
     };
     const result = yield call(sendRequest, apiParams);
     handleApiResponse(result, onCompleted, onError);
@@ -63,7 +72,12 @@ function* getCategoryById({ payload: { params, onCompleted, onError } }) {
 
 function* createCategory({ payload: { params, onCompleted, onError } }) {
   try {
-    const apiParams = apiConfig.category.create;
+    let apiParams = apiConfig.masterCategory.create;
+
+    if (params.kind) {
+      if (params.kind === categoryKinds.CATEGORY_KIND_NEWS)
+        apiParams = { ...apiConfig.tenantCategory.create };
+    }
     const result = yield call(sendRequest, apiParams, params);
     handleApiResponse(result, onCompleted, onError);
   } catch (error) {
@@ -73,7 +87,12 @@ function* createCategory({ payload: { params, onCompleted, onError } }) {
 
 function* updateCategory({ payload: { params, onCompleted, onError } }) {
   try {
-    const apiParams = apiConfig.category.update;
+    let apiParams = apiConfig.masterCategory.update;
+
+    if (params.kind) {
+      if (params.kind === categoryKinds.CATEGORY_KIND_NEWS)
+        apiParams = { ...apiConfig.tenantCategory.update };
+    }
     const result = yield call(sendRequest, apiParams, params);
     handleApiResponse(result, onCompleted, onError);
   } catch (error) {
@@ -83,9 +102,16 @@ function* updateCategory({ payload: { params, onCompleted, onError } }) {
 
 function* deleteCategory({ payload: { params, onCompleted, onError } }) {
   try {
-    const apiParams = {
-      ...apiConfig.category.delete,
-      path: `${apiConfig.category.delete.path}/${params.id}`,
+    let api = apiConfig.masterCategory.delete;
+    if (params.kind) {
+      if (params.kind === categoryKinds.CATEGORY_KIND_NEWS)
+        api = { ...apiConfig.tenantCategory.delete };
+    }
+
+    console.log(api);
+    let apiParams = {
+      ...api,
+      path: `${api.path}/${params.id}`,
     };
     const { success, responseData } = yield call(sendRequest, apiParams);
     handleApiResponse({ success, responseData }, onCompleted, onError);
@@ -99,8 +125,12 @@ function* deleteCategory({ payload: { params, onCompleted, onError } }) {
 }
 
 function* getCategoryAutoComplete({ payload: { kind } }) {
-  const apiParams = apiConfig.category.categoryAutoComplete;
+  let apiParams = apiConfig.masterCategory.categoryAutoComplete;
 
+  if (kind) {
+    if (kind === categoryKinds.CATEGORY_KIND_NEWS)
+      apiParams = { ...apiConfig.tenantCategory.categoryAutoComplete };
+  }
   try {
     const result = yield call(sendRequest, apiParams, { kind });
     yield put({

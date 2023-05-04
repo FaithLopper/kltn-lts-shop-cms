@@ -6,12 +6,14 @@ import ListBasePage from "../ListBasePage";
 import GroupPermissionForm from "../../compoments/groupPermission/GroupPermissionForm";
 import BaseTable from "../../compoments/common/table/BaseTable";
 import BasicModal from "../../compoments/common/modal/BasicModal";
-
+import { PlusOutlined } from "@ant-design/icons";
 import { actions } from "../../actions";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Button } from "antd";
 
 class GroupPermissionListPage extends ListBasePage {
   initialSearch() {
-    return {name: ""};
+    return { name: "" };
   }
 
   constructor(props) {
@@ -21,7 +23,7 @@ class GroupPermissionListPage extends ListBasePage {
     this.breadcrumbs = [{ name: t("breadcrumbs.currentPage") }];
     this.columns = [
       { title: t("table.name"), dataIndex: "name" },
-      { title: t("table.description"), dataIndex: "description"},
+      { title: t("table.description"), dataIndex: "description" },
       this.renderActionColumnModal(),
     ];
     this.actionColumns = {
@@ -44,18 +46,15 @@ class GroupPermissionListPage extends ListBasePage {
 
   getDataDetailMapping(data) {
     return {
-        ...data,
-        permissions: data.permissions ? data.permissions.map(permission => permission.id) : []
-    }
+      ...data,
+      permissions: data.permissions
+        ? data.permissions.map((permission) => permission.id)
+        : [],
+    };
   }
 
   render() {
-    const {
-      dataList,
-      loading,
-      permissions,
-      t,
-    } = this.props;
+    const { dataList, loading, permissions, t } = this.props;
     const { isShowModifiedModal, isShowModifiedLoading } = this.state;
     const groupPermissions = dataList.data || [];
     this.pagination.total = dataList.totalElements || 0;
@@ -65,6 +64,15 @@ class GroupPermissionListPage extends ListBasePage {
       <div>
         {this.renderSearchForm()}
         <div className="action-bar">
+          {this.renderCreateNewButton(
+            <Button
+              type="primary"
+              onClick={() => this.onShowModifiedModal(false)}
+            >
+              <PlusOutlined />{" "}
+              {t("createNewButton", { var: t(`constants:${"Province"}`, "") })}
+            </Button>
+          )}
         </div>
         <BaseTable
           loading={loading}
@@ -110,4 +118,14 @@ const mapDispatchToProps = (dispatch) => ({
   getPermissionList: (payload) => dispatch(actions.getPermissionList(payload)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(['groupPermissionListPage','listBasePage','constants', 'basicModal'])(GroupPermissionListPage));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  withTranslation([
+    "groupPermissionListPage",
+    "listBasePage",
+    "constants",
+    "basicModal",
+  ])(GroupPermissionListPage)
+);

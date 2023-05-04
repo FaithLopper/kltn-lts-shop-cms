@@ -81,19 +81,19 @@ export const sitePathConfig = {
         childrenKeys:['/category-news/:id','/category-news/create'],
         component:CategoryNewsListPage,
         permissions: [
-            apiConfig.category.getList.path,
-            apiConfig.category.getById.path,
-            apiConfig.category.create.path,
-            apiConfig.category.update.path,
-            apiConfig.category.delete.path,
+            apiConfig.tenantCategory.getList.path,
+            apiConfig.tenantCategory.getById.path,
+            apiConfig.tenantCategory.create.path,
+            apiConfig.tenantCategory.update.path,
+            apiConfig.tenantCategory.delete.path,
         ]
     },
     categoryNewsUpdate: {
         path: '/category-news/:id',
         component:CategoryNewsUpdate,
         permissions: [
-            apiConfig.category.create.path,
-            apiConfig.category.update.path,
+            apiConfig.tenantCategory.create.path,
+            apiConfig.tenantCategory.update.path,
         ]
     },
     categoryJobs: {
@@ -101,19 +101,19 @@ export const sitePathConfig = {
         childrenKeys:['/category-jobs/:id','/category-jobs/create'],
         component:CategoryJobsListPage,
         permissions: [
-            apiConfig.category.getList.path,
-            apiConfig.category.getById.path,
-            apiConfig.category.create.path,
-            apiConfig.category.update.path,
-            apiConfig.category.delete.path,
+            apiConfig.masterCategory.getList.path,
+            apiConfig.masterCategory.getById.path,
+            apiConfig.masterCategory.create.path,
+            apiConfig.masterCategory.update.path,
+            apiConfig.masterCategory.delete.path,
         ]
     },
     categoryJobsUpdate: {
         path: '/category-jobs/:id',
         component:CategoryJobsUpdate,
         permissions: [
-            apiConfig.category.create.path,
-            apiConfig.category.update.path,
+            apiConfig.masterCategory.create.path,
+            apiConfig.masterCategory.update.path,
         ]
     },
     categoryDepartments: {
@@ -121,22 +121,22 @@ export const sitePathConfig = {
         childrenKeys:['/category-departments/:id','/category-departments/create'],
         component:CategoryDepartmentsListPage,
         permissions: [
-            apiConfig.category.getList.path,
-            apiConfig.category.getById.path,
-            apiConfig.category.create.path,
-            apiConfig.category.update.path,
-            apiConfig.category.delete.path,
+            apiConfig.masterCategory.getList.path,
+            apiConfig.masterCategory.getById.path,
+            apiConfig.masterCategory.create.path,
+            apiConfig.masterCategory.update.path,
+            apiConfig.masterCategory.delete.path,
         ]
     },
     categoryDepartmentsUpdate: {
         path: '/category-departments/:id',
         component:CategoryDepartmentsUpdate,
         permissions: [
-            apiConfig.category.getList.path,
-            apiConfig.category.getById.path,
-            apiConfig.category.create.path,
-            apiConfig.category.update.path,
-            apiConfig.category.delete.path,
+            apiConfig.masterCategory.getList.path,
+            apiConfig.masterCategory.getById.path,
+            apiConfig.masterCategory.create.path,
+            apiConfig.masterCategory.update.path,
+            apiConfig.masterCategory.delete.path,
         ]
     },
     adminNews: {
