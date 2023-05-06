@@ -36,6 +36,7 @@ class LoginPage extends Component {
         if (responseData && responseData.token) {
           if (setUserData(responseData)) {
             // this.props.history.push(sitePathConfig.admin.path);
+            console.log(responseData);
             if (
               responseData.kind === UserTypes.ADMIN ||
               responseData.kind === UserTypes.EMPLOYEE

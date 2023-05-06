@@ -107,8 +107,6 @@ function* deleteCategory({ payload: { params, onCompleted, onError } }) {
       if (params.kind === categoryKinds.CATEGORY_KIND_NEWS)
         api = { ...apiConfig.tenantCategory.delete };
     }
-
-    console.log(api);
     let apiParams = {
       ...api,
       path: `${api.path}/${params.id}`,

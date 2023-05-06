@@ -72,7 +72,7 @@ export const sitePathConfig = {
             apiConfig.groupPermission.getById.path,
             apiConfig.groupPermission.create.path,
             apiConfig.groupPermission.update.path,
-            'not_have_delete',
+            apiConfig.groupPermission.delete.path,
             apiConfig.groupPermission.getPermissionList.path,
         ]
     },

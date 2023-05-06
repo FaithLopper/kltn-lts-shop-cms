@@ -580,7 +580,7 @@ class ListBasePage extends Component {
 
     renderActionColumnModal() {
         const { t } = this.props;
-        const isRender= this.checkRenderActionColumn()
+        const isRender= this.checkRenderActionColumn();
         if(isRender)
         return {
             title: t ? t('listBasePage:titleActionCol') : 'Action',

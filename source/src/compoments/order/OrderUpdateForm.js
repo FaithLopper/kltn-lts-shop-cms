@@ -37,12 +37,14 @@ const customTableTitle = (
 class OrderUpdateForm extends BasicForm {
   constructor(props) {
     super(props);
+    this.getOrderNextStates = this.getOrderNextStates.bind(this);
     const { t } = this.props;
     const { formatMoney } = Utils;
     this.state = {
       logo: "",
       uploading: false,
       isUpdateLogo: false,
+      nextOrderState: [],
     };
     this.columns = [
       {
@@ -178,6 +180,7 @@ class OrderUpdateForm extends BasicForm {
         modifiedDate: convertUtcToTimezone(nextProps.dataDetail.modifiedDate),
         paymentMethod: getPaymentMethod(nextProps.dataDetail.paymentMethod),
       });
+      this.state.nextOrderState = JSON.parse(JSON.stringify(this.getOrderNextStates()));
     }
   }
 
@@ -213,6 +216,22 @@ class OrderUpdateForm extends BasicForm {
     return dataDetail.orderItems ? dataDetail.orderItems : [];
   };
 
+  getOrderNextStates = () => {
+    const availableStates = this.getFieldValue("availableStates") || [];
+    const nextState = [];
+    if (
+      this.getFieldValue("status") &&
+      !availableStates.find((st) => st === this.getFieldValue("status"))
+    )
+      availableStates.push(this.getFieldValue("status"));
+
+    availableStates.map((state) => {
+      nextState.push(orderStatus.find((val) => val.value === state));
+    });
+
+    return nextState;
+  };
+
   render() {
     const { formId, actions, isEditing, t } = this.props;
     const { formatMoney } = Utils;
@@ -242,7 +261,7 @@ class OrderUpdateForm extends BasicForm {
                         fieldName="status"
                         label={t("form.label.status")}
                         required
-                        options={orderStatus}
+                        options={this.state.nextOrderState}
                       />
                     ) : null}
                   </Col>

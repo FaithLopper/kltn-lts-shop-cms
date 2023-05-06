@@ -109,8 +109,8 @@ function* update({ payload: { params, onCompleted, onError } }) {
 function* deleteRole({ payload: { params, onCompleted, onError } }) {
   try {
     const apiParams = {
-      ...apiConfig.role.delete,
-      path: `${apiConfig.role.delete.path}/${params.id}`,
+      ...apiConfig.groupPermission.delete,
+      path: `${apiConfig.groupPermission.delete.path}/${params.id}`,
     };
     const result = yield call(sendRequest, apiParams, params);
     handleApiResponse(result, onCompleted, onError);

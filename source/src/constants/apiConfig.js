@@ -112,7 +112,7 @@ const apiConfig = {
             headers: baseHeader
         },
         delete: {
-            path: '/v1/skills',
+            path: '/v1/group/tenant/delete',
             method: 'DELETE',
             master: true,
             headers: baseHeader

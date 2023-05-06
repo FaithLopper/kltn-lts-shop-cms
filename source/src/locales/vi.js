@@ -338,6 +338,7 @@ export default {
                permission: 'Vui lòng chọn nhóm quyền',
             }
         },
+        createNewButton: 'Tạo {{ var, lowercase }} mới',
     },
     groupPermissionUpdatePage: {
         breadcrumbs: {

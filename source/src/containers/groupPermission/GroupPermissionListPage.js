@@ -28,7 +28,7 @@ class GroupPermissionListPage extends ListBasePage {
     ];
     this.actionColumns = {
       isEdit: true,
-      isDelete: false,
+      isDelete: true,
       isChangeStatus: false,
     };
   }
@@ -115,6 +115,7 @@ const mapDispatchToProps = (dispatch) => ({
   getDataById: (payload) => dispatch(actions.getGroupPermissionById(payload)),
   createData: (payload) => dispatch(actions.createGroupPermission(payload)),
   updateData: (payload) => dispatch(actions.updateGroupPermission(payload)),
+  deleteData: (payload) => dispatch(actions.deleteGroupPermission(payload)),
   getPermissionList: (payload) => dispatch(actions.getPermissionList(payload)),
 });
 

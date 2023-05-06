@@ -13,8 +13,9 @@ import {
 } from './';
 
 export const groupPermissionTypes = [
-    { value: GroupPermissonTypes.ADMIN, label: 'Quản trị viên' },
-    { value: GroupPermissonTypes.CUSTOMER, label: 'Khách hàng'}
+    // { value: GroupPermissonTypes.ADMIN, label: 'Quản trị viên' },
+    // { value: GroupPermissonTypes.CUSTOMER, label: 'Khách hàng'}
+    { value: GroupPermissonTypes.EMPLOYEE, label: 'Nhân Viên'}
 ]
 
 export const commonStatus = [
