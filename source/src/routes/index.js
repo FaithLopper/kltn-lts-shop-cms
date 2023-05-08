@@ -141,8 +141,8 @@ const RootRoute = () => {
                     );
                 })} */}
                 <PrivateRoute exact path={profile.path} component={ProfilePage}/>
-                <PrivateRoute exact path={admin.path} component={UserAdminListPage}/>
-                <PrivateRoute exact path={adminUpdate.path} component={UserAminUpdate}/>
+                {/* <PrivateRoute exact path={admin.path} component={UserAdminListPage}/> */}
+                {/* <PrivateRoute exact path={adminUpdate.path} component={UserAminUpdate}/> */}
                 <PrivateRoute exact path={groupPermission.path} component={GroupPermissionListPage}/>
                 <PrivateRoute exact path={adminNews.path} component={NewsListPage}/>
                 <PrivateRoute exact path={categoryNews.path} component={CategoryNewsListPage}/>
