@@ -12,6 +12,8 @@ export default {
         },
     },
     navSider: {
+        'Dashboard': 'Quản lý doanh thu',
+        'Store Statistics': 'Thống kê số liệu',
         'Account Management': 'Quản lý tài khoản',
         'Admin': 'Quản trị viên',
         'System': 'Hệ thống',
@@ -951,5 +953,11 @@ export default {
             },
         },
         createNewButton: 'Tạo {{ var, lowercase }} mới',
+    },
+    DashBoardPage: {
+        breadcrumbs: {
+            currentPage: 'Thống kê số liệu',
+            parentPage: 'Thống kê số liệu',
+        },
     },
 }

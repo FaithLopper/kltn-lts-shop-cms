@@ -82,11 +82,12 @@ class NavSider extends Component {
         } = this.state;
         let menuConfig = [];
         if(userData?.kind === UserTypes.ADMIN){
-            menuConfig = navMenuConfig
+            menuConfig = [...navMenuConfig];
         }
         if(userData?.kind === UserTypes.EMPLOYEE){
-            menuConfig = navMenuConfig
+            menuConfig = [...navMenuConfig];
         }
+        
         const availableMenu = menuConfig.filter(navMenu => {
             if(navMenu.handleOnClick) {
                 return userData.permissions?.indexOf(navMenu.permissions[0]) > -1;

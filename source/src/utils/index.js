@@ -300,6 +300,23 @@ const Utils = {
     }
     return result;
   },
+  formatCurrency(local, style, currencyType) {
+    let currency = new Intl.NumberFormat(local, {
+      style: style,
+      currency: currencyType,
+    });
+    return currency;
+  },
+  getCurrentDate() {
+    const day = new Date();
+    let currentDay = day.getDate();
+    const currentMonth = day.getMonth() + 1;
+    const currentYear = day.getFullYear();
+    const date = `${currentDay < 10 ? "0" + currentDay : currentDay}/${
+      currentMonth < 10 ? "0" + currentMonth : currentMonth
+    }/${currentYear}`;
+    return { currentDay, currentMonth, currentYear, date };
+  },
 };
 
 export default Utils;

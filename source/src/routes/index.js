@@ -54,6 +54,7 @@ import TagsListPage from '../containers/tags/TagsListPage';
 import TagsUpdate from '../containers/tags/TagsUpdate';
 import OrderListPage from '../containers/order/OrderListPage';
 import OrderUpdate from '../containers/order/OrderUpdate';
+import DashBoardPage from '../containers/dashboard/DashBoardPage';
 
 const { getUserData } = actions;
 const userData = getUserData();
@@ -102,12 +103,13 @@ const RootRoute = () => {
         tagsUpdate,
         order,
         orderUpdate,
+        dashBoard,
     } = sitePathConfig;
 
     const getUserHomeNavigation =()=>{
         if(userData?.kind === UserTypes.ADMIN){
             return {
-                pathname: profile.path,
+                pathname: dashBoard.path,
                 state: { isRedirectToHomePage: true }
             }
         }
@@ -180,6 +182,7 @@ const RootRoute = () => {
                 <PrivateRoute exact path={tagsUpdate.path} component={TagsUpdate}/>
                 <PrivateRoute exact path={order.path} component={OrderListPage}/>
                 <PrivateRoute exact path={orderUpdate.path} component={OrderUpdate}/>
+                <PrivateRoute exact path={dashBoard.path} component={DashBoardPage}/>
                 {/* Error Page */}
                 <PrivateRoute exact path={forbidden.path} component={Forbidden}/>
                 {/* <Route exact path="/error" component={ErrorServer} /> */}

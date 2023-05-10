@@ -17,6 +17,7 @@ import variantTemplate from './variantTemplate'
 import product from './product'
 import tags from './tags'
 import order from './order'
+import dashBoard from './dashBoard'
 
 const sagas = [
     ...appCommon,
@@ -37,6 +38,7 @@ const sagas = [
     ...product,
     ...tags,
     ...order,
+    ...dashBoard,
 ];
 
 function* rootSaga() {

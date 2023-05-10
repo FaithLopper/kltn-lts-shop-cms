@@ -115,7 +115,7 @@ class MasterLayout extends Component {
             location: { pathname },
             children,
         }= this.props
-        const protoTypeName=children.type.WrappedComponent.prototype.constructor.name.toLowerCase();
+        const protoTypeName=children.type.WrappedComponent.prototype?.constructor.name.toLowerCase() || '';
         return pathname.includes('create') || pathname.includes('update') || pathname.includes('profile') || protoTypeName.includes('update') ? true: false
     }
     onReturn(onBack){

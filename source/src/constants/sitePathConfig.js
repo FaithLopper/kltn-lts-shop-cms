@@ -31,6 +31,7 @@ import CategoryProductSubUpdate from "../containers/categoryProduct/CategoryProd
 import TagsListPage from "../containers/tags/TagsListPage";
 import OrderListPage from "../containers/order/OrderListPage";
 import OrderUpdate from "../containers/order/OrderUpdate";
+import DashBoardPage from "../containers/dashboard/DashBoardPage";
 
 export const sitePathConfig = {
     login: {
@@ -477,5 +478,13 @@ export const sitePathConfig = {
             apiConfig.order.create.path,
             apiConfig.order.update.path,
         ]
+    },
+    dashBoard: {
+        path:'/dashboard',
+        component: DashBoardPage,
+        // permissions: [
+        //     // apiConfig.dashBoard.businessPerformance.path,
+        //     // apiConfig.dashBoard.getChartData.path,
+        // ]
     },
 }

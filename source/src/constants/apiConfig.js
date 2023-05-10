@@ -642,5 +642,17 @@ const apiConfig = {
             headers: baseHeader
         },
     },
+    dashBoard: {
+        businessPerformance: {
+            path: '/v1/dashboard/business-performance',
+            method: 'GET',
+            headers: baseHeader
+        },
+        getChartData: {
+            path: '/v1/dashboard/revenue-by-month',
+            method: 'GET',
+            headers: baseHeader
+        }
+    },
 }
 export default apiConfig;

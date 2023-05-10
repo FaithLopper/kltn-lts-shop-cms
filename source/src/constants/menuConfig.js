@@ -14,8 +14,17 @@ import { sitePathConfig } from "../constants/sitePathConfig";
 // const strParams = (params) => {
 //   return qs.stringify(params);
 // };
-
 const navMenuConfig = [
+  {
+    label: "Dashboard",
+    icon: <UsergroupAddOutlined />,
+    children: [
+      {
+        label: "Store Statistics",
+        ...sitePathConfig.dashBoard,
+      },
+    ],
+  },
   {
     label: "Account Management",
     icon: <UsergroupAddOutlined />,
