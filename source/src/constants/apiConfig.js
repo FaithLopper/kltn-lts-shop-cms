@@ -230,31 +230,37 @@ const apiConfig = {
         getList:{
             path:"/v1/locations/list",
             method:"GET",
+            master: true,
             headers:baseHeader
         },
         getById:{
             path:"/v1/locations/get",
             method:"GET",
+            master: true,
             headers:baseHeader
         },
         create:{
             path:"/v1/locations/create",
             method:"POST",
+            master: true,
             headers:baseHeader
         },
         update:{
             path:"/v1/locations/update",
             method:"PUT",
+            master: true,
             headers:baseHeader
         },
         delete:{
             path:"/v1/locations/delete",
             method:"DELETE",
+            master: true,
             headers:baseHeader
         },
         provinceAutoComplete:{
             path:"/v1/locations/auto-complete",
             method:"GET",
+            master: true,
             headers:baseHeader
         }
     },
@@ -621,6 +627,9 @@ const apiConfig = {
             headers: baseHeader
         },
         create: {
+            path: '/v1/order/create',
+            method: 'GET',
+            headers: baseHeader
         },
         getById: {
             path: '/v1/order/get',

@@ -5,9 +5,11 @@ import {
   ControlOutlined,
   FileTextOutlined,
   UnorderedListOutlined,
-  CrownOutlined,
+  // CrownOutlined,
   HomeOutlined,
   SkinOutlined,
+  AreaChartOutlined,
+  ContainerOutlined,
 } from "@ant-design/icons";
 import { sitePathConfig } from "../constants/sitePathConfig";
 // import qs from "query-string";
@@ -17,7 +19,7 @@ import { sitePathConfig } from "../constants/sitePathConfig";
 const navMenuConfig = [
   {
     label: "Dashboard",
-    icon: <UsergroupAddOutlined />,
+    icon: <AreaChartOutlined />,
     children: [
       {
         label: "Store Statistics",
@@ -133,7 +135,7 @@ const navMenuConfig = [
   },
   {
     label: "Order",
-    icon: <SkinOutlined />,
+    icon: <ContainerOutlined />,
     children: [
       {
         label: "orderManagement",

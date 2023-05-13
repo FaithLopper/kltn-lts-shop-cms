@@ -13,17 +13,18 @@ const initialState = {
   revenueTableData: [
     {
       createdOnlyDate: "01/01/2023",
-      revenue: 0,
+      currentMonthRevenue: 0,
+      lastMonthRevenue: 0,
     },
   ],
   revenueTableLoading: false,
   revenueValuesLoading: false,
   revenueValues: {
-    retailRevenue: 400000000000 ,
-    meanPerCustomer: 200000,
-    returnRevenue: 200000,
-    numberOfBill: 200000,
-    meanPerBill: 200000,
+    retailRevenue: 0 ,
+    meanPerCustomer: 0,
+    returnRevenue: 0,
+    numberOfBill: 0,
+    meanPerBill: 0,
   },
 };
 

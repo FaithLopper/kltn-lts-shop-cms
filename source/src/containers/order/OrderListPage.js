@@ -51,7 +51,7 @@ class OrderListPage extends ListBasePage {
       {
         title: t("table.province"),
         render: (dataRow) => {
-          return dataRow.province.name;
+          return dataRow.provinceId;
         },
       },
       {

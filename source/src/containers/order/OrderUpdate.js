@@ -7,6 +7,7 @@ import { sitePathConfig } from "../../constants/sitePathConfig";
 import ObjectNotFound from "../../compoments/common/ObjectNotFound";
 import { withTranslation } from "react-i18next";
 import OrderUpdateForm from "../../compoments/order/OrderUpdateForm";
+import OrderCreateForm from "../../compoments/order/OrderCreateForm";
 
 class OrderUpdate extends SaveBasePage {
   constructor(props) {
@@ -128,26 +129,43 @@ class OrderUpdate extends SaveBasePage {
 
   render() {
     const { isGetDetailLoading, objectNotFound } = this.state;
-    const { t, uploadFile } = this.props;
+    const { t, uploadFile, cartsData, addNewCart } = this.props;
     if (objectNotFound) {
       return <ObjectNotFound />;
     }
-
     return (
       <LoadingWrapper loading={isGetDetailLoading}>
-        <OrderUpdateForm
-          setIsChangedFormValues={this.setIsChangedFormValues}
-          formId={this.getFormId()}
-          onSubmit={this.onSave}
-          dataDetail={this.isEditing ? this.dataDetail : {}}
-          isEditing={this.isEditing}
-          isLoadingAttribute={this.props.loading}
-          actions={this.renderActions()}
-          handleRemoveImage={this.handleRemoveImageField}
-          handleUploadImage={this.handleUploadImageField}
-          uploadFile={uploadFile}
-          t={t}
-        />
+        {this.isEditing ? (
+          <OrderUpdateForm
+            setIsChangedFormValues={this.setIsChangedFormValues}
+            formId={this.getFormId()}
+            onSubmit={this.onSave}
+            dataDetail={this.dataDetail}
+            isEditing={this.isEditing}
+            isLoadingAttribute={this.props.loading}
+            actions={this.renderActions()}
+            handleRemoveImage={this.handleRemoveImageField}
+            handleUploadImage={this.handleUploadImageField}
+            uploadFile={uploadFile}
+            t={t}
+          />
+        ) : (
+          <OrderCreateForm
+            setIsChangedFormValues={this.setIsChangedFormValues}
+            formId={this.getFormId()}
+            onSubmit={this.onSave}
+            dataDetail={{}}
+            cartsData={cartsData}
+            cartActions={{ addNewCart }}
+            isEditing={this.isEditing}
+            isLoadingAttribute={this.props.loading}
+            actions={this.renderActions()}
+            handleRemoveImage={this.handleRemoveImageField}
+            handleUploadImage={this.handleUploadImageField}
+            uploadFile={uploadFile}
+            t={t}
+          />
+        )}
       </LoadingWrapper>
     );
   }
@@ -155,12 +173,15 @@ class OrderUpdate extends SaveBasePage {
 
 const mapDispatchToProps = (dispatch) => ({
   getDataById: (payload) => dispatch(actions.getOrderById(payload)),
-  //   createData: (payload) => dispatch(actions.createCategory(payload)),
+  createData: (payload) => dispatch(actions.createOrder(payload)),
   updateData: (payload) => dispatch(actions.updateStatusOrder(payload)),
   uploadFile: (payload) => dispatch(actions.uploadFile(payload)),
+  addNewCart: (payload) => dispatch(actions.addNewCart(payload)),
 });
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  cartsData: state.order.cartsData || [],
+});
 
 export default connect(
   mapStateToProps,

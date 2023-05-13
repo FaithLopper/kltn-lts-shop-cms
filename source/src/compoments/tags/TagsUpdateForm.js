@@ -14,9 +14,6 @@ class TagsUpdateForm extends BasicForm {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.dataDetail !== this.props.dataDetail) {
-      this.formRef.current.setFieldsValue(nextProps.dataDetail);
-    }
     if (
       nextProps.dataDetail.avatar !== this.state.logo &&
       this.state.isUpdateLogo === false &&
@@ -25,6 +22,11 @@ class TagsUpdateForm extends BasicForm {
       this.setState({
         logo: `${AppConstants.contentRootUrl}${nextProps.dataDetail.avatar}`,
       });
+    }
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.dataDetail !== this.props.dataDetail) {
+      this.formRef.current.setFieldsValue(this.props.dataDetail);
     }
   }
 
@@ -53,13 +55,15 @@ class TagsUpdateForm extends BasicForm {
   };
 
   render() {
-    const { formId, actions, t } = this.props;
+    let { formId, actions, t, dataDetail } = this.props;
+    console.log(dataDetail);
     return (
       <Form
         id={formId}
         onFinish={this.handleSubmit}
         ref={this.formRef}
-        initialValues={this.getInitialFormValues()}
+        preserve={false}
+        initialValues={dataDetail}
         layout="vertical"
         onValuesChange={this.onValuesChange}
         style={{ width: "600px" }}
@@ -87,8 +91,10 @@ class TagsUpdateForm extends BasicForm {
             </Row>
             <Row gutter={[16, 0]}>
               <Col span={12}>
-                <Row style={{marginBottom: "8px"}}>
-                  <label style={{color:"rgba(0, 0, 0, 0.85)"}}>{t("form.label.color")}</label>
+                <Row style={{ marginBottom: "8px" }}>
+                  <label style={{ color: "rgba(0, 0, 0, 0.85)" }}>
+                    {t("form.label.color")}
+                  </label>
                 </Row>
                 <Row>
                   <ColorPicker

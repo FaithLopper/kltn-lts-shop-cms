@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Col, Row, Card, Divider, Avatar } from "antd";
+import { Form, Col, Row, Card, Divider, Avatar, Tabs } from "antd";
 import BasicForm from "../common/entryForm/BasicForm";
 import Utils from "../../utils";
 import { orderStatus } from "../../constants/masterData";
@@ -11,6 +11,7 @@ import NumericField from "../common/entryForm/NumericField";
 import { convertUtcToTimezone } from "../../utils/datetimeHelper";
 import { AppConstants } from "../../constants";
 import { GiftOutlined } from "@ant-design/icons";
+import createFormStyles from "./OrderCreateForm.module.scss";
 
 const headerStyle = {
   backgroundColor: "black",
@@ -34,10 +35,9 @@ const customTableTitle = (
   return <div style={style}>{title}</div>;
 };
 
-class OrderUpdateForm extends BasicForm {
+class OrderCreateForm extends BasicForm {
   constructor(props) {
     super(props);
-    this.getOrderNextStates = this.getOrderNextStates.bind(this);
     const { t } = this.props;
     const { formatMoney } = Utils;
     this.state = {
@@ -45,11 +45,12 @@ class OrderUpdateForm extends BasicForm {
       uploading: false,
       isUpdateLogo: false,
       nextOrderState: [],
+      currentActiveCart: 0,
+      carts: [],
     };
     this.columns = [
       {
         title: customTableTitle(t("table.image")),
-
         align: "center",
         dataIndex: "avatar",
         render: (avatar) => (
@@ -135,23 +136,23 @@ class OrderUpdateForm extends BasicForm {
           );
         },
       },
-      {
-        title: customTableTitle(t("table.discount")),
-        align: "center",
-        render: (dataRow) => {
-          return (
-            <div style={{ fontSize: tableFontSize }}>
-              {formatMoney(dataRow.discount)}
-            </div>
-          );
-        },
-      },
-      {
-        title: customTableTitle(t("table.note")),
-        render: (dataRow) => {
-          return <div style={{ fontSize: tableFontSize }}>{dataRow.note}</div>;
-        },
-      },
+      //   {
+      //     title: customTableTitle(t("table.discount")),
+      //     align: "center",
+      //     render: (dataRow) => {
+      //       return (
+      //         <div style={{ fontSize: tableFontSize }}>
+      //           {formatMoney(dataRow.discount)}
+      //         </div>
+      //       );
+      //     },
+      //   },
+      //   {
+      //     title: customTableTitle(t("table.note")),
+      //     render: (dataRow) => {
+      //       return <div style={{ fontSize: tableFontSize }}>{dataRow.note}</div>;
+      //     },
+      //   },
       {
         title: customTableTitle(t("table.price")),
         align: "center",
@@ -165,25 +166,12 @@ class OrderUpdateForm extends BasicForm {
       },
     ];
     this.acceptFileTypes = ".png, .jpg, .jpeg, .webp";
+    this.newCartIndex = React.createRef(0);
+    this.addNewCart = this.addNewCart.bind(this);
+    this.removeCart = this.removeCart.bind(this);
+    this.editCartList = this.editCartList.bind(this);
+    this.changeActiveCart = this.changeActiveCart.bind(this);
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.dataDetail !== this.props.dataDetail) {
-      const { getPaymentMethod } = Utils;
-      this.formRef.current.setFieldsValue({
-        ...nextProps.dataDetail,
-        createdBy:
-          nextProps.dataDetail.createdBy === "anonymous"
-            ? "Khách vãng lai"
-            : nextProps.dataDetail.createdBy,
-        createdDate: convertUtcToTimezone(nextProps.dataDetail.createdDate),
-        modifiedDate: convertUtcToTimezone(nextProps.dataDetail.modifiedDate),
-        paymentMethod: getPaymentMethod(nextProps.dataDetail.paymentMethod),
-      });
-      this.state.nextOrderState = JSON.parse(JSON.stringify(this.getOrderNextStates()));
-    }
-  }
-
   onValuesChange = () => {
     const { setIsChangedFormValues } = this.props;
     setIsChangedFormValues(true);
@@ -199,44 +187,74 @@ class OrderUpdateForm extends BasicForm {
   }
 
   getInitialFormValues = () => {
-    const { isEditing, dataDetail } = this.props;
-    if (!isEditing) {
-      return {};
-    }
-    return {
-      ...dataDetail,
-    };
+    return {};
   };
 
-  getOrderItems = () => {
-    const { isEditing, dataDetail } = this.props;
-    if (!isEditing) {
-      return [];
-    }
-    return dataDetail.orderItems ? dataDetail.orderItems : [];
+  getOrderItems = (currentActiveCart) => {
+    const { cartsData } = this.props;
+    return cartsData[currentActiveCart]?.orderItems || [];
   };
 
-  getOrderNextStates = () => {
-    const availableStates = this.getFieldValue("availableStates") || [];
-    const nextState = [];
-    if (
-      this.getFieldValue("status") &&
-      !availableStates.find((st) => st === this.getFieldValue("status"))
-    )
-      availableStates.push(this.getFieldValue("status"));
-
-    availableStates.map((state) => {
-      nextState.push(orderStatus.find((val) => val.value === state));
+  addNewCart() {
+    const { cartActions } = this.props;
+    const newCurrentActiveCart = `cart-${(this.newCartIndex.current += 1)}`;
+    cartActions.addNewCart({
+      label: `Giỏ hàng ${this.newCartIndex.current}`,
+      key: newCurrentActiveCart,
     });
+    this.setState({
+      carts: [
+        ...this.state.carts,
+        {
+          label: `Giỏ hàng ${this.newCartIndex.current}`,
+          key: newCurrentActiveCart,
+        },
+      ],
+      currentActiveCart: newCurrentActiveCart,
+    });
+  }
 
-    return nextState;
-  };
+  removeCart(targetCartKey) {
+    const { carts, currentActiveCart } = this.state;
+    const targetCartIndex = carts.findIndex(
+      (pane) => pane.key === targetCartKey
+    );
+    const newCarts = carts.filter((pane) => pane.key !== targetCartKey);
+    if (newCarts.length && targetCartKey === currentActiveCart) {
+      const { key } =
+        newCarts[
+          targetCartIndex === newCarts.length
+            ? targetCartIndex - 1
+            : targetCartIndex
+        ];
+      this.setState({
+        currentActiveCart: key,
+      });
+    }
+    this.setState({
+      carts: [...newCarts],
+    });
+  }
+
+  editCartList(targetCartKey, action) {
+    if (action === "add") {
+      this.addNewCart();
+    } else {
+      this.removeCart(targetCartKey);
+    }
+  }
+
+  changeActiveCart(key) {
+    this.setState({
+      currentActiveCart: key,
+    });
+  }
 
   render() {
     const { formId, actions, isEditing, t } = this.props;
+    const { carts, currentActiveCart } = this.state;
     const { formatMoney } = Utils;
 
-    console.log(1);
     return (
       <Form
         id={formId}
@@ -246,8 +264,69 @@ class OrderUpdateForm extends BasicForm {
         layout="vertical"
         onValuesChange={this.onValuesChange}
       >
-        <div style={{ minWidth: "1450px" }}>
-          <Row style={{ maxHeight: "500px" }}>
+        <div
+          style={{
+            width: "100rem",
+          }}
+        >
+          <Row>
+            <Card
+              style={{ backgroundColor: "grey", width: "100%", padding: "0px" }}
+              title="Tạo Đơn Hàng"
+              bordered={false}
+              headStyle={headerStyle}
+            >
+              <div style={{ height: 56 }}>
+                <Tabs
+                  hideAdd={carts.length >= 10}
+                  onChange={this.changeActiveCart}
+                  activeKey={currentActiveCart}
+                  type="editable-card"
+                  onEdit={this.editCartList}
+                  items={carts}
+                />
+              </div>
+              {carts.length ? (
+                <div>
+                  <BaseTable
+                    columns={this.columns}
+                    rowKey={(record) => record.id}
+                    dataSource={this.getOrderItems(currentActiveCart)}
+                    bordered
+                  />
+                  <Row gutter={5} style={{ marginTop: "15px" }}>
+                    <Col
+                      span={18}
+                      style={{
+                        fontSize: "18px",
+                        textAlign: "end",
+                        paddingRight: "20px",
+                        paddingTop: "7px",
+                        fontWeight: 700,
+                        textDecoration: "underline",
+                      }}
+                    >
+                      {t("form.label.subTotal")}:
+                    </Col>
+                    <Col span={6} style={{ textAlign: "end" }}>
+                      <NumericField
+                        width="100%"
+                        fieldName="subTotal"
+                        formatter={formatMoney}
+                        style={{ fontSize: 12 }}
+                        size="large"
+                        defaultValue={0}
+                        addonBefore
+                      />
+                    </Col>
+                  </Row>
+                </div>
+              ) : (
+                <div>Hiện không có giỏ hàng, bấm "+" để khởi tạo</div>
+              )}
+            </Card>
+          </Row>
+          {/* <Row style={{ maxHeight: "500px" }}>
             <Col span={12}>
               <Card
                 title="THÔNG TIN ĐƠN HÀNG"
@@ -373,47 +452,7 @@ class OrderUpdateForm extends BasicForm {
                 />
               </Card>
             </Col>
-          </Row>
-          <Row>
-            <Card
-              style={{ width: "100%", padding: "0px" }}
-              title="SẢN PHẨM"
-              bordered={false}
-              headStyle={headerStyle}
-            >
-              <BaseTable
-                columns={this.columns}
-                rowKey={(record) => record.id}
-                dataSource={this.getOrderItems()}
-                bordered
-              />
-              <Row gutter={5} style={{ marginTop: "15px" }}>
-                <Col
-                  span={18}
-                  style={{
-                    fontSize: "18px",
-                    textAlign: "end",
-                    paddingRight: "20px",
-                    paddingTop: "7px",
-                    fontWeight: 700,
-                    textDecoration: "underline",
-                  }}
-                >
-                  {t("form.label.subTotal")}:
-                </Col>
-                <Col span={6} style={{ textAlign: "end" }}>
-                  <NumericField
-                    width="100%"
-                    fieldName="subTotal"
-                    formatter={formatMoney}
-                    style={{ fontSize: 12 }}
-                    size="large"
-                    addonBefore
-                  />
-                </Col>
-              </Row>
-            </Card>
-          </Row>
+          </Row> */}
         </div>
         <div className="footer-card-form">
           <Row gutter={16} justify="end">
@@ -428,5 +467,5 @@ class OrderUpdateForm extends BasicForm {
 }
 
 export default withTranslation(["orderListPage", "listBasePage"])(
-  OrderUpdateForm
+  OrderCreateForm
 );

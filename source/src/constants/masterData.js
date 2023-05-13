@@ -95,12 +95,31 @@ export const categoryKinds = {
   CATEGORY_KIND_DEPARTMENTS,
 };
 
+const REVENUE_MONEY = 1;
+const REVENUE_NUMBER = 2;
+
 export const dashBoardRevnueKinds = {
-  retailRevenue: { title: "Doanh thu bán lẻ", per: "/ngày" },
-  meanPerCustomer: { title: "GTTB/Khách mua", per: "/ngày" },
-  returnRevenue: { title: "Doanh thu trả hàng", per: "/ngày" },
-  numberOfBill: { title: "Số lượng hóa đơn", per: "/ngày" },
-  meanPerBill: { title: "GTTB/Hóa đơn", per: "/ngày" },
+  retailRevenue: {
+    title: "Doanh thu bán lẻ",
+    per: "/ngày",
+    type: REVENUE_MONEY,
+  },
+  meanPerCustomer: {
+    title: "GTTB/Khách mua",
+    per: "/ngày",
+    type: REVENUE_MONEY,
+  },
+  returnRevenue: {
+    title: "Doanh thu trả hàng",
+    per: "/ngày",
+    type: REVENUE_MONEY,
+  },
+  numberOfBill: {
+    title: "Số lượng hóa đơn",
+    per: "/ngày",
+    type: REVENUE_NUMBER,
+  },
+  meanPerBill: { title: "GTTB/Hóa đơn", per: "/ngày", type: REVENUE_MONEY },
 };
 
 export const variantKinds = [

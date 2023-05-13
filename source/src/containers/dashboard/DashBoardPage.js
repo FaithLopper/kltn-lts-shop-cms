@@ -69,10 +69,16 @@ const DashBoardPage = (props) => {
           <div className="rev-values-container">
             {Object.keys(revValuesData).map((value) => {
               return (
-                <Card className="rev-value-card" loading={revValuesLoading}>
+                <Card
+                  key={value}
+                  className="rev-value-card"
+                  loading={revValuesLoading}
+                >
                   <Meta title={dashBoardRevnueKinds[value].title} />
                   <span className="rev-value">
-                    {moneyFormatter.format(revValuesData[value])}
+                    {dashBoardRevnueKinds[value].type === 1
+                      ? moneyFormatter.format(revValuesData[value])
+                      : revValuesData[value]}
                   </span>
                   &nbsp;{dashBoardRevnueKinds[value].per}
                 </Card>
@@ -90,7 +96,7 @@ const DashBoardPage = (props) => {
                 Doanh thu của hôm nay {`(${date})`}:&nbsp;
                 <span className="money">
                   {moneyFormatter.format(
-                    revTableData[currentDay - 1]?.currentMonthRevenue
+                    revTableData[currentDay - 1]?.currentMonthRevenue || 0
                   )}
                 </span>
               </div>

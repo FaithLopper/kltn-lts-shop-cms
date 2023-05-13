@@ -10,8 +10,8 @@
 }
 
 .rev-values-container {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  gap: 2.5rem;
 
   .ant-card-bordered {
     border: 0.0625rem solid #d0d0d0;
@@ -19,10 +19,10 @@
 }
 
 .rev-value-card {
-  width: 18%;
+  width: 100%;
   .rev-value {
     font-size: 24px;
-    max-width: 12rem;
+    max-width: 80%;
     display: inline-block;
     word-wrap: break-word;
   }
@@ -46,8 +46,32 @@
     font-weight: 700;
 
     .money {
-        color: green;
-        font-size: 1.35rem;
+      color: green;
+      font-size: 1.35rem;
     }
+  }
+}
+
+@media screen and (min-width: 860px) {
+  .rev-values-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .rev-values-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (min-width: 1366px) {
+  .rev-values-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .rev-values-container {
+    grid-template-columns: repeat(5, 1fr);
   }
 }

@@ -8,7 +8,13 @@ import { handleApiResponse } from "../utils/apiHelper";
 const { defineActionLoading, defineActionSuccess, defineActionFailed } =
   reduxUtil;
 
-const { GET_ORDER_LIST, GET_ORDER_BY_ID, UPDATE_STATUS_ORDER } = actionTypes;
+const {
+  GET_ORDER_LIST,
+  GET_ORDER_BY_ID,
+  UPDATE_STATUS_ORDER,
+  CREATE_ORDER,
+  ADD_NEW_CART,
+} = actionTypes;
 
 function* getOrderList({ payload: { params } }) {
   const apiParams = apiConfig.order.getList;
@@ -59,11 +65,34 @@ function* updateStatusOrder({ payload: { params, onCompleted, onError } }) {
     onError(error);
   }
 }
+function* createOrder({ payload: { params, onCompleted, onError } }) {
+  try {
+    const apiParams = apiConfig.order.create;
+    const result = yield call(sendRequest, apiParams, params);
+    yield put({
+      type: defineActionSuccess(CREATE_ORDER),
+      orderData: result.responseData && result.responseData.data,
+    });
+    handleApiResponse(result, onCompleted, onError);
+  } catch (error) {
+    onError(error);
+  }
+}
+
+function* addNewCart({ payload }) {
+  try {
+    console.log(payload);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 const sagas = [
   takeLatest(defineActionLoading(GET_ORDER_LIST), getOrderList),
   takeLatest(GET_ORDER_BY_ID, getOrderById),
   takeLatest(UPDATE_STATUS_ORDER, updateStatusOrder),
+  takeLatest(defineActionLoading(CREATE_ORDER), createOrder),
+  takeLatest(ADD_NEW_CART, addNewCart),
 ];
 
 export default sagas;

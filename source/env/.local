@@ -1,4 +1,4 @@
 REACT_APP_APIX = https://shop-api.developteam.net
-REACT_APP_API = http://14.225.205.235:28383
-REACT_APP_API_MASTER = http://14.225.205.235:28384
+REACT_APP_API = https://shop-api.developteam.net
+REACT_APP_API_MASTER = https://shop-api.developteam.net
 GENERATE_SOURCEMAP=true
